@@ -17,15 +17,6 @@ namespace DonutEngine.MathD
             return firstFloat * (1 - by) + secondFloat * by;
         }
 
-        public static DVector2 DVector2Lerp(DVector2 position, DVector2 target, double by)
-        {
-            DVector2 temp = new(0,0);
-
-            temp.x = position.x * (1 - by) + target.x * by;
-            temp.y = position.y * (1 - by) + target.y * by;
-            return temp;
-        }
-
         public static Vector2 Vector2Lerp(Vector2 position, Vector2 target, float by)
         {
             Vector2 temp = new(0,0);
@@ -34,7 +25,7 @@ namespace DonutEngine.MathD
             temp.Y = position.Y * (1 - by) + target.Y * by;
             return temp;
         }
-
+        
         public static float CubicInterpolation(float v0, float v1, float v2, float v3, float t) 
         {
         float p = (v3 - v2) - (v0 - v1);

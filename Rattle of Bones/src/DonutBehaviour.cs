@@ -1,24 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DonutEngine.Backbone;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 
-namespace DonutEngine
+namespace DonutEngine.Backbone
 {
-    public class DonutBehaviour : IObserver
+    public class DonutBehaviour
     {
-        //Object physicsobject;
-        Transform transform = new(new(0,0), 1);
-        Observer runtimeObserver;
-
-        /*public DonutBehaviour()
+        public Transform transform;
+        public DonutBehaviour()
         {
+            RuntimeUpdater.current.RegisterObserver(this);
+        }
 
-        }*/
 
-        public void update()
+        
+
+        public virtual void update()
         {
 
         }

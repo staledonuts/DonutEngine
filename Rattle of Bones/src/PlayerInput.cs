@@ -1,13 +1,14 @@
 using Raylib_cs;
 using DonutEngine.Backbone;
+using System.Numerics;
 
 namespace DonutEngine
 {
     namespace Input
     {
-        public class InputHandler : DonutBehaviour
+        public class PlayerInput : DonutBehaviour
         {
-            public InputHandler()
+            public PlayerInput()
             {
                 
             }

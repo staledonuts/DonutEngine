@@ -1,17 +1,16 @@
 using Raylib_cs;
-using DonutEngine.Backbone;
 
 namespace DonutEngine
 {
     namespace Input
     {
-        public class InputHandler : DonutBehaviour
+        public class InputSystem
         {
-            public InputHandler()
+            public InputSystem()
             {
                 
             }
         }
+
     }
-    
 }
