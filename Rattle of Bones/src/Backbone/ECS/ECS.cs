@@ -1,45 +1,54 @@
 using System.Numerics;
-using DonutEngine.Backbone.Rendering;
 using Raylib_cs;
-namespace DonutEngine.Backbone;
 
-public partial class ECS
+
+namespace DonutEngine
 {
-    public class Entity
+    namespace Backbone
     {
-        void AddComponent<T>(Component component);
-        virtual void Update();
-    }
-
-    public class Component
-    {
-        virtual void Update();
-    }
-
-    public class Registry
-    {
-        Vector<Entity> entities;
-        public void AddEntity(Entity entity)
+        public partial class ECS
         {
+            public class Entity
+            {
+                public List<Component> components;
+                void AddComponent<T>(Component component)
+                {
+                    components.Add(component);
+                }
+                public virtual void Update()
+                {
+                    foreach(Component c in components) 
+                    {
+                        c.Update(Time.deltaTime);
+                    }
+                }
+            }
 
-        }
-        void RemoveEntity(Entity entity)
-        {
+            public class Component
+            {
+                Entity owner; 
+                public virtual void Update(float deltaTime)
+                {
 
-        }
-        void Update();  
-    }
+                }
+            }
 
-    public class DonutTransform : Component
-    {
-        Vector2 position;
-        Vector2 rotation;
-        Vector2 scale;  
+            public class Registry
+            {
+                public List<Entity> entities;
+                public void AddEntity(Entity entity)
+                {
+                    entities.Add(entity);
+                }
+                void RemoveEntity(Entity entity)
+                {
+                    entities.Remove(entity);
+                }
+                void Update() 
+                {
 
-        public override void Update()
-        {
-
+                }
+            }            
         }
     }
 }
-

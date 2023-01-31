@@ -3,7 +3,6 @@ using System.Numerics;
 using System.Linq;
 using System.Threading.Tasks;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 using DonutEngine.MathD;
 
 namespace DonutEngine

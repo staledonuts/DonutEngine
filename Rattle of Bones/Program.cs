@@ -1,28 +1,26 @@
 ﻿using DonutEngine;
 using DonutEngine.Backbone;
-using DonutEngine.Backbone.Rendering;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 static class Program
 {
     public static void Main()
     {
-        InitWindow(800, 480, "Rattle of Bones");
-        SetTargetFPS(60);
-        InitAudioDevice();
+        Raylib.InitWindow(800, 480, "Rattle of Bones");
+        Raylib.SetTargetFPS(60);
+        Raylib.InitAudioDevice();
         GameContainer gameContainer = new();
 
-        while (!WindowShouldClose())
+        while (!Raylib.WindowShouldClose())
         {
-            BeginDrawing();
-            ClearBackground(Color.WHITE);
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.WHITE);
             Time.RunDeltaTime();
             RuntimeUpdater.current.UpdateRuntimeObservers();
-            DrawText(GetFPS().ToString(), 12, 24, 20, Color.BLACK);
-            EndDrawing();
+            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
+            Raylib.EndDrawing();
         }
 
-        CloseWindow();
+        Raylib.CloseWindow();
     }
 }

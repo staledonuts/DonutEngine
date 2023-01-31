@@ -1,12 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Numerics;
 
-namespace DonutEngine.Backbone
+namespace DonutEngine
 {
-    public partial class ECS
+    namespace Backbone
     {
-        
+        public partial class ECS
+        {
+            public class DonutTransform : Component
+            {
+                Vector2 position;
+                Vector2 rotation;
+                Vector2 scale;  
+
+                public virtual void Update()
+                {
+
+                }
+            }
+        }
+
     }
 }

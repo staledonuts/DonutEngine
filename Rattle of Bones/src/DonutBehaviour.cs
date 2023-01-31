@@ -1,26 +1,30 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace DonutEngine.Backbone
+namespace DonutEngine
 {
-    public class DonutBehaviour
+    namespace Backbone
     {
-        public Transform transform;
-        public DonutBehaviour()
+        public class DonutBehaviour
         {
-            RuntimeUpdater.current.RegisterObserver(this);
+            public Transform transform;
+            public DonutBehaviour()
+            {
+                RuntimeUpdater.current.RegisterObserver(this);
+            }
+
+
+            
+
+            public virtual void update()
+            {
+
+            }
+            
+            
         }
 
-
-        
-
-        public virtual void update()
-        {
-
-        }
-        
-        
     }
-
+    
     
 }
