@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Box2D.NetStandard" Version="2.4.7-alpha" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Raylib-cs" Version="4.2.0.1" />
   </ItemGroup>

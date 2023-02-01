@@ -6,15 +6,18 @@ namespace DonutEngine
     {
         public partial class ECS
         {
-            public class DonutTransform : Component
+            public class PhysicsBody : Component
             {
-                Vector2 position;
-                Vector2 rotation;
-                Vector2 scale;  
+                public PhysicsBody(Entity entity) : base(entity)
+                {
+                    
+                }
+                
+                
 
                 public virtual void Update()
                 {
-
+                    
                 }
             }
         }

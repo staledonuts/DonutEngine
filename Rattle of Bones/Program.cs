@@ -16,7 +16,7 @@ static class Program
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
             Time.RunDeltaTime();
-            RuntimeUpdater.current.UpdateRuntimeObservers();
+            //RuntimeUpdater.current.UpdateRuntimeObservers();
             Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
             Raylib.EndDrawing();
         }

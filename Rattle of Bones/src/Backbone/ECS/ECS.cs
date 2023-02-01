@@ -10,8 +10,8 @@ namespace DonutEngine
         {
             public class Entity
             {
-                public List<Component> components;
-                void AddComponent<T>(Component component)
+                List<Component> components;
+                public void AddComponent<T>(Component component)
                 {
                     components.Add(component);
                 }
@@ -26,6 +26,10 @@ namespace DonutEngine
 
             public class Component
             {
+                public Component(Entity entity)
+                {
+                    owner = entity;
+                }
                 Entity owner; 
                 public virtual void Update(float deltaTime)
                 {
