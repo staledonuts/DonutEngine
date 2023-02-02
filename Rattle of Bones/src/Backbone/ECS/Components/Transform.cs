@@ -10,33 +10,29 @@ namespace DonutEngine
     {
         public partial class ECS
         {
-            public partial class Transform
+            public class Transform2D : Component
             {
-                public Transform()
+
+                public Transform2D(Vector2 inputPosition)
                 {
-                    
+                    position = inputPosition;
                 }
 
-                public Transform(Vector2 position)
+                public Transform2D(Vector2 inputPosition, Vector2 inputRotation)
                 {
-                    currentPosition = position;
+                    position = inputPosition;
+                    rotation = inputRotation;
                 }
 
-                public Transform(Vector2 position, Vector2 rotation)
+                public Transform2D(Vector2 inputPosition, Vector2 inputRotation, Vector2 inputScale)
                 {
-                    currentPosition = position;
-                    currentRotation = rotation;
+                    position = inputPosition;
+                    rotation = inputRotation;
+                    rotation = inputScale;
                 }
-
-                public Transform(Vector2 position, Vector2 rotation, Vector2 scale)
-                {
-                    currentPosition = position;
-                    currentRotation = rotation;
-                    currentRotation = scale;
-                }
-                Vector2 currentPosition = Vector2.Zero;
-                Vector2 currentRotation = Vector2.Zero;
-                Vector2 currentScale = Vector2.Zero;
+                public Vector2 position = Vector2.Zero;
+                public Vector2 rotation = Vector2.Zero;
+                public Vector2 scale = Vector2.Zero;
             }
         }
     }

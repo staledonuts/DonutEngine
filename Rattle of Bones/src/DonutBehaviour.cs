@@ -1,5 +1,5 @@
 using Raylib_cs;
-using static Raylib_cs.Raylib;
+using System.Numerics;
 using static DonutEngine.Backbone.ECS;
 
 namespace DonutEngine
@@ -8,11 +8,14 @@ namespace DonutEngine
     {
         public class DonutBehaviour : Entity
         {
-            public Transform transform;
+            public Transform2D transform;
+            
+            
             public DonutBehaviour()
             {
-                AddComponent();
-                
+                Registry.AddEntity(this);
+                transform = new(new Vector2(100,100),Vector2.Zero,Vector2.One);
+                AddComponent(transform);
             }
 
 

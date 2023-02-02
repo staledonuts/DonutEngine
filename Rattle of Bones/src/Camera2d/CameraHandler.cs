@@ -1,9 +1,5 @@
-using System;
-using System.Numerics;
-using System.Linq;
-using System.Threading.Tasks;
 using Raylib_cs;
-using DonutEngine.MathD;
+using DonutEngine.Backbone;
 
 namespace DonutEngine
 {
@@ -11,14 +7,14 @@ namespace DonutEngine
     {
         public static Camera2D donutcam = new();
 
-        public static void SetCameraTarget(Transform target)
+        public static void SetCameraTarget(ECS.Transform2D target)
         {
-            donutcam.target = new((float)target.translation.X, (float)target.translation.Y);
+            donutcam.target = target.position;
         }
 
-        public static void UpdateCamera(Transform target)
+        public static void UpdateCamera(ECS.Transform2D target)
         {
-            donutcam.target = new (target.translation.X,target.translation.Y);
+            donutcam.target = target.position;
         }
            
     }

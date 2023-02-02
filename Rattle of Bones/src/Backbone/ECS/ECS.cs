@@ -10,47 +10,42 @@ namespace DonutEngine
         {
             public class Entity
             {
-                public List<Component> components;
+                public List<Component> components = new();
                 public void AddComponent(Component component)
                 {
                     components.Add(component);
                 }
-                public virtual void Update()
+                public virtual void Update(float deltaTime)
                 {
                     foreach(Component c in components) 
                     {
-                        c.Update(Time.deltaTime);
+                        c.Update(deltaTime);
                     }
                 }
             }
 
             public class Component
             {
-                public Component()
-                {
-                    owner = entity;
-                }
-                Entity owner; 
-                public virtual void Update(float deltaTime)
-                {
-
-                }
+                public virtual void Update(float deltaTime){}
             }
 
             public class Registry
             {
-                public List<Entity> entities;
-                public void AddEntity(Entity entity)
+                static List<Entity> entities = new();
+                public static void AddEntity(Entity entity)
                 {
                     entities.Add(entity);
                 }
-                void RemoveEntity(Entity entity)
+                public static void RemoveEntity(Entity entity)
                 {
                     entities.Remove(entity);
                 }
-                void Update() 
+                public static void Update() 
                 {
-
+                    foreach(Entity e in entities) 
+                    {
+                        e.Update(Time.deltaTime);
+                    }
                 }
             }            
         }
