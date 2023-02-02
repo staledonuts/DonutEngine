@@ -11,7 +11,7 @@ namespace DonutEngine
             public Transform transform;
             public DonutBehaviour()
             {
-                //AddComponent<Entity>(DonutTransform);
+                AddComponent();
                 
             }
 

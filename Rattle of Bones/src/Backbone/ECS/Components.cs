@@ -1,4 +1,5 @@
 using System.Numerics;
+using Raylib_cs;
 
 namespace DonutEngine
 {
@@ -6,15 +7,8 @@ namespace DonutEngine
     {
         public partial class ECS
         {
-            public class PhysicsBody : Component
+            public partial class Transform : Component
             {
-                public PhysicsBody(Entity entity) : base(entity)
-                {
-                    
-                }
-                
-                
-
                 public virtual void Update()
                 {
                     
