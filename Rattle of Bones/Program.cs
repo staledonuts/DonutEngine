@@ -9,7 +9,7 @@ static class Program
         Raylib.InitWindow(800, 480, "Rattle of Bones");
         Raylib.SetTargetFPS(60);
         Raylib.InitAudioDevice();
-        GameContainer gameContainer = new();
+        GameContainer.current.InitGameContainer();
 
         while (!Raylib.WindowShouldClose())
         {

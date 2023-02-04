@@ -2,14 +2,15 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Raylib_cs;
 
 namespace DonutEngine
 {
-    public struct FilePaths
+    public static class FilePaths
     {
         
-        
-        public const string assets = "/Assets/";
-        public const string sounds = "/Sounds/";
+        public static string app =  AppDomain.CurrentDomain.BaseDirectory;
+        public const string assets = "Assets/";
+        public const string sounds = "Sounds/";
     }
 }

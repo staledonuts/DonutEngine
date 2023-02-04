@@ -1,92 +1,90 @@
-/*using Raylib_cs;
+using Raylib_cs;
 using System.Numerics;
+using static DonutEngine.Backbone.ECS;
 
 namespace DonutEngine.Physics
 {
 
-    public class DVector2
+    /*public class DVector2
     {
-        public double x;
-        public double y;
-        public DVector2(double x, double y)
+        public float x;
+        public float y;
+        public DVector2(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public static double Distance(DVector2 a, DVector2 b)
-        {
-            return Math.Sqrt(Math.Pow((a.x - b.x), 2) + Math.Pow((a.y - b.y), 2));
-        }
+        
     }
 
     public class Transform
     {
         public DVector2 position;
-        public double scale;
-        public Transform(DVector2 position, double scale)
+        public float scale;
+        public Transform(DVector2 position, float scale)
         {
             this.position = position;
             this.scale = scale;
         }
-    }
+    }*/
 
     
 
     
     
-    public class Physics
+    public class PhysicsVars
     {
-        public double mass;
-        public double newton;
-        public double velocity;
-        public DVector2 v;
-        public DVector2 a;
-        public DVector2 n;
-        public DVector2 nextN;
-        public DVector2 nextV;
-        public DVector2 rot;
-        public const double G = .0000000000667;
-        public Physics(double velocity, double mass)
+        public float mass;
+        public float newton;
+        public float velocity;
+        public Vector2 v;
+        public Vector2 a;
+        public Vector2 n;
+        public Vector2 nextN;
+        public Vector2 nextV;
+        public Vector2 rot;
+        public const float G = .0000000000667f;
+        public PhysicsVars(float velocity, float mass)
         {
             this.velocity = velocity;
             this.mass = mass;
-            this.v = new DVector2(0, 0);
-            this.a = new DVector2(0, 0);
-            this.n = new DVector2(0, 0);
-            this.nextN = new DVector2(0, 0);
-            this.nextV = new DVector2(0, 0);
+            this.v = new Vector2(0, 0);
+            this.a = new Vector2(0, 0);
+            this.n = new Vector2(0, 0);
+            this.nextN = new Vector2(0, 0);
+            this.nextV = new Vector2(0, 0);
         }
 
-        public static GameObject[] IsColliding(GameObject self, params GameObject[] GameObjects)
+        public static PhysicsObject[] IsColliding(PhysicsObject self, params PhysicsObject[] PhysicsObjects)
         {
-            List<GameObject> coll = new List<GameObject>();
-            foreach (GameObject obj in GameObjects)
+            List<PhysicsObject> coll = new List<PhysicsObject>();
+            /*foreach (PhysicsObject obj in PhysicsObjects)
             {
-                if (DVector2.Distance(self.transform.position, obj.transform.position) <= (self.transform.scale + obj.transform.scale) / 2 && self != obj)
+                if ((float)Transform2D.Distance(self.transform.position, obj.transform.position) <= (self.transform.scale + obj.transform.scale) / 2f && self != obj)
                 {
                     coll.Add(obj);
                 }
-            }
+            }*/
             return coll.ToArray();
         }
 
-        public double Velocity()
+        public float Velocity()
         {
-            return Math.Sqrt(Math.Pow(this.v.x, 2) + Math.Pow(this.v.y, 2));
+            return (float)Math.Sqrt(Math.Pow(this.v.X, 2) + Math.Pow(this.v.Y, 2));
         }
 
-        public static void Gravity(params GameObject[] GameObjects)
+        public static void Gravity(params PhysicsObject[] PhysicsObjects)
         {
-            foreach (GameObject _obj in GameObjects)
+            foreach (PhysicsObject _obj in PhysicsObjects)
             {
-                foreach (GameObject obj in GameObjects)
+                foreach (PhysicsObject obj in PhysicsObjects)
                 {
-                    if (_obj != obj && Physics.IsColliding(_obj, GameObjects) == null)
+                    if (_obj != obj && PhysicsVars.IsColliding(_obj, PhysicsObjects) == null)
                     {
-                        obj.physics.newton = G * (obj.physics.mass * _obj.physics.mass / Math.Pow(DVector2.Distance(obj.transform.position, _obj.transform.position), 2));
-                        double acceleration = obj.physics.newton / _obj.physics.mass;
-                        GameObject.GoToObj(_obj, obj, acceleration);
+                        obj.physics.newton = G * (obj.physics.mass * _obj.physics.mass / (float)Math.Pow(Vector2.Distance(obj.transform.position, _obj.transform.position), 2));
+                        float acceleration = obj.physics.newton / _obj.physics.mass;
+                        PhysicsObject.GoToObj(_obj, obj, acceleration);
                         _obj.physics.velocity = acceleration;
                     }
                 }
@@ -94,59 +92,66 @@ namespace DonutEngine.Physics
         }
     }
 
-    public class GameObject
+    public class PhysicsObject : Component
     {
-        public Physics physics;
-        public Transform transform;
-        public static GameObject[] universe = null;
+        public PhysicsVars physics;
+        public Transform2D transform;
+        public static PhysicsObject[]? universe = null;
 
-        public GameObject(Physics physics, Transform transform)
+        public PhysicsObject(PhysicsVars physics, Transform2D transform)
         {
             this.physics = physics;
             this.transform = transform;
         }
 
+        public override void Update(float deltaTime)
+        {
+            base.Update(deltaTime);
+            Go();   
+        }
         public void Acceleration()
         {
-            this.physics.n.x = this.physics.nextN.x;
-            this.physics.n.y = this.physics.nextN.y;
-            this.physics.a.x = this.physics.n.x / this.physics.mass;
-            this.physics.a.y = this.physics.n.y / this.physics.mass;
-            this.physics.v.x += this.physics.a.x;
-            this.physics.v.y += this.physics.a.y;
+            this.physics.n.X = this.physics.nextN.X;
+            this.physics.n.Y = this.physics.nextN.Y;
+            this.physics.a.X = this.physics.n.X / this.physics.mass;
+            this.physics.a.Y = this.physics.n.Y / this.physics.mass;
+            this.physics.v.X += this.physics.a.X;
+            this.physics.v.Y += this.physics.a.Y;
         }
 
         public void GravityForce()
         {
-            DVector2 gSum = new DVector2(0, 0);
+            Vector2 gSum = new Vector2(0, 0);
 
-            foreach (GameObject obj in GameObject.universe)
+            foreach (PhysicsObject obj in PhysicsObject.universe)
             {
                 if (obj != this)
                 {
-                    DVector2 trgRot = new DVector2(obj.transform.position.x - this.transform.position.x, obj.transform.position.y - this.transform.position.y);
-                    gSum.x += (trgRot.x / Math.Abs(trgRot.y)) * (Physics.G * this.physics.mass * obj.physics.mass / DVector2.Distance(this.transform.position, obj.transform.position));
-                    gSum.y += (trgRot.y / Math.Abs(trgRot.y)) * (Physics.G * this.physics.mass * obj.physics.mass / DVector2.Distance(this.transform.position, obj.transform.position));
+                    Vector2 trgRot = new Vector2(obj.transform.position.X - this.transform.position.X, obj.transform.position.Y - this.transform.position.Y);
+                    gSum.X += (trgRot.X / Math.Abs(trgRot.Y)) * (PhysicsVars.G * this.physics.mass * obj.physics.mass / Vector2.Distance(this.transform.position, obj.transform.position));
+                    gSum.Y += (trgRot.Y / Math.Abs(trgRot.Y)) * (PhysicsVars.G * this.physics.mass * obj.physics.mass / Vector2.Distance(this.transform.position, obj.transform.position));
                 }
             }
             this.physics.nextN = gSum;
+
+            
         }
         public void Calc()
         {
-            if (Physics.IsColliding(this, GameObject.universe).Length == 0)
+            if (PhysicsVars.IsColliding(this, PhysicsObject.universe).Length == 0)
             {
                 this.GravityForce();
             }
             else
             {
                 this.GravityForce();
-                GameObject[] collide = Physics.IsColliding(this, GameObject.universe);
-                foreach (GameObject obj in collide)
+                PhysicsObject[] collide = PhysicsVars.IsColliding(this, PhysicsObject.universe);
+                foreach (PhysicsObject obj in collide)
                 {
-                    this.physics.v.x = (((this.physics.mass - obj.physics.mass) / (this.physics.mass + obj.physics.mass) * this.physics.Velocity()) +
+                    this.physics.v.X = (((this.physics.mass - obj.physics.mass) / (this.physics.mass + obj.physics.mass) * this.physics.Velocity()) +
                         (2 * obj.physics.mass / (this.physics.mass + obj.physics.mass) * obj.physics.Velocity()));
 
-                    this.physics.v.y = (((this.physics.mass - obj.physics.mass) / (this.physics.mass + obj.physics.mass) * this.physics.Velocity()) +
+                    this.physics.v.Y = (((this.physics.mass - obj.physics.mass) / (this.physics.mass + obj.physics.mass) * this.physics.Velocity()) +
                         (2 * obj.physics.mass / (this.physics.mass + obj.physics.mass) * obj.physics.Velocity()));
                 }
 
@@ -156,48 +161,48 @@ namespace DonutEngine.Physics
         {
             this.Acceleration();
 
-            this.transform.position.x += this.physics.v.x / Time.deltaTime;
-            this.transform.position.y += this.physics.v.y / Time.deltaTime;
+            this.transform.position.X += this.physics.v.X / Time.deltaTime;
+            this.transform.position.Y += this.physics.v.Y / Time.deltaTime;
         }
-        public static void GoTo(GameObject self, DVector2 target, double a, params GameObject[] obj)
+        public static void GoTo(PhysicsObject self, Vector2 target, float a, params PhysicsObject[] obj)
         {
-            DVector2 trgRot = new DVector2(target.x - self.transform.position.x, target.y - self.transform.position.y);
+            Vector2 trgRot = new Vector2(target.X - self.transform.position.X, target.Y - self.transform.position.Y);
 
-            for (int i = 0; i < Math.Abs(trgRot.x); i++)
+            for (int i = 0; i < Math.Abs(trgRot.X); i++)
             {
-                if (Physics.IsColliding(self, obj) == null)
+                if (PhysicsVars.IsColliding(self, obj) == null)
                 {
-                    self.transform.position.x += trgRot.x < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
+                    self.transform.position.X += trgRot.X < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
                 }
             }
 
-            for (int i = 0; i < Math.Abs(trgRot.y); i++)
+            for (int i = 0; i < Math.Abs(trgRot.Y); i++)
             {
-                if (Physics.IsColliding(self, obj) == null)
+                if (PhysicsVars.IsColliding(self, obj) == null)
                 {
-                    self.transform.position.y += trgRot.y < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
+                    self.transform.position.Y += trgRot.Y < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
                 }
             }
         }
-        public static void GoToObj(GameObject self, GameObject target, double a)
+        public static void GoToObj(PhysicsObject self, PhysicsObject target, float a)
         {
-            DVector2 trgRot = new DVector2(target.transform.position.x - self.transform.position.x, target.transform.position.y - self.transform.position.y);
+            Vector2 trgRot = new Vector2(target.transform.position.X - self.transform.position.X, target.transform.position.Y - self.transform.position.Y);
             self.physics.rot = trgRot;
-            for (int i = 0; i < Math.Abs(trgRot.x); i++)
+            for (int i = 0; i < Math.Abs(trgRot.X); i++)
             {
-                if (Physics.IsColliding(self, target) == null)
+                if (PhysicsVars.IsColliding(self, target) == null)
                 {
-                    self.transform.position.x += trgRot.x < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
+                    self.transform.position.X += trgRot.X < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
                 }
             }
 
-            for (int i = 0; i < Math.Abs(trgRot.y); i++)
+            for (int i = 0; i < Math.Abs(trgRot.Y); i++)
             {
-                if (Physics.IsColliding(self, target) == null)
+                if (PhysicsVars.IsColliding(self, target) == null)
                 {
-                    self.transform.position.y += trgRot.y < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
+                    self.transform.position.Y += trgRot.Y < 0 ? -1 * a / Time.deltaTime : 1 * a / Time.deltaTime;
                 }
             }
         }
     }
-}*/
+}

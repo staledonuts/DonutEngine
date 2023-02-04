@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace DonutEngine
 {
-    public partial class Player : PlayerBehaviour
+    public class Player : PlayerBehaviour
     {
         public override void Update(float deltaTime)
         {
@@ -13,10 +13,13 @@ namespace DonutEngine
 
         public void Tasks()
         {
-            if(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN))
+            Raylib.DrawCircle((int)transform.position.X,(int)transform.position.Y,10f,Color.BLACK);
+            if(Raylib.IsGamepadButtonDown(0,GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN))
             {
-                transform.position.X += 20;
+                transform.position.Y -= 3;
             }
+
+
         }
 
 

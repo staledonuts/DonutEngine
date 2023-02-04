@@ -13,22 +13,20 @@ namespace DonutEngine
         {
             public class SpriteRenderer : Component
             {
+                
 
-                public SpriteRenderer(Texture2D spriteTex)
+                public SpriteRenderer(Texture2D spriteTex, Transform2D entityTransform)
                 {
                     currentTex = spriteTex;
+                    transform = entityTransform;
                 }
 
                 Texture2D currentTex;
-                int posX = 54;
-                int posY = 54;
-
-
-               
+                Transform2D transform;
                 public override void Update(float deltaTime)
                 {
                     base.Update(deltaTime);
-                    Raylib.DrawTexture(currentTex,posX,posY, Color.WHITE);
+                    Raylib.DrawTexture(currentTex, (int)transform.position.X, (int)transform.position.Y, Color.WHITE);
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace DonutEngine
             public DonutBehaviour()
             {
                 Registry.AddEntity(this);
-                transform = new(new Vector2(100,100),Vector2.Zero,Vector2.One);
+                transform = new(new Vector2(100,100),0f,Vector2.One);
                 AddComponent(transform);
             }
 
