@@ -1,4 +1,5 @@
 using Raylib_cs;
+using DonutEngine.Backbone;
 
 namespace DonutEngine
 {
@@ -17,6 +18,22 @@ namespace DonutEngine
 
                 }
             }
+
+        public void InputHandler()
+        {
+            if(Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_ALT) && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
+            {
+            Raylib.ToggleFullscreen();
+            }
+            if(Raylib.IsGamepadAvailable(0))
+            {
+
+            }
+            if(Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
+            {
+                
+            }
+        }
         }
 
     }

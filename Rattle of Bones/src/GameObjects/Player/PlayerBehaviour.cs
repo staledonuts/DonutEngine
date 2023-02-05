@@ -10,37 +10,28 @@ namespace DonutEngine
     {
         public Transform2D transform;
         public SpriteRenderer spriteRenderer;
-        Texture2D spriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player.png");
+        Texture2D idleSpriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player-idle.png");
+        Texture2D walkSpriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player-walk.png");
+        Texture2D slash1SpriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player-slash1.png");
+        Texture2D slash2SpriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player-slash2.png");
+        Texture2D jumpSpriteTex = Raylib.LoadTexture(app+assets+"Sprites/Player/Player-jump.png");
+        
 
         public PlayerBehaviour()
         {
             Registry.AddEntity(this);
             transform = new(new Vector2(100,100),0f,Vector2.One);
             AddComponent(transform);
-            spriteRenderer = new(spriteTex, transform);
+            spriteRenderer = new(idleSpriteTex, transform);
             AddComponent(spriteRenderer);
         }
 
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            InputHandler();
+            
         }
 
-        public void InputHandler()
-        {
-            if(Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_ALT) && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
-            {
-            Raylib.ToggleFullscreen();
-            }
-            if(Raylib.IsGamepadAvailable(0))
-            {
-
-            }
-            if(Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
-            {
-                transform.position.X += 3f;
-            }
-        }
+        
     }
 }
