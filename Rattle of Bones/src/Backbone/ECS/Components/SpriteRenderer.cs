@@ -26,6 +26,11 @@ namespace DonutEngine
                 public override void Update(float deltaTime)
                 {
                     base.Update(deltaTime);
+                }
+
+                public override void DrawUpdate(float deltaTime)
+                {
+                    base.DrawUpdate(deltaTime);
                     Raylib.DrawTexture(currentTex, (int)transform.position.X, (int)transform.position.Y, Color.WHITE);
                 }
             }

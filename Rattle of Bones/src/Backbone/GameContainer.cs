@@ -1,11 +1,13 @@
 using Raylib_cs;
+using System.Numerics;
 using System;
 using DonutEngine.Backbone;
 
 namespace DonutEngine
 {
     public class GameContainer
-    {        
+    {
+        
         private static GameContainer? _current;
         public static GameContainer current
         {
@@ -28,26 +30,11 @@ namespace DonutEngine
 
         public void InitGameContainer()
         {
-            Raylib.BeginMode2D(GameObjects.donutcam);
-            GameContainer.current.SetCameraTarget(GameObjects.player.transform);
+            GameObjects.donutcam = new();
+            GameObjects.donutcam.zoom = 1.0f;
+            GameObjects.donutcam.offset = new Vector2(SettingsContainer.screenWidth / 2, SettingsContainer.screenHeight / 2);
+            GameObjects.donutcam.target = GameObjects.player.transform.position;
         }
-
-        /*public static bool LoadLevel()
-        {
-
-        }*/
-
-        public void SetCameraTarget(ECS.Transform2D target)
-        {
-            GameObjects.donutcam.target = target.position;
-        }
-
-        public void UpdateCamera(ECS.Transform2D target)
-        {
-            GameObjects.donutcam.target = target.position;
-        }
-            
-    
 
     }
         static class GameObjects

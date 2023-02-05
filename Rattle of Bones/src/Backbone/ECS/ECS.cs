@@ -22,11 +22,20 @@ namespace DonutEngine
                         c.Update(deltaTime);
                     }
                 }
+
+                public virtual void DrawUpdate(float deltaTime)
+                {
+                    foreach(Component c in components) 
+                    {
+                        c.DrawUpdate(deltaTime);
+                    }
+                }
             }
 
             public class Component
             {
                 public virtual void Update(float deltaTime){}
+                public virtual void DrawUpdate(float deltaTime){}
             }
 
             public class Registry
@@ -45,6 +54,14 @@ namespace DonutEngine
                     foreach(Entity e in entities) 
                     {
                         e.Update(Time.deltaTime);
+                    }
+                }
+
+                public static void DrawUpdate()
+                {
+                    foreach(Entity e in entities) 
+                    {
+                        e.DrawUpdate(Time.deltaTime);
                     }
                 }
             }            

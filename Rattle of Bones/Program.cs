@@ -4,23 +4,45 @@ using Raylib_cs;
 
 static class Program
 {
+    public static int framesCounter = 0;
     public static void Main()
     {
-        Raylib.InitWindow(800, 480, "Rattle of Bones");
+        Raylib.InitWindow(SettingsContainer.screenWidth, SettingsContainer.screenHeight, "Rattle of Bones");
         Raylib.SetTargetFPS(60);
         Raylib.InitAudioDevice();
+        ScreenManager.current.InitScreenManager();
         GameContainer.current.InitGameContainer();
+        MainLoopUpdate();
+        Raylib.CloseWindow();
+    }
 
+    static void MainLoopUpdate()
+    {
         while (!Raylib.WindowShouldClose())
         {
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.WHITE);
             Time.RunDeltaTime();
-            ECS.Registry.Update();
-            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
+            UpdateLoop();
+            UpdateDraw();
+            UpdateLate();
+            
+        }
+
+        static void UpdateLoop()
+        {
+            ScreenManager.current.CurrentScreen();
+        }
+
+        static void UpdateDraw()
+        {
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.BLACK);
+            ScreenManager.current.DrawCurrentScreen(SettingsContainer.screenWidth, SettingsContainer.screenHeight);
             Raylib.EndDrawing();
         }
 
-        Raylib.CloseWindow();
+        static void UpdateLate()
+        {
+            ScreenManager.current.LateCurrentScreen();
+        }
     }
 }

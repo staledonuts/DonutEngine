@@ -9,7 +9,7 @@ namespace DonutEngine
     public static class FilePaths
     {
         
-        public static string app =  AppDomain.CurrentDomain.BaseDirectory;
+        public readonly static string app =  AppDomain.CurrentDomain.BaseDirectory;
         public const string assets = "Assets/";
         public const string sounds = "Sounds/";
     }

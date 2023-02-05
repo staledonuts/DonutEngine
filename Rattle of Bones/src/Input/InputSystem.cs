@@ -8,7 +8,14 @@ namespace DonutEngine
         {
             public InputSystem()
             {
-                
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_ALT) && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
+                {
+                Raylib.ToggleFullscreen();
+                }
+                if(Raylib.IsGamepadAvailable(0))
+                {
+
+                }
             }
         }
 
