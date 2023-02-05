@@ -36,7 +36,6 @@ namespace DonutEngine
 
                 public static double Distance(Vector2 positionA, Vector2 positionB)
                 {
-                    
                     return Math.Sqrt(Math.Pow((positionA.X - positionA.X), 2f) + Math.Pow((positionA.Y - positionB.Y), 2f));
                 }
             }
