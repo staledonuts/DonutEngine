@@ -15,6 +15,11 @@ namespace DonutEngine
                 {
                     components.Add(component);
                 }
+
+                public virtual void Start()
+                {
+                    
+                }
                 public virtual void Update(float deltaTime)
                 {
                     foreach(Component c in components) 
@@ -48,6 +53,14 @@ namespace DonutEngine
                 public static void RemoveEntity(Entity entity)
                 {
                     entities.Remove(entity);
+                }
+
+                public static void Start()
+                {
+                    foreach(Entity e in entities) 
+                    {
+                        e.Start();
+                    }
                 }
                 public static void Update() 
                 {

@@ -1,5 +1,6 @@
 using static DonutEngine.Backbone.ECS;
 using static DonutEngine.FilePaths;
+using DonutEngine.Backbone.FSM;
 using DonutEngine.Backbone;
 using Raylib_cs;
 using System.Numerics;
@@ -26,11 +27,16 @@ namespace DonutEngine
             AddComponent(spriteRenderer);
         }
 
+        public override void Start()
+        {
+            
+        }
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
             
         }
+        
 
         
     }

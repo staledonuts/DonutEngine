@@ -6,7 +6,7 @@ using Raylib_cs;
 
 namespace DonutEngine.Backbone
 {
-    public class ScreenManager
+    public sealed class ScreenManager
     {
 
 
