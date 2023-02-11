@@ -72,7 +72,7 @@ namespace DonutEngine.Backbone
                     break;
                 case GameScreen.Game:
                     {
-                        ECS.Registry.Update();
+                        ECS.ProcessUpdate();
                         // TODO: Update GAMEPLAY screen variables here!
 
                         // Press enter to change to ENDING screen
@@ -124,7 +124,7 @@ namespace DonutEngine.Backbone
                         Raylib.BeginMode2D(GameObjects.donutcam);
                         Raylib.DrawRectangle(0, 0, screenWidth, screenHeight, Color.PURPLE);
                         Raylib.DrawText("GAMEPLAY SCREEN", 20, 20, 40, Color.MAROON);
-                        ECS.Registry.DrawUpdate();
+                        ECS.ProcessDrawUpdate();
                         Raylib.EndMode2D();
 
                     }
@@ -155,6 +155,7 @@ namespace DonutEngine.Backbone
                 default:
                     break;
             }
+            ECS.ProcessLateUpdate();
         }
     }
 }

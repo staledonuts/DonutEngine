@@ -1,6 +1,5 @@
 ﻿using DonutEngine;
 using DonutEngine.Backbone;
-using DonutEngine.Input;
 using Raylib_cs;
 
 static class Program
@@ -13,7 +12,7 @@ static class Program
         Raylib.InitAudioDevice();
         ScreenManager.current.InitScreenManager();
         GameContainer.current.InitGameContainer();
-        ECS.Registry.Start();
+        ECS.ProcessStart();
         MainLoopUpdate();
         Raylib.CloseWindow();
     }
@@ -23,6 +22,7 @@ static class Program
         while (!Raylib.WindowShouldClose())
         {
             Time.RunDeltaTime();
+            InputEventSystem.ProcessInput.UpdateInput();
             UpdateLoop();
             UpdateDraw();
             UpdateLate();
@@ -31,7 +31,6 @@ static class Program
 
         static void UpdateLoop()
         {
-            InputSystem.UpdateInputVectorComposite();
             ScreenManager.current.CurrentScreen();
         }
 

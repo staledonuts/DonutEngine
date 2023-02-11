@@ -8,74 +8,113 @@ namespace DonutEngine
     {
         public partial class ECS
         {
+            public delegate void StartEvent();
+            public delegate void UpdateEvent(float deltaTime);
+            public delegate void DrawUpdateEvent(float deltaTime);
+            public delegate void LateUpdateEvent(float deltaTime);
+
+            public static event StartEvent? ecsStart;
+            public static event UpdateEvent? ecsUpdate;
+            public static event DrawUpdateEvent? ecsDrawUpdate;
+            public static event LateUpdateEvent? ecsLateUpdate;
+
+            
+            public static void ProcessStart()
+            {
+                ecsStart?.Invoke();
+            }
+            public static void ProcessUpdate()
+            {
+                ecsUpdate?.Invoke(Time.deltaTime);
+            }
+            public static void ProcessDrawUpdate()
+            {
+                ecsDrawUpdate?.Invoke(Time.deltaTime);
+            }
+            public static void ProcessLateUpdate()
+            {
+                ecsLateUpdate?.Invoke(Time.deltaTime);
+            }
+
+            
             public class Entity
             {
-                public List<Component> components = new();
-                public void AddComponent(Component component)
+                public class Transform2D
                 {
-                    components.Add(component);
-                }
 
-                public virtual void Start()
-                {
-                    
-                }
-                public virtual void Update(float deltaTime)
-                {
-                    foreach(Component c in components) 
+                    public Transform2D(Vector2 inputPosition)
                     {
-                        c.Update(deltaTime);
+                        position = inputPosition;
+                    }
+
+                    public Transform2D(Vector2 inputPosition, float inputRotation)
+                    {
+                        position = inputPosition;
+                        rotation = inputRotation;
+                    }
+
+                    public Transform2D(Vector2 inputPosition, float inputRotation, Vector2 inputScale)
+                    {
+                        position = inputPosition;
+                        rotation = inputRotation;
+                        scale = inputScale;
+                    }
+                    public Vector2 position = Vector2.Zero;
+                    public float rotation = 0f;
+                    public Vector2 scale = Vector2.Zero;
+
+                    public static double Distance(Vector2 positionA, Vector2 positionB)
+                    {
+                        return Math.Sqrt(Math.Pow((positionA.X - positionA.X), 2f) + Math.Pow((positionA.Y - positionB.Y), 2f));
                     }
                 }
-
-                public virtual void DrawUpdate(float deltaTime)
+                public void SubscribeComponent(Component component)
                 {
-                    foreach(Component c in components) 
-                    {
-                        c.DrawUpdate(deltaTime);
-                    }
+                    ecsUpdate += component.Update;
+                    ecsDrawUpdate += component.DrawUpdate;
+                    ecsLateUpdate += component.LateUpdate;
                 }
+
+                public void UnsubscribeComponent(Component component)
+                {
+                    ecsUpdate -= component.Update;
+                    ecsDrawUpdate -= component.DrawUpdate;
+                    ecsLateUpdate -= component.LateUpdate;
+                }
+
+                public virtual void Start(){}
+                public virtual void Update(float deltaTime){}
+                public virtual void DrawUpdate(float deltaTime){}
+
+                public virtual void LateUpdate(float deltaTime){}
             }
 
             public class Component
             {
                 public virtual void Update(float deltaTime){}
                 public virtual void DrawUpdate(float deltaTime){}
+                public virtual void LateUpdate(float deltaTime){}
             }
 
-            public class Registry
+            public class EntityRegistry
             {
-                static List<Entity> entities = new();
-                public static void AddEntity(Entity entity)
+                public static void StartEntity(Entity entity)
                 {
-                    entities.Add(entity);
+                    entity.Start();
                 }
-                public static void RemoveEntity(Entity entity)
+                public static void SubscribeEntity(Entity entity)
                 {
-                    entities.Remove(entity);
+                    ecsStart += entity.Start;
+                    ecsUpdate += entity.Update;
+                    ecsDrawUpdate += entity.DrawUpdate;
+                    ecsLateUpdate += entity.LateUpdate;
                 }
-
-                public static void Start()
+                public static void UnsubscribeEntity(Entity entity)
                 {
-                    foreach(Entity e in entities) 
-                    {
-                        e.Start();
-                    }
-                }
-                public static void Update() 
-                {
-                    foreach(Entity e in entities) 
-                    {
-                        e.Update(Time.deltaTime);
-                    }
-                }
-
-                public static void DrawUpdate()
-                {
-                    foreach(Entity e in entities) 
-                    {
-                        e.DrawUpdate(Time.deltaTime);
-                    }
+                    ecsStart -= entity.Start;
+                    ecsUpdate -= entity.Update;
+                    ecsDrawUpdate -= entity.DrawUpdate;
+                    ecsLateUpdate -= entity.LateUpdate;
                 }
             }            
         }

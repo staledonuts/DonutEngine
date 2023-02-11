@@ -9,13 +9,13 @@ namespace DonutEngine
         public class DonutBehaviour : Entity
         {
             public Transform2D transform;
+            public SpriteRenderer spriteRenderer;
             
             
             public DonutBehaviour()
             {
-                Registry.AddEntity(this);
+                EntityRegistry.SubscribeEntity(this);
                 transform = new(new Vector2(100,100),0f,Vector2.One);
-                AddComponent(transform);
             }
 
 
