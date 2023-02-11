@@ -8,7 +8,7 @@ namespace DonutEngine
 
         public class SpriteRenderer : Component
         {
-            public SpriteRenderer(Texture2D spriteTex, Entity.Transform2D entityTransform, int frameWidth, int frameHeight)
+            public SpriteRenderer(Texture2D spriteTex, Transform2D entityTransform, int frameWidth, int frameHeight)
             {
                 currentTex = spriteTex;
                 transform = entityTransform;
@@ -18,7 +18,7 @@ namespace DonutEngine
             }
 
             Texture2D currentTex;
-            Entity.Transform2D transform;
+            Transform2D transform;
             Rectangle characterFrameRec;
             Animator animator;
             
