@@ -14,4 +14,16 @@ public class WindowSystem
         InitWindow(Program.settingsVars.screenWidth, Program.settingsVars.screenHeight, "Rattle of Bones");
         SetTargetFPS(60);
     }
+
+    public void FullScreen()
+    {
+        if(IsWindowFullscreen())
+        {
+            
+        }
+        else
+        {
+
+        }
+    }
 }

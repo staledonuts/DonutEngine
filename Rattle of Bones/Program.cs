@@ -2,6 +2,8 @@
 using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
+using static DonutEngine.Backbone.Systems.DonutSystems;
+using static Raylib_cs.Raylib;
 
 static class Program
 {
@@ -9,14 +11,15 @@ static class Program
     public static SettingsVars settingsVars = new();
     public static AudioSystem audioSystem = new();
     public static WindowSystem windowSystem = new();
+    public static InputEventSystem inputEventSystem = new();
     public static ScreenManager screenManager = new();
     public static void Main()
     {
         windowSystem.InitializeWindow();
         audioSystem.InitializeAudioSystem();
-        screenManager.InitScreenManager();
-        InputEventSystem.InitInputSystem();
-        GameContainer.current.InitGameContainer();
+        screenManager.InitializeScreenManager();
+        inputEventSystem.InitializeInputSystem();
+        GameContainer.current.InitializeGameContainer();
         ECS.ProcessStart();
         MainLoopUpdate();
         Shutdown();
@@ -24,12 +27,12 @@ static class Program
 
     static void Shutdown()
     {
-        DonutSystems.ShutdownSystems();
-        Raylib.CloseWindow();
+        ShutdownSystems();
+        CloseWindow();
     }
     static void MainLoopUpdate()
     {
-        while (!Raylib.WindowShouldClose())
+        while (!WindowShouldClose())
         {
             Time.RunDeltaTime();
             UpdateLoop();
@@ -40,16 +43,16 @@ static class Program
 
         static void UpdateLoop()
         {
-            DonutSystems.UpdateSystems();
+            UpdateSystems();
             screenManager.CurrentScreen();
         }
 
         static void UpdateDraw()
         {
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.BLACK);
+            BeginDrawing();
+            ClearBackground(Color.BLACK);
             screenManager.DrawCurrentScreen(Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
-            Raylib.EndDrawing();
+            EndDrawing();
         }
 
         static void UpdateLate()

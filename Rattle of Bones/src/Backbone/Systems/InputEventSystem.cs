@@ -22,12 +22,12 @@ namespace DonutEngine.Backbone.Systems
         public static event InputEvent? horizontalInputEvent;
         public static event InputEvent? verticalInputEvent;
 
-        public static void InitInputSystem()
+        public void InitializeInputSystem()
         {
             DonutSystems.Update += UpdateInput;
         }
 
-        public static void UpdateInput()
+        public void UpdateInput()
         {
             InputVars.jumpButton = Raylib.IsKeyDown(KeyboardKey.KEY_X);
             InputVars.attackButton = Raylib.IsKeyDown(KeyboardKey.KEY_C);

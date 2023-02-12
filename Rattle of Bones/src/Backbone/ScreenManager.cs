@@ -10,7 +10,7 @@ namespace DonutEngine.Backbone
     {
         static GameScreen currentScreen = GameScreen.BootSplash;
         static Texture2D splashTex;
-        public void InitScreenManager()
+        public void InitializeScreenManager()
         {
             splashTex = Raylib.LoadTexture(FilePaths.app+"Assets/Splash/raylib-cs.png");
         }
@@ -106,11 +106,10 @@ namespace DonutEngine.Backbone
                 case GameScreen.Game:
                     {
                         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.WHITE);
-                        Raylib.BeginMode2D(GameObjects.donutcam);
                         Raylib.DrawRectangle(0, 0, screenWidth, screenHeight, Color.PURPLE);
                         Raylib.DrawText("GAMEPLAY SCREEN", 20, 20, 40, Color.MAROON);
                         ECS.ProcessDrawUpdate();
-                        Raylib.EndMode2D();
+                        
 
                     }
                     break;

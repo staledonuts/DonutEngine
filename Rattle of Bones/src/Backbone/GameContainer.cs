@@ -28,18 +28,15 @@ namespace DonutEngine
             }
         }
 
-        public void InitGameContainer()
+        public void InitializeGameContainer()
         {
-            GameObjects.donutcam = new();
-            GameObjects.donutcam.zoom = 1.0f;
-            GameObjects.donutcam.offset = new Vector2(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
-            GameObjects.donutcam.target = GameObjects.player.transform.position;
+            
         }
 
     }
         static class GameObjects
         {
-            public static Camera2D donutcam;
+            
             public static Player player = new();
 
         }
