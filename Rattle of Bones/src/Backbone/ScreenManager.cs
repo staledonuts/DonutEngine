@@ -8,11 +8,9 @@ namespace DonutEngine.Backbone
 {
     public sealed class ScreenManager
     {
-
-
+        static GameScreen currentScreen = GameScreen.BootSplash;
         static Texture2D splashTex;
 
-        static GameScreen currentScreen = GameScreen.BootSplash;
         private static ScreenManager? _current;
         public static ScreenManager current
         {
