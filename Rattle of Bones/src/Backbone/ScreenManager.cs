@@ -6,26 +6,13 @@ using Raylib_cs;
 
 namespace DonutEngine.Backbone
 {
-    public sealed class ScreenManager
+    public class ScreenManager
     {
         static GameScreen currentScreen = GameScreen.BootSplash;
         static Texture2D splashTex;
-
-        private static ScreenManager? _current;
-        public static ScreenManager current
-        {
-            get
-            {
-                if(_current == null)
-                {
-                    _current = new ScreenManager();
-                }
-                return _current;
-            }
-        }
         public void InitScreenManager()
         {
-            splashTex = Raylib.LoadTexture(FilePaths.app+FilePaths.assets+"Splash/raylib-cs.png");
+            splashTex = Raylib.LoadTexture(FilePaths.app+"Assets/Splash/raylib-cs.png");
         }
 
         enum GameScreen
@@ -50,7 +37,7 @@ namespace DonutEngine.Backbone
                         {
                             currentScreen = GameScreen.MainMenu;
                             Raylib.UnloadTexture(splashTex);
-                            splashTex = Raylib.LoadTexture(FilePaths.app+FilePaths.assets+"Splash/Titlelogo.png");
+                            splashTex = Raylib.LoadTexture(FilePaths.app+"Assets/Splash/Titlelogo.png");
                             splashTex.height = splashTex.height * 4;
                             splashTex.width = splashTex.width * 4;
                             
@@ -104,15 +91,15 @@ namespace DonutEngine.Backbone
                     {
                         // TODO: Draw LOGO screen here!
                         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.WHITE);
-                        Raylib.DrawTexture(splashTex, (SettingsContainer.screenWidth / 2) - splashTex.width / 2,(SettingsContainer.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
-                        Raylib.DrawText("Made With:", SettingsContainer.screenWidth / 2, (SettingsContainer.screenHeight / 2) +256, 20, Color.WHITE);
+                        Raylib.DrawTexture(splashTex, (Program.settingsVars.screenWidth / 2) - splashTex.width / 2,(Program.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
+                        Raylib.DrawText("Made With:", Program.settingsVars.screenWidth / 2, (Program.settingsVars.screenHeight / 2) +256, 20, Color.WHITE);
                     }
                     break;
                 case GameScreen.MainMenu:
                     {
                         // TODO: Draw TITLE screen here!
                         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.WHITE);
-                        Raylib.DrawTexture(splashTex, (SettingsContainer.screenWidth / 2) - splashTex.width / 2,(SettingsContainer.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
+                        Raylib.DrawTexture(splashTex, (Program.settingsVars.screenWidth / 2) - splashTex.width / 2,(Program.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
                         Raylib.DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, Color.DARKGREEN);
                     }
                     break;

@@ -10,7 +10,8 @@ namespace DonutEngine
     {
         
         public readonly static string app =  AppDomain.CurrentDomain.BaseDirectory;
-        public const string assets = "Assets/";
-        public const string sounds = "Sounds/";
+        public const string sprites = "Assets/Sprites/";
+        public const string sounds = "Assets/Sounds/";
+        public const string music = "Assets/Music/";
     }
 }

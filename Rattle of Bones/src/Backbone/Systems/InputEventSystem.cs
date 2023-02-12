@@ -2,9 +2,9 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using System.Numerics;
 
-namespace DonutEngine.Backbone
+namespace DonutEngine.Backbone.Systems
 {
-    public struct InputVars
+    public static class InputVars
     {
         public static bool jumpButton;
         public static bool attackButton;
@@ -24,26 +24,14 @@ namespace DonutEngine.Backbone
 
         public static void InitInputSystem()
         {
-            jumpEvent.Invoke();
-            attackEvent.Invoke();
-            dashEvent.Invoke();
-            skullEvent.Invoke();
-            horizontalInputEvent.Invoke();
-            verticalInputEvent.Invoke();
+            DonutSystems.Update += UpdateInput;
         }
 
-        
         public static void UpdateInput()
         {
-            jumpEvent.Invoke();
-            attackEvent.Invoke();
-            dashEvent.Invoke();
-            skullEvent.Invoke();
-            horizontalInputEvent.Invoke();
-            verticalInputEvent.Invoke();
-            InputVars.jumpButton = Raylib.IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN) || Raylib.IsKeyDown(KeyboardKey.KEY_X);
-            InputVars.attackButton = Raylib.IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT) || Raylib.IsKeyDown(KeyboardKey.KEY_C);
-            InputVars.dashButton = Raylib.IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN) || Raylib.IsKeyDown(KeyboardKey.KEY_Z);
+            InputVars.jumpButton = Raylib.IsKeyDown(KeyboardKey.KEY_X);
+            InputVars.attackButton = Raylib.IsKeyDown(KeyboardKey.KEY_C);
+            InputVars.dashButton = Raylib.IsKeyDown(KeyboardKey.KEY_Z);
             InputVars.dpad.X = -(int)Raylib.IsKeyDown(KeyboardKey.KEY_LEFT) +(int)Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT);
             InputVars.dpad.Y = -(int)Raylib.IsKeyDown(KeyboardKey.KEY_UP) +(int)Raylib.IsKeyDown(KeyboardKey.KEY_DOWN);
         }   

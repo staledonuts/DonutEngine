@@ -32,7 +32,7 @@ namespace DonutEngine
         {
             GameObjects.donutcam = new();
             GameObjects.donutcam.zoom = 1.0f;
-            GameObjects.donutcam.offset = new Vector2(SettingsContainer.screenWidth / 2, SettingsContainer.screenHeight / 2);
+            GameObjects.donutcam.offset = new Vector2(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
             GameObjects.donutcam.target = GameObjects.player.transform.position;
         }
 
