@@ -18,7 +18,7 @@ public class AudioSystem
             Console.Write("SoundInit Successful\n");
             DonutSystems.Update += UpdateAudioSystem;
             DonutSystems.ShutdownEvent += ShutdownAudioSystem;
-            music = LoadMusicStream(FilePaths.app+FilePaths.music+"deer.mp3");
+            music = LoadMusicStream(FilePaths.app+FilePaths.music+"lullaby.ogg");
             PlayMusicStream(music);
             SetMasterVolume(Program.settingsVars.currentMasterVolume);
         }
