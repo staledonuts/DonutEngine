@@ -20,7 +20,7 @@ namespace DonutEngine
 
         public void MovePlayer()
         {
-            transform.position += InputVars.dpad;
+            physics2D.rigidbody2D.linearVelocity += InputVars.dpad;
         }
 
 

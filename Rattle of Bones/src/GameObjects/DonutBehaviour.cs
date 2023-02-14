@@ -8,14 +8,14 @@ namespace DonutEngine
     {
         public class DonutBehaviour : Entity
         {
-            public Transform2D transform;
+            public Vector2 position;
             public SpriteRenderer spriteRenderer;
             
             
             public DonutBehaviour()
             {
                 EntityRegistry.SubscribeEntity(this);
-                transform = new(new Vector2(100,100),0f,Vector2.One);
+                //new(new Vector2(100,100),0f,Vector2.One);
             }
 
 

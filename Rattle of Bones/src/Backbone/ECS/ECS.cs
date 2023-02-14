@@ -39,7 +39,6 @@ namespace DonutEngine
             
             public class Entity
             {
-                public Transform2D transform2D = new(Vector2.Zero, 0f, Vector2.One);
                 public void SubscribeComponent(Component component)
                 {
                     

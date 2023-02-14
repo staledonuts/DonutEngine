@@ -1,5 +1,7 @@
 using Raylib_cs;
 using static DonutEngine.Backbone.ECS;
+using System.Numerics;
+using Box2D.NetStandard.Dynamics.Bodies;
 
 namespace DonutEngine
 {
@@ -8,17 +10,17 @@ namespace DonutEngine
 
         public class SpriteRenderer : Component
         {
-            public SpriteRenderer(Texture2D spriteTex, Transform2D entityTransform, int frameWidth, int frameHeight)
+            public SpriteRenderer(Texture2D spriteTex, Vector2 entityPosition, int frameWidth, int frameHeight)
             {
                 currentTex = spriteTex;
-                transform = entityTransform;
+                position = entityPosition;
                 characterFrameRec = new Rectangle(0, 0, 0, 0);
                 animator = new Animator("Player", 5, 5, 12);
                 animator.AssignSprite(currentTex);
             }
 
             Texture2D currentTex;
-            Transform2D transform;
+            Vector2 position;
             Rectangle characterFrameRec;
             Animator animator;
             
@@ -31,7 +33,7 @@ namespace DonutEngine
             public override void DrawUpdate(float deltaTime)
             {
                 base.DrawUpdate(deltaTime);
-                Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), transform.position, Color.WHITE);
+                Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), position, Color.WHITE);
             }
 
             public void ChangeCurrentSprite(Texture2D inputSprite, int numOfFramesPerRow, int numOfRows, int speed, float delayInSeconds, bool bPlayInReverse, bool bContinuous, bool bLooping)

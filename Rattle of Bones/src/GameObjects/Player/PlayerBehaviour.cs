@@ -4,14 +4,16 @@ using DonutEngine.Backbone.FSM;
 using DonutEngine.Backbone;
 using Raylib_cs;
 using System.Numerics;
+using Box2D.NetStandard.Dynamics.Bodies;
 
 namespace DonutEngine
 {
     public class PlayerBehaviour : Entity
     {
-        public Transform2D transform;
+        
         public SpriteRenderer spriteRenderer;
-        //public Physics2D physics2D;
+        public Physics2D physics2D;
+        Vector2 setPosition;
         public Texture2D idleSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-idle.png");
         public Texture2D walkSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-walk.png");
         public Texture2D slash1SpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-slash1.png");
@@ -22,10 +24,10 @@ namespace DonutEngine
         public PlayerBehaviour()
         {
             EntityRegistry.SubscribeEntity(this);
-            transform = new(new Vector2(100,100),0f,Vector2.One);
-            spriteRenderer = new(idleSpriteTex, transform, 80, 57);
+            setPosition = new(0,0);
+            physics2D = new(setPosition);
+            spriteRenderer = new(idleSpriteTex, physics2D.rigidbody2D.position, 80, 57);
             SubscribeComponent(spriteRenderer);
-            //physics2D = new(9, transform);
             //SubscribeComponent(physics2D);
             
         }

@@ -133,7 +133,7 @@ namespace DonutEngine.Backbone
             {
                 case GameScreen.Game:
                     {
-                        GameObjects.donutcam.target = GameObjects.player.transform.position;
+                        
                     }
                     break;
                 default:

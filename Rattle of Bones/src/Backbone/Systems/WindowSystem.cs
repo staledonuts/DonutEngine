@@ -15,15 +15,4 @@ public class WindowSystem
         SetTargetFPS(60);
     }
 
-    public void FullScreen()
-    {
-        if(IsWindowFullscreen())
-        {
-            
-        }
-        else
-        {
-
-        }
-    }
 }

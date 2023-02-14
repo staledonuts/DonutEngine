@@ -29,6 +29,7 @@ namespace DonutEngine.Backbone.Systems
 
         public void UpdateInput()
         {
+            
             InputVars.jumpButton = Raylib.IsKeyDown(KeyboardKey.KEY_X);
             InputVars.attackButton = Raylib.IsKeyDown(KeyboardKey.KEY_C);
             InputVars.dashButton = Raylib.IsKeyDown(KeyboardKey.KEY_Z);
