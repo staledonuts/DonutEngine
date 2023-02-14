@@ -26,9 +26,9 @@ namespace DonutEngine
             EntityRegistry.SubscribeEntity(this);
             setPosition = new(0,0);
             physics2D = new(setPosition);
-            spriteRenderer = new(idleSpriteTex, physics2D.rigidbody2D.position, 80, 57);
+            spriteRenderer = new(idleSpriteTex, physics2D, 80, 57);
             SubscribeComponent(spriteRenderer);
-            //SubscribeComponent(physics2D);
+            SubscribeComponent(physics2D);
             
         }
 

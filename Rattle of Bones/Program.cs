@@ -18,8 +18,10 @@ static class Program
         windowSystem.InitializeWindow();
         audioSystem.InitializeAudioSystem();
         screenManager.InitializeScreenManager();
+        PhysicsWorld.InitializePhysicsWorld();
         inputEventSystem.InitializeInputSystem();
-        GameContainer.current.InitializeGameContainer();
+        GameObjects.player = new();
+        GameObjects.player.physics2D.rigidbody2D.ApplyForce(new(20,-20),new(0,0), true);
         ECS.ProcessStart();
         MainLoopUpdate();
         Shutdown();
@@ -35,6 +37,7 @@ static class Program
         while (!WindowShouldClose())
         {
             Time.RunDeltaTime();
+            
             UpdateLoop();
             UpdateDraw();
             UpdateLate();
@@ -60,4 +63,10 @@ static class Program
             screenManager.LateCurrentScreen();
         }
     }
+}
+static class GameObjects
+{
+    
+    public static Player player = new();
+
 }

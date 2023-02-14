@@ -34,10 +34,5 @@ namespace DonutEngine
         }
 
     }
-        static class GameObjects
-        {
-            
-            public static Player player = new();
-
-        }
+        
 }

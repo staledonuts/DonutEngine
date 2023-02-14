@@ -133,7 +133,7 @@ namespace DonutEngine.Backbone
             {
                 case GameScreen.Game:
                     {
-                        
+                        PhysicsWorld.UpdateStep();
                     }
                     break;
                 default:

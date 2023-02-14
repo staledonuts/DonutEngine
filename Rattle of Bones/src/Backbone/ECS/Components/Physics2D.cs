@@ -13,7 +13,6 @@ public class Physics2D : Component
         body = new();
         body.type = BodyType.Dynamic;
         body.position = Vector2.Zero;
-        position = body.position;
         body.enabled = true;
         body.awake = true;
         body.allowSleep = true;
@@ -21,9 +20,8 @@ public class Physics2D : Component
     }
 
     BodyDef body;
-    public BodyDef? rigidbody2D;
+    public Body? rigidbody2D;
     
-    public Vector2 position;
 
     public override void Update(float deltaTime)
     {

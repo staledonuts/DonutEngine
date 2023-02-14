@@ -9,7 +9,10 @@ public static class PhysicsWorld
 {
     static bool canSleep = true;
     static Vector2 gravity = new(0, -10);
-    static World? b2world;
+    public static World? b2world;
+    static float timeStep = 1f / 60f;
+    static int velocityIterations = 7;
+    static int positionIterations = 4;
 
     static bool enableWorld = false;
 
@@ -19,10 +22,10 @@ public static class PhysicsWorld
         
     }
 
-    public static BodyDef AddBodyToWorld(BodyDef body)
+    public static Body AddBodyToWorld(BodyDef body)
     {
         Body returnBody = b2world.CreateBody(body);
-        return body;
+        return returnBody;
     }
 
     public static void ToggleWorldSimulation()
@@ -30,13 +33,18 @@ public static class PhysicsWorld
         if(enableWorld)
         {
             enableWorld = false;
-            DonutEngine.Backbone.Systems.DonutSystems.Update -= b2world.Step()
+            DonutEngine.Backbone.Systems.DonutSystems.Update -= UpdateStep;
         }
         else
         {
             enableWorld = true;
-            DonutEngine.Backbone.Systems.DonutSystems.Update += b2world.Step()
+            DonutEngine.Backbone.Systems.DonutSystems.Update += UpdateStep;
         }
+    }
+
+    public static void UpdateStep()
+    {
+        b2world.Step(timeStep, velocityIterations, positionIterations);
     }
 
 }

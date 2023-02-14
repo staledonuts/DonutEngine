@@ -10,17 +10,17 @@ namespace DonutEngine
 
         public class SpriteRenderer : Component
         {
-            public SpriteRenderer(Texture2D spriteTex, Vector2 entityPosition, int frameWidth, int frameHeight)
+            public SpriteRenderer(Texture2D spriteTex, Physics2D physics2D, int frameWidth, int frameHeight)
             {
                 currentTex = spriteTex;
-                position = entityPosition;
+                currentPhysics2D = physics2D;
                 characterFrameRec = new Rectangle(0, 0, 0, 0);
                 animator = new Animator("Player", 5, 5, 12);
                 animator.AssignSprite(currentTex);
             }
 
             Texture2D currentTex;
-            Vector2 position;
+            Physics2D currentPhysics2D;
             Rectangle characterFrameRec;
             Animator animator;
             
@@ -33,7 +33,8 @@ namespace DonutEngine
             public override void DrawUpdate(float deltaTime)
             {
                 base.DrawUpdate(deltaTime);
-                Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), position, Color.WHITE);
+                Raylib.DrawCircle((int)currentPhysics2D.rigidbody2D.Position.X, (int)currentPhysics2D.rigidbody2D.Position.Y,4 , Color.DARKGREEN);
+                Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), currentPhysics2D.rigidbody2D.Position, Color.WHITE);
             }
 
             public void ChangeCurrentSprite(Texture2D inputSprite, int numOfFramesPerRow, int numOfRows, int speed, float delayInSeconds, bool bPlayInReverse, bool bContinuous, bool bLooping)

@@ -20,7 +20,8 @@ namespace DonutEngine
 
         public void MovePlayer()
         {
-            physics2D.rigidbody2D.linearVelocity += InputVars.dpad;
+            physics2D.rigidbody2D.ApplyForceToCenter(InputVars.dpad, true);
+            Console.Write(physics2D.rigidbody2D.Position);
         }
 
 
