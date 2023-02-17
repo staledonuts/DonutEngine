@@ -2,7 +2,7 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class SceneManager
 {
-    static Scene currentScene = new LogoSplashScene();
+    public static Scene currentScene = new LogoSplashScene();
     
     public static void InitScene()
     {
@@ -27,6 +27,7 @@ public static class SceneManager
     public static void UnloadScene()
     {
         currentScene = currentScene.UnloadScene();
+        InitScene();
     }
     
 }

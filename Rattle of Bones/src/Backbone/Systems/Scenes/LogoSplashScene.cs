@@ -23,8 +23,7 @@ public class LogoSplashScene : Scene
         DonutSystems.DrawUpdate -= this.DrawUpdate;
         DonutSystems.LateUpdate -= this.LateUpdate;
         Raylib.UnloadTexture(splashTex);
-        nextScene = new GameplayScene();
-        return nextScene;
+        return nextScene = new GameplayScene();
         
     }
 

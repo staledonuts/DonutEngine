@@ -10,12 +10,15 @@ public class Physics2D : Component
 {
     public Physics2D(Vector2 position)
     {
-        body = new();
-        body.type = BodyType.Dynamic;
-        body.position = Vector2.Zero;
-        body.enabled = true;
-        body.awake = true;
-        body.allowSleep = true;
+        body = new()
+        {
+            type = BodyType.Dynamic,
+            awake = true,
+            position = Vector2.Zero,
+            gravityScale = -9,
+            enabled = true,
+            allowSleep = true
+        };
         rigidbody2D = SceneManager.GetRef().AddBodyToWorld(body);
     }
 

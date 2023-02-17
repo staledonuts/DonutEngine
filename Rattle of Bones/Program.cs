@@ -10,12 +10,14 @@ static class Program
     public static AudioSystem audioSystem = new();
     public static WindowSystem windowSystem = new();
     public static InputEventSystem inputEventSystem = new();
+    public static CameraHandler cameraHandler = new();
     
     public static void Main()
     {
         windowSystem.InitializeWindow();
         audioSystem.InitializeAudioSystem();
         inputEventSystem.InitializeInputSystem();
+        cameraHandler.InitializeCamera(new(0,0));
         SceneManager.InitScene();
         ECS.ProcessStart();
         MainLoopUpdate();
@@ -53,14 +55,10 @@ static class Program
 
         static void UpdateLate()
         {
+            Raylib.BeginMode2D(cameraHandler.donutcam);
             DonutSystems.UpdateLate();
             ECS.ProcessLateUpdate();
+            Raylib.EndMode2D();
         }
     }
-}
-static class GameObjects
-{
-    
-    public static Player player = new();
-
 }

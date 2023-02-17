@@ -5,11 +5,13 @@ using Raylib_cs;
 public class GameplayScene : Scene
 {
     public PhysicsWorld physicsWorld; 
+    public GameObjects gameObjects;
 
     public override void InitializeScene()
     {
         physicsWorld = new();
         physicsWorld.InitializePhysicsWorld();
+        gameObjects = new();
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
@@ -20,12 +22,12 @@ public class GameplayScene : Scene
         DonutSystems.Update -= this.Update;
         DonutSystems.DrawUpdate -= this.DrawUpdate;
         DonutSystems.LateUpdate -= this.LateUpdate;
-        return null;
+        return this;
     }
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.BLACK);
+        Raylib.ClearBackground(Color.WHITE);
         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
     }
     public override void LateUpdate()
