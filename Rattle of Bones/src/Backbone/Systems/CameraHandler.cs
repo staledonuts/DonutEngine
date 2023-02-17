@@ -15,7 +15,7 @@ public class CameraHandler
         donutcam.offset = new Vector2(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
         donutcam.target = target;
         currentTarget = target;
-        DonutSystems.LateUpdate += UpdateCamera;
+        DonutSystems.Update += UpdateCamera;
     }
 
     public void UpdateCamera()

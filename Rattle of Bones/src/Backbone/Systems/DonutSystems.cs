@@ -2,26 +2,27 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class DonutSystems
 {
-
-    public delegate void Init();
-    public delegate void Shutdown();
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
     public delegate void SystemsLateUpdater();
-    public static event Init? InitEvent;
-    public static event Shutdown? ShutdownEvent;
     public static event SystemsUpdater? Update;
     public static event SystemsDrawUpdater? DrawUpdate;
     public static event SystemsLateUpdater? LateUpdate;
 
-    public static void InitSystems()
+    public static void SubscribeSystem(SystemsClass systemsClass)
     {
-        InitEvent?.Invoke();
+        systemsClass.Start();
+        DonutSystems.Update += systemsClass.Update;
+        DonutSystems.DrawUpdate += systemsClass.DrawUpdate;
+        DonutSystems.LateUpdate += systemsClass.LateUpdate;
     }
 
-    public static void ShutdownSystems()
+    public static void UnsubscribeSystem(SystemsClass systemsClass)
     {
-        ShutdownEvent?.Invoke();
+        DonutSystems.Update -= systemsClass.Update;
+        DonutSystems.DrawUpdate -= systemsClass.DrawUpdate;
+        DonutSystems.LateUpdate -= systemsClass.LateUpdate;
+        systemsClass.Shutdown();
     }
 
     public static void UpdateSystems()
@@ -38,4 +39,17 @@ public static class DonutSystems
     {
         LateUpdate?.Invoke();
     }
+}
+
+public abstract class SystemsClass
+{
+    public abstract void Start();
+
+    public abstract void Update();
+
+    public abstract void DrawUpdate();
+
+    public abstract void LateUpdate();
+
+    public abstract void Shutdown();
 }

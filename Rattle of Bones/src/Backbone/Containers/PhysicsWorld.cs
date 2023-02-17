@@ -7,21 +7,23 @@ using Box2D.NetStandard.Collision;
 
 public class PhysicsWorld
 {
-    bool canSleep = true;
-    Vector2 gravity = new(0, -10);
+    Vector2 setGravity = new(0, -10);
     public World? b2world;
-    float timeStep = 1f / 60f;
-    int velocityIterations = 7;
-    int positionIterations = 4;
+
+    
+    const float timeStep = 1f / 60f;
+    const int velocityIterations = 7;
+    const int positionIterations = 4;
 
     public void InitializePhysicsWorld()
     {
-        b2world = new World(gravity);
+        b2world = new World(setGravity);
     }
 
     public Body AddBodyToWorld(BodyDef body)
     {
         Body returnBody = b2world.CreateBody(body);
+        returnBody.SetLinearVelocity(new(10,10));
         return returnBody;
     }
 

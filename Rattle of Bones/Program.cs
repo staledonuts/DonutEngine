@@ -11,13 +11,13 @@ static class Program
     public static WindowSystem windowSystem = new();
     public static InputEventSystem inputEventSystem = new();
     public static CameraHandler cameraHandler = new();
+
     
     public static void Main()
     {
         windowSystem.InitializeWindow();
-        audioSystem.InitializeAudioSystem();
         inputEventSystem.InitializeInputSystem();
-        cameraHandler.InitializeCamera(new(0,0));
+        cameraHandler.InitializeCamera(new(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2));
         SceneManager.InitScene();
         MainLoopUpdate();
         Shutdown();
@@ -25,7 +25,7 @@ static class Program
 
     static void Shutdown()
     {
-        DonutSystems.ShutdownSystems();
+        //DonutSystems.ShutdownSystems();
         CloseWindow();
     }
     static void MainLoopUpdate()
@@ -47,17 +47,19 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
+            Raylib.BeginMode2D(cameraHandler.donutcam);
             DonutSystems.UpdateDraw();
             ECS.ProcessDrawUpdate();
+            Raylib.EndMode2D();
             EndDrawing();
         }
 
         static void UpdateLate()
         {
-            Raylib.BeginMode2D(cameraHandler.donutcam);
+            
             DonutSystems.UpdateLate();
             ECS.ProcessLateUpdate();
-            Raylib.EndMode2D();
+
         }
     }
 }

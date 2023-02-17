@@ -45,7 +45,7 @@ public class LogoSplashScene : Scene
         framesCounter++;    // Count frames
 
         // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-        if (framesCounter > 120)
+        if (framesCounter > Program.settingsVars.splashScreenLength)
         {
             // todo: sceneunload
             SceneManager.UnloadScene();

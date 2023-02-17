@@ -2,34 +2,13 @@ namespace DonutEngine.Backbone.Systems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-public class AudioSystem
+public class AudioSystem : SystemsClass
 {
+    public AudioSystem()
+    {
+        DonutSystems.SubscribeSystem(this);
+    }
     public static Music music;
-    public void InitializeAudioSystem()
-    {
-        InitAudioDevice();
-        if(!IsAudioDeviceReady())
-        {
-            Console.Write("Cannot Init Sound!\n");
-            CloseWindow();
-        }
-        else
-        {
-            Console.Write("SoundInit Successful\n");
-            DonutSystems.Update += UpdateAudioSystem;
-            DonutSystems.ShutdownEvent += ShutdownAudioSystem;
-            music = LoadMusicStream(FilePaths.app+FilePaths.music+"lullaby.ogg");
-            PlayMusicStream(music);
-            SetMasterVolume(Program.settingsVars.currentMasterVolume);
-        }
-    }
-
-    public void ShutdownAudioSystem()
-    {
-        DonutSystems.ShutdownEvent -= ShutdownAudioSystem;
-        UnloadMusicStream(music);
-        CloseAudioDevice();
-    }
 
     public void PlaySound()
     {
@@ -47,9 +26,41 @@ public class AudioSystem
         SetMusicVolume(music, volume);
     }
 
-    public static void UpdateAudioSystem()
+    public override void Start()
+    {
+        InitAudioDevice();
+        if(!IsAudioDeviceReady())
+        {
+            Console.Write("Cannot Init Sound!\n");
+            CloseWindow();
+        }
+        else
+        {
+            Console.Write("SoundInit Successful\n");
+            music = LoadMusicStream(FilePaths.app+FilePaths.music+"lullaby.ogg");
+            PlayMusicStream(music);
+            SetMasterVolume(Program.settingsVars.currentMasterVolume);
+        }
+    }
+
+    public override void Update()
     {
         UpdateMusicStream(music);
     }
 
+    public override void DrawUpdate()
+    {
+        
+    }
+
+    public override void LateUpdate()
+    {
+        
+    }
+
+    public override void Shutdown()
+    {
+        UnloadMusicStream(music);
+        CloseAudioDevice();
+    }
 }

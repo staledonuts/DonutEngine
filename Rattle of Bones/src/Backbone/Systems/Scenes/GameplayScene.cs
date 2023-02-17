@@ -4,8 +4,8 @@ using Raylib_cs;
 
 public class GameplayScene : Scene
 {
-    public PhysicsWorld physicsWorld; 
-    public GameObjects gameObjects;
+    public PhysicsWorld? physicsWorld; 
+    public GameObjects? gameObjects;
 
     public override void InitializeScene()
     {
