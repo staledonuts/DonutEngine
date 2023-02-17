@@ -19,7 +19,6 @@ static class Program
         inputEventSystem.InitializeInputSystem();
         cameraHandler.InitializeCamera(new(0,0));
         SceneManager.InitScene();
-        ECS.ProcessStart();
         MainLoopUpdate();
         Shutdown();
     }

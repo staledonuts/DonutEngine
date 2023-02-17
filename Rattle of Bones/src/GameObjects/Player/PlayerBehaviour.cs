@@ -38,11 +38,17 @@ namespace DonutEngine
         }
         public override void Update(float deltaTime)
         {
-            base.Update(deltaTime);
             
         }
-        
 
-        
+        public override void DrawUpdate(float deltaTime)
+        {
+            Raylib.DrawCircle((int)physics2D.rigidbody2D.GetPosition().X, (int)physics2D.rigidbody2D.GetPosition().Y,4 , Color.DARKGREEN);
+        }
+
+        public override void LateUpdate(float deltaTime)
+        {
+            
+        }
     }
 }

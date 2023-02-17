@@ -18,15 +18,20 @@ namespace DonutEngine
                 //new(new Vector2(100,100),0f,Vector2.One);
             }
 
+            public override void DrawUpdate(float deltaTime)
+            {
+                
+            }
 
-            
+            public override void LateUpdate(float deltaTime)
+            {
+                
+            }
 
-            public virtual void update()
+            public override void Update(float deltaTime)
             {
 
             }
-            
-            
         }
 
     }

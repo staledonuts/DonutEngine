@@ -15,6 +15,7 @@ public class GameplayScene : Scene
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
+        Program.cameraHandler.ChangeCameraTarget(gameObjects.player.physics2D.rigidbody2D.GetPosition());
     }
 
     public override Scene UnloadScene()

@@ -19,6 +19,7 @@ public class Physics2D : Component
             enabled = true,
             allowSleep = true
         };
+        //Get physicsworld Reference and add body.
         rigidbody2D = SceneManager.GetRef().AddBodyToWorld(body);
     }
 

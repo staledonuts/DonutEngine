@@ -33,7 +33,6 @@ namespace DonutEngine
             public override void DrawUpdate(float deltaTime)
             {
                 base.DrawUpdate(deltaTime);
-                Raylib.DrawCircle((int)currentPhysics2D.rigidbody2D.Position.X, (int)currentPhysics2D.rigidbody2D.Position.Y,4 , Color.DARKGREEN);
                 Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), currentPhysics2D.rigidbody2D.Position, Color.WHITE);
             }
 

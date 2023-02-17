@@ -8,7 +8,7 @@ using Box2D.NetStandard.Collision;
 public class PhysicsWorld
 {
     bool canSleep = true;
-    Vector2 gravity = new(0, -100);
+    Vector2 gravity = new(0, -10);
     public World? b2world;
     float timeStep = 1f / 60f;
     int velocityIterations = 7;
