@@ -18,8 +18,8 @@ public class CameraHandler
     public void UpdateCamera()
     {
         Raylib.BeginMode2D(donutcam);
-        //donutcam.target = GameObjects.player.physics2D.rigidbody2D.Position;
-        //Raylib.EndMode2D();
+        donutcam.target = GameObjects.player.physics2D.rigidbody2D.Position;
+        Raylib.EndMode2D();
     }
 
     public void ChangeCameraTarget(Vector2 target)

@@ -30,10 +30,10 @@ namespace DonutEngine.Backbone
                     {
                         // TODO: Update LOGO screen variables here!
 
-                        Program.framesCounter++;    // Count frames
+                        //Program.framesCounter++;    // Count frames
 
                         // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-                        if (Program.framesCounter > 120)
+                        /*if (Program.framesCounter > 120)
                         {
                             currentScreen = GameScreen.MainMenu;
                             Raylib.UnloadTexture(splashTex);
@@ -41,7 +41,7 @@ namespace DonutEngine.Backbone
                             splashTex.height = splashTex.height * 4;
                             splashTex.width = splashTex.width * 4;
                             
-                        }
+                        }*/
                     }
                     break;
                 case GameScreen.MainMenu:
@@ -57,7 +57,7 @@ namespace DonutEngine.Backbone
                     break;
                 case GameScreen.Game:
                     {
-                        ECS.ProcessUpdate();
+                        
                         // TODO: Update GAMEPLAY screen variables here!
 
                         // Press enter to change to ENDING screen
@@ -108,7 +108,7 @@ namespace DonutEngine.Backbone
                         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.WHITE);
                         Raylib.DrawRectangle(0, 0, screenWidth, screenHeight, Color.PURPLE);
                         Raylib.DrawText("GAMEPLAY SCREEN", 20, 20, 40, Color.MAROON);
-                        ECS.ProcessDrawUpdate();
+                        
                         
 
                     }
@@ -133,13 +133,13 @@ namespace DonutEngine.Backbone
             {
                 case GameScreen.Game:
                     {
-                        PhysicsWorld.UpdateStep();
+                        
                     }
                     break;
                 default:
                     break;
             }
-            ECS.ProcessLateUpdate();
+            
         }
     }
 }

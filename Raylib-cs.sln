@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raylib-cs.Tests", "Raylib-c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rattle of Bones", "Rattle of Bones\Rattle of Bones.csproj", "{66383441-59F7-4A00-9E50-BA17E5FAB22B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonutEngine", "DonutEngine\DonutEngine.csproj", "{52137487-8F19-4FAF-A7BF-82AFFC844341}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{66383441-59F7-4A00-9E50-BA17E5FAB22B}.Release|x64.Build.0 = Release|Any CPU
 		{66383441-59F7-4A00-9E50-BA17E5FAB22B}.Release|x86.ActiveCfg = Release|Any CPU
 		{66383441-59F7-4A00-9E50-BA17E5FAB22B}.Release|x86.Build.0 = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|x64.Build.0 = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Debug|x86.Build.0 = Debug|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|x64.ActiveCfg = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|x64.Build.0 = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|x86.ActiveCfg = Release|Any CPU
+		{52137487-8F19-4FAF-A7BF-82AFFC844341}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

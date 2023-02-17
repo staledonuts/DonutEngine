@@ -24,7 +24,7 @@ namespace DonutEngine
         public PlayerBehaviour()
         {
             EntityRegistry.SubscribeEntity(this);
-            setPosition = new(0,0);
+            setPosition = new(100,100);
             physics2D = new(setPosition);
             spriteRenderer = new(idleSpriteTex, physics2D, 80, 57);
             SubscribeComponent(spriteRenderer);

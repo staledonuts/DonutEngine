@@ -2,26 +2,21 @@
 using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
-using static DonutEngine.Backbone.Systems.DonutSystems;
 using static Raylib_cs.Raylib;
 
 static class Program
 {
-    public static int framesCounter = 0;
     public static SettingsVars settingsVars = new();
     public static AudioSystem audioSystem = new();
     public static WindowSystem windowSystem = new();
     public static InputEventSystem inputEventSystem = new();
-    public static ScreenManager screenManager = new();
+    
     public static void Main()
     {
         windowSystem.InitializeWindow();
         audioSystem.InitializeAudioSystem();
-        screenManager.InitializeScreenManager();
-        PhysicsWorld.InitializePhysicsWorld();
         inputEventSystem.InitializeInputSystem();
-        GameObjects.player = new();
-        GameObjects.player.physics2D.rigidbody2D.ApplyForce(new(20,-20),new(0,0), true);
+        SceneManager.InitScene();
         ECS.ProcessStart();
         MainLoopUpdate();
         Shutdown();
@@ -29,7 +24,7 @@ static class Program
 
     static void Shutdown()
     {
-        ShutdownSystems();
+        DonutSystems.ShutdownSystems();
         CloseWindow();
     }
     static void MainLoopUpdate()
@@ -37,30 +32,29 @@ static class Program
         while (!WindowShouldClose())
         {
             Time.RunDeltaTime();
-            
             UpdateLoop();
             UpdateDraw();
             UpdateLate();
-            
         }
 
         static void UpdateLoop()
         {
-            UpdateSystems();
-            screenManager.CurrentScreen();
+            DonutSystems.UpdateSystems();
+            ECS.ProcessUpdate();
         }
 
         static void UpdateDraw()
         {
             BeginDrawing();
-            ClearBackground(Color.BLACK);
-            screenManager.DrawCurrentScreen(Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
+            DonutSystems.UpdateDraw();
+            ECS.ProcessDrawUpdate();
             EndDrawing();
         }
 
         static void UpdateLate()
         {
-            screenManager.LateCurrentScreen();
+            DonutSystems.UpdateLate();
+            ECS.ProcessLateUpdate();
         }
     }
 }

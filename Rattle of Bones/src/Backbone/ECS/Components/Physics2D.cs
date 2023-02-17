@@ -1,7 +1,7 @@
 namespace DonutEngine.Backbone;
 using static DonutEngine.Backbone.ECS;
 using System.Numerics;
-using static DonutEngine.Backbone.PhysicsWorld;
+using DonutEngine.Backbone.Systems;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Box2D.NetStandard.Collision;
 using Raylib_cs;
@@ -16,11 +16,12 @@ public class Physics2D : Component
         body.enabled = true;
         body.awake = true;
         body.allowSleep = true;
-        rigidbody2D = AddBodyToWorld(body);
+        rigidbody2D = SceneManager.GetRef().AddBodyToWorld(body);
     }
 
     BodyDef body;
     public Body? rigidbody2D;
+
     
 
     public override void Update(float deltaTime)
