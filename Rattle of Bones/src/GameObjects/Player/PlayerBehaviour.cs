@@ -12,7 +12,6 @@ namespace DonutEngine
     {
         
         public SpriteRenderer? spriteRenderer;
-        public Physics2D? physics2D;
         Vector2 setPosition;
         public Texture2D idleSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-idle.png");
         public Texture2D walkSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-walk.png");
@@ -27,9 +26,6 @@ namespace DonutEngine
             setPosition = new(100,100);
             physics2D = new(setPosition);
             spriteRenderer = new(idleSpriteTex, physics2D, 80, 57);
-            SubscribeComponent(spriteRenderer);
-            SubscribeComponent(physics2D);
-          
         }
 
         public override void Start()
@@ -43,10 +39,7 @@ namespace DonutEngine
 
         public override void DrawUpdate(float deltaTime)
         {
-            if(physics2D != null)
-            {
-                Raylib.DrawCircle((int)physics2D.rigidbody2D.GetPosition().X, (int)physics2D.rigidbody2D.GetPosition().Y,4 , Color.DARKGREEN);
-            }
+            
         }
 
         public override void LateUpdate(float deltaTime)

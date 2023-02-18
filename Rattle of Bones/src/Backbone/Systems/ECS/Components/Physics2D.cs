@@ -1,36 +1,33 @@
 namespace DonutEngine.Backbone;
-using static DonutEngine.Backbone.ECS;
 using System.Numerics;
 using DonutEngine.Backbone.Systems;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Box2D.NetStandard.Collision;
 using Raylib_cs;
 
-public class Physics2D : Component
+public abstract partial class Entity
 {
-    public Physics2D(Vector2 position)
+    public class Physics2D
     {
-        body = new()
+        public Physics2D(Vector2 position)
         {
-            type = BodyType.Dynamic,
-            awake = true,
-            position = Vector2.Zero,
-            gravityScale = -9,
-            enabled = true,
-            allowSleep = true
-        };
-        //Get physicsworld Reference and add body.
-        rigidbody2D = SceneManager.GetRef().AddBodyToWorld(body);
+            body = new()
+            {
+                type = BodyType.Dynamic,
+                awake = true,
+                position = Vector2.Zero,
+                gravityScale = -9,
+                enabled = true,
+                allowSleep = true
+            };
+            //Get physicsworld Reference and add body.
+            rigidbody2D = SceneManager.GetRef().AddBodyToWorld(body);
+        }
+
+        BodyDef body;
+        public Body? rigidbody2D;
+
     }
 
-    BodyDef body;
-    public Body? rigidbody2D;
 
-    
-
-    public override void Update(float deltaTime)
-    {
-        base.Update(deltaTime);
-        
-    }
 }

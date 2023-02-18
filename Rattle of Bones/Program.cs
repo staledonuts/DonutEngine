@@ -2,6 +2,7 @@
 using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
+using System.Numerics;
 using static Raylib_cs.Raylib;
 
 static class Program
@@ -10,14 +11,16 @@ static class Program
     public static AudioSystem audioSystem = new();
     public static WindowSystem windowSystem = new();
     public static InputEventSystem inputEventSystem = new();
-    public static CameraHandler cameraHandler = new();
+    public static Camera2D donutCamera = new();
 
     
     public static void Main()
     {
+        donutCamera.zoom = 1.0f;
+        donutCamera.offset = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
+        donutCamera.target = donutCamera.offset;
         windowSystem.InitializeWindow();
         inputEventSystem.InitializeInputSystem();
-        cameraHandler.InitializeCamera(new(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2));
         SceneManager.InitScene();
         MainLoopUpdate();
         Shutdown();
@@ -47,7 +50,7 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
-            Raylib.BeginMode2D(cameraHandler.donutcam);
+            Raylib.BeginMode2D(donutCamera);
             DonutSystems.UpdateDraw();
             ECS.ProcessDrawUpdate();
             Raylib.EndMode2D();

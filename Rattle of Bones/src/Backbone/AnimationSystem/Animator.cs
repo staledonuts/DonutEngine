@@ -9,6 +9,7 @@ namespace DonutEngine.Backbone
 {
 	class Animator
     	{
+		
 		float FrameWidth;
 		float FrameHeight;
 		float TimeRemainingFramesCounter;

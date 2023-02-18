@@ -1,5 +1,6 @@
 namespace DonutEngine;
 using DonutEngine.Backbone.Systems;
+using DonutEngine.Backbone;
 using Raylib_cs;
 
 public class GameplayScene : Scene
@@ -15,7 +16,6 @@ public class GameplayScene : Scene
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
-        Program.cameraHandler.ChangeCameraTarget(gameObjects.player.physics2D.rigidbody2D.GetPosition());
     }
 
     public override Scene UnloadScene()
@@ -30,16 +30,19 @@ public class GameplayScene : Scene
     {
         Raylib.ClearBackground(Color.WHITE);
         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
+        Raylib.DrawRectangleV(new(0.0f, 100.0f),new(500,30), Raylib_cs.Color.BLACK);
     }
     public override void LateUpdate()
     {
-        //throw new NotImplementedException();
+        GameCamera2D.UpdateCameraPlayerBoundsPush(ref Program.donutCamera, gameObjects.player, 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
     }
 
     public override void Update()
     {
         physicsWorld.UpdateStep();
     }
+
+    
 
     
 }

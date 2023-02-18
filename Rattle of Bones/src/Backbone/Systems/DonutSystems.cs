@@ -53,3 +53,10 @@ public abstract class SystemsClass
 
     public abstract void Shutdown();
 }
+
+public enum SubToUpdates
+{
+    Update,
+    UpdateDraw,
+    UpdateLate
+}

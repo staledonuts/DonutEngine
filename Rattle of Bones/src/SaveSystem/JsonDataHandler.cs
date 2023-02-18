@@ -1,4 +1,4 @@
-namespace House_of_How
+namespace DonutEngine.JSON
 {
     using Newtonsoft.Json;
     public class JsonDataHandler
