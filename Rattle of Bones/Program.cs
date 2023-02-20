@@ -10,7 +10,7 @@ static class Program
     public static SettingsVars settingsVars = new();
     public static AudioSystem audioSystem = new();
     public static WindowSystem windowSystem = new();
-    public static InputEventSystem inputEventSystem = new();
+    //public static InputEventSystem inputEventSystem = new();
     public static Camera2D donutCamera = new();
 
     
@@ -20,7 +20,6 @@ static class Program
         donutCamera.offset = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
         donutCamera.target = donutCamera.offset;
         windowSystem.InitializeWindow();
-        inputEventSystem.InitializeInputSystem();
         SceneManager.InitScene();
         MainLoopUpdate();
         Shutdown();
@@ -43,6 +42,7 @@ static class Program
 
         static void UpdateLoop()
         {
+            InputEventSystem.Update();
             DonutSystems.UpdateSystems();
             ECS.ProcessUpdate();
         }

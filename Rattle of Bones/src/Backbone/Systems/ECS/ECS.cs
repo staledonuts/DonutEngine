@@ -27,15 +27,6 @@ public partial class ECS
         ecsLateUpdate?.Invoke(Time.deltaTime);
     }
 
-    
-    
-
-    public abstract class Component
-    {
-        public abstract void Update(float deltaTime);
-        public abstract void DrawUpdate(float deltaTime);
-    }
-
     public class EntityRegistry
     {
         public static void SubscribeEntity(Entity entity)

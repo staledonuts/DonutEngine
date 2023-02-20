@@ -1,42 +1,32 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using System.Numerics;
+using System;
+namespace DonutEngine.Backbone.Systems;
 
-namespace DonutEngine.Backbone.Systems
+
+public static class InputEventSystem
 {
-    public static class InputVars
-    {
-        public static bool jumpButton;
-        public static bool attackButton;
-        public static bool dashButton;
-        public static bool skullButton;
-        public static Vector2 dpad = new();
-    }
-    public class InputEventSystem
-    {
-        public delegate void InputEvent();
-        public static event InputEvent? jumpEvent;
-        public static event InputEvent? attackEvent;
-        public static event InputEvent? dashEvent;
-        public static event InputEvent? skullEvent;
-        public static event InputEvent? horizontalInputEvent;
-        public static event InputEvent? verticalInputEvent;
+    public delegate void InputEventHandler(KeyboardKey key);
 
-        public void InitializeInputSystem()
+    // Declare the event using the delegate.
+    public static event InputEventHandler InputEvent;
+
+    // Define a method that raises the event.
+    public static void UpdateInputEvent(KeyboardKey key, InputState state)
+    {
+        // Check if there are any subscribers to the event.
+        if (InputEvent != null)
         {
-            DonutSystems.Update += UpdateInput;
+            InputEvent.Invoke(key, state);   
         }
-
-        public void UpdateInput()
-        {
-            
-            InputVars.jumpButton = Raylib.IsKeyDown(KeyboardKey.KEY_X);
-            InputVars.attackButton = Raylib.IsKeyDown(KeyboardKey.KEY_C);
-            InputVars.dashButton = Raylib.IsKeyDown(KeyboardKey.KEY_Z);
-            InputVars.dpad.X = -(int)Raylib.IsKeyDown(KeyboardKey.KEY_LEFT) +(int)Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT);
-            InputVars.dpad.Y = -(int)Raylib.IsKeyDown(KeyboardKey.KEY_UP) +(int)Raylib.IsKeyDown(KeyboardKey.KEY_DOWN);
-        }   
-
     }
+    public static void Update()
+    {
+        
+    }
+
+    
 
 }
+

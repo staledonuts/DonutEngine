@@ -22,10 +22,10 @@ namespace DonutEngine
 
         public PlayerBehaviour()
         {
-            EntityRegistry.SubscribeEntity(this);
             setPosition = new(100,100);
             physics2D = new(setPosition);
             spriteRenderer = new(idleSpriteTex, physics2D, 80, 57);
+            EntityRegistry.SubscribeEntity(this);
         }
 
         public override void Start()
@@ -34,12 +34,12 @@ namespace DonutEngine
         }
         public override void Update(float deltaTime)
         {
-            
+            spriteRenderer.Update();
         }
 
         public override void DrawUpdate(float deltaTime)
         {
-            
+            spriteRenderer.DrawUpdate();
         }
 
         public override void LateUpdate(float deltaTime)
