@@ -7,18 +7,20 @@ using static Raylib_cs.Raylib;
 
 static class Program
 {
-    public static SettingsVars settingsVars = new();
-    public static AudioSystem audioSystem = new();
-    public static WindowSystem windowSystem = new();
-    //public static InputEventSystem inputEventSystem = new();
-    public static Camera2D donutCamera = new();
+    public static readonly SettingsVars settingsVars = new();
+    public static readonly AudioSystem audioSystem = new();
+    public static readonly WindowSystem windowSystem = new();
+    public static Camera2D donutCamera = new()
+    {
+        zoom = 1.0f,
+        offset = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2),
+        target = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2)
+    };
 
     
     public static void Main()
     {
-        donutCamera.zoom = 1.0f;
-        donutCamera.offset = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
-        donutCamera.target = donutCamera.offset;
+        
         windowSystem.InitializeWindow();
         SceneManager.InitScene();
         MainLoopUpdate();
@@ -42,7 +44,7 @@ static class Program
 
         static void UpdateLoop()
         {
-            InputEventSystem.Update();
+            InputEventSystem.UpdateInputEvent();
             DonutSystems.UpdateSystems();
             ECS.ProcessUpdate();
         }
@@ -50,10 +52,10 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
-            Raylib.BeginMode2D(donutCamera);
+            BeginMode2D(donutCamera);
             DonutSystems.UpdateDraw();
             ECS.ProcessDrawUpdate();
-            Raylib.EndMode2D();
+            EndMode2D();
             EndDrawing();
         }
 

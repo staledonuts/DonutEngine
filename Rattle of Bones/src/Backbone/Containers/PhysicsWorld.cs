@@ -23,7 +23,6 @@ public class PhysicsWorld
         Body returnBody = level.b2world.CreateBody(body);
         if(returnBody is not null)
         { 
-            returnBody.SetLinearVelocity(new(10,10));
             return returnBody;
         }
         return returnBody;

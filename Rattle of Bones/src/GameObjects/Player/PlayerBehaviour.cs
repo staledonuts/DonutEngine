@@ -3,6 +3,7 @@ using static DonutEngine.FilePaths;
 using DonutEngine.Backbone.FSM;
 using DonutEngine.Backbone;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 using System.Numerics;
 using Box2D.NetStandard.Dynamics.Bodies;
 
@@ -13,11 +14,11 @@ namespace DonutEngine
         
         public SpriteRenderer? spriteRenderer;
         Vector2 setPosition;
-        public Texture2D idleSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-idle.png");
-        public Texture2D walkSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-walk.png");
-        public Texture2D slash1SpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-slash1.png");
-        public Texture2D slash2SpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-slash2.png");
-        public Texture2D jumpSpriteTex = Raylib.LoadTexture(app+sprites+"Player/Player-jump.png");
+        public Texture2D idleSpriteTex = LoadTexture(app+sprites+"Player/Player-idle.png");
+        public Texture2D walkSpriteTex = LoadTexture(app+sprites+"Player/Player-walk.png");
+        public Texture2D slash1SpriteTex = LoadTexture(app+sprites+"Player/Player-slash1.png");
+        public Texture2D slash2SpriteTex = LoadTexture(app+sprites+"Player/Player-slash2.png");
+        public Texture2D jumpSpriteTex = LoadTexture(app+sprites+"Player/Player-jump.png");
         
 
         public PlayerBehaviour()
@@ -34,12 +35,12 @@ namespace DonutEngine
         }
         public override void Update(float deltaTime)
         {
-            spriteRenderer.Update();
+            spriteRenderer?.Update();
         }
 
         public override void DrawUpdate(float deltaTime)
         {
-            spriteRenderer.DrawUpdate();
+            spriteRenderer?.DrawUpdate();
         }
 
         public override void LateUpdate(float deltaTime)
