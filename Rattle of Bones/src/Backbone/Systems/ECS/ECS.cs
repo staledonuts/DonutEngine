@@ -45,6 +45,7 @@ public class EntityManager
         foreach(string jsonFile in jsonFilePath)
         {
             Entity entity = CreateEntity(jsonFile);
+            entities[entity.Id] = entity;
         }
     }
 
@@ -93,7 +94,7 @@ public class EntityManager
                         case nameof(SpriteComponent):
                             component = new SpriteComponent
                             {
-                                Sprite = Raylib.LoadTexture(componentProperties["Sprite"].ToString()),
+                                Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+componentProperties["Sprite"].ToString()),
                                 Width = Int32.Parse(componentProperties["Width"].ToString()),
                                 Height = Int32.Parse(componentProperties["Height"].ToString()),
                                 AnimatorName = componentProperties["AnimatorName"].ToString(),
