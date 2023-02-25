@@ -8,8 +8,9 @@ using static Raylib_cs.Raylib;
 static class Program
 {
     public static readonly SettingsVars settingsVars = new();
-    public static readonly AudioSystem audioSystem = new();
+    public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
+    public static readonly EntityManager entityManager = new();
     public static Camera2D donutCamera = new()
     {
         zoom = 1.0f,
@@ -20,7 +21,6 @@ static class Program
     
     public static void Main()
     {
-        
         windowSystem.InitializeWindow();
         SceneManager.InitScene();
         MainLoopUpdate();

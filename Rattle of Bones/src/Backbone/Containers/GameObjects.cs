@@ -1,6 +1,6 @@
 using DonutEngine;
 public class GameObjects
 {
-    public Player player = new();
+    //public Player player = new();
 
 }

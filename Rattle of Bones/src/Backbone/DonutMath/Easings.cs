@@ -8,7 +8,7 @@
 
 using System;
 
-namespace Raylib
+namespace Raylib_cs.Easing
 {
     public static partial class Raylib
     {

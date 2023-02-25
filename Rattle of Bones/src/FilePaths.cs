@@ -6,12 +6,13 @@ using Raylib_cs;
 
 namespace DonutEngine
 {
-    public static class FilePaths
+    public static class DonutFilePaths
     {
         
         public readonly static string app =  AppDomain.CurrentDomain.BaseDirectory;
-        public const string sprites = "Assets/Sprites/";
-        public const string sounds = "Assets/Sounds/";
-        public const string music = "Assets/Music/";
+        public readonly static string sprites = AppDomain.CurrentDomain.BaseDirectory+"Assets/Sprites/";
+        public readonly static string sounds = AppDomain.CurrentDomain.BaseDirectory+"Assets/Sounds/";
+        public readonly static string music = AppDomain.CurrentDomain.BaseDirectory+"Assets/Music/";
+        public readonly static string entities = AppDomain.CurrentDomain.BaseDirectory+"Scripts/Entities/";
     }
 }

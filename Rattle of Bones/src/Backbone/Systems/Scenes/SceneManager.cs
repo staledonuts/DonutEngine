@@ -9,15 +9,6 @@ public static class SceneManager
         currentScene.InitializeScene();
     }
 
-    public static PhysicsWorld GetRef()
-    {
-        if(currentScene is GameplayScene g)
-        {
-            return g.physicsWorld;
-        }
-        else return null;
-    }
-
     public static void LoadScene(Scene scene)
     {
         currentScene = scene;

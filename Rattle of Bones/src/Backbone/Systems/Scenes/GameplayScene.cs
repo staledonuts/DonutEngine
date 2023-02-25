@@ -5,14 +5,9 @@ using Raylib_cs;
 
 public class GameplayScene : Scene
 {
-    public PhysicsWorld? physicsWorld; 
-    public GameObjects? gameObjects;
-
     public override void InitializeScene()
     {
-        physicsWorld = new();
-        physicsWorld.InitializePhysicsWorld();
-        gameObjects = new();
+        Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
@@ -34,15 +29,11 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        GameCamera2D.UpdateCameraPlayerBoundsPush(ref Program.donutCamera, gameObjects.player, 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
+        //GameCamera2D.UpdateCameraPlayerBoundsPush(ref Program.donutCamera, , 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
     }
 
     public override void Update()
     {
-        physicsWorld.UpdateStep();
-    }
-
-    
-
-    
+        
+    }  
 }
