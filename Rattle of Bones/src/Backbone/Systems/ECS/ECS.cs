@@ -1,8 +1,5 @@
 using System.Numerics;
 using Raylib_cs;
-using System.IO;
-using System.Text.Json;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Box2D.NetStandard.Collision.Shapes;
@@ -45,7 +42,6 @@ public class EntityManager
         foreach(string jsonFile in jsonFilePath)
         {
             Entity entity = CreateEntity(jsonFile);
-            entities[entity.Id] = entity;
         }
     }
 
@@ -79,7 +75,7 @@ public class EntityManager
                 foreach (KeyValuePair<string, object> componentData in data) 
                 {
                     string componentName = componentData.Key;
-                    Dictionary<string, object> componentProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>(componentData.Value.ToString());
+                    Dictionary<string, object>? componentProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>(componentData.Value.ToString());
                     Component? component = null;
 
                     switch (componentName) 
