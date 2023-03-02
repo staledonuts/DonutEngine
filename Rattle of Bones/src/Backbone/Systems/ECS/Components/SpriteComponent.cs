@@ -1,17 +1,27 @@
 using Raylib_cs;
+using Newtonsoft.Json;
 using DonutEngine.Backbone;
 public class SpriteComponent : Component
 {
-
+    [JsonProperty("Sprite")]
     public Texture2D Sprite { get; set; }
+    [JsonProperty("Width")]
     public Int32 Width { get; set; }
+    [JsonProperty("Height")]
     public Int32 Height { get; set; }
+    [JsonProperty("AnimatorName")]
     public string AnimatorName { get; set; }
+    [JsonProperty("FramesPerRow")]
     public Int32 FramesPerRow { get; set; }
+    [JsonProperty("Row")]
     public Int32 Rows { get; set; }
+    [JsonProperty("FrameRate")]
     public Int32 FrameRate { get; set; }
+    [JsonProperty("PlayInReverse")]
     public bool PlayInReverse { get; set; }
+    [JsonProperty("Continuous")]
     public bool Continuous { get; set; }
+    [JsonProperty("Looping")]
     public bool Looping { get; set; }
     
 

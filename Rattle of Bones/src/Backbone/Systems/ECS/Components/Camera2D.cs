@@ -1,10 +1,12 @@
 namespace DonutEngine.Backbone;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using Newtonsoft.Json;
 using System.Numerics;
 
 public class GameCamera2D : Component
 {
+	[JsonProperty("IsActive")]
 	public bool IsActive { get; set; }
 	internal static Vector2 UpdateCameraPlayerBoundsPush_bbox = new Vector2(0.03f, 0.02f);
 	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, PositionComponent pos, float delta, int width, int height)

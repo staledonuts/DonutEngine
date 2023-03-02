@@ -63,31 +63,33 @@ public class EntityManager
         entities.Remove(id);
     }
 
-        internal class EntityFactory 
+        private class EntityFactory 
         {
             private int nextEntityId = 1;
 
             public Entity CreateEntity(string json) 
             {
                 Entity entity = new Entity(nextEntityId++);
-                Dictionary<string, object>? data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 
-                foreach (KeyValuePair<string, object> componentData in data) 
+                Dictionary<string, object> data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+                foreach (KeyValuePair<string, object> componentData in data)
                 {
                     string componentName = componentData.Key;
+
                     Dictionary<string, object>? componentProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>(componentData.Value.ToString());
                     Component? component = null;
 
                     switch (componentName) 
                     {
                         case nameof(PositionComponent):
-                            component = new PositionComponent
+                            component = new PositionComponent()
                             {
                                 X = float.Parse(componentProperties["X"].ToString()),
                                 Y = float.Parse(componentProperties["Y"].ToString())
                             };
                             break;
-                        case nameof(SpriteComponent):
+                        /*case nameof(SpriteComponent):
                             component = new SpriteComponent
                             {
                                 Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+componentProperties["Sprite"].ToString()),
@@ -120,7 +122,7 @@ public class EntityManager
                             {
                                 IsActive = bool.Parse(componentProperties["IsActive"].ToString())
                             };
-                            break;
+                            break;*/
                     }
 
                     if (component != null) 
