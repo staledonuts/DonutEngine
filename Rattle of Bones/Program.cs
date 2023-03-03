@@ -61,10 +61,8 @@ static class Program
 
         static void UpdateLate()
         {
-            
             DonutSystems.UpdateLate();
             ECS.ProcessLateUpdate();
-
         }
     }
 }

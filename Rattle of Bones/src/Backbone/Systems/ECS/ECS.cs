@@ -83,7 +83,8 @@ public class EntityManager
                     string componentType = sectionName.SectionName;
                     Component? component = null;
 
-                        switch (componentType) {
+                        switch (componentType) 
+                        {
                             case "PositionComponent":
                                 component = new PositionComponent() 
                                 {
@@ -91,7 +92,7 @@ public class EntityManager
                                     Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value)
                                 };
                                 break;
-                            case nameof(SpriteComponent):
+                            case "SpriteComponent":
                                 component = new SpriteComponent
                                 {
                                     Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
@@ -106,62 +107,35 @@ public class EntityManager
                                     Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
                                 };
                                 break;
+                            case "PhysicsComponent":
+                                component = new PhysicsComponent
+                                {
+                                    X = float.Parse(sectionName.Keys.GetKeyData("X").Value),
+                                    Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value),
+                                    Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                                    Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value),
+                                    Type = (BodyType)int.Parse(sectionName.Keys.GetKeyData("BodyType").Value),
+                                    Density = float.Parse(sectionName.Keys.GetKeyData("Density").Value),
+                                    Friction = float.Parse(sectionName.Keys.GetKeyData("Friction").Value),
+                                    Restitution = float.Parse(sectionName.Keys.GetKeyData("Restitution").Value)
+                                };
+                                break;
+                            case "GameCamera2D":
+                                component = new GameCamera2D
+                                {
+                                    IsActive = bool.Parse(sectionName.Keys.GetKeyData("IsActive").Value)
+                                };
+                                break;
                             // add support for additional components as needed
                         }
 
-                        if (component != null) 
-                        {
-                            entity.AddComponent(component);
-                        }; 
-                    
+                    if (component != null) 
+                    {
+                        entity.AddComponent(component);
+                        component.OnAddedToEntity(entity);
+                    }; 
                 }
-                return entity;
-            }
+            return entity;
+        }
     }
 }
-
-
-/*switch (componentName) 
-                    {
-                        case nameof(PositionComponent):
-                            component = new PositionComponent
-                            {
-                                X = float.Parse(componentProperties["X"].ToString()),
-                                Y = float.Parse(componentProperties["Y"].ToString())
-                            };
-                            break;
-                        case nameof(SpriteComponent):
-                            component = new SpriteComponent
-                            {
-                                Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+componentProperties["Sprite"].ToString()),
-                                Width = Int32.Parse(componentProperties["Width"].ToString()),
-                                Height = Int32.Parse(componentProperties["Height"].ToString()),
-                                AnimatorName = componentProperties["AnimatorName"].ToString(),
-                                FramesPerRow = Int32.Parse(componentProperties["FramesPerRow"].ToString()),
-                                Rows = Int32.Parse(componentProperties["Rows"].ToString()),
-                                FrameRate = Int32.Parse(componentProperties["FrameRate"].ToString()),
-                                PlayInReverse = bool.Parse(componentProperties["PlayInReverse"].ToString()),
-                                Continuous = bool.Parse(componentProperties["Continuous"].ToString()),
-                                Looping = bool.Parse(componentProperties["Looping"].ToString())
-                            };
-                            break;
-                        case nameof(PhysicsComponent):
-                            component = new PhysicsComponent
-                            {
-                                X = float.Parse(componentProperties["X"].ToString()),
-                                Y = float.Parse(componentProperties["Y"].ToString()),
-                                Width = float.Parse(componentProperties["Width"].ToString()),
-                                Height = float.Parse(componentProperties["Height"].ToString()),
-                                Type = (BodyType)int.Parse(componentProperties["BodyType"].ToString()),
-                                Density = float.Parse(componentProperties["Density"].ToString()),
-                                Friction = float.Parse(componentProperties["Friction"].ToString()),
-                                Restitution = float.Parse(componentProperties["Restitution"].ToString())
-                            };
-                            break;
-                        case nameof(GameCamera2D):
-                            component = new GameCamera2D
-                            {
-                                IsActive = bool.Parse(componentProperties["IsActive"].ToString())
-                            };
-                            break;
-                    }*/

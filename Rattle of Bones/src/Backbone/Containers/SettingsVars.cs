@@ -19,9 +19,7 @@ public class SettingsVars
     public float currentMasterVolume { get; set; }
     public float currentMusicVolume { get; set; }
     public float currentSFXVolume { get; set; }
-
     public int screenWidth { get; set; }
     public int screenHeight { get; set; }
-
     public int splashScreenLength { get; set; }
 }

@@ -7,9 +7,6 @@ namespace DonutEngine.Backbone;
 
 public class Entity 
 {
-    public int ID { get; set; }
-    private Dictionary<Type, object> components = new Dictionary<Type, object>();
-
     public int Id { get; set; }
     public Dictionary<string, Component> Components { get; set; }
 
@@ -27,6 +24,11 @@ public class Entity
     public T GetComponent<T>() where T : Component 
     {
         return (T)Components[typeof(T).Name];
+    }
+
+    public void DestroyEntity()
+    {
+
     }
 }
 
