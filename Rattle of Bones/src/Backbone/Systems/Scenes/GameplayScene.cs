@@ -7,7 +7,7 @@ public class GameplayScene : Scene
 {
     public override void InitializeScene()
     {
-        Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
+        Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;

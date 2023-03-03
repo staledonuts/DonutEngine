@@ -1,8 +1,11 @@
 using System.Numerics;
 using Raylib_cs;
-using Newtonsoft.Json;
+using IniParser.Model;
+using IniParser;
+using IniParser.Parser;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Box2D.NetStandard.Collision.Shapes;
+
 
 namespace DonutEngine.Backbone;
 
@@ -37,18 +40,18 @@ public class EntityManager
 
     public void CreateDirectory()
     {
-        string[] jsonFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.json");
+        string[] iniFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.ini");
 
-        foreach(string jsonFile in jsonFilePath)
+        foreach(string iniFile in iniFilePath)
         {
-            Entity entity = CreateEntity(jsonFile);
+            Entity entity = CreateEntity(iniFile);
         }
     }
 
     
-    public Entity CreateEntity(string json) 
+    public Entity CreateEntity(string ini) 
     {
-        Entity entity = factory.CreateEntity(json);
+        Entity entity = factory.CreateEntity(ini);
         entities[entity.Id] = entity;
         return entity;
     }
@@ -67,29 +70,67 @@ public class EntityManager
         {
             private int nextEntityId = 1;
 
-            public Entity CreateEntity(string json) 
+            public Entity CreateEntity(string iniPath) 
             {
                 Entity entity = new Entity(nextEntityId++);
+                
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData data = parser.ReadFile(iniPath);
+                
 
-                Dictionary<string, object> data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-                foreach (KeyValuePair<string, object> componentData in data)
+                foreach (SectionData sectionName in data.Sections) 
                 {
-                    string componentName = componentData.Key;
-
-                    Dictionary<string, object>? componentProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>(componentData.Value.ToString());
+                    string componentType = sectionName.SectionName;
                     Component? component = null;
 
-                    switch (componentName) 
+                        switch (componentType) {
+                            case "PositionComponent":
+                                component = new PositionComponent() 
+                                {
+                                    X = float.Parse(sectionName.Keys.GetKeyData("X").Value),
+                                    Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value)
+                                };
+                                break;
+                            case nameof(SpriteComponent):
+                                component = new SpriteComponent
+                                {
+                                    Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
+                                    Width = Int32.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                                    Height = Int32.Parse(sectionName.Keys.GetKeyData("Height").Value),
+                                    AnimatorName = sectionName.Keys.GetKeyData("AnimatorName").Value,
+                                    FramesPerRow = Int32.Parse(sectionName.Keys.GetKeyData("FramesPerRow").Value),
+                                    Rows = Int32.Parse(sectionName.Keys.GetKeyData("Rows").Value),
+                                    FrameRate = Int32.Parse(sectionName.Keys.GetKeyData("FrameRate").Value),
+                                    PlayInReverse = bool.Parse(sectionName.Keys.GetKeyData("PlayInReverse").Value),
+                                    Continuous = bool.Parse(sectionName.Keys.GetKeyData("Continuous").Value),
+                                    Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
+                                };
+                                break;
+                            // add support for additional components as needed
+                        }
+
+                        if (component != null) 
+                        {
+                            entity.AddComponent(component);
+                        }; 
+                    
+                }
+                return entity;
+            }
+    }
+}
+
+
+/*switch (componentName) 
                     {
                         case nameof(PositionComponent):
-                            component = new PositionComponent()
+                            component = new PositionComponent
                             {
                                 X = float.Parse(componentProperties["X"].ToString()),
                                 Y = float.Parse(componentProperties["Y"].ToString())
                             };
                             break;
-                        /*case nameof(SpriteComponent):
+                        case nameof(SpriteComponent):
                             component = new SpriteComponent
                             {
                                 Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+componentProperties["Sprite"].ToString()),
@@ -122,16 +163,5 @@ public class EntityManager
                             {
                                 IsActive = bool.Parse(componentProperties["IsActive"].ToString())
                             };
-                            break;*/
-                    }
-
-                    if (component != null) 
-                    {
-                        entity.AddComponent(component);
-                    };
-                }
-            return entity;
-        }
-    }
-}
-
+                            break;
+                    }*/

@@ -1,22 +1,27 @@
 namespace DonutEngine.Backbone.Systems;
-
+using IniParser.Model;
+using IniParser;
 public class SettingsVars
 {
+    
     public SettingsVars()
     {
-        currentMasterVolume = 0.2f;
-        currentMusicVolume = 1f;
-        currentSFXVolume = 0.75f;
-        screenWidth = 800;
-        screenHeight = 450;
-        splashScreenLength = 120;
+        FileIniDataParser parser = new FileIniDataParser();
+        IniData data = parser.ReadFile(DonutFilePaths.settings+"Settings.ini");
+        SectionData sectionData = data.Sections.GetSectionData("Settings");
+        currentMasterVolume = float.Parse(sectionData.Keys.GetKeyData("currentMasterVolume").Value);
+        currentMusicVolume = float.Parse(sectionData.Keys.GetKeyData("currentMusicVolume").Value);
+        currentSFXVolume = float.Parse(sectionData.Keys.GetKeyData("currentSFXVolume").Value);
+        screenWidth = int.Parse(sectionData.Keys.GetKeyData("screenWidth").Value);
+        screenHeight = int.Parse(sectionData.Keys.GetKeyData("screenHeight").Value);
+        splashScreenLength = int.Parse(sectionData.Keys.GetKeyData("splashScreenLength").Value);
     }
-    public float currentMasterVolume;
-    public float currentMusicVolume;
-    public float currentSFXVolume;
+    public float currentMasterVolume { get; set; }
+    public float currentMusicVolume { get; set; }
+    public float currentSFXVolume { get; set; }
 
-    public readonly int screenWidth = 800;
-    public readonly int screenHeight = 450;
+    public int screenWidth { get; set; }
+    public int screenHeight { get; set; }
 
-    public int splashScreenLength;
+    public int splashScreenLength { get; set; }
 }

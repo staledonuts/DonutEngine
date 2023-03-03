@@ -14,5 +14,7 @@ namespace DonutEngine
         public readonly static string sounds = AppDomain.CurrentDomain.BaseDirectory+"Assets/Sounds/";
         public readonly static string music = AppDomain.CurrentDomain.BaseDirectory+"Assets/Music/";
         public readonly static string entities = AppDomain.CurrentDomain.BaseDirectory+"Scripts/Entities/";
+
+        public readonly static string settings = AppDomain.CurrentDomain.BaseDirectory+"Scripts/Settings/";
     }
 }
