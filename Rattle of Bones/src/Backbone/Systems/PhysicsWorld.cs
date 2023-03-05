@@ -23,7 +23,7 @@ public class PhysicsSystem : SystemsClass
             return instance;
         }
     }
-    private World world = new World(new Vector2(0, -10));
+    private World world = new World(new Vector2(0, -1));
     private float timeStep = 1f / 60f;
     private int velocityIterations = 8;
     private int positionIterations = 3;

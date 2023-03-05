@@ -86,7 +86,7 @@ public class EntityManager
                         switch (componentType) 
                         {
                             case "PositionComponent":
-                                component = new PositionComponent() 
+                                component = new PositionComponent
                                 {
                                     X = float.Parse(sectionName.Keys.GetKeyData("X").Value),
                                     Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value)
@@ -96,12 +96,12 @@ public class EntityManager
                                 component = new SpriteComponent
                                 {
                                     Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
-                                    Width = Int32.Parse(sectionName.Keys.GetKeyData("Width").Value),
-                                    Height = Int32.Parse(sectionName.Keys.GetKeyData("Height").Value),
+                                    Width = int.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                                    Height = int.Parse(sectionName.Keys.GetKeyData("Height").Value),
                                     AnimatorName = sectionName.Keys.GetKeyData("AnimatorName").Value,
-                                    FramesPerRow = Int32.Parse(sectionName.Keys.GetKeyData("FramesPerRow").Value),
-                                    Rows = Int32.Parse(sectionName.Keys.GetKeyData("Rows").Value),
-                                    FrameRate = Int32.Parse(sectionName.Keys.GetKeyData("FrameRate").Value),
+                                    FramesPerRow = int.Parse(sectionName.Keys.GetKeyData("FramesPerRow").Value),
+                                    Rows = int.Parse(sectionName.Keys.GetKeyData("Rows").Value),
+                                    FrameRate = int.Parse(sectionName.Keys.GetKeyData("FrameRate").Value),
                                     PlayInReverse = bool.Parse(sectionName.Keys.GetKeyData("PlayInReverse").Value),
                                     Continuous = bool.Parse(sectionName.Keys.GetKeyData("Continuous").Value),
                                     Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
@@ -126,13 +126,26 @@ public class EntityManager
                                     IsActive = bool.Parse(sectionName.Keys.GetKeyData("IsActive").Value)
                                 };
                                 break;
+                            case "PlayerComponent":
+                                component = new PlayerComponent
+                                {
+
+                                };
+                                break;
+                            case "ParticleSystem":
+                                component = new ParticleSystem
+                                {
+                                    maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
+                                    emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
+                                    textureName = sectionName.Keys.GetKeyData("textureName").Value
+                                };
+                                break;
                             // add support for additional components as needed
                         }
 
                     if (component != null) 
                     {
                         entity.AddComponent(component);
-                        component.OnAddedToEntity(entity);
                     }; 
                 }
             return entity;

@@ -18,7 +18,9 @@ public class Entity
 
     public void AddComponent<T>(T component) where T : Component 
     {
-        Components[typeof(T).Name] = component;
+        Components.TryAdd(component.GetType().ToString(), component);
+        component.OnAddedToEntity(this);
+        Console.WriteLine(component.GetType().ToString());
     }
 
     public T GetComponent<T>() where T : Component 
@@ -28,7 +30,12 @@ public class Entity
 
     public void DestroyEntity()
     {
-
+        foreach(KeyValuePair<string, Component> c in Components)
+        {
+            c.Value.OnRemovedFromEntity(this);
+            Components.Remove(c.Key);
+            
+        }
     }
 }
 

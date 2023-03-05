@@ -13,7 +13,7 @@ public class PlayerComponent : Component
     {
         position = entity.GetComponent<PositionComponent>();
         sprite = entity.GetComponent<SpriteComponent>();
-        physics = entity.GetComponent<PhysicsComponent>();
+        //physics = entity.GetComponent<PhysicsComponent>();
         InputEventSystem.JumpEvent += OnJump;
         InputEventSystem.AttackEvent += OnAttack;
         InputEventSystem.DpadEvent += OnDpad;

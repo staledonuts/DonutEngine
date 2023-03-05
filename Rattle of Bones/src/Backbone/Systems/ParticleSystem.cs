@@ -1,6 +1,7 @@
-namespace DonutEngine.Backbone.Systems;
+namespace DonutEngine.Backbone;
 using System.Numerics;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 class Particle
     {
@@ -25,7 +26,7 @@ class Particle
             life -= deltaTime;
         }
 
-        public void Draw()
+        public void Draw(float deltaTime)
         {
             Raylib.DrawCircle((int)position.X, (int)position.Y, size, color);
         }
@@ -34,24 +35,20 @@ class Particle
         {
             return life <= 0f;
         }
+
     }
 
-    class ParticleSystem
+    class ParticleSystem : Component
     {
         private Random random = new Random();
         private Particle[] particles;
-        private int maxParticles;
-        private float emitRate;
-        private float emitTimer;
         private Texture2D particleTexture;
+        private float emitTimer = 0;
+        public int maxParticles { get; set; }
+        public float emitRate { get; set; }
+        public string? textureName { get; set; }
 
-        public ParticleSystem(int maxParticles, float emitRate, Texture2D particleTexture)
-        {
-            this.maxParticles = maxParticles;
-            this.emitRate = emitRate;
-            this.particleTexture = particleTexture;
-            particles = new Particle[maxParticles];
-        }
+        
 
         public void Update(float deltaTime)
         {
@@ -79,7 +76,7 @@ class Particle
             }
         }
 
-        public void Draw()
+        public void Draw(float deltaTime)
         {
             for (int i = 0; i < maxParticles; i++)
             {
@@ -98,9 +95,24 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(random.Next(-100, 100), random.Next(-100, 100)), new Color(random.Next(256), random.Next(256), random.Next(256), 255), random.Next(5, 20), 1f);
+                    particles[i] = new Particle(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(random.Next(-100, 100), random.Next(-100, 100)), new Color(random.Next(256), random.Next(256), random.Next(256), 255), random.Next(5, 20), random.Next(5, 20));
                     break;
                 }
             }
         }
+
+    public override void OnAddedToEntity(Entity entity)
+    {
+        particles = new Particle[maxParticles];
+        particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
+        ECS.ecsUpdate += Update;
+        ECS.ecsDrawUpdate += Draw;
     }
+
+    public override void OnRemovedFromEntity(Entity entity)
+    {
+        ECS.ecsUpdate -= Update;
+        ECS.ecsDrawUpdate -= Draw;
+        UnloadTexture(particleTexture);
+    }
+}

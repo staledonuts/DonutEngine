@@ -11,17 +11,13 @@ static class Program
     public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
     public static readonly EntityManager entityManager = new();
-    public static Camera2D donutCamera = new()
-    {
-        zoom = 1.0f,
-        offset = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2),
-        target = new Vector2(settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2)
-    };
 
+    public static CameraHandler cameraHandler = new();
     
     public static void Main()
     {
         windowSystem.InitializeWindow();
+        cameraHandler.InitializeCamera(new(0,0));
         SceneManager.InitScene();
         MainLoopUpdate();
         Shutdown();
@@ -52,7 +48,7 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
-            BeginMode2D(donutCamera);
+            BeginMode2D(cameraHandler.donutcam);
             DonutSystems.UpdateDraw();
             ECS.ProcessDrawUpdate();
             EndMode2D();
