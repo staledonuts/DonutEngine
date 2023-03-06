@@ -28,7 +28,7 @@ class Particle
 
         public void Draw(float deltaTime)
         {
-            Raylib.DrawCircle((int)position.X, (int)position.Y, size, color);
+            //Raylib.DrawCircle((int)position.X, (int)position.Y, size, color);
         }
 
         public bool IsDead()
@@ -40,6 +40,7 @@ class Particle
 
     class ParticleSystem : Component
     {
+        private PositionComponent positionComponent;
         private Random random = new Random();
         private Particle[] particles;
         private Texture2D particleTexture;
@@ -95,7 +96,7 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(random.Next(-100, 100), random.Next(-100, 100)), new Color(random.Next(256), random.Next(256), random.Next(256), 255), random.Next(5, 20), random.Next(5, 20));
+                    particles[i] = new Particle(positionComponent.GetPosition(), new Vector2(0, random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
                     break;
                 }
             }
@@ -103,6 +104,7 @@ class Particle
 
     public override void OnAddedToEntity(Entity entity)
     {
+        positionComponent = entity.GetComponent<PositionComponent>();
         particles = new Particle[maxParticles];
         particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
         ECS.ecsUpdate += Update;

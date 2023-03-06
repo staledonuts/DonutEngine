@@ -11,7 +11,7 @@ public class GameplayScene : Scene
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
         Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
-        Program.entityManager.CreateEntity(DonutFilePaths.entities+"Test.ini");
+        Program.entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
     }
 
     public override Scene UnloadScene()

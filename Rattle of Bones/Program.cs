@@ -47,12 +47,12 @@ static class Program
 
         static void UpdateDraw()
         {
-            BeginDrawing();
             BeginMode2D(cameraHandler.donutcam);
+            BeginDrawing();
             DonutSystems.UpdateDraw();
             ECS.ProcessDrawUpdate();
-            EndMode2D();
             EndDrawing();
+            EndMode2D();
         }
 
         static void UpdateLate()

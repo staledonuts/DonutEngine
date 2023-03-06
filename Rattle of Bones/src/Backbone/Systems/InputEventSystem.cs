@@ -16,11 +16,6 @@ public static class InputEventSystem
     public static event InputEventHandler? AttackEvent;
     public static event InputEventDpadHandler? DpadEvent;
 
-
-
-
-
-
     // Define a method that raises the event.
     public static void UpdateInputEvent()
     {
