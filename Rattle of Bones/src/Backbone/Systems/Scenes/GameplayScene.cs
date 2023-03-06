@@ -5,12 +5,14 @@ using Raylib_cs;
 
 public class GameplayScene : Scene
 {
+    public Entity? Player;
+
     public override void InitializeScene()
     {
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
-        Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
+        Player = Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
         Program.entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
     }
 
@@ -30,7 +32,7 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        //GameCamera2D.UpdateCameraPlayerBoundsPush(ref Program.donutCamera, , 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
+        Program.cameraHandler.UpdateCameraPlayerBoundsPush(ref Program.cameraHandler.donutcam, Player.GetComponent<PositionComponent>().GetPosition(), 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
     }
 
     public override void Update()
