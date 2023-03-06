@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace DonutEngine.Backbone;
 public class AudioControl : Systems.SystemsClass
 {
-    private static AudioControl? instance = null;
 
     private List<AudioStream> audioStreams = new List<AudioStream>();
     private Dictionary<string, Sound> soundsLibrary = new Dictionary<string, Sound>();
@@ -13,21 +12,9 @@ public class AudioControl : Systems.SystemsClass
 
     private Music currentMusic;
 
-    public static AudioControl Instance 
-    {
-        get 
-        {
-            if (instance == null) 
-            {
-                instance = new AudioControl();
-            }
-            return instance;
-        }
-    }
-
     public override void Start()
     {
-        //throw new NotImplementedException();
+        
     }
 
     public override void Update()

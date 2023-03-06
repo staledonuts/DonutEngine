@@ -10,6 +10,8 @@ public class Entity
     public int Id { get; set; }
     public Dictionary<string, Component> Components { get; set; }
 
+    public PositionComponent? entityPos = null;
+
     public Entity(int id) 
     {
         Id = id;
@@ -40,7 +42,7 @@ public class Entity
 }
 
 public abstract class Component 
-{ 
+{
     public abstract void OnAddedToEntity(Entity entity);
     public abstract void OnRemovedFromEntity(Entity entity);
 }

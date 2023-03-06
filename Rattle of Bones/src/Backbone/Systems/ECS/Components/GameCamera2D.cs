@@ -7,7 +7,7 @@ public class GameCamera2D : Component
 	PositionComponent? position;
     public override void OnAddedToEntity(Entity entity)
     {
-        position = entity.GetComponent<PositionComponent>();
+        position = entity.entityPos;
 		
 		//ECS.ecsUpdate += LateUpdate;
     }

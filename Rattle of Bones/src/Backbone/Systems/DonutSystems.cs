@@ -25,6 +25,22 @@ public static class DonutSystems
         systemsClass.Shutdown();
     }
 
+    public static void InitSystems()
+    {
+        DonutSystems.SubscribeSystem(Program.windowSystem);
+        Program.cameraHandler.InitializeCamera(new(0,0));
+        DonutSystems.SubscribeSystem(Program.audioControl);
+        DonutSystems.SubscribeSystem(Program.physicsSystem);
+        SceneManager.InitScene();
+    }
+
+    public static void KillSystems()
+    {
+        DonutSystems.UnsubscribeSystem(Program.windowSystem);
+        DonutSystems.UnsubscribeSystem(Program.audioControl);
+        DonutSystems.UnsubscribeSystem(Program.physicsSystem);
+    }
+
     public static void UpdateSystems()
     {
         Update?.Invoke();
@@ -52,11 +68,4 @@ public abstract class SystemsClass
     public abstract void LateUpdate();
 
     public abstract void Shutdown();
-}
-
-public enum SubToUpdates
-{
-    Update,
-    UpdateDraw,
-    UpdateLate
 }

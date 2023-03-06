@@ -10,40 +10,16 @@ using Raylib_cs;
 
 public class PhysicsSystem : SystemsClass
 {
-    private static PhysicsSystem? instance = null;
-
-    public static PhysicsSystem Instance 
-    {
-        get 
-        {
-            if (instance == null) 
-            {
-                instance = new PhysicsSystem();
-            }
-            return instance;
-        }
-    }
-    private World world = new World(new Vector2(0, -1));
+    private World world = new World(new Vector2(0, 20));
     private float timeStep = 1f / 60f;
     private int velocityIterations = 8;
     private int positionIterations = 3;
-        
-
-    /*foreach (Entity entity in Program.entityManager.EntitiesWith<PhysicsComponent>()) 
-    {
-        PhysicsComponent physics = entity.GetComponent<PhysicsComponent>();
-        PositionComponent position = entity.GetComponent<PositionComponent>();
-
-        position.X = physics.Body.Position.X;
-        position.Y = physics.Body.Position.Y;
-    }*/
 
     public Body CreateBody(PhysicsComponent physics) 
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = physics.Type;
         bodyDef.position = new Vector2(physics.X, physics.Y);
-
         Body body = world.CreateBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();

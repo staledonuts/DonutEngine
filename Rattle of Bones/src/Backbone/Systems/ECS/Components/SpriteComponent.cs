@@ -15,12 +15,13 @@ public class SpriteComponent : Component
 
     private Animator animator;
 
-    PositionComponent? position;
+    PositionComponent? position = null;
 
     public override void OnAddedToEntity(Entity entity)
     {
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
-        position = entity.GetComponent<PositionComponent>();
+        animator.AssignSprite(Sprite);
+        position = entity.entityPos;
         ECS.ecsDrawUpdate += Draw;
         ECS.ecsUpdate += Update;
     }

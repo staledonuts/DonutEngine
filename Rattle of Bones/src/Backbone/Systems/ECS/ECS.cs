@@ -88,8 +88,7 @@ public class EntityManager
                             case "PositionComponent":
                                 component = new PositionComponent
                                 {
-                                    X = float.Parse(sectionName.Keys.GetKeyData("X").Value),
-                                    Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value)
+                                    Vector = new(float.Parse(sectionName.Keys.GetKeyData("X").Value), float.Parse(sectionName.Keys.GetKeyData("Y").Value))
                                 };
                                 break;
                             case "SpriteComponent":

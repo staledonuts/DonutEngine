@@ -1,19 +1,18 @@
-namespace DonutEngine.Backbone;
-
 using System.Numerics;
+using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
 
 public class PlayerComponent : Component
 {
-    PositionComponent? position;
-    SpriteComponent? sprite;
-    PhysicsComponent? physics;
+    PositionComponent? position = null;
+    SpriteComponent? sprite = null;
+    PhysicsComponent? physics = null;
     public override void OnAddedToEntity(Entity entity)
     {
-        position = entity.GetComponent<PositionComponent>();
+        position = entity.entityPos;
         sprite = entity.GetComponent<SpriteComponent>();
-        //physics = entity.GetComponent<PhysicsComponent>();
+        physics = entity.GetComponent<PhysicsComponent>();
         InputEventSystem.JumpEvent += OnJump;
         InputEventSystem.AttackEvent += OnAttack;
         InputEventSystem.DpadEvent += OnDpad;

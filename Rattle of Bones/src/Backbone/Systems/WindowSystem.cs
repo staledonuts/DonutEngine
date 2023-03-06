@@ -2,14 +2,25 @@ namespace DonutEngine.Backbone.Systems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-public class WindowSystem
+public class WindowSystem : SystemsClass
 {
-    public WindowSystem()
+
+    public override void DrawUpdate()
     {
-        //DonutSystems.InitEvent += InitializeWindow;
-        //DonutSystems.current.ShutdownEvent += ShutdownAudioSystem;
+        
     }
-    public void InitializeWindow()
+
+    public override void LateUpdate()
+    {
+        
+    }
+
+    public override void Shutdown()
+    {
+        
+    }
+
+    public override void Start()
     {
         InitWindow(Program.settingsVars.screenWidth, Program.settingsVars.screenHeight, "Rattle of Bones");
         if(Program.settingsVars.fullScreen)
@@ -19,4 +30,8 @@ public class WindowSystem
         SetTargetFPS(60);
     }
 
+    public override void Update()
+    {
+        
+    }
 }
