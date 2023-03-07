@@ -10,16 +10,16 @@ using Raylib_cs;
 
 public class PhysicsSystem : SystemsClass
 {
-    private World world = new World(new Vector2(0, 20));
+    private World world = new World(new Vector2(0, 200));
     private float timeStep = 1f / 60f;
     private int velocityIterations = 8;
     private int positionIterations = 3;
 
-    public Body CreateBody(PhysicsComponent physics) 
+    public Body CreateBody(PhysicsComponent physics, Entity entity) 
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = physics.Type;
-        bodyDef.position = new Vector2(physics.X, physics.Y);
+        bodyDef.position = entity.entityPos.GetPosition();
         Body body = world.CreateBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -30,6 +30,16 @@ public class PhysicsSystem : SystemsClass
         fixtureDef.restitution = physics.Restitution;
 
         body.CreateFixture(fixtureDef);
+
+        return body;
+    }
+
+    public Body CreateStaticBody(BlockingComponent blockingComponent, Entity entity) 
+    {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyType.Static;
+        bodyDef.position = entity.entityPos.GetPosition();
+        Body body = world.CreateBody(bodyDef);
 
         return body;
     }

@@ -2,6 +2,7 @@ namespace DonutEngine.Backbone;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using DonutEngine;
 
 class Particle
     {
@@ -104,7 +105,7 @@ class Particle
 
     public override void OnAddedToEntity(Entity entity)
     {
-        positionComponent = entity.GetComponent<PositionComponent>();
+        positionComponent = entity.GetComponent<DonutEngine.Backbone.PositionComponent>();
         particles = new Particle[maxParticles];
         particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
         ECS.ecsUpdate += Update;

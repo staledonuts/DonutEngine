@@ -1,0 +1,35 @@
+{
+    "PositionComponent": 
+    {
+        "X": 0,
+        "Y": 0
+    },
+    "SpriteComponent": 
+    {
+        "Sprite": "player.png",
+        "Width": 16,
+        "Height": 16,
+        "AnimatorName": "Player",
+        "FramesPerRow": 7,
+        "Rows": 1,
+        "FrameRate": 12,
+        "PlayInReverse": false,
+        "Continuous": false,
+        "Looping": true
+
+
+    },
+    "PhysicsComponent":
+    {
+        "Width": 16,
+        "Height": 16,
+        "BodyType": "Dynamic",
+        "Density": 1,
+        "Friction": 1,
+        "Restitution": 1
+    },
+    "GameCamera2D":
+    {
+        "IsActive": true
+    }
+}

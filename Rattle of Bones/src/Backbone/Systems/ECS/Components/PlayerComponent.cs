@@ -1,3 +1,4 @@
+namespace DonutEngine.Backbone;
 using System.Numerics;
 using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
@@ -35,7 +36,7 @@ public class PlayerComponent : Component
 
     public void OnDpad(Vector2 vector)
     {
-
+        physics.Body.ApplyLinearImpulse(vector * 900, physics.Body.GetPosition(), true);
     }
 
 

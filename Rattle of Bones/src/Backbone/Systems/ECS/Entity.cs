@@ -20,9 +20,9 @@ public class Entity
 
     public void AddComponent<T>(T component) where T : Component 
     {
-        Components.TryAdd(component.GetType().ToString(), component);
+        Components.TryAdd(component.GetType().Name, component);
         component.OnAddedToEntity(this);
-        Console.WriteLine(component.GetType().ToString());
+        Console.WriteLine(component.GetType().Name);
     }
 
     public T GetComponent<T>() where T : Component 

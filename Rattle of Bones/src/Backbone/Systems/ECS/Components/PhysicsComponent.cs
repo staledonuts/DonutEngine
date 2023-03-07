@@ -1,5 +1,5 @@
+namespace DonutEngine.Backbone;
 using System.Numerics;
-using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using static DonutEngine.Backbone.Systems.DonutSystems;
 using Box2D.NetStandard.Dynamics.Bodies;
@@ -8,21 +8,19 @@ using Raylib_cs;
 
 public class PhysicsComponent : Component 
 {
-    public float X { get; set; }
-    public float Y { get; set; }
     public float Width { get; set; }
     public float Height { get; set; }
     public BodyType Type { get; set; }
     public float Density { get; set; }
     public float Friction { get; set; }
     public float Restitution { get; set; }
-    public Body Body { get; set; }
+    public Body? Body { get; set; }
 
     private PositionComponent? position;
     public override void OnAddedToEntity(Entity entity)
     {
         position = entity.entityPos;
-        Body = physicsSystem.CreateBody(this);
+        Body = physicsSystem.CreateBody(this, entity);
         ECS.ecsUpdate += Update;
     }
 

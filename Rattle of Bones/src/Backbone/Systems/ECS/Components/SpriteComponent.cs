@@ -1,3 +1,4 @@
+namespace DonutEngine.Backbone;
 using Raylib_cs;
 using DonutEngine.Backbone;
 public class SpriteComponent : Component

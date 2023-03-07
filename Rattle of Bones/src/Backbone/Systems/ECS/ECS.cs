@@ -109,8 +109,6 @@ public class EntityManager
                             case "PhysicsComponent":
                                 component = new PhysicsComponent
                                 {
-                                    X = float.Parse(sectionName.Keys.GetKeyData("X").Value),
-                                    Y = float.Parse(sectionName.Keys.GetKeyData("Y").Value),
                                     Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
                                     Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value),
                                     Type = (BodyType)int.Parse(sectionName.Keys.GetKeyData("BodyType").Value),
@@ -137,6 +135,13 @@ public class EntityManager
                                     maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
                                     emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
                                     textureName = sectionName.Keys.GetKeyData("textureName").Value
+                                };
+                                break;
+                            case "BlockingComponent":
+                                component = new BlockingComponent
+                                {
+                                    Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                                    Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value)
                                 };
                                 break;
                             // add support for additional components as needed
