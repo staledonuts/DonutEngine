@@ -1,6 +1,7 @@
 namespace DonutEngine;
 using DonutEngine.Backbone.Systems;
 using DonutEngine.Backbone;
+using static DonutEngine.Backbone.Systems.DonutSystems;
 using Raylib_cs;
 
 public class GameplayScene : Scene
@@ -12,8 +13,8 @@ public class GameplayScene : Scene
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
-        Player = Program.entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
-        Program.entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
+        Player = entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
+        entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
     }
 
     public override Scene UnloadScene()
@@ -32,7 +33,7 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        Program.cameraHandler.UpdateCameraPlayerBoundsPush(ref Program.cameraHandler.donutcam, Player.GetComponent<PositionComponent>().GetPosition(), 1f, Program.settingsVars.screenWidth, Program.settingsVars.screenHeight);
+        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.GetComponent<PositionComponent>().GetPosition(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
     }
 
     public override void Update()

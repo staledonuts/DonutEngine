@@ -7,12 +7,6 @@ using static Raylib_cs.Raylib;
 
 static class Program
 {
-    public static readonly SettingsVars settingsVars = new();
-    public static readonly AudioControl audioControl = new();
-    public static readonly WindowSystem windowSystem = new();
-    public static readonly EntityManager entityManager = new();
-    public static readonly PhysicsSystem physicsSystem = new();
-    public static CameraHandler cameraHandler = new();
     
     public static void Main()
     {
@@ -45,9 +39,8 @@ static class Program
 
         static void UpdateDraw()
         {
-            Time.RunDeltaTime();
             BeginDrawing();
-            BeginMode2D(cameraHandler.donutcam);
+            BeginMode2D(DonutSystems.cameraHandler.donutcam);
             ECS.ProcessDrawUpdate();
             DonutSystems.UpdateDraw();
             EndMode2D();

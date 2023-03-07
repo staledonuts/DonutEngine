@@ -2,6 +2,13 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class DonutSystems
 {
+    public static readonly SettingsVars settingsVars = new();
+    public static readonly AudioControl audioControl = new();
+    public static readonly WindowSystem windowSystem = new();
+    public static readonly EntityManager entityManager = new();
+    public static readonly PhysicsSystem physicsSystem = new();
+    public static CameraHandler cameraHandler = new();
+
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
     public delegate void SystemsLateUpdater();
@@ -27,18 +34,18 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        DonutSystems.SubscribeSystem(Program.windowSystem);
-        Program.cameraHandler.InitializeCamera(new(0,0));
-        DonutSystems.SubscribeSystem(Program.audioControl);
-        DonutSystems.SubscribeSystem(Program.physicsSystem);
+        DonutSystems.SubscribeSystem(windowSystem);
+        cameraHandler.InitializeCamera(new(0,0));
+        DonutSystems.SubscribeSystem(audioControl);
+        DonutSystems.SubscribeSystem(physicsSystem);
         SceneManager.InitScene();
     }
 
     public static void KillSystems()
     {
-        DonutSystems.UnsubscribeSystem(Program.windowSystem);
-        DonutSystems.UnsubscribeSystem(Program.audioControl);
-        DonutSystems.UnsubscribeSystem(Program.physicsSystem);
+        DonutSystems.UnsubscribeSystem(windowSystem);
+        DonutSystems.UnsubscribeSystem(audioControl);
+        DonutSystems.UnsubscribeSystem(physicsSystem);
     }
 
     public static void UpdateSystems()

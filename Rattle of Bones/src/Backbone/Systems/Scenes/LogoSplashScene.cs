@@ -36,8 +36,8 @@ public class LogoSplashScene : Scene
     {
         Raylib.ClearBackground(Color.BLACK);
         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.WHITE);
-        Raylib.DrawTexture(splashTex, (Program.settingsVars.screenWidth / 2) - splashTex.width / 2,(Program.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
-        Raylib.DrawText("Made With:", Program.settingsVars.screenWidth / 2, (Program.settingsVars.screenHeight / 2) +256, 20, Color.WHITE);
+        Raylib.DrawTexture(splashTex, (DonutSystems.settingsVars.screenWidth / 2) - splashTex.width / 2,(DonutSystems.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
+        Raylib.DrawText("Made With:", DonutSystems.settingsVars.screenWidth / 2, (DonutSystems.settingsVars.screenHeight / 2) +256, 20, Color.WHITE);
     }   
 
     public override void Update()
@@ -45,7 +45,7 @@ public class LogoSplashScene : Scene
         framesCounter++;    // Count frames
 
         // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-        if (framesCounter > Program.settingsVars.splashScreenLength)
+        if (framesCounter > DonutSystems.settingsVars.splashScreenLength)
         {
             // todo: sceneunload
             SceneManager.UnloadScene();

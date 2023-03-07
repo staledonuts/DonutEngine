@@ -1,6 +1,7 @@
 namespace DonutEngine.Backbone.Systems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static DonutSystems;
 
 public class WindowSystem : SystemsClass
 {
@@ -22,8 +23,8 @@ public class WindowSystem : SystemsClass
 
     public override void Start()
     {
-        InitWindow(Program.settingsVars.screenWidth, Program.settingsVars.screenHeight, "Rattle of Bones");
-        if(Program.settingsVars.fullScreen)
+        InitWindow(settingsVars.screenWidth, settingsVars.screenHeight, "Rattle of Bones");
+        if(settingsVars.fullScreen)
         {
             ToggleFullscreen();
         }
@@ -32,6 +33,6 @@ public class WindowSystem : SystemsClass
 
     public override void Update()
     {
-        
+        Time.RunDeltaTime();
     }
 }

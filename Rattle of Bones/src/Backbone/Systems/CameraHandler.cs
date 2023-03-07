@@ -12,7 +12,7 @@ public class CameraHandler
     {
         donutcam = new();
         donutcam.zoom = 1.0f;
-        donutcam.offset = new Vector2(Program.settingsVars.screenWidth / 2, Program.settingsVars.screenHeight / 2);
+        donutcam.offset = new Vector2(DonutSystems.settingsVars.screenWidth / 2, DonutSystems.settingsVars.screenHeight / 2);
         donutcam.target = target;
         currentTarget = target;
         DonutSystems.DrawUpdate += UpdateCamera;

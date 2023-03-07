@@ -1,6 +1,7 @@
 using System.Numerics;
 using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
+using static DonutEngine.Backbone.Systems.DonutSystems;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Box2D.NetStandard.Collision.Shapes;
 using Raylib_cs;
@@ -21,13 +22,13 @@ public class PhysicsComponent : Component
     public override void OnAddedToEntity(Entity entity)
     {
         position = entity.entityPos;
-        Body = Program.physicsSystem.CreateBody(this);
+        Body = physicsSystem.CreateBody(this);
         ECS.ecsUpdate += Update;
     }
 
     public override void OnRemovedFromEntity(Entity entity) 
     {
-        Program.physicsSystem.DestroyBody(Body);
+        physicsSystem.DestroyBody(Body);
     }
 
     public void Update(float deltaTime)
