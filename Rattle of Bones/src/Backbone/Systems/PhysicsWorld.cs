@@ -12,8 +12,8 @@ public class PhysicsSystem : SystemsClass
 {
     private World world = new World(new Vector2(0, 200));
     private float timeStep = 1f / 60f;
-    private int velocityIterations = 8;
-    private int positionIterations = 3;
+    private int velocityIterations = 9;
+    private int positionIterations = 4;
 
     public Body CreateBody(PhysicsComponent physics, Entity entity) 
     {
