@@ -9,6 +9,7 @@ public class Entity
 {
     public int Id { get; set; }
     public Dictionary<string, Component> Components { get; set; }
+    public HashSet<string> Tags { get; set; }
 
     public PositionComponent? entityPos = null;
 
@@ -16,6 +17,7 @@ public class Entity
     {
         Id = id;
         Components = new Dictionary<string, Component>();
+        Tags = new HashSet<string>();
     }
 
     public void AddComponent<T>(T component) where T : Component 
@@ -36,7 +38,6 @@ public class Entity
         {
             c.Value.OnRemovedFromEntity(this);
             Components.Remove(c.Key);
-            
         }
     }
 }

@@ -19,7 +19,7 @@ public class PhysicsSystem : SystemsClass
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = physics.Type;
-        bodyDef.position = entity.entityPos.GetPosition();
+        bodyDef.position = entity.entityPos.Position;
         Body body = world.CreateBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -38,7 +38,7 @@ public class PhysicsSystem : SystemsClass
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.Static;
-        bodyDef.position = entity.entityPos.GetPosition();
+        bodyDef.position = entity.entityPos.Position;
         Body body = world.CreateBody(bodyDef);
 
         return body;

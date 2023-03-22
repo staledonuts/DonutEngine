@@ -37,6 +37,20 @@ public class EntityManager
     private Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
     private EntityFactory factory = new EntityFactory();
 
+    public List<Entity> GetEntitiesWithTag(string tag) 
+    {
+        List<Entity> result = new List<Entity>();
+        foreach (KeyValuePair<int, Entity> entity in entities) 
+        {
+            var ent = GetEntity(entity.Key);
+            if (ent.Tags.Contains(tag)) 
+            {
+                result.Add(ent);
+            }
+        }
+        return result;
+    }
+
 
     public void CreateDirectory()
     {
@@ -73,7 +87,6 @@ public class EntityManager
             public Entity CreateEntity(string iniPath) 
             {
                 Entity entity = new Entity(nextEntityId++);
-                
                 FileIniDataParser parser = new FileIniDataParser();
                 IniData data = parser.ReadFile(iniPath);
                 
@@ -85,10 +98,20 @@ public class EntityManager
 
                         switch (componentType) 
                         {
+                            /*case "Tags":
+                            {
+                                foreach(string s in componentType.)
+                                {
+                                    entity.Tags.Add(s.Length.ToString());
+                                }
+                            }
+                            break;*/
                             case "PositionComponent":
                                 component = new PositionComponent
                                 {
-                                    Vector = new(float.Parse(sectionName.Keys.GetKeyData("X").Value), float.Parse(sectionName.Keys.GetKeyData("Y").Value))
+                                    Position = new(float.Parse(sectionName.Keys.GetKeyData("X").Value), float.Parse(sectionName.Keys.GetKeyData("Y").Value)),
+                                    Rotation = float.Parse(sectionName.Keys.GetKeyData("Rotation").Value),
+                                    Scale = new(float.Parse(sectionName.Keys.GetKeyData("ScaleX").Value), float.Parse(sectionName.Keys.GetKeyData("ScaleY").Value))
                                 };
                                 break;
                             case "SpriteComponent":

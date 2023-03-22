@@ -32,7 +32,7 @@ public class PhysicsComponent : Component
     public void Update(float deltaTime)
     {
         
-        position.SetPosition(Body.GetPosition());
+        position.Position = Body.GetPosition();
 
     }
 }

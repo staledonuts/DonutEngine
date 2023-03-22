@@ -97,7 +97,7 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(positionComponent.GetPosition(), new Vector2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
+                    particles[i] = new Particle(positionComponent.Position, new Vector2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
                     break;
                 }
             }

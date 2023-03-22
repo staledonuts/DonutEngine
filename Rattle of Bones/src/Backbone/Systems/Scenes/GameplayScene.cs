@@ -35,7 +35,7 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.GetComponent<PositionComponent>().GetPosition(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
+        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.GetComponent<PositionComponent>().Position, 1f, settingsVars.screenWidth, settingsVars.screenHeight);
     }
 
     public override void Update()
