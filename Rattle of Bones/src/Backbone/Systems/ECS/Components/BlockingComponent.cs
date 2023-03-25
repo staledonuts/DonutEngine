@@ -1,26 +1,26 @@
 namespace DonutEngine.Backbone;
-using Box2D.NetStandard.Dynamics.Bodies;
-using Box2D.NetStandard.Collision.Shapes;
+using Box2DX.Dynamics;
+using Box2DX.Collision;
 using static DonutEngine.Backbone.Systems.DonutSystems;
 public class BlockingComponent : Component
 {
     public float Width { get; set; }
     public float Height { get; set; }
-    public Body? Body { get; set; }
+    public Body? currentBody { get; set; }
 
-    PolygonShape polygonShape = new();
+    PolygonDef polyDef = new();
 
-    private PositionComponent? position;
+    private EntityPhysics? entityPhysics;
     public override void OnAddedToEntity(Entity entity)
     {
-        position = entity.entityPos;
-        Body = physicsSystem.CreateStaticBody(this, entity);
-        polygonShape.SetAsBox(Width, Height);
-        Body.CreateFixture(polygonShape);
+        entityPhysics = entity.entityPhysics;
+        currentBody = physicsSystem.CreateStaticBody(this, entity);
+        polyDef.SetAsBox(Width, Height);
+        currentBody.CreateFixture(polyDef);
     }
 
     public override void OnRemovedFromEntity(Entity entity)
     {
-        physicsSystem.DestroyBody(Body);
+        physicsSystem.DestroyBody(currentBody);
     }
 }

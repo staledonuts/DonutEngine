@@ -4,10 +4,10 @@ using System.Numerics;
 public class GameCamera2D : Component
 {
 	public bool IsActive { get; set; }
-	PositionComponent? position;
+	EntityPhysics? entityPhysics;
     public override void OnAddedToEntity(Entity entity)
     {
-        position = entity.entityPos;
+        entityPhysics = entity.entityPhysics;
 		
 		//ECS.ecsUpdate += LateUpdate;
     }

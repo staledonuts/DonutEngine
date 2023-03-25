@@ -3,8 +3,8 @@ using Raylib_cs;
 using IniParser.Model;
 using IniParser;
 using IniParser.Parser;
-using Box2D.NetStandard.Dynamics.Bodies;
-using Box2D.NetStandard.Collision.Shapes;
+using Box2DX.Dynamics;
+using Box2DX.Collision;
 
 
 namespace DonutEngine.Backbone;
@@ -86,11 +86,11 @@ public class EntityManager
 
             public Entity CreateEntity(string iniPath) 
             {
-                Entity entity = new Entity(nextEntityId++);
+                System.Console.WriteLine(iniPath);
                 FileIniDataParser parser = new FileIniDataParser();
                 IniData data = parser.ReadFile(iniPath);
+                Entity entity = new Entity(nextEntityId++, data);
                 
-
                 foreach (SectionData sectionName in data.Sections) 
                 {
                     string componentType = sectionName.SectionName;
@@ -106,18 +106,10 @@ public class EntityManager
                                 }
                             }
                             break;*/
-                            case "PositionComponent":
-                                component = new PositionComponent
-                                {
-                                    Position = new(float.Parse(sectionName.Keys.GetKeyData("X").Value), float.Parse(sectionName.Keys.GetKeyData("Y").Value)),
-                                    Rotation = float.Parse(sectionName.Keys.GetKeyData("Rotation").Value),
-                                    Scale = new(float.Parse(sectionName.Keys.GetKeyData("ScaleX").Value), float.Parse(sectionName.Keys.GetKeyData("ScaleY").Value))
-                                };
-                                break;
                             case "SpriteComponent":
                                 component = new SpriteComponent
                                 {
-                                    Sprite = Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
+                                    Sprite = Raylib_cs.Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
                                     Width = int.Parse(sectionName.Keys.GetKeyData("Width").Value),
                                     Height = int.Parse(sectionName.Keys.GetKeyData("Height").Value),
                                     AnimatorName = sectionName.Keys.GetKeyData("AnimatorName").Value,
@@ -127,17 +119,6 @@ public class EntityManager
                                     PlayInReverse = bool.Parse(sectionName.Keys.GetKeyData("PlayInReverse").Value),
                                     Continuous = bool.Parse(sectionName.Keys.GetKeyData("Continuous").Value),
                                     Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
-                                };
-                                break;
-                            case "PhysicsComponent":
-                                component = new PhysicsComponent
-                                {
-                                    Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
-                                    Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value),
-                                    Type = (BodyType)int.Parse(sectionName.Keys.GetKeyData("BodyType").Value),
-                                    Density = float.Parse(sectionName.Keys.GetKeyData("Density").Value),
-                                    Friction = float.Parse(sectionName.Keys.GetKeyData("Friction").Value),
-                                    Restitution = float.Parse(sectionName.Keys.GetKeyData("Restitution").Value)
                                 };
                                 break;
                             case "GameCamera2D":

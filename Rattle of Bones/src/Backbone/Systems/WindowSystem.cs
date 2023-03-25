@@ -28,7 +28,7 @@ public class WindowSystem : SystemsClass
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(60);
+        SetTargetFPS(settingsVars.targetFPS);
     }
 
     public override void Update()

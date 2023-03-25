@@ -7,14 +7,12 @@ using Raylib_cs;
 
 public class PlayerComponent : Component
 {
-    PositionComponent? position = null;
     SpriteComponent? sprite = null;
-    PhysicsComponent? physics = null;
+    EntityPhysics? physics = null;
     public override void OnAddedToEntity(Entity entity)
     {
-        position = entity.entityPos;
         sprite = entity.GetComponent<SpriteComponent>();
-        physics = entity.GetComponent<PhysicsComponent>();
+        physics = entity.entityPhysics;
         ECS.ecsUpdate += Update;
         InputEventSystem.JumpEvent += OnJump;
         InputEventSystem.AttackEvent += OnAttack;
@@ -30,7 +28,7 @@ public class PlayerComponent : Component
     {
         if(boolean)
         {
-            physics.Body.ApplyLinearImpulse(new Vector2(0, 0),physics.Body.GetPosition());
+            physics.currentBody.ApplyImpulse(new(0, 0),physics.currentBody.GetPosition());
         }
     }
 
@@ -41,14 +39,14 @@ public class PlayerComponent : Component
 
     public void OnDpad(Vector2 vector)
     {
-        physics.Body.ApplyLinearImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), physics.Body.GetPosition(), true);
+        physics.currentBody.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), physics.currentBody.GetPosition());
     }
 
     public void Update(float deltaTime)
     {
 
-        Console.WriteLine(physics.Body.GetLinearVelocity().X < Mathdf.Epsilon);
-        bool PlayerHasHorizonalVelocity = Math.Abs(physics.Body.GetLinearVelocity().X) > Mathdf.Epsilon;
+        //Console.WriteLine(physics.currentBody.GetLinearVelocity().X < Mathdf.Epsilon);
+        bool PlayerHasHorizonalVelocity = Math.Abs(physics.currentBody.GetLinearVelocity().X) > Mathdf.Epsilon;
         if(PlayerHasHorizonalVelocity)
         {
             sprite.FlipSprite(PlayerHasHorizonalVelocity);

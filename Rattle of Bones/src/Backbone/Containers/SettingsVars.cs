@@ -14,6 +14,7 @@ public class SettingsVars
         currentSFXVolume = float.Parse(sectionData.Keys.GetKeyData("currentSFXVolume").Value);
         screenWidth = int.Parse(sectionData.Keys.GetKeyData("screenWidth").Value);
         screenHeight = int.Parse(sectionData.Keys.GetKeyData("screenHeight").Value);
+        targetFPS = int.Parse(sectionData.Keys.GetKeyData("targetFPS").Value);
         splashScreenLength = int.Parse(sectionData.Keys.GetKeyData("splashScreenLength").Value);
         fullScreen = bool.Parse(sectionData.Keys.GetKeyData("fullScreen").Value);
     }
@@ -22,6 +23,9 @@ public class SettingsVars
     public float currentSFXVolume { get; set; }
     public int screenWidth { get; set; }
     public int screenHeight { get; set; }
+    public int targetFPS { get; set; }
     public int splashScreenLength { get; set; }
     public bool fullScreen { get; set; }
+
+    
 }

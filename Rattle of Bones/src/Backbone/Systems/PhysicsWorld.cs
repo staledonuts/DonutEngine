@@ -1,35 +1,33 @@
 namespace DonutEngine.Backbone.Systems;
 using System.Numerics;
-using Box2D.NetStandard.Common;
-using Box2D.NetStandard.Dynamics.World;
-using Box2D.NetStandard.Dynamics.Bodies;
-using Box2D.NetStandard.Collision.Shapes;
-using Box2D.NetStandard.Dynamics.Fixtures;
-using Box2D.NetStandard.Dynamics.Contacts;
+using Box2DX.Common;
+using static Box2DX.Dynamics.World;
+using Box2DX.Dynamics;
+using Box2DX.Collision;
 using Raylib_cs;
 
 public class PhysicsSystem : SystemsClass
 {
-    private World world = new World(new Vector2(0, 200));
-    private float timeStep = 1f / 60f;
+    private static AABB worldAABB = new();
+    private World? world;
+
+    private Vec2 gravity = new(0, 50);
+    private float timeStep = 1f / DonutSystems.settingsVars.targetFPS;
     private int velocityIterations = 9;
     private int positionIterations = 4;
 
-    public Body CreateBody(PhysicsComponent physics, Entity entity) 
+    public Body CreateBody(EntityPhysics physics, Entity entity) 
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = physics.Type;
-        bodyDef.position = entity.entityPos.Position;
+        bodyDef.Position.Set(physics.X, physics.Y);
         Body body = world.CreateBody(bodyDef);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = new PolygonShape();
-        ((PolygonShape)fixtureDef.shape).SetAsBox(physics.Width / 2f, physics.Height / 2f);
-        fixtureDef.density = physics.Density;
-        fixtureDef.friction = physics.Friction;
-        fixtureDef.restitution = physics.Restitution;
-
-        body.CreateFixture(fixtureDef);
+        PolygonDef polygonDef = new PolygonDef();
+        polygonDef.SetAsBox(physics.Width / 2f, physics.Height / 2f);
+        polygonDef.Density = physics.Density;
+        polygonDef.Friction = physics.Friction;
+        polygonDef.Restitution = physics.Restitution;
+        body.CreateFixture(polygonDef);
+        body.SetMassFromShapes();
 
         return body;
     }
@@ -37,9 +35,9 @@ public class PhysicsSystem : SystemsClass
     public Body CreateStaticBody(BlockingComponent blockingComponent, Entity entity) 
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyType.Static;
-        bodyDef.position = entity.entityPos.Position;
+        bodyDef.Position.Set(entity.entityPhysics.X, entity.entityPhysics.Y);
         Body body = world.CreateBody(bodyDef);
+        body.SetStatic();
 
         return body;
     }
@@ -51,7 +49,9 @@ public class PhysicsSystem : SystemsClass
 
     public override void Start()
     {
-        //throw new NotImplementedException();
+        worldAABB.LowerBound.Set(-100.0f, -100.0f);
+		worldAABB.UpperBound.Set(100.0f, 100.0f);
+        world = new World(worldAABB,gravity, true);
     }
 
     public override void Update()

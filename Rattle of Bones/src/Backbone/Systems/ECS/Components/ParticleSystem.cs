@@ -41,7 +41,7 @@ class Particle
 
     class ParticleSystem : Component
     {
-        private PositionComponent positionComponent;
+        private EntityPhysics entityPhysics;
         private Random random = new Random();
         private Particle[] particles;
         private Texture2D particleTexture;
@@ -97,7 +97,7 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(positionComponent.Position, new Vector2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
+                    particles[i] = new Particle(entityPhysics.GetVector2Pos(), new Vector2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
                     break;
                 }
             }
@@ -105,7 +105,7 @@ class Particle
 
     public override void OnAddedToEntity(Entity entity)
     {
-        positionComponent = entity.GetComponent<DonutEngine.Backbone.PositionComponent>();
+        entityPhysics = entity.entityPhysics;
         particles = new Particle[maxParticles];
         particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
         ECS.ecsUpdate += Update;

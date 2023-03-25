@@ -15,7 +15,7 @@ public class GameplayScene : Scene
         DonutSystems.LateUpdate += this.LateUpdate;
         Player = entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
         entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
-        entityManager.CreateEntity(DonutFilePaths.entities+"Test.ini");
+        //entityManager.CreateEntity(DonutFilePaths.entities+"Test.ini");
         
     }
 
@@ -35,7 +35,7 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.GetComponent<PositionComponent>().Position, 1f, settingsVars.screenWidth, settingsVars.screenHeight);
+        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.entityPhysics.GetVector2Pos(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
     }
 
     public override void Update()
