@@ -1,13 +1,13 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
 
-public class GameCamera2D : Component
+public class GameCamera2D : DynamicComponent
 {
 	public bool IsActive { get; set; }
 	EntityPhysics? entityPhysics;
     public override void OnAddedToEntity(Entity entity)
     {
-        entityPhysics = entity.entityPhysics;
+		
 		
 		//ECS.ecsUpdate += LateUpdate;
     }
@@ -24,4 +24,14 @@ public class GameCamera2D : Component
 			
 		}
 	}
+
+    public override void OnAddedToEntity(DynamicEntity entity)
+    {
+        entityPhysics = entity.entityPhysics;
+    }
+
+    public override void OnRemovedFromEntity(DynamicEntity entity)
+    {
+		
+    }
 }

@@ -16,29 +16,29 @@ public class EntityPhysics
     public float Density { get; set; }
     public float Friction { get; set; }
     public float Restitution { get; set; }
-    public Body? currentBody;
+    public Body? currentBody = null;
 
 
-
-    public void InitEntityPhysics(Entity entity)
+    public void InitEntityPhysics(DynamicEntity entity)
     {
         currentBody = physicsSystem.CreateBody(this, entity);
         ECS.ecsUpdate += Update;
     }
 
-
     public void DestroyEntityPhysics() 
     {
-        physicsSystem.DestroyBody(currentBody);
-        ECS.ecsUpdate -= Update;
+        if(currentBody != null)
+        {
+            physicsSystem.DestroyBody(currentBody);
+            ECS.ecsUpdate -= Update;
+
+        }
     }
 
     public void Update(float deltaTime)
     {
         X = currentBody.GetPosition().X;
         Y = currentBody.GetPosition().Y;
-        System.Console.WriteLine(currentBody.GetPosition().X+"-"+currentBody.GetPosition().Y);
-
     }
 
     public Vector2 GetVector2Pos()

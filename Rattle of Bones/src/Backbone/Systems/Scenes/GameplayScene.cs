@@ -35,7 +35,10 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.entityPhysics.GetVector2Pos(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
+        if(Player is DynamicEntity dynEnt)
+        {
+            cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, dynEnt.entityPhysics.GetVector2Pos(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
+        }
     }
 
     public override void Update()

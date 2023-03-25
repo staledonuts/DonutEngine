@@ -14,14 +14,12 @@ public class LogoSplashScene : Scene
         splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Assets/Splash/raylib-cs.png");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
-        DonutSystems.LateUpdate += this.LateUpdate;
     }
 
     public override Scene UnloadScene()
     {
         DonutSystems.Update -= this.Update;
         DonutSystems.DrawUpdate -= this.DrawUpdate;
-        DonutSystems.LateUpdate -= this.LateUpdate;
         Raylib.UnloadTexture(splashTex);
         return nextScene = new GameplayScene();
         

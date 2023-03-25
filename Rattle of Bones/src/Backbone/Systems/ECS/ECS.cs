@@ -6,7 +6,6 @@ using IniParser.Parser;
 using Box2DX.Dynamics;
 using Box2DX.Collision;
 
-
 namespace DonutEngine.Backbone;
 
 public static class ECS
@@ -51,7 +50,6 @@ public class EntityManager
         return result;
     }
 
-
     public void CreateDirectory()
     {
         string[] iniFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.ini");
@@ -80,83 +78,138 @@ public class EntityManager
         entities.Remove(id);
     }
 
-        private class EntityFactory 
+    private class EntityFactory 
+    {
+        private int nextEntityId = 1;
+
+        public Entity CreateEntity(string iniPath) 
         {
-            private int nextEntityId = 1;
-
-            public Entity CreateEntity(string iniPath) 
+            System.Console.WriteLine(iniPath);
+            FileIniDataParser parser = new FileIniDataParser();
+            IniData data = parser.ReadFile(iniPath);
+            //Entity? entity = null;
+            DynamicEntity? dynEnt = null;
+            StaticEntity? staEnt = null;
+            if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "DynamicEntity")
             {
-                System.Console.WriteLine(iniPath);
-                FileIniDataParser parser = new FileIniDataParser();
-                IniData data = parser.ReadFile(iniPath);
-                Entity entity = new Entity(nextEntityId++, data);
-                
-                foreach (SectionData sectionName in data.Sections) 
+                dynEnt = new DynamicEntity(nextEntityId++, data);
+                CreateComponents(data, dynEnt);
+                return dynEnt;
+            }
+            else if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "StaticEntity")
+            {
+                staEnt = new StaticEntity(nextEntityId++, data);
+                CreateComponents(data, staEnt);
+                return staEnt; 
+            }
+            else return staEnt;
+
+        }
+
+        public void CreateComponents(IniData data, DynamicEntity entity)
+        {
+            DynamicComponent? component = null;
+            foreach (SectionData sectionName in data.Sections) 
+            {
+                if(component != null)
                 {
-                    string componentType = sectionName.SectionName;
-                    Component? component = null;
-
-                        switch (componentType) 
+                    component = null;
+                }
+                string componentType = sectionName.SectionName;
+                switch (componentType) 
+                {
+                    /*case "Tags":
+                    {
+                        foreach(string s in componentType.)
                         {
-                            /*case "Tags":
-                            {
-                                foreach(string s in componentType.)
-                                {
-                                    entity.Tags.Add(s.Length.ToString());
-                                }
-                            }
-                            break;*/
-                            case "SpriteComponent":
-                                component = new SpriteComponent
-                                {
-                                    Sprite = Raylib_cs.Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
-                                    Width = int.Parse(sectionName.Keys.GetKeyData("Width").Value),
-                                    Height = int.Parse(sectionName.Keys.GetKeyData("Height").Value),
-                                    AnimatorName = sectionName.Keys.GetKeyData("AnimatorName").Value,
-                                    FramesPerRow = int.Parse(sectionName.Keys.GetKeyData("FramesPerRow").Value),
-                                    Rows = int.Parse(sectionName.Keys.GetKeyData("Rows").Value),
-                                    FrameRate = int.Parse(sectionName.Keys.GetKeyData("FrameRate").Value),
-                                    PlayInReverse = bool.Parse(sectionName.Keys.GetKeyData("PlayInReverse").Value),
-                                    Continuous = bool.Parse(sectionName.Keys.GetKeyData("Continuous").Value),
-                                    Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
-                                };
-                                break;
-                            case "GameCamera2D":
-                                component = new GameCamera2D
-                                {
-                                    IsActive = bool.Parse(sectionName.Keys.GetKeyData("IsActive").Value)
-                                };
-                                break;
-                            case "PlayerComponent":
-                                component = new PlayerComponent
-                                {
-
-                                };
-                                break;
-                            case "ParticleSystem":
-                                component = new ParticleSystem
-                                {
-                                    maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
-                                    emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
-                                    textureName = sectionName.Keys.GetKeyData("textureName").Value
-                                };
-                                break;
-                            case "BlockingComponent":
-                                component = new BlockingComponent
-                                {
-                                    Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
-                                    Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value)
-                                };
-                                break;
-                            // add support for additional components as needed
+                            entity.Tags.Add(s.Length.ToString());
                         }
+                    }
+                    break;*/
+                    case "SpriteComponent":
+                        component = new SpriteComponent
+                        {
+                            Sprite = Raylib_cs.Raylib.LoadTexture(DonutFilePaths.sprites+sectionName.Keys.GetKeyData("Sprite").Value),
+                            Width = int.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                            Height = int.Parse(sectionName.Keys.GetKeyData("Height").Value),
+                            AnimatorName = sectionName.Keys.GetKeyData("AnimatorName").Value,
+                            FramesPerRow = int.Parse(sectionName.Keys.GetKeyData("FramesPerRow").Value),
+                            Rows = int.Parse(sectionName.Keys.GetKeyData("Rows").Value),
+                            FrameRate = int.Parse(sectionName.Keys.GetKeyData("FrameRate").Value),
+                            PlayInReverse = bool.Parse(sectionName.Keys.GetKeyData("PlayInReverse").Value),
+                            Continuous = bool.Parse(sectionName.Keys.GetKeyData("Continuous").Value),
+                            Looping = bool.Parse(sectionName.Keys.GetKeyData("Looping").Value)
+                        };
+                        break;
+                    case "GameCamera2D":
+                        component = new GameCamera2D
+                        {
+                            IsActive = bool.Parse(sectionName.Keys.GetKeyData("IsActive").Value)
+                        };
+                        break;
+                    case "PlayerComponent":
+                        component = new PlayerComponent
+                        {
 
+                        };
+                        break;
+                    case "ParticleSystem":
+                        component = new ParticleSystem
+                        {
+                            maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
+                            emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
+                            textureName = sectionName.Keys.GetKeyData("textureName").Value
+                        };
+                        break;
+                    // add support for additional components as needed
+                }
+                if (component != null) 
+                {
+                    System.Console.WriteLine(component);
+                    entity.AddComponent(component, entity);
+                }; 
+            }
+        }
+        public void CreateComponents(IniData data, StaticEntity entity)
+        {
+            foreach (SectionData sectionName in data.Sections) 
+            {
+                string componentType = sectionName.SectionName;
+                StaticComponent? component = null;
+                    switch (componentType) 
+                    {
+                        /*case "Tags":
+                        {
+                            foreach(string s in componentType.)
+                            {
+                                entity.Tags.Add(s.Length.ToString());
+                            }
+                        }
+                        break;*/
+                        /*case "ParticleSystem":
+                            component = new ParticleSystem
+                            {
+                                maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
+                                emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
+                                textureName = sectionName.Keys.GetKeyData("textureName").Value
+                            };
+                            break;*/
+                        case "BlockingComponent":
+                            component = new BlockingComponent
+                            {
+                                Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
+                                Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value)
+                            };
+                            break;
+                        // add support for additional components as needed
+                    }
+                    
                     if (component != null) 
                     {
-                        entity.AddComponent(component);
+                        System.Console.WriteLine(component);
+                        entity.AddComponent(component, entity);
                     }; 
                 }
-            return entity;
+            }
         }
-    }
 }

@@ -5,30 +5,36 @@ using DonutEngine.Backbone.Systems;
 using DonutEngine.DonutMath;
 using Raylib_cs;
 
-public class PlayerComponent : Component
+public class PlayerComponent : DynamicComponent
 {
     SpriteComponent? sprite = null;
     EntityPhysics? physics = null;
-    public override void OnAddedToEntity(Entity entity)
+    public override void OnAddedToEntity(DynamicEntity entity)
     {
-        sprite = entity.GetComponent<SpriteComponent>();
         physics = entity.entityPhysics;
+        sprite = entity.GetComponent<SpriteComponent>();
         ECS.ecsUpdate += Update;
         InputEventSystem.JumpEvent += OnJump;
         InputEventSystem.AttackEvent += OnAttack;
         InputEventSystem.DpadEvent += OnDpad;
     }
 
-    public override void OnRemovedFromEntity(Entity entity)
+    public override void OnRemovedFromEntity(DynamicEntity entity)
     {
-        //throw new NotImplementedException();
+
+        physics = entity.entityPhysics;
+        sprite = entity.GetComponent<SpriteComponent>();
+        ECS.ecsUpdate += Update;
+        InputEventSystem.JumpEvent += OnJump;
+        InputEventSystem.AttackEvent += OnAttack;
+        InputEventSystem.DpadEvent += OnDpad;
     }
 
     public void OnJump(CBool boolean)
     {
         if(boolean)
         {
-            physics.currentBody.ApplyImpulse(new(0, 0),physics.currentBody.GetPosition());
+            physics.currentBody.ApplyImpulse(new(0,-2000),physics.currentBody.GetPosition());
         }
     }
 
@@ -44,7 +50,7 @@ public class PlayerComponent : Component
 
     public void Update(float deltaTime)
     {
-
+        
         //Console.WriteLine(physics.currentBody.GetLinearVelocity().X < Mathdf.Epsilon);
         bool PlayerHasHorizonalVelocity = Math.Abs(physics.currentBody.GetLinearVelocity().X) > Mathdf.Epsilon;
         if(PlayerHasHorizonalVelocity)
@@ -53,5 +59,13 @@ public class PlayerComponent : Component
         }
     }
 
+    public override void OnAddedToEntity(Entity entity)
+    {
+        //throw new NotImplementedException();
+    }
 
+    public override void OnRemovedFromEntity(Entity entity)
+    {
+        //throw new NotImplementedException();
+    }
 }
