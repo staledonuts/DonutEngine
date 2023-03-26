@@ -1,11 +1,10 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
-using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using DonutEngine.DonutMath;
 using Raylib_cs;
 
-public class PlayerComponent : DynamicComponent
+public class PlayerComponent : Component
 {
     SpriteComponent? sprite = null;
     EntityPhysics? physics = null;
@@ -59,12 +58,12 @@ public class PlayerComponent : DynamicComponent
         }
     }
 
-    public override void OnAddedToEntity(Entity entity)
+    public override void OnAddedToEntity(StaticEntity entity)
     {
         //throw new NotImplementedException();
     }
 
-    public override void OnRemovedFromEntity(Entity entity)
+    public override void OnRemovedFromEntity(StaticEntity entity)
     {
         //throw new NotImplementedException();
     }

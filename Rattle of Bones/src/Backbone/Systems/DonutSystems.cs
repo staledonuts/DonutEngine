@@ -2,7 +2,7 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class DonutSystems
 {
-    public static readonly SettingsVars settingsVars = new();
+    public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
     public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
     public static readonly EntityManager entityManager = new();

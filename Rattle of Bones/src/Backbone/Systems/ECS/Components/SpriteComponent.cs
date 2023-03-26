@@ -1,7 +1,6 @@
 namespace DonutEngine.Backbone;
 using Raylib_cs;
-using DonutEngine.Backbone;
-public class SpriteComponent : DynamicComponent
+public class SpriteComponent : Component
 {
     public Texture2D Sprite { get; set; }
     public Int32 Width { get; set; }
@@ -47,13 +46,13 @@ public class SpriteComponent : DynamicComponent
         animator.FlipSprite(flipBool, false);
     }
 
-    public override void OnRemovedFromEntity(Entity entity)
+    public override void OnAddedToEntity(StaticEntity entity)
     {
-        
+        //throw new NotImplementedException();
     }
 
-    public override void OnAddedToEntity(Entity entity)
+    public override void OnRemovedFromEntity(StaticEntity entity)
     {
-        
+        //throw new NotImplementedException();
     }
 }

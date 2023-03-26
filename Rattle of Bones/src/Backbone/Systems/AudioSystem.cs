@@ -1,7 +1,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using System;
-using System.Collections.Generic;
+using IniParser.Model;
+using IniParser;
 namespace DonutEngine.Backbone;
 public class AudioControl : Systems.SystemsClass
 {
@@ -11,10 +11,48 @@ public class AudioControl : Systems.SystemsClass
     private Dictionary<string, Music> musicsLibrary = new Dictionary<string, Music>();
 
     private Music currentMusic;
+    private string? currentSongName = null;
 
     public override void Start()
     {
-        
+        InitAudioDevice();
+        InitAudioLibrary();
+    }
+
+    public void InitAudioLibrary()
+    {
+        string firstSong = "Intro";
+        FileIniDataParser parser = new();
+        IniData data = parser.ReadFile(DonutFilePaths.soundDef);
+        foreach (SectionData sectionName in data.Sections)
+        {
+            string audioType = sectionName.SectionName;
+            switch(audioType)
+            {
+                case "SFX":
+                {
+                    foreach(KeyData keys in sectionName.Keys)
+                    {
+                        soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.sfx+keys.Value));
+                    }
+                }
+                break;
+                case "Music":
+                {
+                    firstSong = sectionName.Keys.First().KeyName;
+                    foreach(KeyData keys in sectionName.Keys)
+                    {
+                        musicsLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.music+keys.Value));
+                    }
+                }
+                break;
+            }
+            
+        }
+        if(currentSongName == null)
+        {
+            PlayMusic(firstSong);
+        }
     }
 
     public override void Update()
@@ -34,7 +72,7 @@ public class AudioControl : Systems.SystemsClass
 
     public override void Shutdown()
     {
-        
+        CloseAudioDevice();
     }
 
 
@@ -47,7 +85,8 @@ public class AudioControl : Systems.SystemsClass
     public void PlaySFX(string name) 
     {
         Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) {
+        if (soundsLibrary.TryGetValue(name, out sound)) 
+        {
             PlaySound(sound);
         }
     }
@@ -55,7 +94,8 @@ public class AudioControl : Systems.SystemsClass
     public void StopSFX(string name) 
     {
         Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) {
+        if (soundsLibrary.TryGetValue(name, out sound)) 
+        {
             StopSound(sound);
         }
     }
@@ -81,8 +121,9 @@ public class AudioControl : Systems.SystemsClass
         Music music;
         if (musicsLibrary.TryGetValue(name, out music)) 
         {
+            currentSongName = name;
             currentMusic = music;
-            PlayMusicStream(music);
+            PlayMusicStream(currentMusic);
         }
     }
 

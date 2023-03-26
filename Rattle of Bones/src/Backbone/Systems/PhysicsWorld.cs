@@ -1,7 +1,5 @@
 namespace DonutEngine.Backbone.Systems;
-using System.Numerics;
 using Box2DX.Common;
-using static Box2DX.Dynamics.World;
 using Box2DX.Dynamics;
 using Box2DX.Collision;
 using Raylib_cs;
@@ -16,7 +14,7 @@ public class PhysicsSystem : SystemsClass
     private int velocityIterations = 9;
     private int positionIterations = 4;
 
-    public Body CreateBody(EntityPhysics physics, DynamicEntity entity) 
+    public Body CreateBody(EntityPhysics physics) 
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.Position.Set(physics.X, physics.Y);
@@ -31,10 +29,10 @@ public class PhysicsSystem : SystemsClass
         return body;
     }
 
-    public Body CreateStaticBody(BlockingComponent blockingComponent, StaticEntity entity) 
+    public Body CreateStaticBody(EntityPhysics physics) 
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.Position.Set(entity.X, entity.Y);
+        bodyDef.Position.Set(physics.X, physics.Y);
         Body body = world.CreateBody(bodyDef);
         body.SetStatic();
 

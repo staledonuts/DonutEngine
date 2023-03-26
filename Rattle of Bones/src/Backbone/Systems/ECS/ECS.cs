@@ -1,11 +1,5 @@
-using System.Numerics;
-using Raylib_cs;
 using IniParser.Model;
 using IniParser;
-using IniParser.Parser;
-using Box2DX.Dynamics;
-using Box2DX.Collision;
-
 namespace DonutEngine.Backbone;
 
 public static class ECS
@@ -87,7 +81,6 @@ public class EntityManager
             System.Console.WriteLine(iniPath);
             FileIniDataParser parser = new FileIniDataParser();
             IniData data = parser.ReadFile(iniPath);
-            //Entity? entity = null;
             DynamicEntity? dynEnt = null;
             StaticEntity? staEnt = null;
             if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "DynamicEntity")
@@ -108,7 +101,7 @@ public class EntityManager
 
         public void CreateComponents(IniData data, DynamicEntity entity)
         {
-            DynamicComponent? component = null;
+            Component? component = null;
             foreach (SectionData sectionName in data.Sections) 
             {
                 if(component != null)
@@ -175,7 +168,7 @@ public class EntityManager
             foreach (SectionData sectionName in data.Sections) 
             {
                 string componentType = sectionName.SectionName;
-                StaticComponent? component = null;
+                Component? component = null;
                     switch (componentType) 
                     {
                         /*case "Tags":
@@ -186,19 +179,12 @@ public class EntityManager
                             }
                         }
                         break;*/
-                        /*case "ParticleSystem":
+                        case "ParticleSystem":
                             component = new ParticleSystem
                             {
                                 maxParticles = int.Parse(sectionName.Keys.GetKeyData("maxParticles").Value),
                                 emitRate = float.Parse(sectionName.Keys.GetKeyData("emitRate").Value),
                                 textureName = sectionName.Keys.GetKeyData("textureName").Value
-                            };
-                            break;*/
-                        case "BlockingComponent":
-                            component = new BlockingComponent
-                            {
-                                Width = float.Parse(sectionName.Keys.GetKeyData("Width").Value),
-                                Height = float.Parse(sectionName.Keys.GetKeyData("Height").Value)
                             };
                             break;
                         // add support for additional components as needed

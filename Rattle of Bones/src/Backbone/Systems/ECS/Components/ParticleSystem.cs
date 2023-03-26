@@ -39,7 +39,7 @@ class Particle
 
     }
 
-    class ParticleSystem : DynamicComponent
+    class ParticleSystem : Component
     {
         private EntityPhysics entityPhysics;
         private Random random = new Random();
@@ -119,13 +119,19 @@ class Particle
         UnloadTexture(particleTexture);
     }
 
-    public override void OnAddedToEntity(Entity entity)
+    public override void OnAddedToEntity(StaticEntity entity)
     {
-        //throw new NotImplementedException();
+        //entityPhysics = entity.entityPhysics;
+        particles = new Particle[maxParticles];
+        particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
+        ECS.ecsUpdate += Update;
+        ECS.ecsDrawUpdate += Draw;
     }
 
-    public override void OnRemovedFromEntity(Entity entity)
+    public override void OnRemovedFromEntity(StaticEntity entity)
     {
-        //throw new NotImplementedException();
+        ECS.ecsUpdate -= Update;
+        ECS.ecsDrawUpdate -= Draw;
+        UnloadTexture(particleTexture);
     }
 }

@@ -1,15 +1,9 @@
-using System.Numerics;
-using DonutEngine.Backbone.Systems;
 using Box2DX.Dynamics;
-using Box2DX.Collision;
 using IniParser.Model;
-using IniParser;
-using Raylib_cs;
 namespace DonutEngine.Backbone;
 
 public class DynamicEntity : Entity
 {
-    public EntityPhysics? entityPhysics;
     public DynamicEntity(int id, IniData data) : base(id, data)
     {
         entityPhysics = new EntityPhysics()
@@ -25,22 +19,25 @@ public class DynamicEntity : Entity
         };
         entityPhysics.InitEntityPhysics(this);
     }
-
-    public override void DestroyEntity()
-    {
-        base.DestroyEntity();
-        entityPhysics.DestroyEntityPhysics();
-    }
 }
 
 public class StaticEntity : Entity
 {
     public StaticEntity(int id, IniData data) : base(id, data)
     {
-        X = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("X").Value);
-        Y = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Y").Value);
-        Width = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Width").Value);
-        Height = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Height").Value);
+        entityPhysics = new EntityPhysics()
+        {
+            X = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("X").Value),
+            Y = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Y").Value),
+            Width = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Width").Value),
+            Height = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Height").Value),
+            Type = (Body.BodyType)int.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("BodyType").Value),
+            Density = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Density").Value),
+            Friction = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Friction").Value),
+            Restitution = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Restitution").Value)
+        };
+        entityPhysics.InitEntityPhysics(this);
+
     }
 
     public float X { get; set; }
@@ -61,6 +58,7 @@ public class Entity
     public int Id { get; set; }
     public Dictionary<string, Component> Components { get; set; }
     public HashSet<string> Tags { get; set; }
+    public EntityPhysics? entityPhysics;
 
 
 
@@ -69,17 +67,11 @@ public class Entity
         Components.TryAdd(component.GetType().Name, component);
         if(entity is DynamicEntity dynEnt)
         {
-            if(component is DynamicComponent dynComp)
-            {
-                dynComp.OnAddedToEntity(dynEnt);
-            }
+            component.OnAddedToEntity(dynEnt);
         }
         else if (entity is StaticEntity staEnt)
         {
-            if(component is StaticComponent staComp)
-            {
-                staComp.OnAddedToEntity(staEnt);
-            }
+            component.OnAddedToEntity(staEnt);
         }
         Console.WriteLine(component.GetType().Name);
     }
@@ -89,34 +81,34 @@ public class Entity
         return (T)Components[typeof(T).Name];
     }
 
-    public virtual void DestroyEntity()
+    public void DestroyEntity()
     {
-        foreach(KeyValuePair<string, Component> c in Components)
+        if(this is DynamicEntity dynEnt)
         {
-            c.Value.OnRemovedFromEntity(this);
-            Components.Remove(c.Key);
+            foreach(KeyValuePair<string, Component> c in Components)
+            {
+                c.Value.OnRemovedFromEntity(dynEnt);
+                Components.Remove(c.Key);
+            }
         }
+        else if(this is StaticEntity staEnt)
+        {
+            foreach(KeyValuePair<string, Component> c in Components)
+            {
+                c.Value.OnRemovedFromEntity(staEnt);
+                Components.Remove(c.Key);
+            }
+        }
+        entityPhysics.DestroyEntityPhysics();
     }
 }
 
-
-
-
-public abstract class DynamicComponent : Component
-{
-    public abstract void OnAddedToEntity(DynamicEntity entity);
-    public abstract void OnRemovedFromEntity(DynamicEntity entity);
-}
-
-public abstract class StaticComponent : Component
+public abstract class Component
 {
     public abstract void OnAddedToEntity(StaticEntity entity);
     public abstract void OnRemovedFromEntity(StaticEntity entity);
-}
-public abstract class Component
-{
-    public abstract void OnAddedToEntity(Entity entity);
-    public abstract void OnRemovedFromEntity(Entity entity);
+    public abstract void OnAddedToEntity(DynamicEntity entity);
+    public abstract void OnRemovedFromEntity(DynamicEntity entity);
 }
 
 

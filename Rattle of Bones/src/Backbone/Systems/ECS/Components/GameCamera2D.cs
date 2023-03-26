@@ -1,21 +1,10 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
 
-public class GameCamera2D : DynamicComponent
+public class GameCamera2D : Component
 {
 	public bool IsActive { get; set; }
 	EntityPhysics? entityPhysics;
-    public override void OnAddedToEntity(Entity entity)
-    {
-		
-		
-		//ECS.ecsUpdate += LateUpdate;
-    }
-
-    public override void OnRemovedFromEntity(Entity entity)
-    {
-        //throw new NotImplementedException();
-    }
 
 	public void LateUpdate(float deltaTime)
 	{
@@ -33,5 +22,15 @@ public class GameCamera2D : DynamicComponent
     public override void OnRemovedFromEntity(DynamicEntity entity)
     {
 		
+    }
+
+    public override void OnAddedToEntity(StaticEntity entity)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void OnRemovedFromEntity(StaticEntity entity)
+    {
+        //throw new NotImplementedException();
     }
 }

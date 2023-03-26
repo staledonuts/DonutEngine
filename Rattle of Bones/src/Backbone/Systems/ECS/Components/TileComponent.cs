@@ -1,20 +1,20 @@
 using Raylib_cs;
-using DonutEngine.Backbone;
+using Box2DX.Dynamics;
+namespace DonutEngine.Backbone;
 
-public class TileComponent : StaticComponent
+public class TileComponent : Component
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public float Width { get; set; }
+    public float Height { get; set; }
     public Texture2D Texture { get; set; }
+    private Body? currentBody = null;
+    PolygonDef polyDef = new();
 
     public override void OnAddedToEntity(StaticEntity entity)
     {
-        
-    }
-
-    public override void OnAddedToEntity(Entity entity)
-    {
-
+        currentBody = entity.entityPhysics.currentBody;
+        polyDef.SetAsBox(Width, Height);
+        currentBody.CreateFixture(polyDef);        
     }
 
     public override void OnRemovedFromEntity(StaticEntity entity)
@@ -22,8 +22,13 @@ public class TileComponent : StaticComponent
         
     }
 
-    public override void OnRemovedFromEntity(Entity entity)
+    public override void OnAddedToEntity(DynamicEntity entity)
     {
-        
+        //throw new NotImplementedException();
+    }
+
+    public override void OnRemovedFromEntity(DynamicEntity entity)
+    {
+        //throw new NotImplementedException();
     }
 }
