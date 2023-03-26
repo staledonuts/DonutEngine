@@ -1,14 +1,14 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using System.Numerics;
 using System;
+using Box2DX.Common;
 namespace DonutEngine.Backbone.Systems;
 
 
 public static class InputEventSystem
 {
     public delegate void InputEventHandler(CBool input);
-    public delegate void InputEventDpadHandler(Vector2 vector2);
+    public delegate void InputEventDpadHandler(Vec2 vector2);
 
     // Declare the event using the delegate.
     public static event InputEventHandler? DashEvent;
@@ -21,9 +21,9 @@ public static class InputEventSystem
     {
         if(!IsGamepadAvailable(0))
         {
-            JumpEvent?.Invoke(IsKeyPressed(KeyboardKey.KEY_Z));
-            AttackEvent?.Invoke(IsKeyPressed(KeyboardKey.KEY_X));
-            DashEvent?.Invoke(IsKeyPressed(KeyboardKey.KEY_C));
+            JumpEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_Z));
+            AttackEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
+            DashEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_C));
             DpadEvent?.Invoke(Vector2Composite());
             
         }
@@ -36,9 +36,9 @@ public static class InputEventSystem
         }
     }
 
-    static Vector2 Vector2Composite()
+    static Vec2 Vector2Composite()
     {
-        Vector2 input;
+        Vec2 input;
         if(!IsGamepadAvailable(0))
         {
             input.X = -(int)IsKeyDown(KeyboardKey.KEY_LEFT) +(int)IsKeyDown(KeyboardKey.KEY_RIGHT);

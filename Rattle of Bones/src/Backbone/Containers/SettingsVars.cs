@@ -8,29 +8,12 @@ public class SettingsVars
         parser = new FileIniDataParser();
         try
         {
-            IniData data = parser.ReadFile(settingsPath);
-            SectionData sectionData = data.Sections.GetSectionData("Settings");
-            currentMasterVolume = float.Parse(sectionData.Keys.GetKeyData("currentMasterVolume").Value);
-            currentMusicVolume = float.Parse(sectionData.Keys.GetKeyData("currentMusicVolume").Value);
-            currentSFXVolume = float.Parse(sectionData.Keys.GetKeyData("currentSFXVolume").Value);
-            screenWidth = int.Parse(sectionData.Keys.GetKeyData("screenWidth").Value);
-            screenHeight = int.Parse(sectionData.Keys.GetKeyData("screenHeight").Value);
-            targetFPS = int.Parse(sectionData.Keys.GetKeyData("targetFPS").Value);
-            splashScreenLength = int.Parse(sectionData.Keys.GetKeyData("splashScreenLength").Value);
-            fullScreen = bool.Parse(sectionData.Keys.GetKeyData("fullScreen").Value);
-            System.Console.WriteLine("INFO: ---[Settings Loaded]---");
+            LoadSettings(settingsPath);
         }
         catch
         {
             System.Console.WriteLine("WARNING: ---[There was a Settings Error: Creating Default Fallback]---");
-            currentMasterVolume = 1;
-            currentMusicVolume = 1;
-            currentSFXVolume = 1;
-            screenWidth = 800;
-            screenHeight = 600;
-            targetFPS = 60;
-            splashScreenLength = 120;
-            fullScreen = false;
+            SetDefaultSettings();
             SaveSettings(settingsPath);
         }
         
@@ -46,6 +29,17 @@ public class SettingsVars
     public int splashScreenLength { get; set; }
     public bool fullScreen { get; set; }
 
+    public void SetDefaultSettings()
+    {
+        currentMasterVolume = 1;
+        currentMusicVolume = 1;
+        currentSFXVolume = 1;
+        screenWidth = 800;
+        screenHeight = 600;
+        targetFPS = 60;
+        splashScreenLength = 120;
+        fullScreen = false;
+    }
     public void SaveSettings(string settingsPath)
     {
         IniData data = new();
@@ -58,5 +52,20 @@ public class SettingsVars
         data["Settings"]["splashScreenLength"] = splashScreenLength.ToString();
         data["Settings"]["fullScreen"] = fullScreen.ToString();
         parser.WriteFile(settingsPath, data);
-    }    
+    } 
+
+    public void LoadSettings(string settingsPath)
+    {
+        IniData data = parser.ReadFile(settingsPath);
+        SectionData sectionData = data.Sections.GetSectionData("Settings");
+        currentMasterVolume = float.Parse(sectionData.Keys.GetKeyData("currentMasterVolume").Value);
+        currentMusicVolume = float.Parse(sectionData.Keys.GetKeyData("currentMusicVolume").Value);
+        currentSFXVolume = float.Parse(sectionData.Keys.GetKeyData("currentSFXVolume").Value);
+        screenWidth = int.Parse(sectionData.Keys.GetKeyData("screenWidth").Value);
+        screenHeight = int.Parse(sectionData.Keys.GetKeyData("screenHeight").Value);
+        targetFPS = int.Parse(sectionData.Keys.GetKeyData("targetFPS").Value);
+        splashScreenLength = int.Parse(sectionData.Keys.GetKeyData("splashScreenLength").Value);
+        fullScreen = bool.Parse(sectionData.Keys.GetKeyData("fullScreen").Value);
+        System.Console.WriteLine("INFO: ---[Settings Loaded]---");
+    }   
 }

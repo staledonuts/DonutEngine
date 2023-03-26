@@ -1,5 +1,5 @@
 namespace DonutEngine.Backbone;
-using System.Numerics;
+using Box2DX.Common;
 using DonutEngine.Backbone.Systems;
 using DonutEngine.DonutMath;
 using Raylib_cs;
@@ -33,7 +33,8 @@ public class PlayerComponent : Component
     {
         if(boolean)
         {
-            physics.currentBody.ApplyImpulse(new(0,-2000),physics.currentBody.GetPosition());
+            boolean = false;
+            physics.currentBody.ApplyImpulse(new(0,-20000), physics.currentBody.GetPosition());
         }
     }
 
@@ -42,7 +43,7 @@ public class PlayerComponent : Component
 
     }
 
-    public void OnDpad(Vector2 vector)
+    public void OnDpad(Vec2 vector)
     {
         physics.currentBody.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), physics.currentBody.GetPosition());
     }

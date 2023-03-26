@@ -46,8 +46,8 @@ public class PhysicsSystem : SystemsClass
 
     public override void Start()
     {
-        worldAABB.LowerBound.Set(-10000.0f, -100.0f);
-		worldAABB.UpperBound.Set(10000.0f, 100.0f);
+        worldAABB.LowerBound.Set(-10000.0f, -10000.0f);
+		worldAABB.UpperBound.Set(10000.0f, 10000.0f);
         world = new World(worldAABB,gravity, true);
     }
 
