@@ -1,7 +1,6 @@
+namespace DonutEngine.Backbone;
 using IniParser.Model;
 using IniParser;
-namespace DonutEngine.Backbone;
-
 public static class ECS
 {
     public delegate void UpdateEvent(float deltaTime);
@@ -25,7 +24,7 @@ public static class ECS
         ecsLateUpdate?.Invoke(Time.deltaTime);
     }
 }
-public class EntityManager 
+public class EntityManager
 {
     private Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
     private EntityFactory factory = new EntityFactory();
@@ -54,7 +53,6 @@ public class EntityManager
         }
     }
 
-    
     public Entity CreateEntity(string ini) 
     {
         Entity entity = factory.CreateEntity(ini);
@@ -81,25 +79,27 @@ public class EntityManager
             System.Console.WriteLine(iniPath);
             FileIniDataParser parser = new FileIniDataParser();
             IniData data = parser.ReadFile(iniPath);
-            DynamicEntity? dynEnt = null;
-            StaticEntity? staEnt = null;
+            Entity? currentEntity = null;
             if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "DynamicEntity")
             {
-                dynEnt = new DynamicEntity(nextEntityId++, data);
-                CreateComponents(data, dynEnt);
-                return dynEnt;
+                currentEntity = new DynamicEntity(nextEntityId++, data);
+                CreateComponents(data, currentEntity);
             }
             else if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "StaticEntity")
             {
-                staEnt = new StaticEntity(nextEntityId++, data);
-                CreateComponents(data, staEnt);
-                return staEnt; 
+                currentEntity = new StaticEntity(nextEntityId++, data);
+                CreateComponents(data, currentEntity);
             }
-            else return staEnt;
+            else if(data.Sections.GetSectionData("EntityType").Keys.GetKeyData("Type").Value == "GameObjectEntity")
+            {
+                currentEntity = new GameObjectEntity(nextEntityId++, data);
+                CreateComponents(data, currentEntity);
+            }
+            return currentEntity;
 
         }
 
-        public void CreateComponents(IniData data, DynamicEntity entity)
+        public void CreateComponents(IniData data, Entity entity)
         {
             Component? component = null;
             foreach (SectionData sectionName in data.Sections) 
@@ -198,4 +198,6 @@ public class EntityManager
                 }
             }
         }
+
+    
 }

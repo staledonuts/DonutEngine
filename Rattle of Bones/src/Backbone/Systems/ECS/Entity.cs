@@ -46,6 +46,31 @@ public class StaticEntity : Entity
     public float Height { get; set; }
 }
 
+public class GameObjectEntity : Entity
+{
+    public GameObjectEntity(int id, IniData data) : base(id, data)
+    {
+        entityPhysics = new EntityPhysics()
+        {
+            X = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("X").Value),
+            Y = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Y").Value),
+            Width = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Width").Value),
+            Height = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Height").Value),
+            Type = (Body.BodyType)int.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("BodyType").Value),
+            Density = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Density").Value),
+            Friction = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Friction").Value),
+            Restitution = float.Parse(data.Sections.GetSectionData("EntityPhysics").Keys.GetKeyData("Restitution").Value)
+        };
+        entityPhysics.InitEntityPhysics(this);
+
+    }
+
+    public float X { get; set; }
+    public float Y { get; set; }
+    public float Width { get; set; }
+    public float Height { get; set; }
+}
+
 public class Entity 
 {
     

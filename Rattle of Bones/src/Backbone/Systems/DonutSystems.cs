@@ -6,6 +6,7 @@ public static class DonutSystems
     public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
     public static readonly EntityManager entityManager = new();
+    public static readonly LevelDataSystem levelDataSystem = new();
     public static readonly PhysicsSystem physicsSystem = new();
     public static CameraHandler cameraHandler = new();
 

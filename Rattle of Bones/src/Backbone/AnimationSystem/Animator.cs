@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Raylib_cs;
@@ -9,7 +9,6 @@ namespace DonutEngine.Backbone
 {
 	class Animator
     	{
-		
 		float FrameWidth;
 		float FrameHeight;
 		float TimeRemainingFramesCounter;

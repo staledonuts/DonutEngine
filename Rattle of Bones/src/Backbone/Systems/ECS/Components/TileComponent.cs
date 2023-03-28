@@ -1,5 +1,6 @@
 using Raylib_cs;
 using Box2DX.Dynamics;
+using Box2DX.Collision;
 namespace DonutEngine.Backbone;
 
 public class TileComponent : Component
@@ -14,7 +15,7 @@ public class TileComponent : Component
     {
         currentBody = entity.entityPhysics.currentBody;
         polyDef.SetAsBox(Width, Height);
-        currentBody.CreateFixture(polyDef);        
+        currentBody.CreateShape(polyDef);        
     }
 
     public override void OnRemovedFromEntity(StaticEntity entity)

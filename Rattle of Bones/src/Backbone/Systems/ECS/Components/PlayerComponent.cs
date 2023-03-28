@@ -50,8 +50,6 @@ public class PlayerComponent : Component
 
     public void Update(float deltaTime)
     {
-        
-        //Console.WriteLine(physics.currentBody.GetLinearVelocity().X < Mathdf.Epsilon);
         bool PlayerHasHorizonalVelocity = Math.Abs(physics.currentBody.GetLinearVelocity().X) > Mathdf.Epsilon;
         if(PlayerHasHorizonalVelocity)
         {

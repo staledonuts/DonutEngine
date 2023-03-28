@@ -9,9 +9,9 @@ public class PhysicsSystem : SystemsClass
     private static AABB worldAABB = new();
     private World? world = null;
 
-    private Vec2 gravity = new(0, 50);
+    private Vec2 gravity = new(0, 10);
     private float timeStep = 1f / DonutSystems.settingsVars.targetFPS;
-    private int velocityIterations = 9;
+    private int velocityIterations = 8;
     private int positionIterations = 4;
 
     public Body CreateBody(EntityPhysics physics) 
@@ -24,7 +24,7 @@ public class PhysicsSystem : SystemsClass
         polygonDef.Density = physics.Density;
         polygonDef.Friction = physics.Friction;
         polygonDef.Restitution = physics.Restitution;
-        body.CreateFixture(polygonDef);
+        body.CreateShape(polygonDef);
         body.SetMassFromShapes();
         return body;
     }
@@ -34,7 +34,7 @@ public class PhysicsSystem : SystemsClass
         BodyDef bodyDef = new BodyDef();
         bodyDef.Position.Set(physics.X, physics.Y);
         Body body = world.CreateBody(bodyDef);
-        body.SetStatic();
+        body.IsStatic();
 
         return body;
     }
@@ -46,8 +46,8 @@ public class PhysicsSystem : SystemsClass
 
     public override void Start()
     {
-        worldAABB.LowerBound.Set(-10000.0f, -10000.0f);
-		worldAABB.UpperBound.Set(10000.0f, 10000.0f);
+        worldAABB.LowerBound.Set(-1000.0f, -1000.0f);
+		worldAABB.UpperBound.Set(1000.0f, 1000.0f);
         world = new World(worldAABB,gravity, true);
     }
 
@@ -57,7 +57,7 @@ public class PhysicsSystem : SystemsClass
     }
 
     public override void DrawUpdate()
-    {
+    {        
         Raylib.DrawText("Number of Bodies:"+world.GetBodyCount(),0,50, 12, Raylib_cs.Color.BLACK);
     }
 

@@ -10,13 +10,13 @@ public class GameplayScene : Scene
 
     public override void InitializeScene()
     {
+        DonutSystems.SubscribeSystem(DonutSystems.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
         Player = entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
         entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
         //entityManager.CreateEntity(DonutFilePaths.entities+"Test.ini");
-        
     }
 
     public override Scene UnloadScene()

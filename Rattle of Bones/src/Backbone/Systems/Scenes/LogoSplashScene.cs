@@ -11,7 +11,7 @@ public class LogoSplashScene : Scene
 
     public override void InitializeScene()
     {
-        splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Assets/Splash/raylib-cs.png");
+        splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/raylib-cs.png");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
     }

@@ -41,9 +41,9 @@ class Particle
 
     class ParticleSystem : Component
     {
-        private EntityPhysics entityPhysics;
+        private EntityPhysics? entityPhysics = null;
         private Random random = new Random();
-        private Particle[] particles;
+        private Particle[]? particles = null;
         private Texture2D particleTexture;
         private float emitTimer = 0;
         public int maxParticles { get; set; }
