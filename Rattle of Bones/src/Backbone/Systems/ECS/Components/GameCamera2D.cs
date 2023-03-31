@@ -4,7 +4,7 @@ using System.Numerics;
 public class GameCamera2D : Component
 {
 	public bool IsActive { get; set; }
-	EntityPhysics? entityPhysics;
+	Entity? entity;
 
 	public void LateUpdate(float deltaTime)
 	{
@@ -16,7 +16,7 @@ public class GameCamera2D : Component
 
     public override void OnAddedToEntity(DynamicEntity entity)
     {
-        entityPhysics = entity.entityPhysics;
+        this.entity = entity;
     }
 
     public override void OnRemovedFromEntity(DynamicEntity entity)

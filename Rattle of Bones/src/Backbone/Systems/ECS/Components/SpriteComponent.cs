@@ -15,11 +15,11 @@ public class SpriteComponent : Component
 
     private Animator animator;
 
-    EntityPhysics? entityPhysics = null;
+    Entity? entity = null;
 
     public override void OnAddedToEntity(DynamicEntity entity)
     {
-        entityPhysics = entity.entityPhysics;
+        this.entity = entity;
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
         animator.AssignSprite(Sprite);
         ECS.ecsDrawUpdate += Draw;
@@ -38,7 +38,7 @@ public class SpriteComponent : Component
     }
     public void Draw(float deltaTime)
     {
-        Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entityPhysics.currentBody.GetPosition().X, entityPhysics.currentBody.GetPosition().Y), Color.WHITE);
+        Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.currentBody.GetPosition().X, entity.currentBody.GetPosition().Y), Color.WHITE);
     }
 
     public void  FlipSprite(bool flipBool)

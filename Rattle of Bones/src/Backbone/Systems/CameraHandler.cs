@@ -1,25 +1,26 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
 using Raylib_cs;
+using Box2DX.Common;
 using static Raylib_cs.Raylib;
 using DonutEngine.Backbone.Systems;
 
 public class CameraHandler
 {
     public Camera2D donutcam;
-    Vector2 currentTarget;
-    public void InitializeCamera(Vector2 target)
+    Vec2 currentTarget;
+    public void InitializeCamera(Vec2 target)
     {
         donutcam = new();
         donutcam.zoom = 1.0f;
         donutcam.offset = new Vector2(DonutSystems.settingsVars.screenWidth / 2, DonutSystems.settingsVars.screenHeight / 2);
-        donutcam.target = target;
+        donutcam.target = new(target.X, target.Y);
         currentTarget = target;
         DonutSystems.DrawUpdate += UpdateCamera;
     }
 
-    internal static Vector2 UpdateCameraPlayerBoundsPush_bbox = new Vector2(0.03f, 0.02f);
-	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
+    internal static Vec2 UpdateCameraPlayerBoundsPush_bbox = new Vec2(0.03f, 0.02f);
+	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
 	{
 		Vector2 bboxWorldMin = GetScreenToWorld2D(new((1 - UpdateCameraPlayerBoundsPush_bbox.X) * 0.5f * width, (1 - UpdateCameraPlayerBoundsPush_bbox.Y) * 0.5f * height), camera);
 		Vector2 bboxWorldMax = GetScreenToWorld2D(new((1 + UpdateCameraPlayerBoundsPush_bbox.X) * 0.5f * width, (1 + UpdateCameraPlayerBoundsPush_bbox.Y) * 0.5f * height), camera);
@@ -43,15 +44,15 @@ public class CameraHandler
 		}
 	}
 
-	public void UpdateCameraCenter(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
+	public void UpdateCameraCenter(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
 	{
 		camera.offset = new(width / 2.0f, height / 2.0f);
-		camera.target = pos;
+		camera.target = new(pos.X, pos.Y);
 	}
 
-	public void UpdateCameraCenterInsideMap(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
+	public void UpdateCameraCenterInsideMap(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
 	{
-		camera.target = pos;
+		camera.target = new(pos.X, pos.Y);
 		camera.offset = new(width / 2.0f, height / 2.0f);
 		float minX = 1000F;
 		float minY = 1000F;
@@ -100,10 +101,10 @@ public class CameraHandler
 	internal float UpdateCameraCenterSmoothFollow_minEffectLength = 10F;
 	internal float UpdateCameraCenterSmoothFollow_fractionSpeed = 0.8f;
 
-	public void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
+	public void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
 	{
 		camera.offset = new(width / 2.0f, height / 2.0f);
-		Vector2 diff = Vector2.Subtract(pos, camera.target);
+		Vector2 diff = Vector2.Subtract(new(pos.X, pos.Y), camera.target);
 		float length = diff.Length();
 
 		if (length > UpdateCameraCenterSmoothFollow_minEffectLength)
@@ -118,7 +119,7 @@ public class CameraHandler
         UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget, Time.deltaTime, 2, 1);
     }
 
-    public void SetCameraTarget(Vector2 target)
+    public void SetCameraTarget(Vec2 target)
     {
         currentTarget = target;
     }

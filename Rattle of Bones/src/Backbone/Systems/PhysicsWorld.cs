@@ -14,7 +14,7 @@ public class PhysicsSystem : SystemsClass
     private int velocityIterations = 8;
     private int positionIterations = 4;
 
-    public Body CreateBody(EntityPhysics physics) 
+    public Body CreateBody(Entity physics) 
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.Position.Set(physics.X, physics.Y);
@@ -29,7 +29,7 @@ public class PhysicsSystem : SystemsClass
         return body;
     }
 
-    public Body CreateStaticBody(EntityPhysics physics) 
+    public Body CreateStaticBody(Entity physics) 
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.Position.Set(physics.X, physics.Y);

@@ -6,7 +6,7 @@ using Raylib_cs;
 
 public class GameplayScene : Scene
 {
-    public Entity? Player;
+    public DynamicEntity? Player;
 
     public override void InitializeScene()
     {
@@ -14,13 +14,13 @@ public class GameplayScene : Scene
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
-        Player = entityManager.CreateEntity(DonutFilePaths.entities+"Player.ini");
-        entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
-        //entityManager.CreateEntity(DonutFilePaths.entities+"Test.ini");
+        Player = (DynamicEntity)entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
+        //entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
     }
 
     public override Scene UnloadScene()
     {
+        DonutSystems.UnsubscribeSystem(DonutSystems.levelDataSystem);
         DonutSystems.Update -= this.Update;
         DonutSystems.DrawUpdate -= this.DrawUpdate;
         DonutSystems.LateUpdate -= this.LateUpdate;
@@ -35,10 +35,7 @@ public class GameplayScene : Scene
     }
     public override void LateUpdate()
     {
-        if(Player is DynamicEntity dynEnt)
-        {
-            cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, dynEnt.entityPhysics.GetVector2Pos(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
-        }
+        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, Player.currentBody.GetPosition(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
     }
 
     public override void Update()

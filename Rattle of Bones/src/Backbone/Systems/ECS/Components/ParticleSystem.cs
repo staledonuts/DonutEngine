@@ -1,18 +1,19 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
+using Box2DX.Common;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using DonutEngine;
 
 class Particle
     {
-        public Vector2 position;
-        public Vector2 velocity;
+        public Vec2 position;
+        public Vec2 velocity;
         public Color color;
         public float size;
         public float life;
 
-        public Particle(Vector2 position, Vector2 velocity, Color color, float size, float life)
+        public Particle(Vec2 position, Vec2 velocity, Color color, float size, float life)
         {
             this.position = position;
             this.velocity = velocity;
@@ -41,7 +42,7 @@ class Particle
 
     class ParticleSystem : Component
     {
-        private EntityPhysics? entityPhysics = null;
+        private Entity? entity = null;
         private Random random = new Random();
         private Particle[]? particles = null;
         private Texture2D particleTexture;
@@ -87,7 +88,7 @@ class Particle
                     continue;
                 }
 
-                Raylib.DrawTextureEx(particleTexture, particles[i].position, 0f, particles[i].size / particleTexture.width, particles[i].color);
+                Raylib.DrawTextureEx(particleTexture, new(particles[i].position.X, particles[i].position.Y), 0f, particles[i].size / particleTexture.width, particles[i].color);
             }
         }
 
@@ -97,7 +98,7 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(entityPhysics.GetVector2Pos(), new Vector2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
+                    particles[i] = new Particle(entity.currentBody.GetPosition(), new Vec2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
                     break;
                 }
             }
@@ -105,7 +106,7 @@ class Particle
 
     public override void OnAddedToEntity(DynamicEntity entity)
     {
-        entityPhysics = entity.entityPhysics;
+        this.entity = entity;
         particles = new Particle[maxParticles];
         particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
         ECS.ecsUpdate += Update;

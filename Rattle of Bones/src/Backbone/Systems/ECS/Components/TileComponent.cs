@@ -13,7 +13,7 @@ public class TileComponent : Component
 
     public override void OnAddedToEntity(StaticEntity entity)
     {
-        currentBody = entity.entityPhysics.currentBody;
+        currentBody = entity.currentBody;
         polyDef.SetAsBox(Width, Height);
         currentBody.CreateShape(polyDef);        
     }
