@@ -8,7 +8,7 @@ public class PlayerComponent : Component
 {
     SpriteComponent? sprite = null;
     Entity? entity = null;
-    public override void OnAddedToEntity(DynamicEntity entity)
+    public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
         sprite = entity.GetComponent<SpriteComponent>();
@@ -18,7 +18,7 @@ public class PlayerComponent : Component
         InputEventSystem.DpadEvent += OnDpad;
     }
 
-    public override void OnRemovedFromEntity(DynamicEntity entity)
+    public override void OnRemovedFromEntity(Entity entity)
     {
 
         this.entity = entity;
@@ -27,6 +27,7 @@ public class PlayerComponent : Component
         InputEventSystem.JumpEvent += OnJump;
         InputEventSystem.AttackEvent += OnAttack;
         InputEventSystem.DpadEvent += OnDpad;
+        Dispose();
     }
 
     public void OnJump(CBool boolean)
@@ -55,15 +56,5 @@ public class PlayerComponent : Component
         {
             sprite.FlipSprite(PlayerHasHorizonalVelocity);
         }
-    }
-
-    public override void OnAddedToEntity(StaticEntity entity)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnRemovedFromEntity(StaticEntity entity)
-    {
-        //throw new NotImplementedException();
     }
 }

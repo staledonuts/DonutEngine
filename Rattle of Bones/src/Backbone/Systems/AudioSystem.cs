@@ -23,7 +23,7 @@ public class AudioControl : Systems.SystemsClass
     {
         string firstSong = "Intro";
         FileIniDataParser parser = new();
-        IniData data = parser.ReadFile(DonutFilePaths.soundDef);
+        IniData data = parser.ReadFile(DonutFilePaths.audioDef);
         foreach (SectionData sectionName in data.Sections)
         {
             string audioType = sectionName.SectionName;

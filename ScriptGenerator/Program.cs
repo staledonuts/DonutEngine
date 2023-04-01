@@ -1,4 +1,5 @@
 ﻿using static Raylib_cs.Raylib;
+using DonutEngine.Backbone.Systems;
 
 static class Program
 {
@@ -26,26 +27,23 @@ static class Program
 
         static void UpdateLoop()
         {
-            
             InputEventSystem.UpdateInputEvent();
             DonutSystems.UpdateSystems();
-            ECS.ProcessUpdate();
+            //ECS.ProcessUpdate();
         }
 
         static void UpdateDraw()
         {
             BeginDrawing();
-            BeginMode2D(DonutSystems.cameraHandler.donutcam);
-            ECS.ProcessDrawUpdate();
+            //ECS.ProcessDrawUpdate();
             DonutSystems.UpdateDraw();
-            EndMode2D();
             EndDrawing();
         }
 
         static void UpdateLate()
         {
             DonutSystems.UpdateLate();
-            ECS.ProcessLateUpdate();
+            //ECS.ProcessLateUpdate();
         }
     }
 }

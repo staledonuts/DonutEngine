@@ -11,25 +11,15 @@ public class TileComponent : Component
     private Body? currentBody = null;
     PolygonDef polyDef = new();
 
-    public override void OnAddedToEntity(StaticEntity entity)
+    public override void OnAddedToEntity(Entity entity)
     {
         currentBody = entity.currentBody;
         polyDef.SetAsBox(Width, Height);
         currentBody.CreateShape(polyDef);        
     }
 
-    public override void OnRemovedFromEntity(StaticEntity entity)
+    public override void OnRemovedFromEntity(Entity entity)
     {
-        
-    }
-
-    public override void OnAddedToEntity(DynamicEntity entity)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnRemovedFromEntity(DynamicEntity entity)
-    {
-        //throw new NotImplementedException();
+        Dispose();
     }
 }

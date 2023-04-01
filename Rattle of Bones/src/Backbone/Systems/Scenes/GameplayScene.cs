@@ -6,7 +6,7 @@ using Raylib_cs;
 
 public class GameplayScene : Scene
 {
-    public DynamicEntity? Player;
+    public Entity? Player;
 
     public override void InitializeScene()
     {
@@ -14,7 +14,7 @@ public class GameplayScene : Scene
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
-        Player = (DynamicEntity)entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
+        Player = entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
         //entityManager.CreateEntity(DonutFilePaths.entities+"ParticleTest.ini");
     }
 

@@ -17,7 +17,7 @@ public class SpriteComponent : Component
 
     Entity? entity = null;
 
-    public override void OnAddedToEntity(DynamicEntity entity)
+    public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
@@ -26,10 +26,12 @@ public class SpriteComponent : Component
         ECS.ecsUpdate += Update;
     }
 
-    public override void OnRemovedFromEntity(DynamicEntity entity)
+    public override void OnRemovedFromEntity(Entity entity)
     {
+        this.entity = null;
         ECS.ecsDrawUpdate -= Draw;
         ECS.ecsUpdate -= Update;
+        Dispose();
     }
 
     public void Update(float deltaTime)
@@ -44,15 +46,5 @@ public class SpriteComponent : Component
     public void  FlipSprite(bool flipBool)
     {
         animator.FlipSprite(flipBool, false);
-    }
-
-    public override void OnAddedToEntity(StaticEntity entity)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnRemovedFromEntity(StaticEntity entity)
-    {
-        //throw new NotImplementedException();
     }
 }

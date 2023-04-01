@@ -4,31 +4,7 @@ using Box2DX.Dynamics;
 using Newtonsoft.Json;
 namespace DonutEngine.Backbone;
 
-public class DynamicEntity : Entity
-{
-    public DynamicEntity(int id, object data) : base(id, data)
-    {
-        
-    }
-}
-
-public class StaticEntity : Entity
-{
-    public StaticEntity(int id, object data) : base(id, data)
-    {
-        
-    }
-}
-
-public class GameObjectEntity : Entity
-{
-    public GameObjectEntity(int id, object data) : base(id, data)
-    {
-
-    }
-}
-
-public class Entity
+public class Entity : IDisposable
 {
     public Entity(int id, dynamic data)
     {
@@ -57,19 +33,12 @@ public class Entity
     public float Friction { get; set; }
     public float Restitution { get; set; }
     public Body? currentBody = null;
-
+    private bool disposedValue;
 
     public void AddComponent<T>(T component, Entity entity) where T : Component 
     {
         Components.TryAdd(component.GetType().Name, component);
-        if(entity is DynamicEntity dynEnt)
-        {
-            component.OnAddedToEntity(dynEnt);
-        }
-        else if (entity is StaticEntity staEnt)
-        {
-            component.OnAddedToEntity(staEnt);
-        }
+        component.OnAddedToEntity(entity);
         Console.WriteLine(component.GetType().Name);
     }
 
@@ -80,32 +49,22 @@ public class Entity
 
     public void DestroyEntity()
     {
-        if(this is DynamicEntity dynEnt)
+        foreach(KeyValuePair<string, Component> c in Components)
         {
-            foreach(KeyValuePair<string, Component> c in Components)
-            {
-                c.Value.OnRemovedFromEntity(dynEnt);
-                Components.Remove(c.Key);
-            }
-        }
-        else if(this is StaticEntity staEnt)
-        {
-            foreach(KeyValuePair<string, Component> c in Components)
-            {
-                c.Value.OnRemovedFromEntity(staEnt);
-                Components.Remove(c.Key);
-            }
+            c.Value.OnRemovedFromEntity(this);
+            Components.Remove(c.Key);
         }
         DestroyEntityPhysics();
+        Dispose();
     }
 
     public void InitEntityPhysics(Entity entity)
     {
-        if (entity is DynamicEntity dynEnt)
+        if (entity.Type == Body.BodyType.Dynamic)
         {
             currentBody = physicsSystem.CreateBody(this);
         }
-        else if (entity is StaticEntity staEnt)
+        else if (entity.Type == Body.BodyType.Static)
         {
             currentBody = physicsSystem.CreateStaticBody(this);
         }
@@ -120,14 +79,71 @@ public class Entity
 
         }
     }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            // TODO: set large fields to null
+            disposedValue = true;
+        }
+    }
+
+    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+    // ~Entity()
+    // {
+    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    //     Dispose(disposing: false);
+    // }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }
 
-public abstract class Component
+public abstract class Component : IDisposable
 {
-    public abstract void OnAddedToEntity(StaticEntity entity);
-    public abstract void OnRemovedFromEntity(StaticEntity entity);
-    public abstract void OnAddedToEntity(DynamicEntity entity);
-    public abstract void OnRemovedFromEntity(DynamicEntity entity);
+    private bool disposedValue;
+    public abstract void OnAddedToEntity(Entity entity);
+    public abstract void OnRemovedFromEntity(Entity entity);
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            // TODO: set large fields to null
+            disposedValue = true;
+        }
+    }
+
+    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+    // ~Component()
+    // {
+    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    //     Dispose(disposing: false);
+    // }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }
 
 

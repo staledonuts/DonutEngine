@@ -104,23 +104,7 @@ class Particle
             }
         }
 
-    public override void OnAddedToEntity(DynamicEntity entity)
-    {
-        this.entity = entity;
-        particles = new Particle[maxParticles];
-        particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
-        ECS.ecsUpdate += Update;
-        ECS.ecsDrawUpdate += Draw;
-    }
-
-    public override void OnRemovedFromEntity(DynamicEntity entity)
-    {
-        ECS.ecsUpdate -= Update;
-        ECS.ecsDrawUpdate -= Draw;
-        UnloadTexture(particleTexture);
-    }
-
-    public override void OnAddedToEntity(StaticEntity entity)
+    public override void OnAddedToEntity(Entity entity)
     {
         //entityPhysics = entity.entityPhysics;
         particles = new Particle[maxParticles];
@@ -129,10 +113,11 @@ class Particle
         ECS.ecsDrawUpdate += Draw;
     }
 
-    public override void OnRemovedFromEntity(StaticEntity entity)
+    public override void OnRemovedFromEntity(Entity entity)
     {
         ECS.ecsUpdate -= Update;
         ECS.ecsDrawUpdate -= Draw;
         UnloadTexture(particleTexture);
+        Dispose();
     }
 }

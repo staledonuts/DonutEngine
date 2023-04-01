@@ -1,0 +1,33 @@
+{
+    "SoundEffects": 
+    {
+        "back001": "back_001.ogg",
+        "back002": "back_002.ogg",
+        "back003": "back_003.ogg",
+        "back004": "back_004.ogg",
+        "bong001": "bong_001.ogg",
+        "click001": "click_001.ogg",
+        "click002": "click_002.ogg",
+        "click003": "click_003.ogg",
+        "click004": "click_004.ogg",
+        "click005": "click_005.ogg",
+        "close001": "close_001.ogg",
+        "close002": "close_002.ogg",
+        "close003": "close_003.ogg",
+        "close004": "close_004.ogg",
+        "confirmation001": "confirmation_001.ogg",
+        "confirmation002": "confirmation_002.ogg",
+        "confirmation003": "confirmation_003.ogg",
+        "confirmation004": "confirmation_004.ogg",
+        "drop001": "drop_001.ogg",
+        "drop002": "drop_002.ogg",
+        "drop003": "drop_003.ogg",
+        "drop004": "drop_004.ogg"
+    },
+    "Music":
+    {
+        "Song1": "lullaby.ogg",
+        "Song2": "lullaby.ogg",
+        "Song3": "lullaby.ogg"
+    }
+}

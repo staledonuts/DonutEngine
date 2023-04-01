@@ -2,7 +2,7 @@ namespace DonutEngine.Backbone.Systems;
 
 public class LevelDataSystem : SystemsClass
 {
-    Dictionary<string, LevelContainer> levelContainers = new();
+    Dictionary<string, LevelContainer> levelContainers = new Dictionary<string, LevelContainer>();
 
     public void CreateLevelContainer()
     {
@@ -12,10 +12,10 @@ public class LevelDataSystem : SystemsClass
     {
         if(levelContainers.Any())
         {
-            /*foreach(LevelContainer lc in levelContainers)
+            foreach(KeyValuePair<string, LevelContainer> lc in levelContainers)
             {
-                lc.DrawObjects();
-            }*/
+                //lc.Value.DrawObjects();
+            }
         }
     }
 

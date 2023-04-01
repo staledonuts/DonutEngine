@@ -13,24 +13,9 @@ public class EntityFactory
         dynamic data = JsonConvert.DeserializeObject(json);
 
         Entity? currentEntity = null;
-        switch (data.EntityType.Type.ToString())
-            {
-                case "DynamicEntity":
-                    currentEntity = new DynamicEntity(nextEntityId++, data);
-                    CreateComponents(data, currentEntity as DynamicEntity);
-                    break;
-                case "StaticEntity":
-                    currentEntity = new StaticEntity(nextEntityId++, data);
-                    CreateComponents(data, currentEntity as StaticEntity);
-                    break;
-                case "GameObjectEntity":
-                    currentEntity = new GameObjectEntity(nextEntityId++, data);
-                    CreateComponents(data, currentEntity as GameObjectEntity);
-                    break;
-            }
-
-            return currentEntity;
-
+        currentEntity = new Entity(nextEntityId++, data);
+        CreateComponents(data, currentEntity);
+        return currentEntity;
     }
 
     public void CreateComponents(dynamic data, Entity entity)

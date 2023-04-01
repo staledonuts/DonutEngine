@@ -13,24 +13,14 @@ public class GameCamera2D : Component
 			
 		}
 	}
-
-    public override void OnAddedToEntity(DynamicEntity entity)
+    public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
     }
 
-    public override void OnRemovedFromEntity(DynamicEntity entity)
-    {
-		
-    }
-
-    public override void OnAddedToEntity(StaticEntity entity)
+    public override void OnRemovedFromEntity(Entity entity)
     {
         //throw new NotImplementedException();
-    }
-
-    public override void OnRemovedFromEntity(StaticEntity entity)
-    {
-        //throw new NotImplementedException();
+        Dispose();
     }
 }
