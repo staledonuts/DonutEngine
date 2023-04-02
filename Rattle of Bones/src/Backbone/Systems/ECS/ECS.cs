@@ -1,6 +1,8 @@
 namespace DonutEngine.Backbone;
 public static class ECS
 {
+    //This class takes care updating all Entities and components.
+    //All entities and components are registered here.
     public delegate void UpdateEvent(float deltaTime);
     public delegate void DrawUpdateEvent(float deltaTime);
     public delegate void LateUpdateEvent(float deltaTime);

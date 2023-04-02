@@ -5,10 +5,12 @@ public static class DonutSystems
     public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
     public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
+    public static readonly UISystem uISystem = new();
     public static readonly EntityManager entityManager = new();
     public static readonly LevelDataSystem levelDataSystem = new();
     public static readonly PhysicsSystem physicsSystem = new();
     public static CameraHandler cameraHandler = new();
+
 
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
@@ -39,6 +41,7 @@ public static class DonutSystems
         cameraHandler.InitializeCamera(new(0,0));
         DonutSystems.SubscribeSystem(audioControl);
         DonutSystems.SubscribeSystem(physicsSystem);
+        DonutSystems.SubscribeSystem(uISystem);
         SceneManager.InitScene();
     }
 
@@ -47,6 +50,7 @@ public static class DonutSystems
         DonutSystems.UnsubscribeSystem(windowSystem);
         DonutSystems.UnsubscribeSystem(audioControl);
         DonutSystems.UnsubscribeSystem(physicsSystem);
+        DonutSystems.UnsubscribeSystem(uISystem);
     }
 
     public static void UpdateSystems()

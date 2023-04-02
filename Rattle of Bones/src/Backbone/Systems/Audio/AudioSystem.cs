@@ -2,6 +2,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using IniParser.Model;
 using IniParser;
+using DonutEngine.Backbone.Systems;
 namespace DonutEngine.Backbone;
 public class AudioControl : Systems.SystemsClass
 {
@@ -87,7 +88,8 @@ public class AudioControl : Systems.SystemsClass
         Sound sound;
         if (soundsLibrary.TryGetValue(name, out sound)) 
         {
-            PlaySound(sound);
+            Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
+            PlaySoundMulti(sound);
         }
     }
 
@@ -123,6 +125,7 @@ public class AudioControl : Systems.SystemsClass
         {
             currentSongName = name;
             currentMusic = music;
+            Raylib.SetMusicVolume(currentMusic, DonutSystems.settingsVars.currentMusicVolume);
             PlayMusicStream(currentMusic);
         }
     }

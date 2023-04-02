@@ -29,7 +29,7 @@ public class GameplayScene : Scene
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.MAROON);
+        
         Raylib.DrawText(Raylib.GetFPS().ToString(), 12, 24, 20, Color.BLACK);
         Raylib.DrawRectangleV(new(0.0f, 100.0f),new(500,30), Raylib_cs.Color.BLACK);
     }

@@ -35,6 +35,7 @@ public class PlayerComponent : Component
         if(boolean)
         {
             boolean = false;
+            PlaySFX("confirmation001");
             entity.currentBody.ApplyImpulse(new(0,-20000), this.entity.currentBody.GetPosition());
         }
     }

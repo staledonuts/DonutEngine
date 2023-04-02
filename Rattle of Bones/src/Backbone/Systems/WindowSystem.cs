@@ -5,10 +5,11 @@ using static DonutSystems;
 
 public class WindowSystem : SystemsClass
 {
+    
 
     public override void DrawUpdate()
     {
-        
+        Raylib.ClearBackground(Color.GRAY);
     }
 
     public override void LateUpdate()

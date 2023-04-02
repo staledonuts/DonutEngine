@@ -4,6 +4,7 @@ public static class DonutSystems
 {
     public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
     public static readonly WindowSystem windowSystem = new();
+    public static UISystem uISystem = new();
 
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
@@ -31,11 +32,13 @@ public static class DonutSystems
     public static void InitSystems()
     {
         DonutSystems.SubscribeSystem(windowSystem);
+        DonutSystems.SubscribeSystem(uISystem);
     }
 
     public static void KillSystems()
     {
         DonutSystems.UnsubscribeSystem(windowSystem);
+        DonutSystems.UnsubscribeSystem(uISystem);
     }
 
     public static void UpdateSystems()

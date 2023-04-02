@@ -5,38 +5,7 @@ using System.Runtime.InteropServices;
 
 using Raylib_cs;
 using ImGuiNET;
-namespace DonutEngine.Backbone.Systems;
-
-public class UISystem : SystemsClass
-{
-    public override void DrawUpdate()
-    {
-        Raylib.ClearBackground(Color.DARKGRAY);
-        rlImGui.Begin();
-        ImGui.ShowDemoWindow();
-        rlImGui.End();   
-    }
-
-    public override void LateUpdate()
-    {
-        
-    }
-
-    public override void Shutdown()
-    {
-        rlImGui.Shutdown();
-    }
-
-    public override void Start()
-    {
-        rlImGui.Setup(true);
-    }
-
-    public override void Update()
-    {
-        
-    }
-}
+namespace DonutEngine.Backbone.Systems.UI;
 
 public static class rlImGui
 {

@@ -1,19 +1,21 @@
+using System.Numerics;
+using static DonutEngine.Backbone.Systems.DonutSystems;
+using Box2DX.Dynamics;
+using Newtonsoft.Json;
 namespace DonutEngine.Backbone;
 
-public struct LevelContainer : IDisposable
+public abstract class Component : IDisposable
 {
-    public LevelContainer(string name)
-    {
-        ID = name;
-        
-    }
-    public string? ID = null;
-    public float playerDistance = 0f;
-
-    public Entity[] levelObjects;
     private bool disposedValue;
+    public abstract void OnAddedToEntity(Entity entity);
+    public abstract void OnRemovedFromEntity(Entity entity);
 
-    public void Dispose(bool disposing)
+    public void PlaySFX(string name)
+    {
+        DonutEngine.Backbone.Systems.DonutSystems.audioControl.PlaySFX(name);
+    }
+
+    protected virtual void Dispose(bool disposing)
     {
         if (!disposedValue)
         {
@@ -29,7 +31,7 @@ public struct LevelContainer : IDisposable
     }
 
     // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    // ~LevelContainer()
+    // ~Component()
     // {
     //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
     //     Dispose(disposing: false);
@@ -42,3 +44,8 @@ public struct LevelContainer : IDisposable
         GC.SuppressFinalize(this);
     }
 }
+
+
+
+
+

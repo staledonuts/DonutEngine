@@ -1,8 +1,10 @@
 namespace DonutEngine.Backbone.Systems;
 using IniParser.Model;
 using IniParser;
+using Raylib_cs;
 public class SettingsVars
 {
+    //Contains various settings for the game engine.
     public SettingsVars(string settingsPath)
     {
         parser = new FileIniDataParser();
@@ -25,6 +27,8 @@ public class SettingsVars
     public float currentSFXVolume { get; set; }
     public int screenWidth { get; set; }
     public int screenHeight { get; set; }
+    public readonly int virtualScreenWidth = 320;
+    public readonly int virtualScreenHeight = 160;
     public int targetFPS { get; set; }
     public int splashScreenLength { get; set; }
     public bool fullScreen { get; set; }
@@ -32,8 +36,8 @@ public class SettingsVars
     public void SetDefaultSettings()
     {
         currentMasterVolume = 1;
-        currentMusicVolume = 1;
-        currentSFXVolume = 1;
+        currentMusicVolume = 0.5f;
+        currentSFXVolume = 0.8f;
         screenWidth = 800;
         screenHeight = 600;
         targetFPS = 60;
@@ -59,6 +63,7 @@ public class SettingsVars
         IniData data = parser.ReadFile(settingsPath);
         SectionData sectionData = data.Sections.GetSectionData("Settings");
         currentMasterVolume = float.Parse(sectionData.Keys.GetKeyData("currentMasterVolume").Value);
+        Raylib.SetMasterVolume(currentMasterVolume);
         currentMusicVolume = float.Parse(sectionData.Keys.GetKeyData("currentMusicVolume").Value);
         currentSFXVolume = float.Parse(sectionData.Keys.GetKeyData("currentSFXVolume").Value);
         screenWidth = int.Parse(sectionData.Keys.GetKeyData("screenWidth").Value);
