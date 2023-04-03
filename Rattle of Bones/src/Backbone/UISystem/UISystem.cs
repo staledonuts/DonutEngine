@@ -2,6 +2,7 @@ using DonutEngine.Backbone.Systems.UI;
 using Raylib_cs;
 using Box2DX.Common;
 using ImGuiNET;
+using System.Numerics;
 namespace DonutEngine.Backbone.Systems;
 
 public class UISystem : SystemsClass
@@ -9,7 +10,8 @@ public class UISystem : SystemsClass
     static bool Open = false;
     static bool Quit = false;
     static RenderTexture2D UIRenderTexture;
-    static Texture2D viewTexture;
+    static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+    static Texture2D viewPort;
     
 
     public override void Update()
@@ -35,10 +37,11 @@ public class UISystem : SystemsClass
             rlImGui.Begin();
             DoMainMenu();
             ImGui.ShowDemoWindow();
-            rlImGui.End();   
+            rlImGui.End();
             Raylib.EndTextureMode();
-            Raylib.DrawTexture(UIRenderTexture.texture, UIRenderTexture.texture.width, UIRenderTexture.texture.height, Color.WHITE);
             
+            //Raylib.DrawTexture(UIRenderTexture.texture, 0, 0, Color.WHITE);
+            Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
         }
     }
 
