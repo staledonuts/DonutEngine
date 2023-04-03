@@ -9,9 +9,9 @@ public class UISystem : SystemsClass
 {
     static bool Open = false;
     static bool Quit = false;
+    static bool ImGuiDemoOpen = false;
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-    static Texture2D viewPort;
     
 
     public override void Update()
@@ -37,6 +37,10 @@ public class UISystem : SystemsClass
             rlImGui.Begin();
             DoMainMenu();
             ImGui.ShowDemoWindow();
+            if (ImGuiDemoOpen)
+            {
+                ImGui.ShowDemoWindow(ref ImGuiDemoOpen);
+            }
             rlImGui.End();
             Raylib.EndTextureMode();
             
@@ -96,7 +100,8 @@ public class UISystem : SystemsClass
 
             if (ImGui.BeginMenu("Window"))
             {
-                //ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
+                //ImGui.MenuItem("Reload Entities", string.Empty, )
+                ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
 
                 ImGui.EndMenu();
             }
