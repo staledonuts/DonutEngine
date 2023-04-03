@@ -2,6 +2,10 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class DonutSystems
 {
+    /////////////////////////////////////////////////
+    //This is my Systems Updater and container.
+    // a simple event system that i subscribe all the systems to for the update loop.
+    /////////////////////////////////////////////////
     public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
     public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();

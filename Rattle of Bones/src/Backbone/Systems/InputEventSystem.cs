@@ -15,6 +15,8 @@ public static class InputEventSystem
     public static event InputEventHandler? AttackEvent;
     public static event InputEventDpadHandler? DpadEvent;
 
+    public static event InputEventHandler? ToggleUI;
+
     // Define a method that raises the event.
     public static void UpdateInputEvent()
     {
@@ -24,7 +26,7 @@ public static class InputEventSystem
             AttackEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
             DashEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_C));
             DpadEvent?.Invoke(Vector2Composite());
-            
+            ToggleUI?.Invoke(IsKeyPressed(KeyboardKey.KEY_F11));
         }
         else
         {
@@ -32,6 +34,7 @@ public static class InputEventSystem
             AttackEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT));
             DashEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_1));
             DpadEvent?.Invoke(Vector2Composite());
+            ToggleUI?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_MIDDLE_LEFT));
         }
     }
 

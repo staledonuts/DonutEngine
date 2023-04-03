@@ -17,6 +17,7 @@ public class CameraHandler
         donutcam.target = new(target.X, target.Y);
         currentTarget = target;
         DonutSystems.DrawUpdate += UpdateCamera;
+		
     }
 
     internal static Vec2 UpdateCameraPlayerBoundsPush_bbox = new Vec2(0.03f, 0.02f);
