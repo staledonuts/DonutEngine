@@ -4,7 +4,6 @@ public class EntityManager
 {
     private Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
     private EntityFactory factory = new EntityFactory();
-
     public List<Entity> GetEntitiesWithTag(string tag) 
     {
         List<Entity> result = new List<Entity>();
@@ -21,17 +20,29 @@ public class EntityManager
 
     public void CreateDirectory()
     {
-        string[] iniFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.ini");
+        string[] jsonFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.json");
 
-        foreach(string iniFile in iniFilePath)
+        foreach(string jsonFile in jsonFilePath)
         {
-            Entity entity = CreateEntity(iniFile);
+            Entity entity = CreateEntity(jsonFile);
         }
     }
 
-    public Entity CreateEntity(string ini) 
+    public void ReloadEntities()
     {
-        Entity entity = factory.CreateEntity(ini);
+        foreach(KeyValuePair<int, Entity> entity in entities)
+        {
+            entity.Value.DestroyEntity();
+        }
+        entities = new Dictionary<int, Entity>();
+        CreateDirectory();
+    }
+
+
+
+    public Entity CreateEntity(string json) 
+    {
+        Entity entity = factory.CreateEntity(json);
         entities[entity.Id] = entity;
         return entity;
     }

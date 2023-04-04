@@ -20,13 +20,10 @@ public class PlayerComponent : Component
 
     public override void OnRemovedFromEntity(Entity entity)
     {
-
-        this.entity = entity;
-        sprite = entity.GetComponent<SpriteComponent>();
-        ECS.ecsUpdate += Update;
-        InputEventSystem.JumpEvent += OnJump;
-        InputEventSystem.AttackEvent += OnAttack;
-        InputEventSystem.DpadEvent += OnDpad;
+        ECS.ecsUpdate -= Update;
+        InputEventSystem.JumpEvent -= OnJump;
+        InputEventSystem.AttackEvent -= OnAttack;
+        InputEventSystem.DpadEvent -= OnDpad;
         Dispose();
     }
 

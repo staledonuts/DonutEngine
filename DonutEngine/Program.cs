@@ -9,6 +9,7 @@ static class Program
     {
         //Lets set up the different nessecary systems!
         DonutSystems.InitSystems();
+
         //This is where all the update loops go.
         MainLoopUpdate();
         Shutdown();
@@ -25,8 +26,10 @@ static class Program
         {
             //Physics, Player logic and so forth. Before draw.
             UpdateLoop();
+
             //All draw logic.
             UpdateDraw();
+            
             //Camera and less priority nesseccary things go here.
             UpdateLate();
         }
@@ -35,9 +38,11 @@ static class Program
         {
             //Input system first
             InputEventSystem.UpdateInputEvent();
+
             //DonutSystems is the backbone of the engine.
             //here is Physics, Sound and UI updated.
             DonutSystems.UpdateSystems();
+
             //Entity Component system.
             //most gamelogic is updated here.
             //this is updated after most other things.

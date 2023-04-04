@@ -8,7 +8,6 @@ namespace DonutEngine.Backbone.Systems;
 public class UISystem : SystemsClass
 {
     static bool Open = false;
-    static bool Quit = false;
     static bool ImGuiDemoOpen = false;
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
@@ -91,11 +90,17 @@ public class UISystem : SystemsClass
         {
             if (ImGui.BeginMenu("File"))
             {
+                if(ImGui.MenuItem("Reload Entities"))
+                {
+                    DonutSystems.entityManager.ReloadEntities();
+                    ImGui.EndMenu();
+                }
                 if (ImGui.MenuItem("Exit"))
-                    Quit = true;
+                {
+                    Raylib.CloseWindow();
+                }
 
                 ImGui.EndMenu();
-                Raylib.CloseWindow();
             }
 
             if (ImGui.BeginMenu("Window"))
