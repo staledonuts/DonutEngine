@@ -131,6 +131,12 @@ public class UISystem : SystemsClass
                 ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
                 ImGui.EndMenu();
             }
+            if (ImGui.BeginMenu("Game Stat"))
+            {
+                ImGui.MenuItem("General", "F3");
+                ImGui.MenuItem("FPS:"+Raylib.GetFPS().ToString());
+                ImGui.EndMenu();
+            }
             ImGui.EndMainMenuBar();
         }
     }
