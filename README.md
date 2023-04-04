@@ -3,8 +3,8 @@
 # DonutEngine
 
 C# Homebrew framework/engine based off raylib/raylib_cs, a simple and easy-to-use library to learn videogames programming (www.raylib.com)
-[![License](https://img.shields.io/badge/license-zlib%2Flibpng-blue.svg)](LICENSE)
 
+[![License](https://img.shields.io/badge/license-zlib%2Flibpng-blue.svg)](LICENSE)
 [![Chat on Discord](https://img.shields.io/discord/426912293134270465.svg?logo=discord)](https://discord.gg/raylib)
 
 
