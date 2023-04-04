@@ -76,6 +76,11 @@ public class AudioControl : Systems.SystemsClass
         CloseAudioDevice();
     }
 
+    public float CurrentMusicTime()
+    {
+        return Raylib.GetMusicTimePlayed(currentMusic);
+    }
+
 
     public void LoadSFX(string name, string filename) 
     {

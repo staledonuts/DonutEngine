@@ -9,6 +9,8 @@ public class UISystem : SystemsClass
 {
     static bool Open = false;
     static bool ImGuiDemoOpen = false;
+
+    static SoundPlayer soundPlayer = new();
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
     
@@ -16,13 +18,19 @@ public class UISystem : SystemsClass
     public override void Update()
     {
         if (!Open)
-                return;
-        if (Raylib.IsWindowResized())
+        {
+            return;
+        }
+        else
+        {
+            if (Raylib.IsWindowResized())
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
                 UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             }
-        UpdateUIPosition();
+            soundPlayer.Update();
+        }
+        
     }
     public override void DrawUpdate()
     {
@@ -32,25 +40,38 @@ public class UISystem : SystemsClass
         }
         else
         {
+
             Raylib.BeginTextureMode(UIRenderTexture);
+            Raylib.ClearBackground(Color.BLANK);
             rlImGui.Begin();
             DoMainMenu();
-            ImGui.ShowDemoWindow();
             if (ImGuiDemoOpen)
             {
                 ImGui.ShowDemoWindow(ref ImGuiDemoOpen);
             }
+            if(soundPlayer.Open)
+            {
+                soundPlayer.Show();
+            }
             rlImGui.End();
             Raylib.EndTextureMode();
-            
-            //Raylib.DrawTexture(UIRenderTexture.texture, 0, 0, Color.WHITE);
             Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
         }
     }
 
     public override void LateUpdate()
     {
-        
+        if (!Open)
+        {
+            return;
+        }
+        else
+        {
+            if(Raylib.IsKeyPressed(KeyboardKey.KEY_F5))
+            {
+                DonutSystems.entityManager.ReloadEntities();
+            }        
+        }
     }
 
     public override void Shutdown()
@@ -65,11 +86,6 @@ public class UISystem : SystemsClass
         rlImGui.Setup(true);
         InputEventSystem.ToggleUI += ToggleUI;
         System.Console.WriteLine("Started UI sys");
-    }
-
-    private void UpdateUIPosition()
-    {
-
     }
 
     public static void ToggleUI(CBool toggle)
@@ -90,10 +106,9 @@ public class UISystem : SystemsClass
         {
             if (ImGui.BeginMenu("File"))
             {
-                if(ImGui.MenuItem("Reload Entities"))
+                if(ImGui.MenuItem("Reload Entities", "F5"))
                 {
                     DonutSystems.entityManager.ReloadEntities();
-                    ImGui.EndMenu();
                 }
                 if (ImGui.MenuItem("Exit"))
                 {
@@ -103,11 +118,17 @@ public class UISystem : SystemsClass
                 ImGui.EndMenu();
             }
 
-            if (ImGui.BeginMenu("Window"))
+            if (ImGui.BeginMenu("Assets"))
             {
                 //ImGui.MenuItem("Reload Entities", string.Empty, )
-                ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
+                ImGui.MenuItem("Sound Player", string.Empty, ref soundPlayer.Open);
 
+                ImGui.EndMenu();
+            }
+
+            if (ImGui.BeginMenu("Demo"))
+            {
+                ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();
