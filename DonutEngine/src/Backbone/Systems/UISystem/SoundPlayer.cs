@@ -25,6 +25,7 @@ public class SoundPlayer : DocumentWindow
         {
             Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.RootAndChildWindows);
             Vector2 size = ImGui.GetContentRegionAvail();
+            Vector2 width = new(ImGui.GetColumnWidth(), ImGui.GetContentRegionAvail().Y);
             ImGui.BeginChild("Music Control");
             {
                 if(ImGui.Button("Play", buttonSize))
@@ -42,10 +43,10 @@ public class SoundPlayer : DocumentWindow
                 ImGui.SameLine();
                 ImGui.Text(DonutSystems.audioControl.CurrentMusicTime().ToString());
                 ImGui.NewLine();
-                ImGui.BeginListBox("Muzak", size);
+                ImGui.BeginListBox("Muzak", width);
                 ImGui.ListBox("Music Playlist", ref currentMusicPlaylistItem, DonutSystems.audioControl.GetMusicPlaylist(), DonutSystems.audioControl.GetMusicPlaylistLength());
                 ImGui.EndListBox();
-                if(ImGui.Button("Play", buttonSize))
+                if(ImGui.Button("PlaySFX", buttonSize))
                 {
                     string[] playlist = DonutSystems.audioControl.GetSFXPlaylist();
                     string currentSelection = playlist.GetValue(currentSFXPlaylistItem).ToString();
@@ -53,8 +54,8 @@ public class SoundPlayer : DocumentWindow
                 }
                 ImGui.SameLine();
                 ImGui.NewLine();
-                ImGui.BeginListBox("SFX", size);
-                ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, DonutSystems.audioControl.GetMusicPlaylist(), DonutSystems.audioControl.GetMusicPlaylistLength());
+                ImGui.BeginListBox("SFX", width);
+                ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, DonutSystems.audioControl.GetSFXPlaylist(), DonutSystems.audioControl.GetSFXPlaylistLength(), DonutSystems.audioControl.GetSFXPlaylistLength());
                 ImGui.EndListBox();
 
                 ImGui.EndChild();

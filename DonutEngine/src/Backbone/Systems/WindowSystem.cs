@@ -9,8 +9,7 @@ public class WindowSystem : SystemsClass
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.GRAY);
-        //Raylib.DrawRectangleV(new(0.0f, 100.0f),new(500,30), Raylib_cs.Color.BLACK);
+        Raylib.ClearBackground(Color.BLACK);
     }
 
     public override void LateUpdate()
