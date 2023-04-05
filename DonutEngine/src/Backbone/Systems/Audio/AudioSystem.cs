@@ -9,7 +9,7 @@ public class AudioControl : Systems.SystemsClass
 
     private List<AudioStream> audioStreams = new List<AudioStream>();
     private Dictionary<string, Sound> soundsLibrary = new Dictionary<string, Sound>();
-    private Dictionary<string, Music> musicsLibrary = new Dictionary<string, Music>();
+    private Dictionary<string, Music> musicLibrary = new Dictionary<string, Music>();
 
     private Music currentMusic;
     private string? currentSongName = null;
@@ -43,7 +43,7 @@ public class AudioControl : Systems.SystemsClass
                     firstSong = sectionName.Keys.First().KeyName;
                     foreach(KeyData keys in sectionName.Keys)
                     {
-                        musicsLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.music+keys.Value));
+                        musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.music+keys.Value));
                     }
                 }
                 break;
@@ -79,6 +79,16 @@ public class AudioControl : Systems.SystemsClass
     public float CurrentMusicTime()
     {
         return Raylib.GetMusicTimePlayed(currentMusic);
+    }
+
+    public string[] GetPlaylist()
+    {
+        return musicLibrary.Keys.ToArray<string>();
+    }
+
+    public int GetPlaylistLength()
+    {
+        return musicLibrary.Count();
     }
 
 
@@ -120,13 +130,13 @@ public class AudioControl : Systems.SystemsClass
     public void LoadMusic(string name, string filename) 
     {
         Music music = LoadMusicStream(filename);
-        musicsLibrary.Add(name, music);
+        musicLibrary.Add(name, music);
     }
 
     public void PlayMusic(string name) 
     {
         Music music;
-        if (musicsLibrary.TryGetValue(name, out music)) 
+        if (musicLibrary.TryGetValue(name, out music)) 
         {
             currentSongName = name;
             currentMusic = music;
@@ -158,10 +168,10 @@ public class AudioControl : Systems.SystemsClass
     public void UnloadMusic(string name) 
     {
         Music music;
-        if (musicsLibrary.TryGetValue(name, out music)) 
+        if (musicLibrary.TryGetValue(name, out music)) 
         {
             UnloadMusicStream(music);
-            musicsLibrary.Remove(name);
+            musicLibrary.Remove(name);
         }
     }    
 }

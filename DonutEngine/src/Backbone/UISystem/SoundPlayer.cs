@@ -9,6 +9,7 @@ namespace DonutEngine.Backbone.Systems.UI;
 public class SoundPlayer : DocumentWindow
 {
     Vector2 buttonSize = new(100, 20);
+    int currentPlaylistItem = 0;
     public override void Setup()
     {
         //throw new NotImplementedException();
@@ -23,10 +24,26 @@ public class SoundPlayer : DocumentWindow
         {
             Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.RootAndChildWindows);
             Vector2 size = ImGui.GetContentRegionAvail();
-            ImGui.Button("Play", buttonSize);
-            ImGui.Button("Stop", buttonSize);
-
-            
+            ImGui.BeginChild("Music Control");
+            {
+                if(ImGui.Button("Play", buttonSize))
+                {
+                    DonutSystems.audioControl.ResumeMusic();
+                }
+                ImGui.SameLine();
+                if(ImGui.Button("Pause/Play", buttonSize))
+                {
+                    DonutSystems.audioControl.PauseMusic();
+                }
+                ImGui.SameLine();
+                ImGui.Text(DonutSystems.audioControl.CurrentMusicTime().ToString());
+                ImGui.EndChild();
+            }
+            if(ImGui.BeginListBox("Playlist"))
+            {
+                ImGui.ListBox("Playlist", ref currentPlaylistItem, DonutSystems.audioControl.GetPlaylist(), DonutSystems.audioControl.GetPlaylistLength());
+                ImGui.EndListBox();
+            }
 
             ImGui.End();
         }

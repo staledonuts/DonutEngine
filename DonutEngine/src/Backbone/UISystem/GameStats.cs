@@ -5,7 +5,7 @@ using Raylib_cs;
 using ImGuiNET;
 
 namespace DonutEngine.Backbone.Systems.UI;
-public class ImageViewerWindow : DocumentWindow
+public class GameStats : DocumentWindow
 {
     Texture2D ImageTexture;
     Camera2D Camera = new Camera2D();
@@ -43,7 +43,7 @@ public class ImageViewerWindow : DocumentWindow
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
         ImGui.SetNextWindowSizeConstraints(new Vector2(400, 400), new Vector2((float)Raylib.GetScreenWidth(), (float)Raylib.GetScreenHeight()));
 
-        if (ImGui.Begin("Image Viewer", ref Open, ImGuiWindowFlags.NoScrollbar))
+        if (ImGui.Begin("GameStats", ref Open, ImGuiWindowFlags.NoScrollbar))
         {
             Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.RootAndChildWindows);
 

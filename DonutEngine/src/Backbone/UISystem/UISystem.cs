@@ -9,7 +9,7 @@ public class UISystem : SystemsClass
 {
     static bool Open = false;
     static bool ImGuiDemoOpen = false;
-
+    static GameStats gameStats = new();
     static SoundPlayer soundPlayer = new();
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
@@ -29,6 +29,7 @@ public class UISystem : SystemsClass
                 UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             }
             soundPlayer.Update();
+            gameStats.Update();
         }
         
     }
@@ -52,6 +53,10 @@ public class UISystem : SystemsClass
             if(soundPlayer.Open)
             {
                 soundPlayer.Show();
+            }
+            if(gameStats.Open)
+            {
+                gameStats.Show();
             }
             rlImGui.End();
             Raylib.EndTextureMode();
@@ -133,7 +138,7 @@ public class UISystem : SystemsClass
             }
             if (ImGui.BeginMenu("Game Stat"))
             {
-                ImGui.MenuItem("General", "F3");
+                ImGui.MenuItem("General", "F3", ref gameStats.Open);
                 ImGui.MenuItem("FPS:"+Raylib.GetFPS().ToString());
                 ImGui.EndMenu();
             }
