@@ -39,8 +39,9 @@ public class SoundPlayer : DocumentWindow
                 ImGui.Text(DonutSystems.audioControl.CurrentMusicTime().ToString());
                 ImGui.EndChild();
             }
-            if(ImGui.BeginListBox("Playlist"))
+            if(ImGui.BeginListBox("Playlist", new(200, 400)))
             {
+                
                 ImGui.ListBox("Playlist", ref currentPlaylistItem, DonutSystems.audioControl.GetPlaylist(), DonutSystems.audioControl.GetPlaylistLength());
                 ImGui.EndListBox();
             }

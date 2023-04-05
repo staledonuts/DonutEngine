@@ -59,6 +59,7 @@ public class UISystem : SystemsClass
                 gameStats.Show();
             }
             rlImGui.End();
+            Raylib.DrawText(Raylib.GetFPS().ToString(), (int) + 12, (int)DonutSystems.cameraHandler.donutcam.offset.Y + 24, 20, Color.BLACK);
             Raylib.EndTextureMode();
             Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
         }
