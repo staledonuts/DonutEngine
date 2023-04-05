@@ -81,15 +81,26 @@ public class AudioControl : Systems.SystemsClass
         return Raylib.GetMusicTimePlayed(currentMusic);
     }
 
-    public string[] GetPlaylist()
+
+    public string[] GetMusicPlaylist()
     {
         return musicLibrary.Keys.ToArray<string>();
     }
-
-    public int GetPlaylistLength()
+    public int GetMusicPlaylistLength()
     {
         return musicLibrary.Count();
     }
+
+    public int GetSFXPlaylistLength()
+    {
+        return soundsLibrary.Count();
+    }
+
+    public string[] GetSFXPlaylist()
+    {
+        return soundsLibrary.Keys.ToArray<string>();
+    }
+
 
 
     public void LoadSFX(string name, string filename) 
@@ -147,12 +158,14 @@ public class AudioControl : Systems.SystemsClass
 
     public void PauseMusic()
     {
-        PauseMusicStream(currentMusic);
-    }
-
-    public void ResumeMusic() 
-    {
-        ResumeMusicStream(currentMusic);
+        if(IsMusicStreamPlaying(currentMusic))
+        {
+            PauseMusicStream(currentMusic);
+        }
+        else
+        {
+            ResumeMusicStream(currentMusic);
+        }
     }
 
     public void StopMusic() 

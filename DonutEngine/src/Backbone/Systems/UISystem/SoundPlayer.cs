@@ -9,7 +9,8 @@ namespace DonutEngine.Backbone.Systems.UI;
 public class SoundPlayer : DocumentWindow
 {
     Vector2 buttonSize = new(100, 20);
-    int currentPlaylistItem = 0;
+    int currentMusicPlaylistItem = 0;
+    int currentSFXPlaylistItem = 0;
     public override void Setup()
     {
         //throw new NotImplementedException();
@@ -28,29 +29,40 @@ public class SoundPlayer : DocumentWindow
             {
                 if(ImGui.Button("Play", buttonSize))
                 {
-                    DonutSystems.audioControl.ResumeMusic();
+                    string[] playlist = DonutSystems.audioControl.GetMusicPlaylist();
+                    string currentSelection = playlist.GetValue(currentMusicPlaylistItem).ToString();
+                    DonutSystems.audioControl.StopMusic();
+                    DonutSystems.audioControl.PlayMusic(currentSelection);
                 }
                 ImGui.SameLine();
-                if(ImGui.Button("Pause/Play", buttonSize))
+                if(ImGui.Button("Pause/Resume", buttonSize))
                 {
                     DonutSystems.audioControl.PauseMusic();
                 }
                 ImGui.SameLine();
                 ImGui.Text(DonutSystems.audioControl.CurrentMusicTime().ToString());
+                ImGui.NewLine();
+                ImGui.BeginListBox("Muzak", size);
+                ImGui.ListBox("Music Playlist", ref currentMusicPlaylistItem, DonutSystems.audioControl.GetMusicPlaylist(), DonutSystems.audioControl.GetMusicPlaylistLength());
+                ImGui.EndListBox();
+                if(ImGui.Button("Play", buttonSize))
+                {
+                    string[] playlist = DonutSystems.audioControl.GetSFXPlaylist();
+                    string currentSelection = playlist.GetValue(currentSFXPlaylistItem).ToString();
+                    DonutSystems.audioControl.PlaySFX(currentSelection);
+                }
+                ImGui.SameLine();
+                ImGui.NewLine();
+                ImGui.BeginListBox("SFX", size);
+                ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, DonutSystems.audioControl.GetMusicPlaylist(), DonutSystems.audioControl.GetMusicPlaylistLength());
+                ImGui.EndListBox();
+
                 ImGui.EndChild();
             }
-            if(ImGui.BeginListBox("Playlist", new(200, 400)))
-            {
-                
-                ImGui.ListBox("Playlist", ref currentPlaylistItem, DonutSystems.audioControl.GetPlaylist(), DonutSystems.audioControl.GetPlaylistLength());
-                ImGui.EndListBox();
-            }
-
             ImGui.End();
         }
         ImGui.PopStyleVar();
     }
-
     public override void Shutdown()
     {
         //throw new NotImplementedException();
