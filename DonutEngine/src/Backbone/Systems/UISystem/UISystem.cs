@@ -3,6 +3,7 @@ using Raylib_cs;
 using Box2DX.Common;
 using ImGuiNET;
 using System.Numerics;
+using DonutEngine.Backbone.Systems.UI.EntityCreator;
 namespace DonutEngine.Backbone.Systems;
 
 public class UISystem : SystemsClass
@@ -11,6 +12,7 @@ public class UISystem : SystemsClass
     static bool ImGuiDemoOpen = false;
     static GameStats gameStats = new();
     static SoundPlayer soundPlayer = new();
+    static EntityCreator entityCreator = new();
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
     
@@ -41,9 +43,9 @@ public class UISystem : SystemsClass
         }
         else
         {
-
             Raylib.BeginTextureMode(UIRenderTexture);
             Raylib.ClearBackground(Color.BLANK);
+            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, (int)DonutSystems.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
             DoMainMenu();
             if (ImGuiDemoOpen)
@@ -58,8 +60,11 @@ public class UISystem : SystemsClass
             {
                 gameStats.Show();
             }
+            if(entityCreator.Open)
+            {
+                entityCreator.Show();
+            }
             rlImGui.End();
-            Raylib.DrawText(Raylib.GetFPS().ToString(), (int) + 12, (int)DonutSystems.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             Raylib.EndTextureMode();
             Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
         }
@@ -112,10 +117,6 @@ public class UISystem : SystemsClass
         {
             if (ImGui.BeginMenu("File"))
             {
-                if(ImGui.MenuItem("Reload Entities", "F5"))
-                {
-                    DonutSystems.entityManager.ReloadEntities();
-                }
                 if (ImGui.MenuItem("Exit"))
                 {
                     Raylib.CloseWindow();
@@ -126,8 +127,9 @@ public class UISystem : SystemsClass
 
             if (ImGui.BeginMenu("Assets"))
             {
-                //ImGui.MenuItem("Reload Entities", string.Empty, )
-                ImGui.MenuItem("Sound Player", string.Empty, ref soundPlayer.Open);
+                ImGui.MenuItem("Entity Creator", string.Empty, ref entityCreator.Open);
+
+                ImGui.MenuItem("Sound Tester", string.Empty, ref soundPlayer.Open);
 
                 ImGui.EndMenu();
             }
