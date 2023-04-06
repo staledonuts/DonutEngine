@@ -8,15 +8,12 @@ using DonutEngine.Backbone.Systems.UI;
 
 namespace DonutEngine.Backbone.Systems.UI.EntityCreator;
 
-public class EntityCreator : DocumentWindow
+public partial class EntityCreator : DocumentWindow
 {
-    EntityData entityData = new();
-    Vector2 buttonSize = new(100, 20);
 
-    ImGuiInputTextFlags inputFlags = ImGuiInputTextFlags.CharsHexadecimal | ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.AutoSelectAll | ImGuiInputTextFlags.NoHorizontalScroll | ImGuiInputTextFlags.CallbackAlways;
     public override void Setup()
     {
-        //throw new NotImplementedException();
+        
     }
 
     public override void Show()
@@ -29,7 +26,6 @@ public class EntityCreator : DocumentWindow
             DoMenu();
             Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.RootAndChildWindows);
             Vector2 size = ImGui.GetContentRegionAvail();
-            Vector2 width = new(ImGui.GetColumnWidth(), ImGui.GetContentRegionAvail().Y);
             EntityWindow();
             ImGui.End();
         }
@@ -37,7 +33,7 @@ public class EntityCreator : DocumentWindow
     }
     public override void Shutdown()
     {
-        //throw new NotImplementedException();
+        
     }
 
     public override void Update()
@@ -54,51 +50,136 @@ public class EntityCreator : DocumentWindow
         {
             if(ImGui.BeginMenu("File"))
             {
-                if(ImGui.MenuItem("Reload Entities", "F5"))
+                if(ImGui.MenuItem(" - Reset Entity"))
+                {
+                    ResetEntityWindow();
+                }
+                if(ImGui.MenuItem(" - Save As"))
+                {
+                    SaveEntity();
+                }
+                if(ImGui.MenuItem(" - Reload Game Entities", "F5"))
                 {
                     DonutSystems.entityManager.ReloadEntities();
                 }
-                if(ImGui.MenuItem("Save As"))
-                {
-                    
-                }
+                ImGui.EndMenu();
+            }
+            if(ImGui.BeginMenu("Components"))
+            {
+                if(ImGui.MenuItem(" - GameCamera 2D Component", "",  ref componentBools.gameCamera2D)){}
+                if(ImGui.MenuItem(" - Player Component", "",  ref componentBools.playerComponent)){}
+                if(ImGui.MenuItem(" - Sprite Component", "",  ref componentBools.spriteComponent)){}
+                //if(ImGui.MenuItem("Particle Component", "",  ref componentBools.particleComponent)){}
                 ImGui.EndMenu();
             }
             ImGui.EndMenuBar();
         }
     }
 
-    private void EntityWindow()
+    public void ResetEntityWindow()
     {
-        ImGui.InputFloat(":X", ref entityData.X);
-        ImGui.NewLine();
-        ImGui.InputFloat(":Y", ref entityData.Y);
-        ImGui.NewLine();
-        ImGui.SliderFloat(":Collision Width", ref entityData.Width, 0, 100, entityData.Width.ToString("0.000"));
-        ImGui.NewLine();
-        ImGui.SliderFloat(":Collision Height", ref entityData.Height, 0, 100, entityData.Height.ToString("0.000"));
-        ImGui.NewLine();
-        ImGui.CheckboxFlags(":Dynamic", ref entityData.bodyType, 1);
-        ImGui.NewLine();
-        ImGui.SliderFloat(":Density", ref entityData.Density, 0, 3, entityData.Density.ToString("0.000"));
-        ImGui.NewLine();
-        ImGui.SliderFloat(":Friction", ref entityData.Friction, 0, 3, entityData.Friction.ToString("0.000"));
-        ImGui.NewLine();
-        ImGui.SliderFloat(":Restitution", ref entityData.Restitution, 0, 10, entityData.Restitution.ToString("0.000"));
-        //ImGui.NewLine();
+        componentBools = new();
+        entityData = new();
+        gameCamera2D = new();
+        playerComponent = new();
+        spriteComponent = new();
+    }
+
+    public void SaveEntity()
+    {
         
     }
 
-    private struct EntityData
-    {
-        public float X;
-        public float Y;
-        public float Width;
-        public float Height;
-        public int bodyType;
-        public float Density;
-        public float Friction;
-        public float Restitution;
-    }
-}
 
+    private void EntityWindow()
+    {
+        ImGui.InputTextWithHint("EntityName", "Input Filename: will be saved as a Json", ref name, 32, ImGuiInputTextFlags.AutoSelectAll);
+        if(ImGui.CollapsingHeader("Physics", ImGuiTreeNodeFlags.SpanAvailWidth))
+        {
+            ImGui.InputFloat("X", ref entityData.X);
+            if(ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip("Position in the world");
+                ImGui.EndTooltip();
+            }
+            ImGui.InputFloat("Y", ref entityData.Y);
+            if(ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip("Position in the world");
+                ImGui.EndTooltip();
+            }
+            ImGui.SliderFloat("Collision Width", ref entityData.Width, 0, 100, entityData.Width.ToString("0.000"));
+            if(ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip("Rectangular Collision Size");
+                ImGui.EndTooltip();
+            }
+            ImGui.SliderFloat("Collision Height", ref entityData.Height, 0, 100, entityData.Height.ToString("0.000"));
+            if(ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip("Rectangular Collision Size");
+                ImGui.EndTooltip();
+            }
+            ImGui.CheckboxFlags("Dynamic", ref entityData.bodyType, 1);
+            if(ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip("Set as Dynamic Body");
+                ImGui.EndTooltip();
+            }
+            ImGui.SliderFloat("Density", ref entityData.Density, 0, 3, entityData.Density.ToString("0.000"));
+            ImGui.SliderFloat("Friction", ref entityData.Friction, 0, 3, entityData.Friction.ToString("0.000"));
+            ImGui.SliderFloat("Restitution", ref entityData.Restitution, 0, 10, entityData.Restitution.ToString("0.000"));
+            ImGui.NewLine();
+            if(ImGui.Button("Reset", buttonSize))
+            {
+                entityData = new();
+            }
+            ImGui.NewLine();
+        }
+        if(componentBools.gameCamera2D)
+        {
+            if(ImGui.CollapsingHeader("GameCamera2D", ImGuiTreeNodeFlags.SpanAvailWidth))
+            {
+                ImGui.Checkbox("Is Active", ref gameCamera2D.IsActive);
+            }
+        }
+        if(componentBools.playerComponent)
+        {
+            if(ImGui.CollapsingHeader("PlayerComponent", ImGuiTreeNodeFlags.SpanAvailWidth))
+            {
+                ImGui.BulletText("You should currently only use this component on 1 Entity in the game.");
+                ImGui.BulletText("This could change in the future.");
+                
+            }
+        }
+        if(componentBools.spriteComponent)
+        {
+            if(ImGui.CollapsingHeader("SpriteComponent", ImGuiTreeNodeFlags.SpanAvailWidth))
+            {
+                ImGui.InputText("Sprite sheet filename", ref spriteComponent.sprite, 32, ImGuiInputTextFlags.AutoSelectAll);
+                ImGui.InputInt("Sprite Frame Width", ref spriteComponent.width);
+                ImGui.InputInt("Sprite Frame Height", ref spriteComponent.height);
+                ImGui.InputInt("Frames Per Row", ref spriteComponent.framesPerRow);
+                ImGui.InputInt("Rows", ref spriteComponent.rows);
+                ImGui.InputInt("Framerate", ref spriteComponent.frameRate);
+                ImGui.Checkbox("Play in reverse", ref spriteComponent.playInReverse);
+                ImGui.Checkbox("Continuous", ref spriteComponent.continuous);
+                ImGui.Checkbox("Looping", ref spriteComponent.looping);
+                ImGui.NewLine();
+                if(ImGui.Button("Reset", buttonSize))
+                {
+                    spriteComponent = new();
+                }
+                ImGui.NewLine();
+            }
+        }
+        
+        
+    }
+    
+}

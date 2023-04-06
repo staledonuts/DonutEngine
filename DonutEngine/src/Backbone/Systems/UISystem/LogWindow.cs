@@ -11,7 +11,7 @@ public class LogWindow : DocumentWindow
     Vector2 buttonSize = new(100, 20);
     public override void Setup()
     {
-        //throw new NotImplementedException();
+        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);
     }
 
     public override void Show()
@@ -23,9 +23,14 @@ public class LogWindow : DocumentWindow
             Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.RootAndChildWindows);
             Vector2 size = ImGui.GetContentRegionAvail();
             Vector2 width = new(ImGui.GetColumnWidth(), ImGui.GetContentRegionAvail().Y);
-            if(ImGui.BeginListBox("Log"))
+            if(ImGui.BeginTabBar("LogWindowTabs"))
             {
-                ImGui.EndListBox();
+                if(ImGui.BeginTabItem("Log"))
+                {
+                    
+                    ImGui.EndTabItem();
+                }
+                ImGui.EndTabBar();
             }
             ImGui.End();
         }
