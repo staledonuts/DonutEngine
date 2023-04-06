@@ -81,6 +81,11 @@ public class AudioControl : Systems.SystemsClass
         return Raylib.GetMusicTimePlayed(currentMusic);
     }
 
+    public float CurrentMusicLength()
+    {
+        return Raylib.GetMusicTimeLength(currentMusic);
+    }
+
 
     public string[] GetMusicPlaylist()
     {
