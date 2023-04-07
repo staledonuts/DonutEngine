@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>DonutEngine</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>donutengine-icon.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
