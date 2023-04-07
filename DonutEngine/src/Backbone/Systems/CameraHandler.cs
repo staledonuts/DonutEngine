@@ -11,6 +11,7 @@ public class CameraHandler
     Vec2 currentTarget;
     public void InitializeCamera(Vec2 target)
     {
+		LoadingScreen.DrawLoadingScreen("Init Camera");
         donutcam = new();
         donutcam.zoom = 1.0f;
         donutcam.offset = new Vector2(DonutSystems.settingsVars.screenWidth / 2, DonutSystems.settingsVars.screenHeight / 2);

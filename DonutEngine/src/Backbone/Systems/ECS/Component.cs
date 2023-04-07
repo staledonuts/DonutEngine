@@ -12,7 +12,7 @@ public abstract class Component : IDisposable
 
     public void PlaySFX(string name)
     {
-        DonutEngine.Backbone.Systems.DonutSystems.audioControl.PlaySFX(name);
+        audioControl.PlaySFX(name);
     }
 
     protected virtual void Dispose(bool disposing)

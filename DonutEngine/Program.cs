@@ -1,17 +1,18 @@
 ﻿using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
+using DonutEngine;
 using static Raylib_cs.Raylib;
 
 static class Program
 {
+    public static bool isLoading = false;
     
     public static void Main()
     {
         //Lets set up the different nessecary systems!
         DonutSystems.InitSystems();
-
         //This is where all the update loops go.
-        MainLoopUpdate();
+        MainLoop();
         Shutdown();
     }
 
@@ -20,7 +21,7 @@ static class Program
         DonutSystems.KillSystems();
         CloseWindow();
     }
-    static void MainLoopUpdate()
+    static void MainLoop()
     {
         while (!WindowShouldClose())
         {

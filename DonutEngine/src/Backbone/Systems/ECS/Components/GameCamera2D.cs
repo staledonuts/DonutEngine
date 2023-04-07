@@ -1,6 +1,5 @@
 namespace DonutEngine.Backbone;
 using System.Numerics;
-using static DonutEngine.Backbone.Systems.DonutSystems;
 using DonutEngine.Backbone.Systems;
 
 public class GameCamera2D : Component
@@ -10,7 +9,7 @@ public class GameCamera2D : Component
 
 	public void LateUpdate(float deltaTime)
 	{
-        cameraHandler.UpdateCameraPlayerBoundsPush(ref cameraHandler.donutcam, entity.currentBody.GetPosition(), 1f, settingsVars.screenWidth, settingsVars.screenHeight);
+        DonutSystems.cameraHandler.UpdateCameraPlayerBoundsPush(ref DonutSystems.cameraHandler.donutcam, entity.currentBody.GetPosition(), 1f, DonutSystems.settingsVars.screenWidth, DonutSystems.settingsVars.screenHeight);
 	}
     public override void OnAddedToEntity(Entity entity)
     {

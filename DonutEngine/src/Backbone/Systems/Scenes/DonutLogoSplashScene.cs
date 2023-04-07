@@ -2,7 +2,7 @@ namespace DonutEngine;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
 
-public class LogoSplashScene : Scene
+public class DonutLogoSplashScene : Scene
 {
 
     static Texture2D splashTex;
@@ -11,7 +11,7 @@ public class LogoSplashScene : Scene
 
     public override void InitializeScene()
     {
-        splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/raylib-cs.png");
+        splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/DeadDonut-Logo.png");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
     }
@@ -21,7 +21,7 @@ public class LogoSplashScene : Scene
         DonutSystems.Update -= this.Update;
         DonutSystems.DrawUpdate -= this.DrawUpdate;
         Raylib.UnloadTexture(splashTex);
-        return nextScene = new DonutLogoSplashScene();
+        return nextScene = new GameplayScene();
         
     }
 

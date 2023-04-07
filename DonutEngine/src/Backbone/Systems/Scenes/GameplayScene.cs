@@ -1,7 +1,5 @@
 namespace DonutEngine;
 using DonutEngine.Backbone.Systems;
-using DonutEngine.Backbone;
-using static DonutEngine.Backbone.Systems.DonutSystems;
 using Raylib_cs;
 
 public class GameplayScene : Scene
@@ -14,7 +12,7 @@ public class GameplayScene : Scene
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
         //entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
-        entityManager.CreateDirectory();
+        DonutSystems.entityManager.CreateDirectory();
     }
 
     public override Scene UnloadScene()

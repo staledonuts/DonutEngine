@@ -93,6 +93,7 @@ public class UISystem : SystemsClass
 
     public override void Start()
     {
+        LoadingScreen.DrawLoadingScreen("Loading UI");
         UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         rlImGui.Setup(true);
         InputEventSystem.ToggleUI += ToggleUI;

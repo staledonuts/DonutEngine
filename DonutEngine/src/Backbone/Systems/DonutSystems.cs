@@ -7,8 +7,8 @@ public static class DonutSystems
     // a simple event system that i subscribe all the systems to for the update loop.
     /////////////////////////////////////////////////
     public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
-    public static readonly AudioControl audioControl = new();
     public static readonly WindowSystem windowSystem = new();
+    public static readonly AudioControl audioControl = new();
     public static readonly UISystem uISystem = new();
     public static readonly EntityManager entityManager = new();
     public static readonly LevelDataSystem levelDataSystem = new();

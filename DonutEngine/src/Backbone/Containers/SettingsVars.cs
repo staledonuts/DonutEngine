@@ -41,7 +41,7 @@ public class SettingsVars
         screenWidth = 800;
         screenHeight = 600;
         targetFPS = 60;
-        splashScreenLength = 120;
+        splashScreenLength = 60;
         fullScreen = false;
     }
     public void SaveSettings(string settingsPath)

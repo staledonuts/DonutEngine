@@ -1,7 +1,6 @@
 namespace DonutEngine.Backbone.Systems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static DonutSystems;
 
 public class WindowSystem : SystemsClass
 {
@@ -24,13 +23,13 @@ public class WindowSystem : SystemsClass
 
     public override void Start()
     {
-        InitWindow(settingsVars.screenWidth, settingsVars.screenHeight, "DonutEngine");
+        InitWindow(DonutSystems.settingsVars.screenWidth, DonutSystems.settingsVars.screenHeight, "DonutEngine");
         //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE | ConfigFlags.FLAG_WINDOW_MAXIMIZED);
-        if(settingsVars.fullScreen)
+        if(DonutSystems.settingsVars.fullScreen)
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(settingsVars.targetFPS);
+        SetTargetFPS(DonutSystems.settingsVars.targetFPS);
         
     }
 

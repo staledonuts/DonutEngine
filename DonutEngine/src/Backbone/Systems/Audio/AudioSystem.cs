@@ -22,6 +22,7 @@ public class AudioControl : Systems.SystemsClass
 
     public void InitAudioLibrary()
     {
+        LoadingScreen.DrawLoadingScreen("Loading Audio:");
         string firstSong = "Intro";
         FileIniDataParser parser = new();
         IniData data = parser.ReadFile(DonutFilePaths.audioDef);
@@ -35,6 +36,7 @@ public class AudioControl : Systems.SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.sfx+keys.Value));
+                        LoadingScreen.DrawLoadingScreen("Loading Audio: SFX "+keys.Value);
                     }
                 }
                 break;
@@ -44,6 +46,7 @@ public class AudioControl : Systems.SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.music+keys.Value));
+                        LoadingScreen.DrawLoadingScreen("Loading Audio: Song "+keys.Value);
                     }
                 }
                 break;

@@ -24,6 +24,7 @@ public class EntityManager
 
         foreach(string jsonFile in jsonFilePath)
         {
+            LoadingScreen.DrawLoadingScreen("Loading Entites");
             Entity entity = CreateEntity(jsonFile);
         }
     }

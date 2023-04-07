@@ -46,6 +46,7 @@ public class PhysicsSystem : SystemsClass
 
     public override void Start()
     {
+        LoadingScreen.DrawLoadingScreen("Initializing Physics");
         worldAABB.LowerBound.Set(-1000.0f, -1000.0f);
 		worldAABB.UpperBound.Set(1000.0f, 1000.0f);
         world = new World(worldAABB,gravity, true);
