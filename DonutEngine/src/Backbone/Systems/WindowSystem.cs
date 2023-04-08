@@ -8,7 +8,7 @@ public class WindowSystem : SystemsClass
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.BLACK);
+        Raylib.ClearBackground(Color.SKYBLUE);
     }
 
     public override void LateUpdate()
@@ -29,8 +29,7 @@ public class WindowSystem : SystemsClass
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(DonutSystems.settingsVars.targetFPS);
-        
+        SetTargetFPS(DonutSystems.settingsVars.targetFPS);        
     }
 
     public override void Update()

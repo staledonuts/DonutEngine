@@ -1,5 +1,6 @@
 namespace DonutEngine.Backbone;
 using DonutEngine.Backbone.Factory;
+using DonutEngine.Backbone.Systems;
 public class EntityManager
 {
     private Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
@@ -24,7 +25,6 @@ public class EntityManager
 
         foreach(string jsonFile in jsonFilePath)
         {
-            LoadingScreen.DrawLoadingScreen("Loading Entites");
             Entity entity = CreateEntity(jsonFile);
         }
     }

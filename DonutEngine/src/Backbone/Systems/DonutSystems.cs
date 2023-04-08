@@ -8,8 +8,8 @@ public static class DonutSystems
     /////////////////////////////////////////////////
     public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
     public static readonly WindowSystem windowSystem = new();
-    public static readonly AudioControl audioControl = new();
     public static readonly UISystem uISystem = new();
+    public static readonly AudioControl audioControl = new();
     public static readonly EntityManager entityManager = new();
     public static readonly LevelDataSystem levelDataSystem = new();
     public static readonly PhysicsSystem physicsSystem = new();
@@ -51,10 +51,10 @@ public static class DonutSystems
 
     public static void KillSystems()
     {
-        DonutSystems.UnsubscribeSystem(windowSystem);
-        DonutSystems.UnsubscribeSystem(audioControl);
-        DonutSystems.UnsubscribeSystem(physicsSystem);
         DonutSystems.UnsubscribeSystem(uISystem);
+        DonutSystems.UnsubscribeSystem(physicsSystem);
+        DonutSystems.UnsubscribeSystem(audioControl);
+        DonutSystems.UnsubscribeSystem(windowSystem);
     }
 
     public static void UpdateSystems()
@@ -71,7 +71,11 @@ public static class DonutSystems
     {
         LateUpdate?.Invoke();
     }
+
+    
 }
+
+
 
 public abstract class SystemsClass
 {

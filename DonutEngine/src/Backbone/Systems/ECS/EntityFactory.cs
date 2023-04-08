@@ -1,4 +1,5 @@
 namespace DonutEngine.Backbone.Factory;
+using DonutEngine.Backbone.Systems;
 using Newtonsoft.Json;
 
 public class EntityFactory 
@@ -8,7 +9,6 @@ public class EntityFactory
     public Entity CreateEntity(string jsonPath) 
     {
         System.Console.WriteLine(jsonPath);
-        //FileIniDataParser parser = new FileIniDataParser();
         string json = File.ReadAllText(jsonPath);
         dynamic data = JsonConvert.DeserializeObject(json);
 

@@ -8,13 +8,15 @@ namespace DonutEngine.Backbone.Systems;
 
 public class UISystem : SystemsClass
 {
-    static bool Open = false;
+    static bool Open = true;
+    static bool DebugOpen = false;
     static bool ImGuiDemoOpen = false;
     static GameStats gameStats = new();
     static SoundPlayer soundPlayer = new();
+    static LoadingScreen loadingScreen = new();
     static EntityCreator entityCreator = new();
     static RenderTexture2D UIRenderTexture;
-    static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+    static Rectangle rect;
     
 
     public override void Update()
@@ -23,15 +25,19 @@ public class UISystem : SystemsClass
         {
             return;
         }
-        else
+        else if(Open)
         {
             if (Raylib.IsWindowResized())
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
+                rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
                 UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             }
-            soundPlayer.Update();
-            gameStats.Update();
+            if(DebugOpen)
+            {
+                soundPlayer.DrawUpdate();
+                gameStats.DrawUpdate();
+            }
         }
         
     }
@@ -47,23 +53,11 @@ public class UISystem : SystemsClass
             Raylib.ClearBackground(Color.BLANK);
             Raylib.DrawText(Raylib.GetFPS().ToString(), 12, (int)DonutSystems.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
-            DoMainMenu();
-            if (ImGuiDemoOpen)
+            if(DebugOpen)
             {
-                ImGui.ShowDemoWindow(ref ImGuiDemoOpen);
+                DebugMenu();
             }
-            if(soundPlayer.Open)
-            {
-                soundPlayer.Show();
-            }
-            if(gameStats.Open)
-            {
-                gameStats.Show();
-            }
-            if(entityCreator.Open)
-            {
-                entityCreator.Show();
-            }
+            loadingScreen.Show();
             rlImGui.End();
             Raylib.EndTextureMode();
             Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
@@ -87,32 +81,65 @@ public class UISystem : SystemsClass
 
     public override void Shutdown()
     {
-        rlImGui.Shutdown();
         Raylib.UnloadRenderTexture(UIRenderTexture);
+        rlImGui.Shutdown();
     }
 
     public override void Start()
     {
-        LoadingScreen.DrawLoadingScreen("Loading UI");
-        UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         rlImGui.Setup(true);
-        InputEventSystem.ToggleUI += ToggleUI;
+        rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+        UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height);
+        InputEventSystem.ToggleUI += ToggleDebugUI;
         System.Console.WriteLine("Started UI sys");
     }
 
-    public static void ToggleUI(CBool toggle)
+    public void ToggleDebugUI(CBool toggle)
     {
-        if(Open && toggle)
+        if(DebugOpen && toggle)
         {
-            Open = false;
+            DebugOpen = false;
         }
-        else if(!Open && toggle)
+        else if(!DebugOpen && toggle)
         {
-            Open = true;
+            DebugOpen = true;
         }
     }
 
-    private static void DoMainMenu()
+    public void ShowLoadingUI(bool setBool)
+    {
+        loadingScreen.Open = setBool;
+    }
+
+    public void SetLoadingItem(string item)
+    {
+        loadingScreen.SetLoadingItem(item);
+    }
+
+    private void DebugMenu()
+    {
+        
+        DoMainMenu();
+        if (ImGuiDemoOpen)
+        {
+            ImGui.ShowDemoWindow(ref ImGuiDemoOpen);
+        }
+        if(soundPlayer.Open)
+        {
+            soundPlayer.Show();
+        }
+        if(gameStats.Open)
+        {
+            gameStats.Show();
+        }
+        if(entityCreator.Open)
+        {
+            entityCreator.Show();
+        }
+    }
+    
+
+    private void DoMainMenu()
     {
         if (ImGui.BeginMainMenuBar())
         {

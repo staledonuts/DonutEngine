@@ -41,7 +41,7 @@ public class SoundPlayer : DocumentWindow
         
     }
 
-    public override void Update()
+    public override void DrawUpdate()
     {
         if (!Open)
         {

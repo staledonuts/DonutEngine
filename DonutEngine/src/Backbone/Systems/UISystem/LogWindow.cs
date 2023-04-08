@@ -41,7 +41,7 @@ public class LogWindow : DocumentWindow
         //throw new NotImplementedException();
     }
 
-    public override void Update()
+    public override void DrawUpdate()
     {
         if (!Open)
         {

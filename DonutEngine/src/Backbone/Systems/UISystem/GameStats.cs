@@ -103,7 +103,7 @@ public class GameStats : DocumentWindow
         Raylib.UnloadTexture(ImageTexture);
     }
 
-    public override void Update()
+    public override void DrawUpdate()
     {
         if (!Open)
             return;

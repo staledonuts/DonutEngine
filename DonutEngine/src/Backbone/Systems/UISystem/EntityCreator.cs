@@ -36,7 +36,7 @@ public partial class EntityCreator : DocumentWindow
         
     }
 
-    public override void Update()
+    public override void DrawUpdate()
     {
         if (!Open)
         {
