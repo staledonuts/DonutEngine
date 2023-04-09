@@ -15,6 +15,11 @@ public abstract class Component : IDisposable
         audioControl.PlaySFX(name);
     }
 
+    public void PlaySFX(string name, float minPitch, float maxPitch)
+    {
+        audioControl.PlaySFX(name, minPitch, maxPitch);
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (!disposedValue)

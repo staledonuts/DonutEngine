@@ -31,7 +31,7 @@ public class PlayerComponent : Component
         if(boolean)
         {
             boolean = false;
-            PlaySFX("confirmation001");
+            PlaySFX("confirmation001", 0.9f, 1.1f);
             entity.currentBody.ApplyImpulse(new(0,-20000), this.entity.currentBody.GetPosition());
         }
     }

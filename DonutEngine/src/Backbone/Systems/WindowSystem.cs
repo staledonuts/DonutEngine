@@ -1,8 +1,9 @@
 namespace DonutEngine.Backbone.Systems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static DonutEngine.Backbone.Systems.Debug.CustomLogging;
 
-public class WindowSystem : SystemsClass
+public unsafe class WindowSystem : SystemsClass
 {
     
 
@@ -29,7 +30,10 @@ public class WindowSystem : SystemsClass
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(DonutSystems.settingsVars.targetFPS);        
+        SetTargetFPS(DonutSystems.settingsVars.targetFPS);  
+        SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_ALL);
+        //Custom Logging
+        SetTraceLogCallback(&LogCustom);      
     }
 
     public override void Update()

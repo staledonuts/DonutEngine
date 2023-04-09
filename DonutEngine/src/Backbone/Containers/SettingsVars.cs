@@ -15,8 +15,7 @@ public class SettingsVars
         }
         catch
         {
-            
-            System.Console.WriteLine("WARNING: ---[There was a Settings Error: Creating Default Fallback]---");
+            Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "---[There was a Settings Error: Creating Default Fallback]---");
             SetDefaultSettings();
             SaveSettings(settingsPath);
         }
@@ -55,13 +54,15 @@ public class SettingsVars
         fullScreen = false;
         logging = false;
 
-        spritesPath = DonutFilePaths.app+"Resources/Sprites/";
-        sfxPath = DonutFilePaths.app+"Resources/Sound/SFX/";
-        musicPath = DonutFilePaths.app+"Resources/Sound/Music/";
-        audioDefPath = DonutFilePaths.app+"Resources/Scripts/Sound/SoundFileDef.ini";
-        entitiesPath = DonutFilePaths.app+"Resources/Scripts/Entities/";
+        spritesPath = "Resources/Sprites/";
+        sfxPath = "Resources/Sound/SFX/";
+        musicPath = "Resources/Sound/Music/";
+        audioDefPath = "Resources/Scripts/Sound/SoundFileDef.ini";
+        entitiesPath = "Resources/Scripts/Entities/";
 
     }
+
+    
     public void SaveSettings(string settingsPath)
     {
         IniData data = new();
@@ -80,6 +81,7 @@ public class SettingsVars
         data["FilePaths"]["audioDefPath"] = audioDefPath;
         data["FilePaths"]["entitiesPath"] = entitiesPath;
         parser.WriteFile(settingsPath, data);
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "---[Settings Saved]---");
     } 
 
     public void LoadSettings(string settingsPath)
@@ -100,11 +102,11 @@ public class SettingsVars
 
         //FilePaths Loading
         sectionData = data.Sections.GetSectionData("FilePaths");
-        spritesPath = sectionData.Keys.GetKeyData("spritePath").Value;
+        spritesPath = sectionData.Keys.GetKeyData("spritesPath").Value;
         sfxPath = sectionData.Keys.GetKeyData("sfxPath").Value;
         musicPath = sectionData.Keys.GetKeyData("musicPath").Value;
         audioDefPath = sectionData.Keys.GetKeyData("audioDefPath").Value;
         entitiesPath = sectionData.Keys.GetKeyData("entitiesPath").Value;
-        System.Console.WriteLine("INFO: ---[Settings Loaded]---");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "---[Settings Loaded]---");
     }   
 }

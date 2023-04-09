@@ -10,8 +10,8 @@ public class AudioControl : Systems.SystemsClass
     private List<AudioStream> audioStreams = new List<AudioStream>();
     private Dictionary<string, Sound> soundsLibrary = new Dictionary<string, Sound>();
     private Dictionary<string, Music> musicLibrary = new Dictionary<string, Music>();
-
     private Music currentMusic;
+    private Random random = new();
     private string? currentSongName = null;
 
     public override void Start()
@@ -24,7 +24,7 @@ public class AudioControl : Systems.SystemsClass
     {
         string firstSong = "Intro";
         FileIniDataParser parser = new();
-        IniData data = parser.ReadFile(DonutSystems.settingsVars.audioDefPath);
+        IniData data = parser.ReadFile(DonutFilePaths.app+DonutSystems.settingsVars.audioDefPath);
         foreach (SectionData sectionName in data.Sections)
         {
             string audioType = sectionName.SectionName;
@@ -35,7 +35,7 @@ public class AudioControl : Systems.SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         //DonutSystems.uISystem.SetLoadingItem("Loading SFX: "+keys.KeyName);
-                        soundsLibrary.Add(keys.KeyName, LoadSound(DonutSystems.settingsVars.sfxPath+keys.Value));
+                        soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.app+DonutSystems.settingsVars.sfxPath+keys.Value));
                     }
                 }
                 break;
@@ -45,7 +45,7 @@ public class AudioControl : Systems.SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         //DonutSystems.uISystem.SetLoadingItem("Loading Music: "+keys.KeyName);
-                        musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutSystems.settingsVars.musicPath+keys.Value));
+                        musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.app+DonutSystems.settingsVars.musicPath+keys.Value));
                     }
                 }
                 break;
@@ -122,6 +122,17 @@ public class AudioControl : Systems.SystemsClass
         if (soundsLibrary.TryGetValue(name, out sound)) 
         {
             Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
+            PlaySoundMulti(sound);
+        }
+    }
+
+    public void PlaySFX(string name, float minPitch, float maxPitch) 
+    {
+        Sound sound;
+        if (soundsLibrary.TryGetValue(name, out sound)) 
+        {
+            Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
+            SetSoundPitch(sound, random.NextSingle() * (maxPitch - minPitch) + minPitch);
             PlaySoundMulti(sound);
         }
     }

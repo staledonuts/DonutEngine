@@ -6,9 +6,13 @@ using System.Runtime.InteropServices;
 
 public static class Logging
 {
-    public static void WriteLog()
+    public static void WriteLog(string logString)
     {
-        //Raylib.
+        
+        using(StreamWriter streamWriter = new(AppDomain.CurrentDomain.BaseDirectory+"Log.log", true))
+        {
+            streamWriter.WriteLine(logString);
+        }
     }
 
     
@@ -33,8 +37,12 @@ public unsafe class CustomLogging
             TraceLogLevel.LOG_NONE => ConsoleColor.White,
             _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
         };
-
-        Console.WriteLine($"Custom " + message);
+        
+        Console.WriteLine($"Log: " + message);
+        if(DonutSystems.settingsVars.logging)
+        {
+            Logging.WriteLog("Log: "+message);
+        }
         Console.ResetColor();
     }
 }
