@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Box2DX.Common;
@@ -19,29 +20,26 @@ public static class InputEventSystem
 
     // Define a method that raises the event.
     public static void UpdateInputEvent()
-    {
-        if(!IsGamepadAvailable(0))
-        {
-            JumpEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_Z));
-            AttackEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
-            DashEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_C));
-            DpadEvent?.Invoke(Vector2Composite());
-            ToggleUI?.Invoke(IsKeyPressed(KeyboardKey.KEY_F11));
-        }
-        else
-        {
-            JumpEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
-            AttackEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT));
-            DashEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_1));
-            DpadEvent?.Invoke(Vector2Composite());
-            ToggleUI?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_MIDDLE_LEFT));
-        }
+    { 
+        // Keyboard
+        JumpEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_Z));
+        AttackEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
+        DashEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_C));
+        DpadEvent?.Invoke(Vector2Composite(useKeyboard:true));
+        ToggleUI?.Invoke(IsKeyPressed(KeyboardKey.KEY_F11));
+            
+        // Gamepad
+        JumpEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
+        AttackEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT));
+        DashEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_1));
+        DpadEvent?.Invoke(Vector2Composite(useKeyboard:false));
+        ToggleUI?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_MIDDLE_LEFT));
     }
 
-    static Vec2 Vector2Composite()
+    static Vec2 Vector2Composite(bool useKeyboard = true)
     {
         Vec2 input;
-        if(!IsGamepadAvailable(0))
+        if(useKeyboard)
         {
             input.X = -(int)IsKeyDown(KeyboardKey.KEY_LEFT) +(int)IsKeyDown(KeyboardKey.KEY_RIGHT);
             input.Y = -(int)IsKeyDown(KeyboardKey.KEY_UP) +(int)IsKeyDown(KeyboardKey.KEY_DOWN);
