@@ -18,7 +18,8 @@ public partial class EntityCreator : DocumentWindow
     static GameCamera2D gameCamera2D = new();
     static PlayerComponent playerComponent = new();
     static SpriteComponent spriteComponent = new();
-
+    
+    [System.Serializable]
     private struct ComponentBools
     {
         public bool gameCamera2D;
@@ -27,6 +28,7 @@ public partial class EntityCreator : DocumentWindow
         public bool colorBoxComponent;
     }
 
+    [System.Serializable]
     private struct EntityData
     {
         public float X;
@@ -39,16 +41,19 @@ public partial class EntityCreator : DocumentWindow
         public float Restitution;
     }
 
+    [System.Serializable]
     private struct GameCamera2D
     {
         public bool IsActive;
     }
 
+    [System.Serializable]
     private struct PlayerComponent
     {
 
     }
 
+    [System.Serializable]
     private struct SpriteComponent
     {
         public SpriteComponent()

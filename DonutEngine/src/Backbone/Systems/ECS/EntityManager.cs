@@ -21,7 +21,7 @@ public class EntityManager
 
     public void CreateDirectory()
     {
-        string[] jsonFilePath = Directory.GetFiles(DonutFilePaths.entities, "*.json");
+        string[] jsonFilePath = Directory.GetFiles(DonutSystems.settingsVars.entitiesPath, "*.json");
 
         foreach(string jsonFile in jsonFilePath)
         {

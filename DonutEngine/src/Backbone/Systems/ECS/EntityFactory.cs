@@ -40,7 +40,7 @@ public class EntityFactory
                 case "SpriteComponent":
                     component = new SpriteComponent
                     {
-                        Sprite = Raylib_cs.Raylib.LoadTexture(DonutFilePaths.sprites + componentData.Sprite.ToString()),
+                        Sprite = Raylib_cs.Raylib.LoadTexture(DonutSystems.settingsVars.spritesPath + componentData.Sprite.ToString()),
                         Width = int.Parse(componentData.Width.ToString()),
                         Height = int.Parse(componentData.Height.ToString()),
                         AnimatorName = componentData.AnimatorName.ToString(),
@@ -76,7 +76,6 @@ public class EntityFactory
             }
             if (component != null) 
             {
-                System.Console.WriteLine(component);
                 entity.AddComponent(component, entity);
             }; 
         }
