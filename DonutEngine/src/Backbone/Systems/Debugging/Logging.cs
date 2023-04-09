@@ -29,9 +29,21 @@ public unsafe class CustomLogging
         {
             TraceLogLevel.LOG_ALL => ConsoleColor.White,
             TraceLogLevel.LOG_TRACE => ConsoleColor.Black,
-            TraceLogLevel.LOG_DEBUG => ConsoleColor.Magenta,
+            TraceLogLevel.LOG_DEBUG => ConsoleColor.White,
             TraceLogLevel.LOG_INFO => ConsoleColor.Cyan,
             TraceLogLevel.LOG_WARNING => ConsoleColor.DarkYellow,
+            TraceLogLevel.LOG_ERROR => ConsoleColor.Black,
+            TraceLogLevel.LOG_FATAL => ConsoleColor.Black,
+            TraceLogLevel.LOG_NONE => ConsoleColor.Black,
+            _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
+        };
+        Console.BackgroundColor = (TraceLogLevel)logLevel switch
+        {
+            TraceLogLevel.LOG_ALL => ConsoleColor.Black,
+            TraceLogLevel.LOG_TRACE => ConsoleColor.White,
+            TraceLogLevel.LOG_DEBUG => ConsoleColor.DarkGreen,
+            TraceLogLevel.LOG_INFO => ConsoleColor.Black,
+            TraceLogLevel.LOG_WARNING => ConsoleColor.Black,
             TraceLogLevel.LOG_ERROR => ConsoleColor.Red,
             TraceLogLevel.LOG_FATAL => ConsoleColor.Red,
             TraceLogLevel.LOG_NONE => ConsoleColor.White,

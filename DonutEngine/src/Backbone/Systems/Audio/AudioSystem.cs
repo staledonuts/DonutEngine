@@ -3,8 +3,9 @@ using static Raylib_cs.Raylib;
 using IniParser.Model;
 using IniParser;
 using DonutEngine.Backbone.Systems;
+using System.Collections;
 namespace DonutEngine.Backbone;
-public class AudioControl : Systems.SystemsClass
+public partial class AudioControl : Systems.SystemsClass
 {
 
     private List<AudioStream> audioStreams = new List<AudioStream>();
@@ -18,6 +19,7 @@ public class AudioControl : Systems.SystemsClass
     {
         InitAudioDevice();
         InitAudioLibrary();
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
 
     public void InitAudioLibrary()
@@ -60,17 +62,17 @@ public class AudioControl : Systems.SystemsClass
 
     public override void Update()
     {
-        UpdateMusicStream(currentMusic);
+        
     }
 
     public override void DrawUpdate()
     {
-        //throw new NotImplementedException();
+        
     }
 
     public override void LateUpdate()
     {
-        //throw new NotImplementedException();
+        UpdateMusicStream(currentMusic);
     }
 
     public override void Shutdown()
@@ -78,131 +80,7 @@ public class AudioControl : Systems.SystemsClass
         CloseAudioDevice();
     }
 
-    public float CurrentMusicTime()
-    {
-        return Raylib.GetMusicTimePlayed(currentMusic);
-    }
-
-    public float CurrentMusicLength()
-    {
-        return Raylib.GetMusicTimeLength(currentMusic);
-    }
 
 
-    public string[] GetMusicPlaylist()
-    {
-        return musicLibrary.Keys.ToArray<string>();
-    }
-    public int GetMusicPlaylistLength()
-    {
-        return musicLibrary.Count();
-    }
-
-    public int GetSFXPlaylistLength()
-    {
-        return soundsLibrary.Count();
-    }
-
-    public string[] GetSFXPlaylist()
-    {
-        return soundsLibrary.Keys.ToArray<string>();
-    }
-
-
-
-    public void LoadSFX(string name, string filename) 
-    {
-        Sound sound = LoadSound(filename);
-        soundsLibrary.Add(name, sound);
-    }
-
-    public void PlaySFX(string name) 
-    {
-        Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) 
-        {
-            Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
-            PlaySoundMulti(sound);
-        }
-    }
-
-    public void PlaySFX(string name, float minPitch, float maxPitch) 
-    {
-        Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) 
-        {
-            Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
-            SetSoundPitch(sound, random.NextSingle() * (maxPitch - minPitch) + minPitch);
-            PlaySoundMulti(sound);
-        }
-    }
-
-    public void StopSFX(string name) 
-    {
-        Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) 
-        {
-            StopSound(sound);
-        }
-    }
-
-    public void UnloadSFX(string name) 
-    {
-        Sound sound;
-        if (soundsLibrary.TryGetValue(name, out sound)) 
-        {
-            UnloadSound(sound);
-            soundsLibrary.Remove(name);
-        }
-    }
-
-    public void LoadMusic(string name, string filename) 
-    {
-        Music music = LoadMusicStream(filename);
-        musicLibrary.Add(name, music);
-    }
-
-    public void PlayMusic(string name) 
-    {
-        Music music;
-        if (musicLibrary.TryGetValue(name, out music)) 
-        {
-            currentSongName = name;
-            currentMusic = music;
-            Raylib.SetMusicVolume(currentMusic, DonutSystems.settingsVars.currentMusicVolume);
-            PlayMusicStream(currentMusic);
-        }
-    }
-
-    public void PauseMusic()
-    {
-        if(IsMusicStreamPlaying(currentMusic))
-        {
-            PauseMusicStream(currentMusic);
-        }
-        else
-        {
-            ResumeMusicStream(currentMusic);
-        }
-    }
-
-    public void StopMusic() 
-    {
-        StopMusicStream(currentMusic);
-    }
-
-    public void SetMusicVolume(float volume) 
-    {
-        SetMusicVolume(volume);
-    }
-
-    public void UnloadMusic(string name) 
-    {
-        Music music;
-        if (musicLibrary.TryGetValue(name, out music)) 
-        {
-            UnloadMusicStream(music);
-            musicLibrary.Remove(name);
-        }
-    }    
+    
 }

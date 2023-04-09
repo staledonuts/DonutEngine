@@ -2,6 +2,7 @@ namespace DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
 using System.Numerics;
 using Box2DX.Common;
+using Box2DX.Dynamics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using DonutEngine;
@@ -10,11 +11,13 @@ class Particle
     {
         public Vec2 position;
         public Vec2 velocity;
-        public Color color;
+        public Raylib_cs.Color color;
         public float size;
         public float life;
 
-        public Particle(Vec2 position, Vec2 velocity, Color color, float size, float life)
+        
+
+        public Particle(Vec2 position, Vec2 velocity, Raylib_cs.Color color, float size, float life)
         {
             this.position = position;
             this.velocity = velocity;
@@ -99,7 +102,7 @@ class Particle
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(entity.currentBody.GetPosition(), new Vec2(random.Next(5, 10), random.Next(5, 10)), Color.WHITE, random.Next(15, 20), 20);
+                    particles[i] = new Particle(entity.currentBody.GetPosition(), new Vec2(random.Next(5, 10), random.Next(5, 10)), Raylib_cs.Color.WHITE, random.Next(15, 20), 20);
                     break;
                 }
             }

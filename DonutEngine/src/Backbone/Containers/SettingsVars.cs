@@ -15,7 +15,7 @@ public class SettingsVars
         }
         catch
         {
-            Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "---[There was a Settings Error: Creating Default Fallback]---");
+            Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "------[ There was a Settings Error: Creating Default Fallback ]------");
             SetDefaultSettings();
             SaveSettings(settingsPath);
         }
@@ -81,7 +81,7 @@ public class SettingsVars
         data["FilePaths"]["audioDefPath"] = audioDefPath;
         data["FilePaths"]["entitiesPath"] = entitiesPath;
         parser.WriteFile(settingsPath, data);
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "---[Settings Saved]---");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Settings Saved ]------");
     } 
 
     public void LoadSettings(string settingsPath)
@@ -107,6 +107,6 @@ public class SettingsVars
         musicPath = sectionData.Keys.GetKeyData("musicPath").Value;
         audioDefPath = sectionData.Keys.GetKeyData("audioDefPath").Value;
         entitiesPath = sectionData.Keys.GetKeyData("entitiesPath").Value;
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "---[Settings Loaded]---");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Settings Loaded ]------");
     }   
 }

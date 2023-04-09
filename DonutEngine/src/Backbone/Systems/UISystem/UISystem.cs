@@ -91,7 +91,7 @@ public class UISystem : SystemsClass
         rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height);
         InputEventSystem.ToggleUI += ToggleDebugUI;
-        System.Console.WriteLine("Started UI sys");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Started UI System ]------");
     }
 
     public void ToggleDebugUI(CBool toggle)

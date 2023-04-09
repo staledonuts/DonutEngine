@@ -1,6 +1,7 @@
 namespace DonutEngine.Backbone.Factory;
 using DonutEngine.Backbone.Systems;
 using Newtonsoft.Json;
+using Raylib_cs;
 
 public class EntityFactory 
 {
@@ -8,13 +9,13 @@ public class EntityFactory
 
     public Entity CreateEntity(string jsonPath) 
     {
-        System.Console.WriteLine(jsonPath);
         string json = File.ReadAllText(jsonPath);
         dynamic data = JsonConvert.DeserializeObject(json);
 
         Entity? currentEntity = null;
         currentEntity = new Entity(nextEntityId++, data);
         CreateComponents(data, currentEntity);
+        Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Loaded Entity: "+currentEntity.GetType().ToString());
         return currentEntity;
     }
 
