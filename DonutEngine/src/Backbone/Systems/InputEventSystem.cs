@@ -20,7 +20,8 @@ public static class InputEventSystem
 
     // Define a method that raises the event.
     public static void UpdateInputEvent()
-    { 
+    {
+        /* 1nputz */
         // Keyboard
         JumpEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_Z));
         AttackEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
