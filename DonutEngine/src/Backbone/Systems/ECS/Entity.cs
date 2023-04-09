@@ -39,7 +39,6 @@ public class Entity : IDisposable
     {
         Components.TryAdd(component.GetType().Name, component);
         component.OnAddedToEntity(entity);
-        Console.WriteLine(component.GetType().Name);
     }
 
     public T GetComponent<T>() where T : Component 

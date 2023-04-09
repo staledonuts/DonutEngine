@@ -1,14 +1,18 @@
 ﻿using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
-using DonutEngine;
+using static DonutEngine.Backbone.Systems.Debug.CustomLogging;
 using static Raylib_cs.Raylib;
 
-static class Program
+
+static unsafe class Program
 {
     public static bool isLoading = false;
     
     public static void Main()
     {
+        SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_ALL);
+        //Custom Logging
+        SetTraceLogCallback(&LogCustom);
         //Lets set up the different nessecary systems!
         DonutSystems.InitSystems();
         //This is where all the update loops go.

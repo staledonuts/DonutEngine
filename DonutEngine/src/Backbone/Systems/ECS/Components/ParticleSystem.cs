@@ -1,4 +1,5 @@
 namespace DonutEngine.Backbone;
+using DonutEngine.Backbone.Systems;
 using System.Numerics;
 using Box2DX.Common;
 using Raylib_cs;
@@ -108,7 +109,7 @@ class Particle
     {
         //entityPhysics = entity.entityPhysics;
         particles = new Particle[maxParticles];
-        particleTexture = LoadTexture(DonutFilePaths.sprites+textureName);
+        particleTexture = LoadTexture(DonutSystems.settingsVars.spritesPath+textureName);
         ECS.ecsUpdate += Update;
         ECS.ecsDrawUpdate += Draw;
     }
