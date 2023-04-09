@@ -1,7 +1,6 @@
 namespace DonutEngine.Backbone;
 using Box2DX.Common;
 using DonutEngine.Backbone.Systems;
-using DonutEngine.DonutMath;
 using Raylib_cs;
 
 public class PlayerComponent : Component
@@ -49,7 +48,7 @@ public class PlayerComponent : Component
 
     public void Update(float deltaTime)
     {
-        bool PlayerHasHorizonalVelocity = Math.Abs(entity.currentBody.GetLinearVelocity().X) > Mathdf.Epsilon;
+        bool PlayerHasHorizonalVelocity = Math.Abs(entity.currentBody.GetLinearVelocity().X) > Math.FLOAT32_EPSILON;
         if(PlayerHasHorizonalVelocity)
         {
             sprite.FlipSprite(PlayerHasHorizonalVelocity);
