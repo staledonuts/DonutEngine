@@ -9,7 +9,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Box2DXStandard" Version="1.0.3" />
+    <PackageReference Include="Box2D.NetStandard" Version="1.0.4" />
     <PackageReference Include="ImGui.NET" Version="1.89.4" />
     <PackageReference Include="ini-parser-netstandard" Version="2.5.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

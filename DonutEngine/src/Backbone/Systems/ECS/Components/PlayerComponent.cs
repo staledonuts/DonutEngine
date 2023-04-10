@@ -48,7 +48,7 @@ public class PlayerComponent : Component
 
     public void Update(float deltaTime)
     {
-        bool PlayerHasHorizonalVelocity = Math.Abs(entity.currentBody.GetLinearVelocity().X) > Math.FLOAT32_EPSILON;
+        bool PlayerHasHorizonalVelocity = Math.Abs(entity.currentBody.GetLinearVelocity().X) > MathD.Epsilon;
         if(PlayerHasHorizonalVelocity)
         {
             sprite.FlipSprite(PlayerHasHorizonalVelocity);

@@ -1,15 +1,18 @@
 ﻿using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
+using DonutEngine.Backbone.Systems.Shaders;
 
 using static Raylib_cs.Raylib;
 
 
 static class Program
 {
+    const int GLSL_VERSION = 330;
     public static bool isLoading = false;
     
     public static void Main()
     {
+        ShaderSystem.InitShaders();
         //Lets set up the different nessecary systems!
         DonutSystems.InitSystems();
         //This is where all the update loops go.

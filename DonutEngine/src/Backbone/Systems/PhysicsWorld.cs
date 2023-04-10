@@ -14,25 +14,25 @@ public class PhysicsSystem : SystemsClass
     private int velocityIterations = 8;
     private int positionIterations = 4;
 
-    public Body CreateBody(Entity physics) 
+    public Body CreateBody(float X, float Y, float Width, float Height, float Density, float Friction, float Restitution) 
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.Position.Set(physics.X, physics.Y);
+        bodyDef.Position.Set(X, Y);
         Body body = world.CreateBody(bodyDef);
         PolygonDef polygonDef = new PolygonDef();
-        polygonDef.SetAsBox(physics.Width / 2f, physics.Height / 2f);
-        polygonDef.Density = physics.Density;
-        polygonDef.Friction = physics.Friction;
-        polygonDef.Restitution = physics.Restitution;
-        body.CreateShape(polygonDef);
+        polygonDef.SetAsBox(Width / 2f, Height / 2f);
+        polygonDef.Density = Density;
+        polygonDef.Friction = Friction;
+        polygonDef.Restitution = Restitution;
+        body.CreateFixture(polygonDef);
         body.SetMassFromShapes();
         return body;
     }
 
-    public Body CreateStaticBody(Entity physics) 
+    public Body CreateStaticBody(float X, float Y) 
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.Position.Set(physics.X, physics.Y);
+        bodyDef.Position.Set(X, Y);
         Body body = world.CreateBody(bodyDef);
         body.IsStatic();
 

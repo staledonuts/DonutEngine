@@ -7,7 +7,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using DonutEngine;
 
-class Particle
+class Particle : PhysicsBody
     {
         public Vec2 position;
         public Vec2 velocity;
@@ -24,6 +24,7 @@ class Particle
             this.color = color;
             this.size = size;
             this.life = life;
+            CreateBody();
         }
 
         public void Update(float deltaTime)
@@ -51,6 +52,14 @@ class Particle
         private Particle[]? particles = null;
         private Texture2D particleTexture;
         private float emitTimer = 0;
+
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Width { get; set; }
+        public float Height { get; set; }
+        public float Density { get; set; }
+        public float Friction { get; set; }
+        public float Restitution { get; set; }
         public int maxParticles { get; set; }
         public float emitRate { get; set; }
         public string? textureName { get; set; }

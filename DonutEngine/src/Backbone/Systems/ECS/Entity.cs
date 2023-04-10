@@ -61,11 +61,11 @@ public class Entity : IDisposable
     {
         if (entity.Type == Body.BodyType.Dynamic)
         {
-            currentBody = physicsSystem.CreateBody(this);
+            currentBody = physicsSystem.CreateBody(X,Y,Width,Height,Density,Friction,Restitution);
         }
         else if (entity.Type == Body.BodyType.Static)
         {
-            currentBody = physicsSystem.CreateStaticBody(this);
+            currentBody = physicsSystem.CreateStaticBody(X,Y);
         }
         
     }

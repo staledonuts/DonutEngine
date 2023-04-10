@@ -15,7 +15,7 @@ public class TileComponent : Component
     {
         currentBody = entity.currentBody;
         polyDef.SetAsBox(Width, Height);
-        currentBody.CreateShape(polyDef);        
+        currentBody.CreateFixture(polyDef);        
     }
 
     public override void OnRemovedFromEntity(Entity entity)
