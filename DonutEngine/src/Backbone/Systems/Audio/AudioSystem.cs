@@ -4,8 +4,8 @@ using IniParser.Model;
 using IniParser;
 using DonutEngine.Backbone.Systems;
 using System.Collections;
-namespace DonutEngine.Backbone;
-public partial class AudioControl : Systems.SystemsClass
+namespace DonutEngine.Backbone.Systems.Audio;
+public partial class AudioControl : SystemsClass
 {
 
     private List<AudioStream> audioStreams = new List<AudioStream>();

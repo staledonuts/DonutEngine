@@ -3,24 +3,30 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DonutEngine.Backbone;
 
-public static class ComponentSerializer {
+public static class ComponentSerializer 
+{
     private static Dictionary<string, JsonSerializerSettings> serializerSettings = new Dictionary<string, JsonSerializerSettings>();
 
-    public static void RegisterComponentType<T>(JsonSerializerSettings settings = null) where T : Component {
-        if (!serializerSettings.ContainsKey(typeof(T).Name)) {
+    public static void RegisterComponentType<T>(JsonSerializerSettings settings = null) where T : Component 
+    {
+        if (!serializerSettings.ContainsKey(typeof(T).Name)) 
+        {
             serializerSettings[typeof(T).Name] = settings ?? new JsonSerializerSettings();
         }
     }
 
-    public static string Serialize(Component component) {
+    public static string Serialize(Component component) 
+    {
         return JsonConvert.SerializeObject(component, serializerSettings[component.GetType().Name]);
     }
 
-    public static T Deserialize<T>(string json) where T : Component {
+    public static T Deserialize<T>(string json) where T : Component 
+    {
         return JsonConvert.DeserializeObject<T>(json, serializerSettings[typeof(T).Name]);
     }
 
-    public static Component Deserialize(string json) {
+    public static Component Deserialize(string json) 
+    {
         JObject jObject = JObject.Parse(json);
         string typeName = jObject.Value<string>("$type");
         Type type = Type.GetType(typeName);

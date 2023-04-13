@@ -10,16 +10,6 @@ public abstract class Component : IDisposable
     public abstract void OnAddedToEntity(Entity entity);
     public abstract void OnRemovedFromEntity(Entity entity);
 
-    public void PlaySFX(string name)
-    {
-        audioControl.PlaySFX(name);
-    }
-
-    public void PlaySFX(string name, float minPitch, float maxPitch)
-    {
-        audioControl.PlaySFX(name, minPitch, maxPitch);
-    }
-
     protected virtual void Dispose(bool disposing)
     {
         if (!disposedValue)

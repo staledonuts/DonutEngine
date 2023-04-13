@@ -1,8 +1,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using DonutEngine.Backbone.Systems;
 using System.Collections;
-namespace DonutEngine.Backbone;
+namespace DonutEngine.Backbone.Systems.Audio;
 
 public partial class AudioControl
 {

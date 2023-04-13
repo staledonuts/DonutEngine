@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DonutEngine.Backbone.Systems.UI;
 
-namespace DonutEngine.Backbone.Systems.UI.EntityCreator;
+namespace DonutEngine.Backbone.Systems.UI.Creator;
 
 public partial class EntityCreator : DocumentWindow
 {

@@ -1,4 +1,4 @@
-namespace DonutEngine.Backbone.Systems;
+namespace DonutEngine.Backbone.Systems.Window;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static DonutEngine.Backbone.Systems.Debug.CustomLogging;

@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Box2DX.Common;
-namespace DonutEngine.Backbone.Systems;
+namespace DonutEngine.Backbone.Systems.Input;
 
 
 public static class InputEventSystem

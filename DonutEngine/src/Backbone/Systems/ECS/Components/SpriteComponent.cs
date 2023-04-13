@@ -44,6 +44,7 @@ public class SpriteComponent : Component
     public void Draw(float deltaTime)
     {
         //Raylib.BeginShaderMode(outlineShader.shader);
+        
         Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.currentBody.GetPosition().X, entity.currentBody.GetPosition().Y), Color.WHITE);
         //Raylib.EndShaderMode();
     }

@@ -1,4 +1,4 @@
-namespace DonutEngine.Backbone.Systems;
+namespace DonutEngine.Backbone.Systems.Physics;
 using Box2DX.Common;
 using Box2DX.Dynamics;
 using Box2DX.Collision;
