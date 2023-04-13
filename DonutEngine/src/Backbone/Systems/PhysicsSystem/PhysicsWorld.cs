@@ -68,6 +68,6 @@ public class PhysicsSystem : SystemsClass
 
     public override void Shutdown()
     {
-        //throw new NotImplementedException();
+        world.Dispose();
     }
 }

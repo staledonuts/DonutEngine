@@ -15,6 +15,7 @@ public class UISystem : SystemsClass
     static SoundPlayer soundPlayer = new();
     static LoadingScreen loadingScreen = new();
     static EntityCreator entityCreator = new();
+    static EntitySpawnList entitySpawnList = new();
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect;
     
@@ -136,6 +137,10 @@ public class UISystem : SystemsClass
         {
             entityCreator.Show();
         }
+        if(entitySpawnList.Open)
+        {
+            entitySpawnList.Show();
+        }
     }
     
 
@@ -156,6 +161,8 @@ public class UISystem : SystemsClass
             if (ImGui.BeginMenu("Assets"))
             {
                 ImGui.MenuItem("Entity Creator", string.Empty, ref entityCreator.Open);
+
+                ImGui.MenuItem("Entity Spawner", string.Empty, ref entitySpawnList.Open);
 
                 ImGui.MenuItem("Sound Tester", string.Empty, ref soundPlayer.Open);
 

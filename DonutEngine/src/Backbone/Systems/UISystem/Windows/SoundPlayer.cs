@@ -8,7 +8,7 @@ namespace DonutEngine.Backbone.Systems.UI;
 
 public class SoundPlayer : DocumentWindow
 {
-    Vector2 buttonSize = new(100, 12);
+    Vector2 buttonSize = new(100, 18);
     int currentMusicPlaylistItem = 0;
     int currentSFXPlaylistItem = 0;
     public override void Setup()

@@ -1,6 +1,9 @@
 namespace DonutEngine.Backbone;
 using DonutEngine.Backbone.Factory;
 using DonutEngine.Backbone.Systems;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 public class EntityManager
 {
     private Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
@@ -53,8 +56,13 @@ public class EntityManager
         return entities[id];
     }
 
-    public void RemoveEntity(int id) 
+    /*public string[] GetEntityList()
     {
+        return entities.Keys.ToArray<string>();
+    }*/
+    public void RemoveEntity(int id, Entity entity) 
+    {
+        entity.DestroyEntity();
         entities.Remove(id);
     }
 }

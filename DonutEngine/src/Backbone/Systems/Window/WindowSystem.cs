@@ -9,7 +9,7 @@ public unsafe class WindowSystem : SystemsClass
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.RAYWHITE);
+        Raylib.ClearBackground(Color.DARKGRAY);
     }
 
     public override void LateUpdate()
