@@ -8,6 +8,8 @@ public class EntitySpawnList : DocumentWindow
     Vector2 buttonSize = new(100, 18);
     int currentListItem = 0;
     int currentEntitiesListItem = 0;
+    private Dictionary<int, Entity> entities;
+    List<string> nameList = new();
     public override void DrawUpdate()
     {
         //throw new NotImplementedException();
@@ -15,7 +17,8 @@ public class EntitySpawnList : DocumentWindow
 
     public override void Setup()
     {
-        //throw new NotImplementedException();
+        entities = DonutSystems.entityManager.GetEntityList();
+        CreateNameList();
     }
 
     public override void Show()
@@ -59,16 +62,30 @@ public class EntitySpawnList : DocumentWindow
         }
         if(ImGui.BeginTabItem("Entity List"))
         {
-            if(ImGui.Button("Spawn", buttonSize))
-            {            
+            if(ImGui.Button("Destroy Entity", buttonSize))
+            {
                 string currentSelection = Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json").GetValue(currentListItem).ToString();
                 DonutSystems.entityManager.CreateEntity(currentSelection);
             }
+            if(ImGui.Button("Refresh List", buttonSize))
+            {
+                CreateNameList();
+            }
             ImGui.NewLine();
             ImGui.BeginListBox("Entities", width);
-            //ImGui.ListBox("Entities", ref currentEntitiesListItem, DonutSystems.entityManager.GetEntityList(), Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json").Count());
+            ImGui.ListBox("Entities", ref currentEntitiesListItem, nameList.ToArray(), entities.Count());
             ImGui.EndListBox();
             ImGui.EndTabItem();
         }       
+    }
+
+    private void CreateNameList()
+    {
+        nameList = new();
+        
+        foreach(KeyValuePair<int, Entity> keyValuePair in entities)
+        {
+            nameList.Add(keyValuePair.Value.Name);
+        }
     }
 }

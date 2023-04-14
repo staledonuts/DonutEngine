@@ -14,7 +14,7 @@ public class EntityManager
         foreach (KeyValuePair<int, Entity> entity in entities) 
         {
             var ent = GetEntity(entity.Key);
-            if (ent.Tags.Contains(tag)) 
+            if (ent.Tags.Contains(tag))
             {
                 result.Add(ent);
             }
@@ -56,10 +56,10 @@ public class EntityManager
         return entities[id];
     }
 
-    /*public string[] GetEntityList()
+    public Dictionary<int, Entity> GetEntityList()
     {
-        return entities.Keys.ToArray<string>();
-    }*/
+        return entities;
+    }
     public void RemoveEntity(int id, Entity entity) 
     {
         entity.DestroyEntity();

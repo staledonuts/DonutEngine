@@ -11,7 +11,6 @@ namespace DonutEngine.Backbone.Systems.UI.Creator;
 
 public partial class EntityCreator : DocumentWindow
 {
-    static String name = "";
     Vector2 buttonSize = new(100, 20);
     static ComponentBools componentBools = new();
     static EntityData entityData = new();
@@ -31,6 +30,7 @@ public partial class EntityCreator : DocumentWindow
     [System.Serializable]
     private struct EntityData
     {
+        public string Name;
         public float X;
         public float Y;
         public float Width;

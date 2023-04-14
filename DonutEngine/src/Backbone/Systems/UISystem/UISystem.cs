@@ -89,6 +89,7 @@ public class UISystem : SystemsClass
     public override void Start()
     {
         rlImGui.Setup(true);
+        entitySpawnList.Setup();
         rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height);
         InputEventSystem.ToggleUI += ToggleDebugUI;

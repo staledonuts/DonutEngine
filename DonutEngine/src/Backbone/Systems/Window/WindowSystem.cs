@@ -5,7 +5,7 @@ using static DonutEngine.Backbone.Systems.Debug.CustomLogging;
 
 public unsafe class WindowSystem : SystemsClass
 {
-    
+    Image icon;
 
     public override void DrawUpdate()
     {
@@ -24,6 +24,8 @@ public unsafe class WindowSystem : SystemsClass
 
     public override void Start()
     {
+        //icon = LoadImage(DonutFilePaths.app+"donutengine-icon.ico");
+        SetWindowIcon(icon);
         InitWindow(DonutSystems.settingsVars.screenWidth, DonutSystems.settingsVars.screenHeight, "DonutEngine");
         //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE | ConfigFlags.FLAG_WINDOW_MAXIMIZED);
         if(DonutSystems.settingsVars.fullScreen)
@@ -31,9 +33,10 @@ public unsafe class WindowSystem : SystemsClass
             ToggleFullscreen();
         }
         SetTargetFPS(DonutSystems.settingsVars.targetFPS);  
-        SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_ALL);
+        SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_DEBUG);
         //Custom Logging
-        SetTraceLogCallback(&LogCustom);      
+        SetTraceLogCallback(&LogCustom);
+
     }
 
     public override void Update()

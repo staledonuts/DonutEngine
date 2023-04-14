@@ -1,6 +1,7 @@
 {
     "EntityType": {
         "Type": "DynamicEntity",
+        "Name": "Player",
         "X": "14",
         "Y": "16",
         "Width": "14",

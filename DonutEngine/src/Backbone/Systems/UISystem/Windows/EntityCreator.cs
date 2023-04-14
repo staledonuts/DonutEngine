@@ -56,7 +56,7 @@ public partial class EntityCreator : DocumentWindow
                 }
                 if(ImGui.MenuItem(" - Save As"))
                 {
-                    SaveEntity();
+                    SaveJson(entityData.Name);
                 }
                 if(ImGui.MenuItem(" - Reload Game Entities", "F5"))
                 {
@@ -85,15 +85,14 @@ public partial class EntityCreator : DocumentWindow
         spriteComponent = new();
     }
 
-    public void SaveEntity()
-    {
-        
-    }
-
 
     private void EntityWindow()
     {
-        ImGui.InputTextWithHint("EntityName", "Input Filename: will be saved as a Json", ref name, 32, ImGuiInputTextFlags.AutoSelectAll);
+        if(entityData.Name == null)
+        {
+            entityData.Name = "";
+        }
+        ImGui.InputTextWithHint("Entity Filename", "Input Filename: will be saved as a Json", ref entityData.Name, 32, ImGuiInputTextFlags.AutoSelectAll);
         if(ImGui.CollapsingHeader("Physics", ImGuiTreeNodeFlags.SpanAvailWidth))
         {
             ImGui.InputFloat("X", ref entityData.X);

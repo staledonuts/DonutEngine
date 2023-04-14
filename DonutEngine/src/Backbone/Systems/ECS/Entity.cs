@@ -9,6 +9,7 @@ public class Entity : IDisposable
     public Entity(int id, dynamic data)
     {
         Id = id;
+        Name = data.EntityType.Name;
         Components = new Dictionary<string, Component>();
         Tags = new HashSet<string>();
         X = float.Parse(data.EntityType.X.ToString());
@@ -22,6 +23,7 @@ public class Entity : IDisposable
         InitEntityPhysics(this);
     }
     public int Id { get; set; }
+    public string Name { get; set; }
     public Dictionary<string, Component> Components { get; set; }
     public HashSet<string> Tags { get; set; }
     public float X { get; set; }
