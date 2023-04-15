@@ -11,6 +11,7 @@ public class SettingsVars
         parser = new FileIniDataParser();
         try
         {
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Trying to Load Settings ]------");
             LoadSettings(settingsPath);
         }
         catch
@@ -54,13 +55,21 @@ public class SettingsVars
         splashScreenLength = 60;
         fullScreen = false;
         logging = false;
-
+        #if WIN64
+        spritesPath = "Resources\\Sprites\\";
+        sfxPath = "Resources\\Sound\\SFX\\";
+        musicPath = "Resources\\Sound\\Music\\";
+        audioDefPath = "Resources\\Scripts\\Sound\\SoundFileDef.ini";
+        entitiesPath = "Resources\\Scripts\\Entities\\";
+        texturesPath = "Resources\\Textures\\";
+        #else
         spritesPath = "Resources/Sprites/";
         sfxPath = "Resources/Sound/SFX/";
         musicPath = "Resources/Sound/Music/";
         audioDefPath = "Resources/Scripts/Sound/SoundFileDef.ini";
         entitiesPath = "Resources/Scripts/Entities/";
         texturesPath = "Resources/Textures/";
+        #endif
 
     }
 
