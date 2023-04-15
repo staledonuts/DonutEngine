@@ -1,6 +1,6 @@
 namespace DonutEngine.Backbone;
 using Box2DX.Common;
-using DonutEngine.Backbone.Textures;
+using static DonutEngine.Backbone.Systems.DonutSystems;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
@@ -109,7 +109,7 @@ class Particle : ParticlePhysics
     public override void OnAddedToEntity(Entity entity)
     {
         particles = new Particle[maxParticles];
-        particleTexture = TextureContainer.GetTexture("Ship1.png");
+        particleTexture = textureContainer.GetTexture("Ship1.png");
         ECS.ecsUpdate += Update;
         ECS.ecsDrawUpdate += Draw;
     }

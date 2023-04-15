@@ -1,12 +1,13 @@
 using Raylib_cs;
 using DonutEngine.Backbone.Systems;
+using System.IO;
 namespace DonutEngine.Backbone.Textures;
 
 public class TextureContainer
 {
+    Dictionary<string, Texture2D> textureLibrary = new Dictionary<string, Texture2D>();
     public void InitTextureContainer()
     {
-        textureLibrary = new();
         string emptyPath = DonutFilePaths.app + DonutSystems.settingsVars.texturesPath + "empty.png";
         if (File.Exists(emptyPath))
         {
@@ -26,13 +27,11 @@ public class TextureContainer
         
         foreach(string pngFile in texturePath)
         {
-            textureLibrary.TryAdd(pngFile, Raylib.LoadTexture(pathToTextures+pngFile));
+            string name = Path.GetFileNameWithoutExtension(pngFile);
+            Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
+            textureLibrary.TryAdd(name, Raylib.LoadTexture(pngFile));
         }
     }
-
-
-
-    Dictionary<string, Texture2D> textureLibrary;
     
     public Texture2D GetTexture(string textureName)
     {

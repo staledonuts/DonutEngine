@@ -31,7 +31,7 @@ public class UISystem : SystemsClass
             if (Raylib.IsWindowResized())
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
-                rect = new(0,0,Raylib.GetScreenWidth(), -Raylib.GetScreenHeight());
+                rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
                 UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             }
             if(DebugOpen)

@@ -14,9 +14,9 @@ public static class ShaderSystem
 
     public static void InitShaders()
     {
-        //shaderLibrary.Add("base", Raylib.LoadShader(DonutFilePaths.app+"Shaders/base.vs" ,DonutFilePaths.app+"Shaders/base.fs"));
-        //shaderLibrary.Add("outline", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/outline.fs"));
-        //shaderLibrary.Add("bloom", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/bloom.fs"));  
+        shaderLibrary.Add("base", Raylib.LoadShader(DonutFilePaths.app+"Shaders/base.vs" ,DonutFilePaths.app+"Shaders/base.fs"));
+        shaderLibrary.Add("outline", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/outline.fs"));
+        shaderLibrary.Add("bloom", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/bloom.fs"));  
     }
 
     public static Shader GetShader(string name)

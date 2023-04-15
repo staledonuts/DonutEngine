@@ -3,8 +3,9 @@ using DonutEngine.Backbone.Systems.Shaders;
 using Raylib_cs;
 public class SpriteComponent : Component
 {
-    public Texture2D Sprite { get; set; }
+    public string Sprite { get; set; }
     //public OutlineShader outlineShader;
+    Texture2D tex;
     public Int32 Width { get; set; }
     public Int32 Height { get; set; }
     public string AnimatorName { get; set; }
@@ -22,8 +23,9 @@ public class SpriteComponent : Component
     public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
+        tex = DonutEngine.Backbone.Systems.DonutSystems.textureContainer.GetTexture(Sprite);
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
-        animator.AssignSprite(Sprite);
+        animator.AssignSprite(tex);
         //outlineShader = new(Sprite, new(0,0,0,1),2);
         ECS.ecsDrawUpdate += Draw;
         ECS.ecsUpdate += Update;
