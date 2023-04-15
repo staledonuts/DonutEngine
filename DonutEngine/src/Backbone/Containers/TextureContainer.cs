@@ -2,9 +2,9 @@ using Raylib_cs;
 using DonutEngine.Backbone.Systems;
 namespace DonutEngine.Backbone.Textures;
 
-public static class TextureContainer
+public class TextureContainer
 {
-    public static void InitTextureContainer()
+    public void InitTextureContainer()
     {
         textureLibrary = new();
         string emptyPath = DonutFilePaths.app + DonutSystems.settingsVars.texturesPath + "empty.png";
@@ -32,9 +32,9 @@ public static class TextureContainer
 
 
 
-    static Dictionary<string, Texture2D> textureLibrary;
+    Dictionary<string, Texture2D> textureLibrary;
     
-    public static Texture2D GetTexture(string textureName)
+    public Texture2D GetTexture(string textureName)
     {
         Texture2D texture;
         try
@@ -49,7 +49,7 @@ public static class TextureContainer
         }
     }
     
-    public static void EmptyTextureLibrary()
+    public void EmptyTextureLibrary()
     {
         foreach(KeyValuePair<string, Texture2D> keyValuePair in textureLibrary)
         {

@@ -13,6 +13,7 @@ public static class DonutSystems
     /////////////////////////////////////////////////
     public static readonly SettingsVars settingsVars = new();
     public static readonly WindowSystem windowSystem = new();
+    public static readonly TextureContainer textureContainer = new();
     public static readonly UISystem uISystem = new();
     public static readonly AudioControl audioControl = new();
     public static readonly EntityManager entityManager = new();
@@ -46,8 +47,8 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        TextureContainer.InitTextureContainer();
         DonutSystems.SubscribeSystem(windowSystem);
+        textureContainer.InitTextureContainer();
         cameraHandler.InitializeCamera(new(0,0));
         DonutSystems.SubscribeSystem(audioControl);
         DonutSystems.SubscribeSystem(physicsSystem);
@@ -60,8 +61,8 @@ public static class DonutSystems
         DonutSystems.UnsubscribeSystem(uISystem);
         DonutSystems.UnsubscribeSystem(physicsSystem);
         DonutSystems.UnsubscribeSystem(audioControl);
+        textureContainer.EmptyTextureLibrary();
         DonutSystems.UnsubscribeSystem(windowSystem);
-        TextureContainer.EmptyTextureLibrary();
     }
 
     public static void UpdateSystems()
