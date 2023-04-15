@@ -11,7 +11,7 @@ public class PhysicsSystem : SystemsClass
     private World? world = null;
 
     private Vec2 gravity = new(0, 10);
-    private float timeStep = 1f / DonutSystems.settingsVars.targetFPS;
+    private float timeStep = 1f / Sys.settingsVars.targetFPS;
     private int velocityIterations = 8;
     private int positionIterations = 4;
 

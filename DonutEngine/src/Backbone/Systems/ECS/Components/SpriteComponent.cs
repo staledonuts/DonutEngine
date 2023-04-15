@@ -4,7 +4,7 @@ using Raylib_cs;
 public class SpriteComponent : Component
 {
     public string Sprite { get; set; }
-    //public OutlineShader outlineShader;
+    public OutlineShader outlineShader;
     Texture2D tex;
     public Int32 Width { get; set; }
     public Int32 Height { get; set; }
@@ -23,10 +23,10 @@ public class SpriteComponent : Component
     public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
-        tex = DonutEngine.Backbone.Systems.DonutSystems.textureContainer.GetTexture(Sprite);
+        tex = Sys.textureContainer.GetTexture(Sprite);
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
         animator.AssignSprite(tex);
-        //outlineShader = new(Sprite, new(0,0,0,1),2);
+        outlineShader = new(tex, new(1,1,1,1),2);
         ECS.ecsDrawUpdate += Draw;
         ECS.ecsUpdate += Update;
     }
@@ -46,7 +46,6 @@ public class SpriteComponent : Component
     public void Draw(float deltaTime)
     {
         //Raylib.BeginShaderMode(outlineShader.shader);
-        
         Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.currentBody.GetPosition().X, entity.currentBody.GetPosition().Y), Color.WHITE);
         //Raylib.EndShaderMode();
     }

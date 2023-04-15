@@ -51,7 +51,7 @@ public unsafe class CustomLogging
         };
         
         Console.WriteLine($"Log: " + message);
-        if(DonutSystems.settingsVars.logging)
+        if(Sys.settingsVars.logging)
         {
             Logging.WriteLog("Log: "+message);
         }

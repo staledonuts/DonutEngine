@@ -9,7 +9,7 @@ public class GameCamera2D : Component
 
 	public void LateUpdate(float deltaTime)
 	{
-        DonutSystems.cameraHandler.UpdateCameraPlayerBoundsPush(ref DonutSystems.cameraHandler.donutcam, entity.currentBody.GetPosition(), 1f, DonutSystems.settingsVars.screenWidth, DonutSystems.settingsVars.screenHeight);
+        Sys.cameraHandler.UpdateCameraPlayerBoundsPush(ref Sys.cameraHandler.donutcam, entity.currentBody.GetPosition(), 1f, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
 	}
     public override void OnAddedToEntity(Entity entity)
     {

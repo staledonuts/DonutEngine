@@ -60,7 +60,7 @@ public partial class EntityCreator : DocumentWindow
                 }
                 if(ImGui.MenuItem(" - Reload Game Entities", "F5"))
                 {
-                    DonutSystems.entityManager.ReloadEntities();
+                    Sys.entityManager.ReloadEntities();
                 }
                 ImGui.EndMenu();
             }

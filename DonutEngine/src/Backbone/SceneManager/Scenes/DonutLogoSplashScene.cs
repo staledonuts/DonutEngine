@@ -33,7 +33,7 @@ public class DonutLogoSplashScene : Scene
     public override void DrawUpdate()
     {
         Raylib.ClearBackground(Color.BLACK);
-        Raylib.DrawTexture(splashTex, (DonutSystems.settingsVars.screenWidth / 2) - splashTex.width / 2,(DonutSystems.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
+        Raylib.DrawTexture(splashTex, (Sys.settingsVars.screenWidth / 2) - splashTex.width / 2,(Sys.settingsVars.screenHeight / 2)  - splashTex.height /2,Color.WHITE);
     }   
 
     public override void Update()
@@ -41,7 +41,7 @@ public class DonutLogoSplashScene : Scene
         framesCounter++;    // Count frames
 
         // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-        if (framesCounter > DonutSystems.settingsVars.splashScreenLength)
+        if (framesCounter > Sys.settingsVars.splashScreenLength)
         {
             // todo: sceneunload
             SceneManager.UnloadScene();

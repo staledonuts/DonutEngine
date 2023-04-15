@@ -109,7 +109,7 @@ class Particle : ParticlePhysics
     public override void OnAddedToEntity(Entity entity)
     {
         particles = new Particle[maxParticles];
-        particleTexture = textureContainer.GetTexture("Ship1.png");
+        particleTexture = Sys.textureContainer.GetTexture("Ship1.png");
         ECS.ecsUpdate += Update;
         ECS.ecsDrawUpdate += Draw;
     }

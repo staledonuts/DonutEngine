@@ -17,7 +17,7 @@ public class EntitySpawnList : DocumentWindow
 
     public override void Setup()
     {
-        entities = DonutSystems.entityManager.GetEntityList();
+        entities = Sys.entityManager.GetEntityList();
         CreateNameList();
     }
 
@@ -51,12 +51,12 @@ public class EntitySpawnList : DocumentWindow
         {
             if(ImGui.Button("Spawn", buttonSize))
             {            
-                string currentSelection = Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json").GetValue(currentListItem).ToString();
-                DonutSystems.entityManager.CreateEntity(currentSelection);
+                string currentSelection = Directory.GetFiles(DonutFilePaths.app+Sys.settingsVars.entitiesPath, "*.json").GetValue(currentListItem).ToString();
+                Sys.entityManager.CreateEntity(currentSelection);
             }
             ImGui.NewLine();
             ImGui.BeginListBox("Entities", width);
-            ImGui.ListBox("Entities", ref currentListItem, Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json"), Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json").Count());
+            ImGui.ListBox("Entities", ref currentListItem, Directory.GetFiles(DonutFilePaths.app+Sys.settingsVars.entitiesPath, "*.json"), Directory.GetFiles(DonutFilePaths.app+Sys.settingsVars.entitiesPath, "*.json").Count());
             ImGui.EndListBox();
             ImGui.EndTabItem();
         }
@@ -64,8 +64,8 @@ public class EntitySpawnList : DocumentWindow
         {
             if(ImGui.Button("Destroy Entity", buttonSize))
             {
-                string currentSelection = Directory.GetFiles(DonutFilePaths.app+DonutSystems.settingsVars.entitiesPath, "*.json").GetValue(currentListItem).ToString();
-                DonutSystems.entityManager.CreateEntity(currentSelection);
+                string currentSelection = Directory.GetFiles(DonutFilePaths.app+Sys.settingsVars.entitiesPath, "*.json").GetValue(currentListItem).ToString();
+                Sys.entityManager.CreateEntity(currentSelection);
             }
             if(ImGui.Button("Refresh List", buttonSize))
             {

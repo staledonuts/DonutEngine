@@ -57,7 +57,7 @@ public class LogWindow : DocumentWindow
             {
                 if(ImGui.MenuItem("Reload Entities", "F5"))
                 {
-                    DonutSystems.entityManager.ReloadEntities();
+                    Sys.entityManager.ReloadEntities();
                 }
                 if(ImGui.MenuItem("Save As"))
                 {

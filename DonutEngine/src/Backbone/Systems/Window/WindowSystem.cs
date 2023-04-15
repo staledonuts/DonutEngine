@@ -23,13 +23,13 @@ public unsafe class WindowSystem : SystemsClass
 
     public override void Start()
     {
-        InitWindow(DonutSystems.settingsVars.screenWidth, DonutSystems.settingsVars.screenHeight, "DonutEngine");
+        InitWindow(Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight, "DonutEngine");
         //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE | ConfigFlags.FLAG_WINDOW_MAXIMIZED);
-        if(DonutSystems.settingsVars.fullScreen)
+        if(Sys.settingsVars.fullScreen)
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(DonutSystems.settingsVars.targetFPS);  
+        SetTargetFPS(Sys.settingsVars.targetFPS);  
         SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_DEBUG);
         //Custom Logging
         SetTraceLogCallback(&LogCustom);

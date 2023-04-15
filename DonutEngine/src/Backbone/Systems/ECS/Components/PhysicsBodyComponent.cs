@@ -13,11 +13,11 @@ internal class PhysicsBody
     public Body? currentBody = null;
     internal void CreateBody()
     {
-        currentBody = physicsSystem.CreateBody(X,Y,Width,Height,Density,Friction,Restitution);
+        currentBody = Sys.physicsSystem.CreateBody(X,Y,Width,Height,Density,Friction,Restitution);
     }
 
     internal void DestroyBody()
     {
-        physicsSystem.DestroyBody(currentBody);
+        Sys.physicsSystem.DestroyBody(currentBody);
     }
 }

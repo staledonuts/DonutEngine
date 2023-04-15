@@ -1,6 +1,6 @@
-﻿using DonutEngine.Backbone;
+﻿using DonutEngine;
+using DonutEngine.Backbone;
 using DonutEngine.Backbone.Systems;
-using DonutEngine.Backbone.Systems.Shaders;
 using DonutEngine.Backbone.Systems.Input;
 
 using static Raylib_cs.Raylib;
@@ -13,7 +13,6 @@ static class Program
     
     public static void Main()
     {
-        ShaderSystem.InitShaders();
         //Lets set up the different nessesary systems!
         DonutSystems.InitSystems();
         //This is where all the update loops go.
@@ -58,7 +57,7 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
-            BeginMode2D(DonutSystems.cameraHandler.donutcam);
+            BeginMode2D(Sys.cameraHandler.donutcam);
             ECS.ProcessDrawUpdate();
             DonutSystems.UpdateDraw();
             EndMode2D();

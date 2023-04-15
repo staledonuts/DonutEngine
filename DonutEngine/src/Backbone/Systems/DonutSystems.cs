@@ -1,25 +1,13 @@
 namespace DonutEngine.Backbone.Systems;
-using DonutEngine.Backbone.Systems.Audio;
-using DonutEngine.Backbone.Systems.Window;
-using DonutEngine.Backbone.Systems.UI;
-using DonutEngine.Backbone.Systems.Physics;
-using DonutEngine.Backbone.Textures;
+
 
 public static class DonutSystems
 {
     /////////////////////////////////////////////////
-    //This is my Systems Updater and container.
+    //This is my Systems Updater
     // a simple event system that i subscribe all the systems to for the update loop.
     /////////////////////////////////////////////////
-    public static readonly SettingsVars settingsVars = new();
-    public static readonly WindowSystem windowSystem = new();
-    public static readonly TextureContainer textureContainer = new();
-    public static readonly UISystem uISystem = new();
-    public static readonly AudioControl audioControl = new();
-    public static readonly EntityManager entityManager = new();
-    public static readonly LevelDataSystem levelDataSystem = new();
-    public static readonly PhysicsSystem physicsSystem = new();
-    public static CameraHandler cameraHandler = new();
+    
 
 
     public delegate void SystemsUpdater();
@@ -47,22 +35,23 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        DonutSystems.SubscribeSystem(windowSystem);
-        textureContainer.InitTextureContainer();
-        cameraHandler.InitializeCamera(new(0,0));
-        DonutSystems.SubscribeSystem(audioControl);
-        DonutSystems.SubscribeSystem(physicsSystem);
-        DonutSystems.SubscribeSystem(uISystem);
+        DonutSystems.SubscribeSystem(Sys.windowSystem);
+        Sys.textureContainer.InitTextureContainer();
+        Sys.shaderSystem.InitShaders();
+        Sys.cameraHandler.InitializeCamera(new(0,0));
+        DonutSystems.SubscribeSystem(Sys.audioControl);
+        DonutSystems.SubscribeSystem(Sys.physicsSystem);
+        DonutSystems.SubscribeSystem(Sys.uISystem);
         SceneManager.InitScene();
     }
 
     public static void KillSystems()
     {
-        DonutSystems.UnsubscribeSystem(uISystem);
-        DonutSystems.UnsubscribeSystem(physicsSystem);
-        DonutSystems.UnsubscribeSystem(audioControl);
-        textureContainer.EmptyTextureLibrary();
-        DonutSystems.UnsubscribeSystem(windowSystem);
+        DonutSystems.UnsubscribeSystem(Sys.uISystem);
+        DonutSystems.UnsubscribeSystem(Sys.physicsSystem);
+        DonutSystems.UnsubscribeSystem(Sys.audioControl);
+        Sys.textureContainer.EmptyTextureLibrary();
+        DonutSystems.UnsubscribeSystem(Sys.windowSystem);
     }
 
     public static void UpdateSystems()

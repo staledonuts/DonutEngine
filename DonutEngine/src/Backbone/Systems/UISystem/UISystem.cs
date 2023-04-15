@@ -52,7 +52,7 @@ public class UISystem : SystemsClass
         {
             Raylib.BeginTextureMode(UIRenderTexture);
             Raylib.ClearBackground(Color.BLANK);
-            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, (int)DonutSystems.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
+            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
             if(DebugOpen)
             {
@@ -75,7 +75,7 @@ public class UISystem : SystemsClass
         {
             if(Raylib.IsKeyPressed(KeyboardKey.KEY_F5))
             {
-                DonutSystems.entityManager.ReloadEntities();
+                Sys.entityManager.ReloadEntities();
             }        
         }
     }

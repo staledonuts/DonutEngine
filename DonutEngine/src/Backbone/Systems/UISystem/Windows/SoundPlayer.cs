@@ -69,15 +69,15 @@ public class SoundPlayer : DocumentWindow
         {
             if(ImGui.Button("Play", buttonSize))
             {
-                string[] playlist = DonutSystems.audioControl.GetMusicPlaylist();
+                string[] playlist = Sys.audioControl.GetMusicPlaylist();
                 string currentSelection = playlist.GetValue(currentMusicPlaylistItem).ToString();
-                DonutSystems.audioControl.StopMusic();
-                DonutSystems.audioControl.PlayMusic(currentSelection);
+                Sys.audioControl.StopMusic();
+                Sys.audioControl.PlayMusic(currentSelection);
             }
             ImGui.SameLine();
             if(ImGui.Button("Pause/Resume", buttonSize))
             {
-                DonutSystems.audioControl.PauseMusic();
+                Sys.audioControl.PauseMusic();
             }
             ImGui.SameLine();
             if(ImGui.Button("Reload Music", buttonSize))
@@ -85,12 +85,12 @@ public class SoundPlayer : DocumentWindow
                 
             }
             ImGui.SameLine();
-            ImGui.Text(DonutSystems.audioControl.CurrentMusicTime().ToString());
+            ImGui.Text(Sys.audioControl.CurrentMusicTime().ToString());
             ImGui.SameLine();
-            ImGui.Text(" / "+DonutSystems.audioControl.CurrentMusicLength().ToString());
+            ImGui.Text(" / "+Sys.audioControl.CurrentMusicLength().ToString());
             ImGui.NewLine();
             ImGui.BeginListBox("Muzak", width);
-            ImGui.ListBox("Music Playlist", ref currentMusicPlaylistItem, DonutSystems.audioControl.GetMusicPlaylist(), DonutSystems.audioControl.GetMusicPlaylistLength());
+            ImGui.ListBox("Music Playlist", ref currentMusicPlaylistItem, Sys.audioControl.GetMusicPlaylist(), Sys.audioControl.GetMusicPlaylistLength());
             ImGui.EndListBox();
             ImGui.EndTabItem();
         }
@@ -98,9 +98,9 @@ public class SoundPlayer : DocumentWindow
         {
             if(ImGui.Button("PlaySFX", buttonSize))
             {
-                string[] playlist = DonutSystems.audioControl.GetSFXPlaylist();
+                string[] playlist = Sys.audioControl.GetSFXPlaylist();
                 string currentSelection = playlist.GetValue(currentSFXPlaylistItem).ToString();
-                DonutSystems.audioControl.PlaySFX(currentSelection);
+                Sys.audioControl.PlaySFX(currentSelection);
             }
             ImGui.SameLine();
             if(ImGui.Button("Reload Sounds", buttonSize))
@@ -109,7 +109,7 @@ public class SoundPlayer : DocumentWindow
             }
             ImGui.NewLine();
             ImGui.BeginListBox("SFX", width);
-            ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, DonutSystems.audioControl.GetSFXPlaylist(), DonutSystems.audioControl.GetSFXPlaylistLength(), DonutSystems.audioControl.GetSFXPlaylistLength());
+            ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, Sys.audioControl.GetSFXPlaylist(), Sys.audioControl.GetSFXPlaylistLength(), Sys.audioControl.GetSFXPlaylistLength());
             ImGui.EndListBox();
             ImGui.NewLine();
             ImGui.EndTabItem();

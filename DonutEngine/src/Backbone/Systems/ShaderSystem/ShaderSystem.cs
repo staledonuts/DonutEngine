@@ -8,18 +8,18 @@ using DonutEngine.Backbone.Systems;
 namespace DonutEngine.Backbone.Systems.Shaders;
 
 
-public static class ShaderSystem
+public class ShaderSystem
 {
-    private static Dictionary<string, Shader> shaderLibrary = new Dictionary<string, Shader>();
+    private Dictionary<string, Shader> shaderLibrary = new Dictionary<string, Shader>();
 
-    public static void InitShaders()
+    public void InitShaders()
     {
         shaderLibrary.Add("base", Raylib.LoadShader(DonutFilePaths.app+"Shaders/base.vs" ,DonutFilePaths.app+"Shaders/base.fs"));
         shaderLibrary.Add("outline", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/outline.fs"));
         shaderLibrary.Add("bloom", Raylib.LoadShader(null ,DonutFilePaths.app+"Shaders/bloom.fs"));  
     }
 
-    public static Shader GetShader(string name)
+    public Shader GetShader(string name)
     {
         Shader shader;
         if (shaderLibrary.TryGetValue(name, out shader)) 
@@ -39,7 +39,7 @@ public struct OutlineShader
     public OutlineShader(Texture2D texture2D, Vector4 color, float outlineSize)
     {
         texture = texture2D;
-        shader = ShaderSystem.GetShader("outline");
+        shader = Sys.shaderSystem.GetShader("outline");
         this.outlineSize = outlineSize;
         outlineColor = new[] 
         { 

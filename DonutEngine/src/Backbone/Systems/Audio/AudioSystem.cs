@@ -26,7 +26,7 @@ public partial class AudioControl : SystemsClass
     {
         string firstSong = "Intro";
         FileIniDataParser parser = new();
-        IniData data = parser.ReadFile(DonutFilePaths.app+DonutSystems.settingsVars.audioDefPath);
+        IniData data = parser.ReadFile(DonutFilePaths.app+Sys.settingsVars.audioDefPath);
         foreach (SectionData sectionName in data.Sections)
         {
             string audioType = sectionName.SectionName;
@@ -37,7 +37,7 @@ public partial class AudioControl : SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         //DonutSystems.uISystem.SetLoadingItem("Loading SFX: "+keys.KeyName);
-                        soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.app+DonutSystems.settingsVars.sfxPath+keys.Value));
+                        soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.app+Sys.settingsVars.sfxPath+keys.Value));
                     }
                 }
                 break;
@@ -47,7 +47,7 @@ public partial class AudioControl : SystemsClass
                     foreach(KeyData keys in sectionName.Keys)
                     {
                         //DonutSystems.uISystem.SetLoadingItem("Loading Music: "+keys.KeyName);
-                        musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.app+DonutSystems.settingsVars.musicPath+keys.Value));
+                        musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.app+Sys.settingsVars.musicPath+keys.Value));
                     }
                 }
                 break;

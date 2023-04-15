@@ -7,17 +7,17 @@ public class GameplayScene : Scene
 
     public override void InitializeScene()
     {
-        DonutSystems.SubscribeSystem(DonutSystems.levelDataSystem);
+        DonutSystems.SubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
         //entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
-        DonutSystems.entityManager.CreateDirectory();
+        Sys.entityManager.CreateDirectory();
     }
 
     public override Scene UnloadScene()
     {
-        DonutSystems.UnsubscribeSystem(DonutSystems.levelDataSystem);
+        DonutSystems.UnsubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update -= this.Update;
         DonutSystems.DrawUpdate -= this.DrawUpdate;
         DonutSystems.LateUpdate -= this.LateUpdate;
