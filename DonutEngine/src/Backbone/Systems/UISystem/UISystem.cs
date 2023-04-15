@@ -31,7 +31,7 @@ public class UISystem : SystemsClass
             if (Raylib.IsWindowResized())
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
-                rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                rect = new(0,0,Raylib.GetScreenWidth(), -Raylib.GetScreenHeight());
                 UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             }
             if(DebugOpen)
@@ -61,7 +61,7 @@ public class UISystem : SystemsClass
             loadingScreen.Show();
             rlImGui.End();
             Raylib.EndTextureMode();
-            Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
+            Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
         }
     }
 

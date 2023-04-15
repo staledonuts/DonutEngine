@@ -10,7 +10,8 @@ public static class TextureContainer
         string emptyPath = DonutFilePaths.app + DonutSystems.settingsVars.texturesPath + "empty.png";
         if (File.Exists(emptyPath))
         {
-            textureLibrary.Add("empty", Raylib.LoadTexture(emptyPath));
+            Texture2D tex = Raylib.LoadTexture(emptyPath);
+            textureLibrary.Add("empty", tex);
         }
         else
         {

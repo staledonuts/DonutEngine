@@ -26,7 +26,7 @@ public partial class AudioControl
         if (soundsLibrary.TryGetValue(name, out sound)) 
         {
             Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
-            PlaySoundMulti(sound);
+            PlaySound(sound);
         }
     }
 
@@ -37,7 +37,7 @@ public partial class AudioControl
         {
             Raylib.SetSoundVolume(sound, DonutSystems.settingsVars.currentSFXVolume);
             SetSoundPitch(sound, random.NextSingle() * (maxPitch - minPitch) + minPitch);
-            PlaySoundMulti(sound);
+            PlaySound(sound);
         }
     }
 
