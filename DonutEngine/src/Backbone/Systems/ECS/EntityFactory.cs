@@ -7,7 +7,7 @@ public class EntityFactory
 {
     private int nextEntityId = 1;
 
-    public Entity CreateEntity(string jsonPath) 
+    public Entity CreateEntity(string jsonPath)
     {
         string json = File.ReadAllText(jsonPath);
         dynamic data = JsonConvert.DeserializeObject(json);
@@ -62,7 +62,7 @@ public class EntityFactory
                 case "PlayerComponent":
                     component = new PlayerComponent
                     {
-
+                        PlayerNumber = int.Parse(componentData.PlayerNumber.ToString())
                     };
                     break;
                 case "ParticleSystem":
@@ -70,7 +70,6 @@ public class EntityFactory
                     {
                         maxParticles = int.Parse(componentData.maxParticles.ToString()),
                         emitRate = float.Parse(componentData.emitRate.ToString()),
-                        textureName = componentData.textureName.ToString()
                     };
                     break;
                 // add support for additional components as needed

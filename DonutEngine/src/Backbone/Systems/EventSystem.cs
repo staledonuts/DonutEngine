@@ -1,6 +1,6 @@
 using System;
 namespace DonutEngine.Events;
-public class EventSystem
+public static class GameEvents
 {
     public delegate void GameEvent();
 

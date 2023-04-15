@@ -30,7 +30,8 @@
             "IsActive": false
         },
         {
-            "Type": "PlayerComponent"
+            "Type": "PlayerComponent",
+            "PlayerNumber": 0
         }
     ]
 }

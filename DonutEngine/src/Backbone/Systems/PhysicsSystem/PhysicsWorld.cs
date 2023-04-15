@@ -2,6 +2,7 @@ namespace DonutEngine.Backbone.Systems.Physics;
 using Box2DX.Common;
 using Box2DX.Dynamics;
 using Box2DX.Collision;
+using System.Numerics;
 using Raylib_cs;
 
 public class PhysicsSystem : SystemsClass
@@ -27,6 +28,11 @@ public class PhysicsSystem : SystemsClass
         body.CreateFixture(polygonDef);
         body.SetMassFromShapes();
         return body;
+    }
+
+    public Body CreateBodyDef(BodyDef bodydef)
+    {
+        return world.CreateBody(bodydef);
     }
 
     public Body CreateStaticBody(float X, float Y) 

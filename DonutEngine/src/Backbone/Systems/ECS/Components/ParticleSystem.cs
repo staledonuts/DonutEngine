@@ -1,35 +1,31 @@
 namespace DonutEngine.Backbone;
-using DonutEngine.Backbone.Systems;
-using System.Numerics;
 using Box2DX.Common;
-using Box2DX.Dynamics;
+using DonutEngine.Backbone.Textures;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using DonutEngine;
 
-class Particle : PhysicsBody
+class Particle : ParticlePhysics
     {
+        
         public Vec2 position;
         public Vec2 velocity;
         public Raylib_cs.Color color;
         public float size;
         public float life;
+        
 
         
 
-        public Particle(Vec2 position, Vec2 velocity, Raylib_cs.Color color, float size, float life)
+        public Particle(Entity entity) : base(entity)
         {
-            this.position = position;
-            this.velocity = velocity;
-            this.color = color;
-            this.size = size;
+            this.position = entity.currentBody.GetPosition();
+            this.color = Raylib_cs.Color.WHITE;
             this.life = life;
             CreateBody();
         }
 
         public void Update(float deltaTime)
         {
-            position += velocity;
             life -= deltaTime;
         }
 
@@ -52,14 +48,6 @@ class Particle : PhysicsBody
         private Particle[]? particles = null;
         private Texture2D particleTexture;
         private float emitTimer = 0;
-
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Width { get; set; }
-        public float Height { get; set; }
-        public float Density { get; set; }
-        public float Friction { get; set; }
-        public float Restitution { get; set; }
         public int maxParticles { get; set; }
         public float emitRate { get; set; }
         public string? textureName { get; set; }
@@ -79,6 +67,7 @@ class Particle : PhysicsBody
 
                 if (particles[i].IsDead())
                 {
+                    particles[i].DestroyBody();
                     particles[i] = null;
                 }
             }
@@ -111,7 +100,7 @@ class Particle : PhysicsBody
             {
                 if (particles[i] == null)
                 {
-                    particles[i] = new Particle(entity.currentBody.GetPosition(), new Vec2(random.Next(5, 10), random.Next(5, 10)), Raylib_cs.Color.WHITE, random.Next(15, 20), 20);
+                    particles[i] = new Particle(entity);
                     break;
                 }
             }
@@ -119,9 +108,8 @@ class Particle : PhysicsBody
 
     public override void OnAddedToEntity(Entity entity)
     {
-        //entityPhysics = entity.entityPhysics;
         particles = new Particle[maxParticles];
-        particleTexture = LoadTexture(DonutSystems.settingsVars.spritesPath+textureName);
+        particleTexture = TextureContainer.GetTexture("Ship1.png");
         ECS.ecsUpdate += Update;
         ECS.ecsDrawUpdate += Draw;
     }
@@ -130,7 +118,6 @@ class Particle : PhysicsBody
     {
         ECS.ecsUpdate -= Update;
         ECS.ecsDrawUpdate -= Draw;
-        UnloadTexture(particleTexture);
         Dispose();
     }
 }

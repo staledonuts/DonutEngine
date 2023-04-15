@@ -3,6 +3,7 @@ using DonutEngine.Backbone.Systems.Audio;
 using DonutEngine.Backbone.Systems.Window;
 using DonutEngine.Backbone.Systems.UI;
 using DonutEngine.Backbone.Systems.Physics;
+using DonutEngine.Backbone.Textures;
 
 public static class DonutSystems
 {
@@ -45,6 +46,7 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
+        TextureContainer.InitTextureContainer();
         DonutSystems.SubscribeSystem(windowSystem);
         cameraHandler.InitializeCamera(new(0,0));
         DonutSystems.SubscribeSystem(audioControl);
@@ -59,6 +61,7 @@ public static class DonutSystems
         DonutSystems.UnsubscribeSystem(physicsSystem);
         DonutSystems.UnsubscribeSystem(audioControl);
         DonutSystems.UnsubscribeSystem(windowSystem);
+        TextureContainer.EmptyTextureLibrary();
     }
 
     public static void UpdateSystems()

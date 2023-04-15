@@ -41,6 +41,7 @@ public class SettingsVars
     public string musicPath { get; set; }
     public string audioDefPath { get; set; }
     public string entitiesPath { get; set; }
+    public string texturesPath { get; set; }
 
     public void SetDefaultSettings()
     {
@@ -59,6 +60,7 @@ public class SettingsVars
         musicPath = "Resources/Sound/Music/";
         audioDefPath = "Resources/Scripts/Sound/SoundFileDef.ini";
         entitiesPath = "Resources/Scripts/Entities/";
+        texturesPath = "Resources/Textures/";
 
     }
 
@@ -80,6 +82,7 @@ public class SettingsVars
         data["FilePaths"]["musicPath"] = musicPath;
         data["FilePaths"]["audioDefPath"] = audioDefPath;
         data["FilePaths"]["entitiesPath"] = entitiesPath;
+        data["FilePaths"]["texturesPath"] = texturesPath;
         parser.WriteFile(settingsPath, data);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Settings Saved ]------");
     } 
@@ -107,6 +110,7 @@ public class SettingsVars
         musicPath = sectionData.Keys.GetKeyData("musicPath").Value;
         audioDefPath = sectionData.Keys.GetKeyData("audioDefPath").Value;
         entitiesPath = sectionData.Keys.GetKeyData("entitiesPath").Value;
+        texturesPath = sectionData.Keys.GetKeyData("texturesPath").Value;
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Settings Loaded ]------");
     }   
 }

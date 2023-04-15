@@ -14,7 +14,7 @@ static class Program
     public static void Main()
     {
         ShaderSystem.InitShaders();
-        //Lets set up the different nessecary systems!
+        //Lets set up the different nessesary systems!
         DonutSystems.InitSystems();
         //This is where all the update loops go.
         MainLoop();

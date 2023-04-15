@@ -3,10 +3,12 @@ using Box2DX.Common;
 using DonutEngine.Backbone.Systems.Input;
 using Raylib_cs;
 
-public class PlayerComponent : Component , IPlaySound
+public class PlayerComponent : Component, IPlaySound
 {
     SpriteComponent? sprite = null;
     Entity? entity = null;
+    public int PlayerNumber { get; set; }
+    
     public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;

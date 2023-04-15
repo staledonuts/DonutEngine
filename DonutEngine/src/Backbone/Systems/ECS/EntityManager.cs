@@ -56,6 +56,11 @@ public class EntityManager
         return entities[id];
     }
 
+    /*public Entity GetEntityWithName(string name)
+    {
+
+    }*/
+
     public Dictionary<int, Entity> GetEntityList()
     {
         return entities;
