@@ -25,12 +25,7 @@ public static class TextureContainer
         
         foreach(string pngFile in texturePath)
         {
-            Add(pngFile);
-        }
-
-        void Add(string str)
-        {
-            textureLibrary.TryAdd(str, Raylib.LoadTexture(pathToTextures+str));
+            textureLibrary.TryAdd(pngFile, Raylib.LoadTexture(pathToTextures+pngFile));
         }
     }
 

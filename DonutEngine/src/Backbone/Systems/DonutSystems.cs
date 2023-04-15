@@ -11,11 +11,7 @@ public static class DonutSystems
     //This is my Systems Updater and container.
     // a simple event system that i subscribe all the systems to for the update loop.
     /////////////////////////////////////////////////
-    #if WIN64
-    public static readonly SettingsVars settingsVars = new(DonutFilePaths.winSettings);
-    #else
-    public static readonly SettingsVars settingsVars = new(DonutFilePaths.linuxSettings);
-    #endif
+    public static readonly SettingsVars settingsVars = new();
     public static readonly WindowSystem windowSystem = new();
     public static readonly UISystem uISystem = new();
     public static readonly AudioControl audioControl = new();

@@ -1,4 +1,5 @@
 namespace DonutEngine.Backbone.Systems;
+using System;
 using IniParser.Model;
 using IniParser;
 using Raylib_cs;
@@ -6,8 +7,20 @@ using DonutEngine;
 public class SettingsVars
 {
     //Contains various settings for the game engine.
-    public SettingsVars(string settingsPath)
+    public SettingsVars()
     {
+        if(OperatingSystem.IsWindows())
+        {
+            settingsPath = DonutFilePaths.winSettings;
+        }
+        if(OperatingSystem.IsLinux())
+        {
+            settingsPath = DonutFilePaths.linuxSettings;
+        }
+        if(OperatingSystem.IsFreeBSD())
+        {
+            settingsPath = DonutFilePaths.bsdSettings;
+        }
         parser = new FileIniDataParser();
         try
         {
@@ -23,6 +36,7 @@ public class SettingsVars
         
         
     }
+    string settingsPath;
     FileIniDataParser parser;
     public float currentMasterVolume { get; set; }
     public float currentMusicVolume { get; set; }
@@ -55,22 +69,24 @@ public class SettingsVars
         splashScreenLength = 60;
         fullScreen = false;
         logging = false;
-        #if WIN64
-        spritesPath = "Resources\\Sprites\\";
-        sfxPath = "Resources\\Sound\\SFX\\";
-        musicPath = "Resources\\Sound\\Music\\";
-        audioDefPath = "Resources\\Scripts\\Sound\\SoundFileDef.ini";
-        entitiesPath = "Resources\\Scripts\\Entities\\";
-        texturesPath = "Resources\\Textures\\";
-        #else
-        spritesPath = "Resources/Sprites/";
-        sfxPath = "Resources/Sound/SFX/";
-        musicPath = "Resources/Sound/Music/";
-        audioDefPath = "Resources/Scripts/Sound/SoundFileDef.ini";
-        entitiesPath = "Resources/Scripts/Entities/";
-        texturesPath = "Resources/Textures/";
-        #endif
-
+        if(OperatingSystem.IsWindows())
+        {
+            spritesPath = "Resources\\Sprites\\";
+            sfxPath = "Resources\\Sound\\SFX\\";
+            musicPath = "Resources\\Sound\\Music\\";
+            audioDefPath = "Resources\\Scripts\\Sound\\SoundFileDef.ini";
+            entitiesPath = "Resources\\Scripts\\Entities\\";
+            texturesPath = "Resources\\Textures\\";
+        }
+        else if(OperatingSystem.IsLinux() | OperatingSystem.IsFreeBSD())
+        {
+            spritesPath = "Resources/Sprites/";
+            sfxPath = "Resources/Sound/SFX/";
+            musicPath = "Resources/Sound/Music/";
+            audioDefPath = "Resources/Scripts/Sound/SoundFileDef.ini";
+            entitiesPath = "Resources/Scripts/Entities/";
+            texturesPath = "Resources/Textures/";
+        }
     }
 
     
