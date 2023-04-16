@@ -9,9 +9,11 @@ namespace DonutEngine.Backbone.Systems.UI;
 public class UISystem : SystemsClass
 {
     static bool Open = true;
-    static bool DebugOpen = false;
+    static bool MenuOpen = false;
     static bool ImGuiDemoOpen = false;
+    #if DEBUG
     static GameStats gameStats = new();
+    #endif
     static SoundPlayer soundPlayer = new();
     static LoadingScreen loadingScreen = new();
     static EntityCreator entityCreator = new();
@@ -44,10 +46,12 @@ public class UISystem : SystemsClass
                 rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
                 UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
             }
-            if(DebugOpen)
+            if(MenuOpen)
             {
                 soundPlayer.DrawUpdate();
+                #if DEBUG
                 gameStats.DrawUpdate();
+                #endif
             }
         }
         
@@ -62,11 +66,11 @@ public class UISystem : SystemsClass
         {
             Raylib.BeginTextureMode(UIRenderTexture);
             Raylib.ClearBackground(Color.BLANK);
-            Raylib.DrawText(Raylib.GetFPS().ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
+            Raylib.DrawText(Time.deltaTime.ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
-            if(DebugOpen)
+            if(MenuOpen)
             {
-                DebugMenu();
+                MainMenu();
             }
             loadingScreen.Show();
             rlImGui.End();
@@ -98,27 +102,16 @@ public class UISystem : SystemsClass
 
     public void ToggleDebugUI(CBool toggle)
     {
-        if(DebugOpen && toggle)
+        if(MenuOpen && toggle)
         {
-            DebugOpen = false;
+            MenuOpen = false;
         }
-        else if(!DebugOpen && toggle)
+        else if(!MenuOpen && toggle)
         {
-            DebugOpen = true;
+            MenuOpen = true;
         }
     }
-
-    public void ShowLoadingUI(bool setBool)
-    {
-        loadingScreen.Open = setBool;
-    }
-
-    public void SetLoadingItem(string item)
-    {
-        loadingScreen.SetLoadingItem(item);
-    }
-
-    private void DebugMenu()
+    private void MainMenu()
     {
         
         DoMainMenu();
@@ -175,12 +168,14 @@ public class UISystem : SystemsClass
                 ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
                 ImGui.EndMenu();
             }
-            if (ImGui.BeginMenu("Game Stat"))
+            #if DEBUG
+            if (ImGui.BeginMenu("Debug"))
             {
                 ImGui.MenuItem("General", "F3", ref gameStats.Open);
                 ImGui.MenuItem("FPS:"+Raylib.GetFPS().ToString());
                 ImGui.EndMenu();
             }
+            #endif
             ImGui.EndMainMenuBar();
         }
     }

@@ -58,40 +58,9 @@ public class GameStats : DocumentWindow
 
             if (ImGui.BeginChild("Toolbar", new Vector2(ImGui.GetContentRegionAvail().X, 25)))
             {
-                ImGui.SetCursorPosX(2);
-                ImGui.SetCursorPosY(3);
-
-                if (ImGui.Button("None"))
-                {
-                    CurrentToolMode = ToolMode.None;
-                }
-                ImGui.SameLine();
-
-                if (ImGui.Button("Move"))
-                {
-                    CurrentToolMode = ToolMode.Move;
-                }
-
-                ImGui.SameLine();
-                switch (CurrentToolMode)
-                {
-                    case ToolMode.None:
-                        ImGui.TextUnformatted("No Tool");
-                        break;
-                    case ToolMode.Move:
-                        ImGui.TextUnformatted("Move Tool");
-                        break;
-                    default:
-                        break;
-                }
-
-                ImGui.SameLine();
-                ImGui.TextUnformatted(String.Format("camera target X%f Y%f", Camera.target.X, Camera.target.Y));
+                ImGui.TextUnformatted(String.Format("Current Physics Bodies: "+Sys.physicsSystem.physicsInfo.currentPhysicsBodies.ToString()));
                 ImGui.EndChild();
             }
-
-            rlImGui.ImageRect(ViewTexture.texture, (int)size.X, (int)size.Y, viewRect);
-
             ImGui.End();
         }
         ImGui.PopStyleVar();

@@ -4,7 +4,7 @@ using Box2DX.Dynamics;
 using Newtonsoft.Json;
 namespace DonutEngine.Backbone;
 
-public class Entity : IDisposable
+public class Entity : EntityPhysics, IDisposable
 {
     public Entity(int id, dynamic data)
     {
@@ -55,31 +55,11 @@ public class Entity : IDisposable
             c.Value.OnRemovedFromEntity(this);
             Components.Remove(c.Key);
         }
-        DestroyEntityPhysics();
+        DestroyEntityPhysics(this);
         Dispose();
     }
 
-    public void InitEntityPhysics(Entity entity)
-    {
-        if (entity.Type == Body.BodyType.Dynamic)
-        {
-            currentBody = Sys.physicsSystem.CreateBody(X,Y,Width,Height,Density,Friction,Restitution);
-        }
-        else if (entity.Type == Body.BodyType.Static)
-        {
-            currentBody = Sys.physicsSystem.CreateStaticBody(X,Y);
-        }
-        
-    }
-
-    public void DestroyEntityPhysics() 
-    {
-        if(currentBody != null)
-        {
-            Sys.physicsSystem.DestroyBody(currentBody);
-
-        }
-    }
+    
 
     protected virtual void Dispose(bool disposing)
     {

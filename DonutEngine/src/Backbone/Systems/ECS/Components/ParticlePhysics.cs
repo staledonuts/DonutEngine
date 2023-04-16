@@ -13,14 +13,14 @@ internal class ParticlePhysics
         bodyDef.MassData.Mass = 0.2f;
         bodyDef.LinearVelocity = new(Box2DX.Common.Math.Random(-100, 100), Box2DX.Common.Math.Random(200, 250));
         bodyDef.Position = entity.currentBody.GetPosition();
-        Sys.physicsSystem.CreateBodyDef(bodyDef);
+        Sys.physicsSystem.CreateBody(bodyDef);
     }
 
     public Body body;
     public BodyDef bodyDef;
     internal void CreateBody()
     {
-        body = Sys.physicsSystem.CreateBodyDef(bodyDef);
+        body = Sys.physicsSystem.CreateBody(bodyDef);
     }
 
     internal void DestroyBody()
