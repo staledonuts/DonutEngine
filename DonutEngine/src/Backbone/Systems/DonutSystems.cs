@@ -1,15 +1,24 @@
 namespace DonutEngine.Backbone.Systems;
-
+/// <summary>
+/// The Systems Updater: - 
+/// <example>
+/// a simple event system you subscribe all SystemsClasses to for the main update loop.
+/// Currently DonutEngine.Sys Contains the Different system classes for convenient access.
+/// The Three Booleans below is for Subscribing to the different Update Loops;
+/// Dont forget to Unsubscribe too!
+/// <code>
+/// DonutSystems.SubscribeSystem("Sys.systemsClass", true, true, false);
+/// </code>
+/// </example>
+/// </summary>
 
 public static class DonutSystems
 {
     /////////////////////////////////////////////////
-    //This is my Systems Updater
-    // a simple event system that i subscribe all the systems to for the update loop.
+    //
+    // 
     /////////////////////////////////////////////////
     
-
-
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
     public delegate void SystemsLateUpdater();
@@ -17,12 +26,21 @@ public static class DonutSystems
     public static event SystemsDrawUpdater? DrawUpdate;
     public static event SystemsLateUpdater? LateUpdate;
 
-    public static void SubscribeSystem(SystemsClass systemsClass)
+    public static void SubscribeSystem(SystemsClass systemsClass, bool SubUpdate, bool SubDraw, bool SubLate)
     {
         systemsClass.Start();
-        DonutSystems.Update += systemsClass.Update;
-        DonutSystems.DrawUpdate += systemsClass.DrawUpdate;
-        DonutSystems.LateUpdate += systemsClass.LateUpdate;
+        if(SubUpdate)
+        {
+            DonutSystems.Update += systemsClass.Update;
+        }
+        if(SubDraw)
+        {
+            DonutSystems.DrawUpdate += systemsClass.DrawUpdate;
+        }
+        if(SubLate)
+        {
+            DonutSystems.LateUpdate += systemsClass.LateUpdate;
+        }
     }
 
     public static void UnsubscribeSystem(SystemsClass systemsClass)
@@ -35,13 +53,13 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        DonutSystems.SubscribeSystem(Sys.windowSystem);
+        DonutSystems.SubscribeSystem(Sys.windowSystem, true, true, false);
         Sys.textureContainer.InitTextureContainer();
         Sys.shaderSystem.InitShaders();
         Sys.cameraHandler.InitializeCamera(new(0,0));
-        DonutSystems.SubscribeSystem(Sys.audioControl);
-        DonutSystems.SubscribeSystem(Sys.physicsSystem);
-        DonutSystems.SubscribeSystem(Sys.uISystem);
+        DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
+        DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
+        DonutSystems.SubscribeSystem(Sys.uISystem, true, true, true);
         SceneManager.InitScene();
     }
 

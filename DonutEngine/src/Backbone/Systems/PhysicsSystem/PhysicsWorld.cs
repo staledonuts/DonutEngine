@@ -52,9 +52,11 @@ public class PhysicsSystem : SystemsClass
 
     public override void Start()
     {
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up Physics System ]------");
         worldAABB.LowerBound.Set(-1000.0f, -1000.0f);
 		worldAABB.UpperBound.Set(1000.0f, 1000.0f);
         world = new World(worldAABB,gravity, true);
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Physics System Initialized ]------");
     }
 
     public override void Update()
@@ -64,7 +66,7 @@ public class PhysicsSystem : SystemsClass
 
     public override void DrawUpdate()
     {        
-        Raylib.DrawText("Number of Bodies:"+world.GetBodyCount(),0,50, 12, Raylib_cs.Color.BLACK);
+        //Raylib.DrawText("Number of Bodies:"+world.GetBodyCount(),0,50, 12, Raylib_cs.Color.BLACK);
     }
 
     public override void LateUpdate()

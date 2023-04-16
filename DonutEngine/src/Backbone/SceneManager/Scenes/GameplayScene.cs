@@ -7,7 +7,7 @@ public class GameplayScene : Scene
 
     public override void InitializeScene()
     {
-        DonutSystems.SubscribeSystem(Sys.levelDataSystem);
+        //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;

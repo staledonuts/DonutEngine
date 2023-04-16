@@ -19,6 +19,16 @@ public class UISystem : SystemsClass
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect;
     
+    public override void Start()
+    {
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up UI System ]------");
+        rlImGui.Setup(true);
+        entitySpawnList.Setup();
+        rect = new(0,0,Raylib.GetScreenWidth(), -Raylib.GetScreenHeight());
+        UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
+        InputEventSystem.ToggleUI += ToggleDebugUI;
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ UI System Initialized ]------");
+    }
 
     public override void Update()
     {
@@ -32,7 +42,7 @@ public class UISystem : SystemsClass
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
                 rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-                UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
             }
             if(DebugOpen)
             {
@@ -84,16 +94,6 @@ public class UISystem : SystemsClass
     {
         Raylib.UnloadRenderTexture(UIRenderTexture);
         rlImGui.Shutdown();
-    }
-
-    public override void Start()
-    {
-        rlImGui.Setup(true);
-        entitySpawnList.Setup();
-        rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-        UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height);
-        InputEventSystem.ToggleUI += ToggleDebugUI;
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Started UI System ]------");
     }
 
     public void ToggleDebugUI(CBool toggle)

@@ -5,10 +5,11 @@ using static DonutEngine.Backbone.Systems.Debug.CustomLogging;
 
 public unsafe class WindowSystem : SystemsClass
 {
+    Color color = Color.MAGENTA;
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Color.DARKGRAY);
+        Raylib.ClearBackground(color);
     }
 
     public override void LateUpdate()
@@ -39,5 +40,10 @@ public unsafe class WindowSystem : SystemsClass
     public override void Update()
     {
         Time.RunDeltaTime();
+    }
+
+    public void SetBackgroundColor(Color color)
+    {
+        this.color = color;
     }
 }

@@ -17,6 +17,7 @@ public partial class AudioControl : SystemsClass
 
     public override void Start()
     {
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
         InitAudioDevice();
         InitAudioLibrary();
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
