@@ -18,7 +18,7 @@ class Particle : ParticlePhysics
 
         public Particle(Entity entity) : base(entity)
         {
-            this.position = entity.currentBody.GetPosition();
+            this.position = entity.body.GetPosition();
             this.color = Raylib_cs.Color.WHITE;
             this.life = life;
             CreateBody();

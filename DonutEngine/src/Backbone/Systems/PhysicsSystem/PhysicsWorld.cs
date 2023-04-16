@@ -16,13 +16,18 @@ public class PhysicsSystem : SystemsClass
     private static AABB worldAABB = new();
     private World? world = null;
     private Vec2 gravity = new(0, 10);
-    private float timeStep = 1f / Sys.settingsVars.targetFPS;
+    private float timeStep = 1f / 60;
     private int velocityIterations = 8;
     private int positionIterations = 4;
 
     public Body CreateBody(BodyDef bodydef)
     {
         return world.CreateBody(bodydef);
+    }
+
+    public void SetSomething(Body body)
+    {
+        
     }
 
     public void DestroyBody(Body body)
@@ -54,7 +59,7 @@ public class PhysicsSystem : SystemsClass
 
     public override void LateUpdate()
     {
-        //throw new NotImplementedException();
+
     }
 
     public override void Shutdown()

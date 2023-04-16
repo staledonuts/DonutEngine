@@ -55,7 +55,6 @@ public static class DonutSystems
     {
         DonutSystems.SubscribeSystem(Sys.windowSystem, true, true, false);
         Sys.textureContainer.InitTextureContainer();
-        Sys.shaderSystem.InitShaders();
         Sys.cameraHandler.InitializeCamera(new(0,0));
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);

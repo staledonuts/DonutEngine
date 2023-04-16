@@ -34,7 +34,11 @@ public class Entity : EntityPhysics, IDisposable
     public float Density { get; set; }
     public float Friction { get; set; }
     public float Restitution { get; set; }
-    public Body? currentBody = null;
+    public Body? body = null;
+    public Fixture? fixture = null;
+    public BodyDef bodyDef = new();
+    public PolygonDef polyDef = new();
+
     private bool disposedValue;
 
     public void AddComponent<T>(T component, Entity entity) where T : Component 

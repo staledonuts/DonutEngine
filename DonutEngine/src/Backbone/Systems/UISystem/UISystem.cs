@@ -66,7 +66,7 @@ public class UISystem : SystemsClass
         {
             Raylib.BeginTextureMode(UIRenderTexture);
             Raylib.ClearBackground(Color.BLANK);
-            Raylib.DrawText(Time.deltaTime.ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
+            //Raylib.DrawText(Time.deltaTime.ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
             if(MenuOpen)
             {

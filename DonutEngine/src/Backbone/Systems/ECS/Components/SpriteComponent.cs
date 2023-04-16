@@ -1,5 +1,5 @@
 namespace DonutEngine.Backbone;
-using DonutEngine.Backbone.Systems.Shaders;
+using DonutEngine.Shaders;
 using Raylib_cs;
 public class SpriteComponent : Component
 {
@@ -46,7 +46,7 @@ public class SpriteComponent : Component
     public void Draw(float deltaTime)
     {
         //Raylib.BeginShaderMode(outlineShader.shader);
-        Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.currentBody.GetPosition().X, entity.currentBody.GetPosition().Y), Color.WHITE);
+        Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.body.GetPosition().X, entity.body.GetPosition().Y), Color.WHITE);
         //Raylib.EndShaderMode();
     }
 

@@ -13,9 +13,9 @@ public class TileComponent : Component
 
     public override void OnAddedToEntity(Entity entity)
     {
-        currentBody = entity.currentBody;
+        /*currentBody = entity.body;
         polyDef.SetAsBox(Width, Height);
-        currentBody.CreateFixture(polyDef);        
+        currentBody.CreateFixture(polyDef);*/
     }
 
     public override void OnRemovedFromEntity(Entity entity)
