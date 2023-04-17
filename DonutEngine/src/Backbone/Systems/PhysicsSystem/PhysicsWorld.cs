@@ -15,7 +15,7 @@ public class PhysicsSystem : SystemsClass
     #endif
     private static AABB worldAABB = new();
     private World? world = null;
-    private Vec2 gravity = new(0, 10);
+    private Vec2 gravity = new(0, 0);
     private float timeStep = 1f / 60;
     private int velocityIterations = 8;
     private int positionIterations = 4;
@@ -40,6 +40,7 @@ public class PhysicsSystem : SystemsClass
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up Physics System ]------");
         worldAABB.LowerBound.Set(-1000.0f, -1000.0f);
 		worldAABB.UpperBound.Set(1000.0f, 1000.0f);
+        worldAABB.Center.SetZero();
         world = new World(worldAABB,gravity, true);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Physics System Initialized ]------");
     }

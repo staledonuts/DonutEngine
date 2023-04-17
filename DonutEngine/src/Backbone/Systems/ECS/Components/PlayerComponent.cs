@@ -36,7 +36,7 @@ public class PlayerComponent : Component
         {
             boolean = false;
             Sys.audioControl.PlaySFX("confirmation001", 0.9f, 1.1f);
-            entity.body.ApplyForce(new(0,-20000), this.entity.body.GetPosition());
+            entity.body.ApplyForce(new(0,-20000), entity.body.GetPosition());
         }
     }
 
@@ -51,7 +51,7 @@ public class PlayerComponent : Component
 
     private void OnDpad(Vec2 vector)
     {
-        //entity.body.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), entity.body.GetPosition());
+        entity.body.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), entity.body.GetPosition());
     }
 
     public void Update(float deltaTime)

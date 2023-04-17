@@ -10,9 +10,10 @@ class Particle : ParticlePhysics
         public Vec2 position;
         public Vec2 velocity;
         public Raylib_cs.Color color;
+        const float lifetime = 60f;
         public float size;
         public float life;
-        
+     
 
         
 
@@ -20,18 +21,19 @@ class Particle : ParticlePhysics
         {
             this.position = entity.body.GetPosition();
             this.color = Raylib_cs.Color.WHITE;
-            this.life = life;
-            CreateBody();
+            this.life = lifetime;
         }
 
         public void Update(float deltaTime)
         {
+            position = body.GetPosition();
+            velocity = body.GetLinearVelocity();
             life -= deltaTime;
         }
 
-        public void Draw(float deltaTime)
+        public void Draw(float deltaTime, Texture2D tex)
         {
-            Raylib.DrawCircle((int)position.X, (int)position.Y, size, color);
+            Raylib.DrawTextureEx(tex, new(position.X,position.Y), 0f, size / tex.width, color);
         }
 
         public bool IsDead()
@@ -47,12 +49,10 @@ class Particle : ParticlePhysics
         private Random random = new Random();
         private Particle[]? particles = null;
         private Texture2D particleTexture;
-        private float emitTimer = 0;
+        private float emitTimer = 60;
         public int maxParticles { get; set; }
         public float emitRate { get; set; }
         public string? textureName { get; set; }
-
-        
 
         public void Update(float deltaTime)
         {
@@ -89,8 +89,8 @@ class Particle : ParticlePhysics
                 {
                     continue;
                 }
-
-                Raylib.DrawTextureEx(particleTexture, new(particles[i].position.X, particles[i].position.Y), 0f, particles[i].size / particleTexture.width, particles[i].color);
+                
+                particles[i].Draw(deltaTime, particleTexture);
             }
         }
 

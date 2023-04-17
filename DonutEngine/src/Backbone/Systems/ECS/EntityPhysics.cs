@@ -1,4 +1,3 @@
-using Box2DX.Dynamics;
 namespace DonutEngine.Backbone;
 
 public class EntityPhysics
@@ -11,21 +10,12 @@ public class EntityPhysics
         entity.polyDef.Friction = entity.Friction;
         entity.polyDef.Restitution = entity.Restitution;
         entity.bodyDef.IsSleeping = false;
-        entity.bodyDef.AllowSleep = false;
-        entity.bodyDef.LinearDamping = 0.01f;
-        entity.bodyDef.MassData.Mass = 1;
+        entity.bodyDef.AllowSleep = true;
+        entity.bodyDef.LinearDamping = 0;
         entity.body = Sys.physicsSystem.CreateBody(entity.bodyDef);
-        /*if(entity.Type == Body.BodyType.Dynamic)
-        {
-        }
-        
-        if(entity.Type == Body.BodyType.Static)
-        {
-            entity.body = Sys.physicsSystem.CreateBody(entity.bodyDef);
-            entity.body.SetStatic();
-        }*/
         entity.fixture = entity.body.CreateFixture(entity.polyDef);
         entity.fixture.ComputeMass(out entity.bodyDef.MassData);
+        entity.body.SetMass(entity.bodyDef.MassData);
     }
 
     public void DestroyEntityPhysics(Entity entity) 

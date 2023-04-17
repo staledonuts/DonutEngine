@@ -8,7 +8,7 @@ public class GameplayScene : Scene
 
     public override void InitializeScene()
     {
-        collbox1 = new(1000, 10, 0, -200, 10, 0.01f, 0.01f);
+        collbox1 = new(1000, 50, 0, 0, 1, 0.01f, 0.01f);
         //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
@@ -50,7 +50,7 @@ public class GameplayScene : Scene
             bodyDef.Position = new(x,y);
             bodyDef.MassData.Mass = 1f;
             body = Sys.physicsSystem.CreateBody(bodyDef);
-            body.IsStatic();
+            body.SetStatic();
             PolygonDef polygonDef = new PolygonDef();
             polygonDef.SetAsBox(width, height);
             polygonDef.Density = density;
@@ -67,7 +67,7 @@ public class GameplayScene : Scene
 
         public void DrawMe()
         {
-            Raylib.DrawRectanglePro(rect, new(rect.x, rect.y),0, color);
+            Raylib.DrawRectanglePro(rect, new(body.GetPosition().X, body.GetPosition().Y),0, color);
         }
     }
 }

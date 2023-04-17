@@ -18,17 +18,13 @@ internal class ParticlePhysics
         body = Sys.physicsSystem.CreateBody(bodyDef);
         fixture = body.CreateFixture(polyDef);
         fixture.ComputeMass(out bodyDef.MassData);
-        
+        body.SetMass(bodyDef.MassData);
     }
 
     public Body body;
     public BodyDef bodyDef;
     public Fixture fixture;
     public PolygonDef polyDef;
-    internal void CreateBody()
-    {
-        body = Sys.physicsSystem.CreateBody(bodyDef);
-    }
 
     internal void DestroyBody()
     {
