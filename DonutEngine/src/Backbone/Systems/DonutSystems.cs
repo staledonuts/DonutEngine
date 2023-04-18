@@ -58,7 +58,7 @@ public static class DonutSystems
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
         DonutSystems.SubscribeSystem(Sys.uISystem, true, true, true);
-        Sys.cameraHandler.InitializeCamera(new(0,0));
+        DonutSystems.SubscribeSystem(Sys.cameraHandler, false, false, true);
         SceneManager.InitScene();
     }
 
@@ -67,6 +67,7 @@ public static class DonutSystems
         DonutSystems.UnsubscribeSystem(Sys.uISystem);
         DonutSystems.UnsubscribeSystem(Sys.physicsSystem);
         DonutSystems.UnsubscribeSystem(Sys.audioControl);
+        DonutSystems.UnsubscribeSystem(Sys.cameraHandler);
         Sys.textureContainer.EmptyTextureLibrary();
         DonutSystems.UnsubscribeSystem(Sys.windowSystem);
     }

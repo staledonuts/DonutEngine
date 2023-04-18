@@ -34,8 +34,8 @@ public class Entity : EntityPhysics, IDisposable
     public float Density { get; set; }
     public float Friction { get; set; }
     public float Restitution { get; set; }
-    public Body? body = null;
-    public Fixture? fixture = null;
+    public Body? body;
+    public Fixture? fixture;
     public BodyDef bodyDef = new();
     public PolygonDef polyDef = new();
 

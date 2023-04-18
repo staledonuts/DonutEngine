@@ -42,7 +42,12 @@ public class PlayerComponent : Component
 
     private void OnLeftStick(Vec2 InputVector)
     {
-        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetPosition());
+        entity.body.ApplyImpulse(InputVector * -2000, entity.body.GetPosition());
+    }
+    
+    private void OnRightStick(Vec2 InputVector)
+    {
+        //entity.body.SetAngle(InputVector.X * -MathD.Pi);
     }
     private void OnAttack(CBool boolean)
     {
@@ -51,15 +56,15 @@ public class PlayerComponent : Component
 
     private void OnDpad(Vec2 vector)
     {
-        entity.body.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), entity.body.GetPosition());
+        //entity.body.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), entity.body.GetPosition());
     }
 
     public void Update(float deltaTime)
     {
-        bool PlayerHasHorizonalVelocity = Math.Abs(entity.body.GetLinearVelocity().X) > MathD.Epsilon;
-        if(PlayerHasHorizonalVelocity)
+        //bool PlayerHasHorizonalVelocity = Math.Abs(entity.body.GetLinearVelocity().X) > MathD.Epsilon;
+        /*if(PlayerHasHorizonalVelocity)
         {
             sprite.FlipSprite(PlayerHasHorizonalVelocity);
-        }
+        }*/
     }
 }

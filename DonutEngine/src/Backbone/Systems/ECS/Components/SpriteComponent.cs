@@ -4,7 +4,6 @@ using Raylib_cs;
 public class SpriteComponent : Component
 {
     public string Sprite { get; set; }
-    public OutlineShader outlineShader;
     Texture2D tex;
     public Int32 Width { get; set; }
     public Int32 Height { get; set; }
@@ -26,7 +25,6 @@ public class SpriteComponent : Component
         tex = Sys.textureContainer.GetTexture(Sprite);
         animator = new Animator(AnimatorName, FramesPerRow, Rows, FrameRate, PlayInReverse, Continuous, Looping);
         animator.AssignSprite(tex);
-        outlineShader = new(tex, new(1,1,1,1),2);
         ECS.ecsDrawUpdate += Draw;
         ECS.ecsUpdate += Update;
     }
@@ -43,11 +41,10 @@ public class SpriteComponent : Component
     {
         animator.Play();
     }
+
     public void Draw(float deltaTime)
     {
-        //Raylib.BeginShaderMode(outlineShader.shader);
         Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.body.GetPosition().X, entity.body.GetPosition().Y), Color.WHITE);
-        //Raylib.EndShaderMode();
     }
 
     public void  FlipSprite(bool flipBool)

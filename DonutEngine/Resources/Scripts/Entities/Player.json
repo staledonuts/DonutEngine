@@ -14,7 +14,7 @@
     "Components": [
         {
             "Type": "SpriteComponent",
-            "Sprite": "Player/Player.png",
+            "Sprite": "Player",
             "Width": 16,
             "Height": 16,
             "AnimatorName": "Player",
@@ -27,7 +27,7 @@
         },
         {
             "Type": "GameCamera2D",
-            "IsActive": false
+            "IsActive": true
         },
         {
             "Type": "PlayerComponent",

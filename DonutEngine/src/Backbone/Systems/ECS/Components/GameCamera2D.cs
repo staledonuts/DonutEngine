@@ -1,21 +1,37 @@
 namespace DonutEngine.Backbone;
-using System.Numerics;
+using Box2DX.Common;
 using DonutEngine.Backbone.Systems;
 
 public class GameCamera2D : Component
 {
+    
 	public bool IsActive { get; set; }
 	Entity? entity;
 
 	public void LateUpdate(float deltaTime)
 	{
-        Sys.cameraHandler.UpdateCameraPlayerBoundsPush(ref Sys.cameraHandler.donutcam, entity.body.GetPosition(), 1f, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
+        
 	}
     public override void OnAddedToEntity(Entity entity)
     {
         this.entity = entity;
+        Sys.cameraHandler.SetCameraTarget(entity);
+        Sys.cameraHandler.SetCameraUpdateMode(CameraHandler.CameraUpdateModes.Smooth);
         ECS.ecsLateUpdate += LateUpdate;
-        
+    }
+    
+    public void ToggleActive()
+    {
+        if(IsActive)
+        {
+            IsActive = false;
+            ECS.ecsLateUpdate -= LateUpdate;
+        }
+        else
+        {
+            IsActive = true;
+            ECS.ecsLateUpdate += LateUpdate;
+        }
     }
 
     public override void OnRemovedFromEntity(Entity entity)

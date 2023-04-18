@@ -25,11 +25,6 @@ public class PhysicsSystem : SystemsClass
         return world.CreateBody(bodydef);
     }
 
-    public void SetSomething(Body body)
-    {
-        
-    }
-
     public void DestroyBody(Body body)
     {
         world.DestroyBody(body);

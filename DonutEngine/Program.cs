@@ -8,9 +8,7 @@ using static Raylib_cs.Raylib;
 
 static class Program
 {
-    const int GLSL_VERSION = 330;
-    public static bool isLoading = false;
-    
+    public static bool isLoading = false;   
     public static void Main()
     {
         //Lets set up the different nessesary systems!

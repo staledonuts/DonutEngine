@@ -8,7 +8,7 @@ public class GameplayScene : Scene
 
     public override void InitializeScene()
     {
-        collbox1 = new(1000, 50, 0, 0, 1, 0.01f, 0.01f);
+        collbox1 = new(1000, 10, 0, 700, 1, 0.01f, 0.01f);
         //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
@@ -47,8 +47,7 @@ public class GameplayScene : Scene
         public CollisionBox(float width, float height, float x, float y, float density, float friction, float restitution)
         {
             bodyDef = new();
-            bodyDef.Position = new(x,y);
-            bodyDef.MassData.Mass = 1f;
+            bodyDef.Position.Set(x,y);
             body = Sys.physicsSystem.CreateBody(bodyDef);
             body.SetStatic();
             PolygonDef polygonDef = new PolygonDef();
@@ -67,7 +66,7 @@ public class GameplayScene : Scene
 
         public void DrawMe()
         {
-            Raylib.DrawRectanglePro(rect, new(body.GetPosition().X, body.GetPosition().Y),0, color);
+            Raylib.DrawRectangleRec(rect, color);
         }
     }
 }
