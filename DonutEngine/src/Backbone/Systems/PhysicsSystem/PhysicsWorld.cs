@@ -42,6 +42,7 @@ public class PhysicsSystem : SystemsClass
 
     public override void Update()
     {
+        timeStep = 1f / Raylib.GetFPS();
         world.Step(timeStep, velocityIterations, positionIterations);
         #if DEBUG
         physicsInfo.currentPhysicsBodies = world.GetBodyCount();

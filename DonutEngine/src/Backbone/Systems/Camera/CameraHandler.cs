@@ -8,7 +8,7 @@ using DonutEngine.Backbone.Systems;
 public partial class CameraHandler : SystemsClass
 {
     public Camera2D donutcam = new();
-    Entity? currentTarget;
+    GameCamera2D? currentTarget;
 	CameraUpdateModes cameraUpdateModes = new();
     public override void Start()
     {
@@ -36,12 +36,12 @@ public partial class CameraHandler : SystemsClass
 			{
 				case CameraUpdateModes.Smooth:
 				{
-					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.body.GetPosition(), Time.deltaTime, 2, 1);
+					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Time.deltaTime, 2, 1);
 					break;
 				}
 				case CameraUpdateModes.Boundspush:
 				{
-					UpdateCameraPlayerBoundsPush(ref donutcam, currentTarget.body.GetPosition(), 1f, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
+					UpdateCameraPlayerBoundsPush(ref donutcam, currentTarget.GetPosition(), 1f, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
 					break;
 				}
 				case CameraUpdateModes.Center:
@@ -69,7 +69,8 @@ public partial class CameraHandler : SystemsClass
 
     public void SetCameraTarget(Entity entity)
     {
-        currentTarget = entity;
+        currentTarget = entity.GetComponent<GameCamera2D>();
+		donutcam.target = currentTarget.GetPosition();
     }
 
 	public enum CameraUpdateModes

@@ -42,7 +42,7 @@ public class PlayerComponent : Component
 
     private void OnLeftStick(Vec2 InputVector)
     {
-        entity.body.ApplyImpulse(InputVector * -2000, entity.body.GetPosition());
+        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetPosition());
     }
     
     private void OnRightStick(Vec2 InputVector)

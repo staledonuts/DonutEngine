@@ -7,8 +7,8 @@ using DonutEngine.Backbone.Systems;
 
 public partial class CameraHandler : SystemsClass
 {
-    internal static Vec2 UpdateCameraPlayerBoundsPush_bbox = new Vec2(0.03f, 0.02f);
-	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
+    internal static Vector2 UpdateCameraPlayerBoundsPush_bbox = new Vector2(0.03f, 0.02f);
+	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
 	{
 		Vector2 bboxWorldMin = GetScreenToWorld2D(new((1 - UpdateCameraPlayerBoundsPush_bbox.X) * 0.5f * width, (1 - UpdateCameraPlayerBoundsPush_bbox.Y) * 0.5f * height), camera);
 		Vector2 bboxWorldMax = GetScreenToWorld2D(new((1 + UpdateCameraPlayerBoundsPush_bbox.X) * 0.5f * width, (1 + UpdateCameraPlayerBoundsPush_bbox.Y) * 0.5f * height), camera);
@@ -32,7 +32,7 @@ public partial class CameraHandler : SystemsClass
 		}
 	}
 
-	public void UpdateCameraCenter(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
+	public void UpdateCameraCenter(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
 	{
 		camera.offset = new(width / 2.0f, height / 2.0f);
 		camera.target = new(pos.X, pos.Y);
@@ -49,7 +49,7 @@ public partial class CameraHandler : SystemsClass
 	internal float UpdateCameraCenterSmoothFollow_minEffectLength = 10F;
 	internal float UpdateCameraCenterSmoothFollow_fractionSpeed = 0.8f;
 
-	public void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Vec2 pos, float delta, int width, int height)
+	public void UpdateCameraCenterSmoothFollow(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
 	{
 		camera.offset = new(width / 2.0f, height / 2.0f);
 		Vector2 diff = Vector2.Subtract(new(pos.X, pos.Y), camera.target);
