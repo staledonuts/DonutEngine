@@ -34,7 +34,6 @@ static class Program
         static void UpdateDraw()
         {
             BeginDrawing();
-            //ECS.ProcessDrawUpdate();
             DonutSystems.UpdateDraw();
             EndDrawing();
         }
@@ -42,7 +41,6 @@ static class Program
         static void UpdateLate()
         {
             DonutSystems.UpdateLate();
-            //ECS.ProcessLateUpdate();
         }
     }
 }

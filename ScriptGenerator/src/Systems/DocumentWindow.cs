@@ -8,8 +8,6 @@ public abstract class DocumentWindow
 {
     public bool Open = false;
 
-    public RenderTexture2D ViewTexture;
-
     public abstract void Start();
     public abstract void Shutdown();
     public abstract void DrawUpdate();

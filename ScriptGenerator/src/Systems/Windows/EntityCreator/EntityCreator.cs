@@ -19,10 +19,6 @@ public partial class EntityCreator : DocumentWindow
     }
     public override void DrawUpdate()
     {
-        if (!Open)
-        {
-            return;
-        }
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
         ImGui.SetNextWindowSizeConstraints(new Vector2(400, 400), new Vector2((float)Raylib.GetScreenWidth(), (float)Raylib.GetScreenHeight()));
         

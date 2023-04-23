@@ -8,7 +8,7 @@ public class WindowSystem : SystemsClass
 
     public override void DrawUpdate()
     {
-        Raylib.ClearBackground(Raylib_cs.Color.BLACK);
+        Raylib.ClearBackground(Raylib_cs.Color.GRAY);
     }
 
     public override void LateUpdate()

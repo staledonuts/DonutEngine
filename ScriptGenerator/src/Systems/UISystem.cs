@@ -2,55 +2,38 @@ using Raylib_cs;
 using ImGuiNET;
 using System.Numerics;
 using DonutEngine.Backbone.Systems.UI.Creator;
+using DonutEngine.Backbone.Systems.UI.Audio;
 namespace DonutEngine.Backbone.Systems.UI;
 
 public class UISystem : SystemsClass
 {
-    static bool Open = true;
-    static bool ImGuiDemoOpen = false;
-    static RenderTexture2D UIRenderTexture;
-    static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+    RenderTexture2D UIRenderTexture;
+    Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
-    static EntityCreator sceneViewWindow = new();
+    EntityCreator entityCreatorWindow = new();
+    SoundDefiner soundDefinerWindow = new();
+
     
 
     public override void Update()
     {
-        if (!Open)
+        if (Raylib.IsWindowResized())
         {
-            return;
-        }
-        else if(Open)
-        {
-            if (Raylib.IsWindowResized())
-            {
-                Raylib.UnloadRenderTexture(UIRenderTexture);
-                rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-                UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
-            }
+            Raylib.UnloadRenderTexture(UIRenderTexture);
+            rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
         }
     }
     public override void DrawUpdate()
     {
-        if (!Open)
-        {
-            return;
-        }
-        else
-        {
-            Raylib.BeginTextureMode(UIRenderTexture);
-            Raylib.ClearBackground(Color.BLANK);
-            //Raylib.DrawText(Time.deltaTime.ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
-            rlImGui.Begin();
-            /*if(MenuOpen)
-            {
-                MainMenu();
-            }*/
-            //loadingScreen.Show();
-            rlImGui.End();
-            Raylib.EndTextureMode();
-            Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
-        }
+        Raylib.BeginTextureMode(UIRenderTexture);
+        Raylib.ClearBackground(Color.BLANK);
+        rlImGui.Begin();
+        MainMenu();
+        rlImGui.End();
+        Raylib.EndTextureMode();
+        Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
+
     }
 
     public override void LateUpdate()
@@ -70,33 +53,50 @@ public class UISystem : SystemsClass
         rlImGui.Setup(true);
         rect = new(0,0,Raylib.GetScreenWidth(), -Raylib.GetScreenHeight());
         UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
+
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ UI System Initialized ]------");
     }
 
-    private static void DoMainMenu()
+    private void MainMenu()
+    {
+        
+        DoMainMenu();
+        if (entityCreatorWindow.Open)
+        {
+            entityCreatorWindow.DrawUpdate();
+        }
+        if (soundDefinerWindow.Open)
+        {
+            soundDefinerWindow.DrawUpdate();
+        }
+    }
+
+    private void DoMainMenu()
     {
         if (ImGui.BeginMainMenuBar())
         {
             if (ImGui.BeginMenu("File"))
             {
-                if (ImGui.MenuItem("Entity Factory"))
-                {
-                    
-                }
                 if (ImGui.MenuItem("Exit"))
                 {
                     Raylib.CloseWindow();
                 }
-
                 ImGui.EndMenu();
-
             }
-
-            if (ImGui.BeginMenu("Window"))
+            if (ImGui.BeginMenu("Entities"))
             {
-                //ImGui.MenuItem("Reload Entities", string.Empty, )
-                ImGui.MenuItem("ImGui Demo", string.Empty, ref ImGuiDemoOpen);
-
+                if (ImGui.MenuItem("Entity Creator", string.Empty, ref entityCreatorWindow.Open))
+                {
+                    
+                }
+                ImGui.EndMenu();
+            }
+            if (ImGui.BeginMenu("Audio"))
+            {
+                if (ImGui.MenuItem("SFX Definer", string.Empty, ref soundDefinerWindow.Open))
+                {
+                    
+                }
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();
