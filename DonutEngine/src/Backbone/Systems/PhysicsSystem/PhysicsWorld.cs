@@ -5,7 +5,6 @@ using DonutEngine.Backbone.Systems.Debug;
 using Box2DX.Common;
 using Box2DX.Dynamics;
 using Box2DX.Collision;
-using System.Numerics;
 using Raylib_cs;
 
 public class PhysicsSystem : SystemsClass
@@ -16,9 +15,8 @@ public class PhysicsSystem : SystemsClass
     private static AABB worldAABB = new();
     private World? world = null;
     private Vec2 gravity = new(0, 0);
-    private float timeStep = 1f / 60;
-    private int velocityIterations = 8;
-    private int positionIterations = 4;
+    private int velocityIterations = 6;
+    private int positionIterations = 2;
 
     public Body CreateBody(BodyDef bodydef)
     {
@@ -42,8 +40,7 @@ public class PhysicsSystem : SystemsClass
 
     public override void Update()
     {
-        timeStep = 1f / Raylib.GetFPS();
-        world.Step(timeStep, velocityIterations, positionIterations);
+        world.Step(timeStep(), velocityIterations, positionIterations);
         #if DEBUG
         physicsInfo.currentPhysicsBodies = world.GetBodyCount();
         #endif
@@ -63,4 +60,11 @@ public class PhysicsSystem : SystemsClass
     {
         world.Dispose();
     }
+
+    private float timeStep()
+    {
+        float timeStep = 1f / Raylib.GetFPS();
+        return timeStep;
+    } 
+
 }

@@ -72,7 +72,7 @@ public class UISystem : SystemsClass
             {
                 MainMenu();
             }
-            loadingScreen.Show();
+            //loadingScreen.Show();
             rlImGui.End();
             Raylib.EndTextureMode();
             Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);

@@ -27,7 +27,6 @@ static class Program
 
         static void UpdateLoop()
         {
-            InputEventSystem.UpdateInputEvent();
             DonutSystems.UpdateSystems();
             //ECS.ProcessUpdate();
         }

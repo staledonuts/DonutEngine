@@ -4,11 +4,11 @@ using Raylib_cs;
 using Box2DX.Dynamics;
 public class GameplayScene : Scene
 {
-    CollisionBox collbox1;
+    //CollisionBox collbox1;
 
     public override void InitializeScene()
     {
-        collbox1 = new(1000, 10, 0, 70, 1, 0.01f, 0.01f);
+        //collbox1 = new(1000, 10, 0, 70, 1, 0.01f, 0.01f);
         //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
@@ -30,7 +30,7 @@ public class GameplayScene : Scene
     {
 
         Raylib.DrawCircle(100,100, 30, Raylib_cs.Color.BLACK);
-        collbox1.DrawMe();
+        //collbox1.DrawMe();
     }
     public override void LateUpdate()
     {

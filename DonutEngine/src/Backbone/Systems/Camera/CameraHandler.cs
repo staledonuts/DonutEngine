@@ -36,7 +36,7 @@ public partial class CameraHandler : SystemsClass
 			{
 				case CameraUpdateModes.Smooth:
 				{
-					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Time.deltaTime, 2, 1);
+					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Time.deltaTime, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
 					break;
 				}
 				case CameraUpdateModes.Boundspush:

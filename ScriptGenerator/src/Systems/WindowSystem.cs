@@ -8,7 +8,7 @@ public class WindowSystem : SystemsClass
 
     public override void DrawUpdate()
     {
-        
+        Raylib.ClearBackground(Raylib_cs.Color.BLACK);
     }
 
     public override void LateUpdate()
@@ -23,12 +23,12 @@ public class WindowSystem : SystemsClass
 
     public override void Start()
     {
-        InitWindow(settingsVars.screenWidth, settingsVars.screenHeight, "Rattle of Bones");
-        if(settingsVars.fullScreen)
+        InitWindow(Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight, "Rattle of Bones");
+        if(Sys.settingsVars.fullScreen)
         {
             ToggleFullscreen();
         }
-        SetTargetFPS(settingsVars.targetFPS);
+        SetTargetFPS(Sys.settingsVars.targetFPS);
     }
 
     public override void Update()

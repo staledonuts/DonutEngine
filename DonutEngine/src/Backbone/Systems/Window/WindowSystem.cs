@@ -25,11 +25,6 @@ public unsafe class WindowSystem : SystemsClass
     public override void Start()
     {
         InitWindow(Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight, "DonutEngine");
-        //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE | ConfigFlags.FLAG_WINDOW_MAXIMIZED);
-        if(Sys.settingsVars.fullScreen)
-        {
-            ToggleFullscreen();
-        }
         SetTargetFPS(Sys.settingsVars.targetFPS);  
         SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_DEBUG);
         //Custom Logging
@@ -45,5 +40,38 @@ public unsafe class WindowSystem : SystemsClass
     public void SetBackgroundColor(Color color)
     {
         this.color = color;
+    }
+
+    public void SetWindowFlags()
+    {
+        if(Sys.settingsVars.fullScreen)
+        {
+            SetConfigFlags(ConfigFlags.FLAG_FULLSCREEN_MODE);
+        }
+        if(Sys.settingsVars.vSync)
+        {
+            SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
+        }
+        if(Sys.settingsVars.windowResizable)
+        {
+            SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+        }
+
+    }
+
+    public void ToggleVsync()
+    {
+        if(Sys.settingsVars.vSync)
+        {
+            Sys.settingsVars.vSync = false;
+            Sys.settingsVars.SaveSettings();
+            Raylib.SetWindowState(ConfigFlags.FLAG_FULLSCREEN_MODE);
+        }
+        else
+        {
+            Sys.settingsVars.vSync = true;
+            Sys.settingsVars.SaveSettings();
+            Raylib.SetWindowState(ConfigFlags.FLAG_FULLSCREEN_MODE);
+        }
     }
 }

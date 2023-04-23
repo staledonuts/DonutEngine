@@ -2,10 +2,6 @@ namespace DonutEngine.Backbone.Systems;
 
 public static class DonutSystems
 {
-    public static readonly SettingsVars settingsVars = new(DonutFilePaths.settings);
-    public static readonly WindowSystem windowSystem = new();
-    public static UISystem uISystem = new();
-
     public delegate void SystemsUpdater();
     public delegate void SystemsDrawUpdater();
     public delegate void SystemsLateUpdater();
@@ -31,14 +27,14 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        DonutSystems.SubscribeSystem(windowSystem);
-        DonutSystems.SubscribeSystem(uISystem);
+        DonutSystems.SubscribeSystem(Sys.windowSystem);
+        DonutSystems.SubscribeSystem(Sys.uISystem);
     }
 
     public static void KillSystems()
     {
-        DonutSystems.UnsubscribeSystem(windowSystem);
-        DonutSystems.UnsubscribeSystem(uISystem);
+        DonutSystems.UnsubscribeSystem(Sys.windowSystem);
+        DonutSystems.UnsubscribeSystem(Sys.uISystem);
     }
 
     public static void UpdateSystems()

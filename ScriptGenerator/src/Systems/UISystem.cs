@@ -1,8 +1,8 @@
-using DonutEngine.Backbone.Systems.UI;
 using Raylib_cs;
 using ImGuiNET;
 using System.Numerics;
-namespace DonutEngine.Backbone.Systems;
+using DonutEngine.Backbone.Systems.UI.Creator;
+namespace DonutEngine.Backbone.Systems.UI;
 
 public class UISystem : SystemsClass
 {
@@ -11,19 +11,24 @@ public class UISystem : SystemsClass
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
-    static SceneViewWindow sceneViewWindow = new();
-    static ImageViewerWindow imageViewerWindow = new();
+    static EntityCreator sceneViewWindow = new();
     
 
     public override void Update()
     {
         if (!Open)
-                return;
-        if (Raylib.IsWindowResized())
+        {
+            return;
+        }
+        else if(Open)
+        {
+            if (Raylib.IsWindowResized())
             {
                 Raylib.UnloadRenderTexture(UIRenderTexture);
-                UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                rect = new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
             }
+        }
     }
     public override void DrawUpdate()
     {
@@ -34,18 +39,17 @@ public class UISystem : SystemsClass
         else
         {
             Raylib.BeginTextureMode(UIRenderTexture);
+            Raylib.ClearBackground(Color.BLANK);
+            //Raylib.DrawText(Time.deltaTime.ToString(), 12, (int)Sys.cameraHandler.donutcam.offset.Y + 24, 20, Color.WHITE);
             rlImGui.Begin();
-            DoMainMenu();
-            //ImGui.ShowDemoWindow();
-            if (ImGuiDemoOpen)
+            /*if(MenuOpen)
             {
-                ImGui.ShowDemoWindow(ref ImGuiDemoOpen);
-            }
+                MainMenu();
+            }*/
+            //loadingScreen.Show();
             rlImGui.End();
             Raylib.EndTextureMode();
-            
-            //Raylib.DrawTexture(UIRenderTexture.texture, 0, 0, Color.WHITE);
-            Raylib.DrawTextureQuad(UIRenderTexture.texture, new(1,-1), Vector2.Zero, rect, Color.WHITE);
+            Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
         }
     }
 
@@ -62,9 +66,11 @@ public class UISystem : SystemsClass
 
     public override void Start()
     {
-        UIRenderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up UI System ]------");
         rlImGui.Setup(true);
-        System.Console.WriteLine("Started UI sys");
+        rect = new(0,0,Raylib.GetScreenWidth(), -Raylib.GetScreenHeight());
+        UIRenderTexture = Raylib.LoadRenderTexture((int)rect.width, (int)rect.height * -1);
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ UI System Initialized ]------");
     }
 
     private static void DoMainMenu()

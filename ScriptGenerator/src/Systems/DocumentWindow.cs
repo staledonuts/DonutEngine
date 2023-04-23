@@ -10,9 +10,9 @@ public abstract class DocumentWindow
 
     public RenderTexture2D ViewTexture;
 
-    public abstract void Setup();
+    public abstract void Start();
     public abstract void Shutdown();
-    public abstract void Show();
+    public abstract void DrawUpdate();
     public abstract void Update();
 
     public bool Focused = false;

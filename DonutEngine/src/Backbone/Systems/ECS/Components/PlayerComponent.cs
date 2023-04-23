@@ -35,14 +35,12 @@ public class PlayerComponent : Component
         if(boolean)
         {
             boolean = false;
-            Sys.audioControl.PlaySFX("confirmation001", 0.9f, 1.1f);
-            entity.body.ApplyForce(new(0,-20000), entity.body.GetPosition());
         }
     }
 
     private void OnLeftStick(Vec2 InputVector)
     {
-        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetPosition());
+        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetLocalPoint(entity.body.GetWorldCenter()));
     }
     
     private void OnRightStick(Vec2 InputVector)
@@ -56,7 +54,7 @@ public class PlayerComponent : Component
 
     private void OnDpad(Vec2 vector)
     {
-        //entity.body.ApplyImpulse(new(Math.Clamp(vector.X * 900, -900, 900),vector.Y), entity.body.GetPosition());
+        entity.body.ApplyImpulse(vector * 900, entity.body.GetLocalPoint(entity.body.GetWorldCenter()));
     }
 
     public void Update(float deltaTime)

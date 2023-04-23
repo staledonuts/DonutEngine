@@ -25,13 +25,13 @@ public class SettingsVars
         try
         {
             Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Trying to Load Settings ]------");
-            LoadSettings(settingsPath);
+            LoadSettings();
         }
         catch
         {
             Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "------[ There was a Settings Error: Creating Default Fallback ]------");
             SetDefaultSettings();
-            SaveSettings(settingsPath);
+            SaveSettings();
         }
         
         
@@ -49,6 +49,9 @@ public class SettingsVars
     public int splashScreenLength { get; set; }
     public bool fullScreen { get; set; }
     public bool logging { get; set; }
+    public bool windowResizable { get; set; }
+    public bool vSync { get; set; }
+
 
 
     public string spritesPath { get; set; }
@@ -69,6 +72,9 @@ public class SettingsVars
         splashScreenLength = 60;
         fullScreen = false;
         logging = false;
+        windowResizable = true;
+        vSync = true;
+
         if(OperatingSystem.IsWindows())
         {
             spritesPath = "Resources\\Sprites\\";
@@ -90,7 +96,7 @@ public class SettingsVars
     }
 
     
-    public void SaveSettings(string settingsPath)
+    public void SaveSettings()
     {
         IniData data = new();
         data["Settings"]["currentMasterVolume"] = currentMasterVolume.ToString();
@@ -102,6 +108,8 @@ public class SettingsVars
         data["Settings"]["splashScreenLength"] = splashScreenLength.ToString();
         data["Settings"]["fullScreen"] = fullScreen.ToString();
         data["Settings"]["logging"] = logging.ToString();
+        data["Settings"]["windowResizable"] = windowResizable.ToString();
+        data["Settings"]["vSync"] = vSync.ToString();
         data["FilePaths"]["spritesPath"] = spritesPath;
         data["FilePaths"]["sfxPath"] = sfxPath;
         data["FilePaths"]["musicPath"] = musicPath;
@@ -112,7 +120,7 @@ public class SettingsVars
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Settings Saved ]------");
     } 
 
-    public void LoadSettings(string settingsPath)
+    public void LoadSettings()
     {
         IniData data = parser.ReadFile(settingsPath);
         //Settings Loading
@@ -126,7 +134,9 @@ public class SettingsVars
         targetFPS = int.Parse(sectionData.Keys.GetKeyData("targetFPS").Value);
         splashScreenLength = int.Parse(sectionData.Keys.GetKeyData("splashScreenLength").Value);
         fullScreen = bool.Parse(sectionData.Keys.GetKeyData("fullScreen").Value);
+        windowResizable = bool.Parse(sectionData.Keys.GetKeyData("windowResizable").Value);
         logging = bool.Parse(sectionData.Keys.GetKeyData("logging").Value);
+        vSync = bool.Parse(sectionData.Keys.GetKeyData("vSync").Value);
 
         //FilePaths Loading
         sectionData = data.Sections.GetSectionData("FilePaths");

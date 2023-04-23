@@ -58,7 +58,7 @@ public static class DonutSystems
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
         DonutSystems.SubscribeSystem(Sys.uISystem, true, true, true);
-        DonutSystems.SubscribeSystem(Sys.cameraHandler, false, false, true);
+        DonutSystems.SubscribeSystem(Sys.cameraHandler, true, true, true);
         SceneManager.InitScene();
     }
 
