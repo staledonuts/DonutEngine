@@ -56,16 +56,16 @@ static class Program
         {
             BeginDrawing();
             BeginMode2D(Sys.cameraHandler.donutcam);
-            ECS.ProcessDrawUpdate();
             DonutSystems.UpdateDraw();
+            ECS.ProcessDrawUpdate();
             EndMode2D();
             EndDrawing();
         }
 
         static void UpdateLate()
         {
-            DonutSystems.UpdateLate();
             ECS.ProcessLateUpdate();
+            DonutSystems.UpdateLate();
         }
     }
 }

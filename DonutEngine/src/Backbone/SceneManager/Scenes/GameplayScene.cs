@@ -5,11 +5,13 @@ using Box2DX.Dynamics;
 public class GameplayScene : Scene
 {
     //CollisionBox collbox1;
+    Texture2D tex;
 
     public override void InitializeScene()
     {
         //collbox1 = new(1000, 10, 0, 70, 1, 0.01f, 0.01f);
         //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
+        tex = Sys.textureContainer.GetTexture("background");
         DonutSystems.Update += this.Update;
         DonutSystems.DrawUpdate += this.DrawUpdate;
         DonutSystems.LateUpdate += this.LateUpdate;
@@ -29,7 +31,7 @@ public class GameplayScene : Scene
     public override void DrawUpdate()
     {
 
-        Raylib.DrawCircle(100,100, 30, Raylib_cs.Color.BLACK);
+        Raylib.DrawTextureRec(tex, new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenWidth()), System.Numerics.Vector2.Zero, Raylib_cs.Color.WHITE );
         //collbox1.DrawMe();
     }
     public override void LateUpdate()

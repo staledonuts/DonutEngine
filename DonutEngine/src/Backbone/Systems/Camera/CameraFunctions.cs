@@ -31,12 +31,6 @@ public partial class CameraHandler : SystemsClass
 			camera.target.Y = bboxWorldMin.Y + (pos.Y - bboxWorldMax.Y);
 		}
 	}
-
-	public void UpdateCameraCenter(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
-	{
-		camera.offset = new(width / 2.0f, height / 2.0f);
-		camera.target = new(pos.X, pos.Y);
-	}
 	private float fminf(float a, float b)
 	{
 		return MathF.Min(a, b);
@@ -60,5 +54,11 @@ public partial class CameraHandler : SystemsClass
 			float speed = fmaxf(UpdateCameraCenterSmoothFollow_fractionSpeed * length, UpdateCameraCenterSmoothFollow_minSpeed);
 			camera.target = Vector2.Add(camera.target, diff * (speed * delta / length));
 		}
+	}
+
+	static void UpdateCameraCenter(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
+	{
+		camera.offset = new Vector2(width / 2, height / 2);
+		camera.target = pos;
 	}
 }

@@ -1,9 +1,12 @@
 namespace DonutEngine.Backbone.Systems.UI.Audio;
 using Raylib_cs;
 using ImGuiNET;
+using Newtonsoft.Json;
 using System.Numerics;
 public class SoundDefiner : DocumentWindow
 {
+    SoundDef soundDef = new();
+    string Filename;
     public override void DrawUpdate()
     {
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
@@ -42,11 +45,11 @@ public class SoundDefiner : DocumentWindow
             {
                 if(ImGui.MenuItem(" [Reset]"))
                 {
-                    //ResetWindow();
+                    ReloadWindow();
                 }
                 if(ImGui.MenuItem(" [Save As]"))
                 {
-                    //SaveJson(entityData.Name);
+                    SaveJson(Filename);
                 }
                 ImGui.EndMenu();
             }
@@ -57,5 +60,42 @@ public class SoundDefiner : DocumentWindow
             }
             ImGui.EndMenuBar();
         }
+    }
+
+    private void SaveJson(string json)
+    {
+        if(json == "")
+        {
+            return;
+        }
+        else
+        {
+            var settings = new JsonSerializerSettings{Formatting = Formatting.Indented, NullValueHandling = NullValueHandling.Ignore};
+            var data = JsonConvert.SerializeObject(new {soundDef}, settings);
+
+            File.WriteAllText(DonutFilePaths.app+Sys.settingsVars.audioDefPath+json+".json", data);
+        }
+    }
+
+    private void ReloadWindow()
+    {
+
+    }
+    
+    private struct SoundDef
+    {
+
+    }
+
+    private void EntityWindow()
+    {
+        if(Filename == null)
+        {
+            Filename = "";
+        }
+        ImGui.InputTextWithHint("Entity Filename", "Input Filename: will be saved as a Json", ref Filename, 32, ImGuiInputTextFlags.AutoSelectAll);
+        
+        
+        
     }
 }

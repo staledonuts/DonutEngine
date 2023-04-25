@@ -72,7 +72,7 @@ public class Entity : IDisposable
         entity.polyDef.Restitution = entity.Restitution;
         entity.bodyDef.IsSleeping = false;
         entity.bodyDef.AllowSleep = true;
-        entity.bodyDef.LinearDamping = 0.2f;
+        entity.bodyDef.LinearDamping = 0.6f;
         entity.bodyDef.AngularDamping= 0.1f;
         entity.bodyDef.FixedRotation = false;
         entity.body = Sys.physicsSystem.CreateBody(entity.bodyDef);

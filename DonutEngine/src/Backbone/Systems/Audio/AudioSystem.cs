@@ -2,8 +2,6 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using IniParser.Model;
 using IniParser;
-using DonutEngine.Backbone.Systems;
-using System.Collections;
 namespace DonutEngine.Backbone.Systems.Audio;
 public partial class AudioControl : SystemsClass
 {
@@ -23,6 +21,22 @@ public partial class AudioControl : SystemsClass
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
 
+    public void ReloadAudioLibrary()
+    {
+        Raylib.StopMusicStream(currentMusic);
+        foreach(KeyValuePair<string, Sound> sfx in soundsLibrary)
+        {
+            Raylib.UnloadSound(sfx.Value);
+        }
+        foreach(KeyValuePair<string, Music> music in musicLibrary)
+        {
+            Raylib.UnloadMusicStream(music.Value);
+        }
+        soundsLibrary = new Dictionary<string, Sound>();
+        musicLibrary = new Dictionary<string, Music>();
+        InitAudioLibrary();
+    }
+
     public void InitAudioLibrary()
     {
         string firstSong = "Intro";
@@ -37,7 +51,6 @@ public partial class AudioControl : SystemsClass
                 {
                     foreach(KeyData keys in sectionName.Keys)
                     {
-                        //DonutSystems.uISystem.SetLoadingItem("Loading SFX: "+keys.KeyName);
                         soundsLibrary.Add(keys.KeyName, LoadSound(DonutFilePaths.app+Sys.settingsVars.sfxPath+keys.Value));
                     }
                 }
@@ -47,7 +60,6 @@ public partial class AudioControl : SystemsClass
                     firstSong = sectionName.Keys.First().KeyName;
                     foreach(KeyData keys in sectionName.Keys)
                     {
-                        //DonutSystems.uISystem.SetLoadingItem("Loading Music: "+keys.KeyName);
                         musicLibrary.Add(keys.KeyName, LoadMusicStream(DonutFilePaths.app+Sys.settingsVars.musicPath+keys.Value));
                     }
                 }

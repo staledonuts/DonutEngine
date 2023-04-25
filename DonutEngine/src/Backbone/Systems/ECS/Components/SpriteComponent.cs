@@ -44,7 +44,7 @@ public class SpriteComponent : Component
 
     public void Draw(float deltaTime)
     {
-        Raylib.DrawTextureRec(animator.GetSprite(), animator.GetFrameRec(), new(entity.body.GetPosition().X, entity.body.GetPosition().Y), Color.WHITE);
+        Raylib.DrawTexturePro(animator.GetSprite(), animator.GetFrameRec(), animator.GetFrameRec(), new(entity.body.GetPosition().X, entity.body.GetPosition().Y), entity.body.GetAngle(), Color.WHITE);
     }
 
     public void  FlipSprite(bool flipBool)

@@ -40,12 +40,12 @@ public class PlayerComponent : Component
 
     private void OnLeftStick(Vec2 InputVector)
     {
-        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetLocalPoint(entity.body.GetWorldCenter()));
+        entity.body.ApplyImpulse(InputVector * -2000, entity.body.GetPosition());
     }
     
     private void OnRightStick(Vec2 InputVector)
     {
-        //entity.body.SetAngle(InputVector.X * -MathD.Pi);
+        entity.body.ApplyTorque(InputVector.X * -2000);
     }
     private void OnAttack(CBool boolean)
     {
@@ -54,7 +54,7 @@ public class PlayerComponent : Component
 
     private void OnDpad(Vec2 vector)
     {
-        entity.body.ApplyImpulse(vector * 900, entity.body.GetLocalPoint(entity.body.GetWorldCenter()));
+        entity.body.ApplyImpulse(vector * 900, entity.body.GetPosition());
     }
 
     public void Update(float deltaTime)

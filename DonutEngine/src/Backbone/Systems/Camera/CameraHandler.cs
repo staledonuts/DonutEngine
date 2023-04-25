@@ -15,7 +15,7 @@ public partial class CameraHandler : SystemsClass
         donutcam.zoom = 1.0f;
         donutcam.offset = new Vector2(Sys.settingsVars.screenWidth / 2, Sys.settingsVars.screenHeight / 2);
         currentTarget = null;
-		cameraUpdateModes = CameraUpdateModes.Smooth;
+		cameraUpdateModes = CameraUpdateModes.Center;
     }
 
     public override void Update()
@@ -36,7 +36,7 @@ public partial class CameraHandler : SystemsClass
 			{
 				case CameraUpdateModes.Smooth:
 				{
-					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Time.deltaTime, Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
+					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Raylib.GetFrameTime(), Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight);
 					break;
 				}
 				case CameraUpdateModes.Boundspush:
@@ -46,6 +46,7 @@ public partial class CameraHandler : SystemsClass
 				}
 				case CameraUpdateModes.Center:
 				{
+					UpdateCameraCenter(ref donutcam, currentTarget.GetPosition(), Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 					break;
 				}
 			}

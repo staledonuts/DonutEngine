@@ -56,7 +56,10 @@ public class SoundPlayer : DocumentWindow
             if(ImGui.BeginMenu("Debug"))
             { 
                 
-                
+                if(ImGui.MenuItem("Reload Audio Library"))
+                {
+                    Sys.audioControl.ReloadAudioLibrary();
+                }
                 ImGui.EndMenu();
             }
             ImGui.EndMenuBar();
@@ -80,11 +83,6 @@ public class SoundPlayer : DocumentWindow
                 Sys.audioControl.PauseMusic();
             }
             ImGui.SameLine();
-            if(ImGui.Button("Reload Music", buttonSize))
-            {
-                
-            }
-            ImGui.SameLine();
             ImGui.Text(Sys.audioControl.CurrentMusicTime().ToString());
             ImGui.SameLine();
             ImGui.Text(" / "+Sys.audioControl.CurrentMusicLength().ToString());
@@ -102,11 +100,6 @@ public class SoundPlayer : DocumentWindow
                 string currentSelection = playlist.GetValue(currentSFXPlaylistItem).ToString();
                 Sys.audioControl.PlaySFX(currentSelection);
             }
-            ImGui.SameLine();
-            if(ImGui.Button("Reload Sounds", buttonSize))
-            {
-                
-            }
             ImGui.NewLine();
             ImGui.BeginListBox("SFX", width);
             ImGui.ListBox("SFX Playlist", ref currentSFXPlaylistItem, Sys.audioControl.GetSFXPlaylist(), Sys.audioControl.GetSFXPlaylistLength(), Sys.audioControl.GetSFXPlaylistLength());
@@ -114,8 +107,5 @@ public class SoundPlayer : DocumentWindow
             ImGui.NewLine();
             ImGui.EndTabItem();
         }       
-
-        
-
     }
 }

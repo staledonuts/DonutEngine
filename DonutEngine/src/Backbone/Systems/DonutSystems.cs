@@ -54,11 +54,11 @@ public static class DonutSystems
     public static void InitSystems()
     {
         DonutSystems.SubscribeSystem(Sys.windowSystem, true, true, false);
+        DonutSystems.SubscribeSystem(Sys.cameraHandler, false, false, true);
         Sys.textureContainer.InitTextureContainer();
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
         DonutSystems.SubscribeSystem(Sys.uISystem, true, true, true);
-        DonutSystems.SubscribeSystem(Sys.cameraHandler, true, true, true);
         SceneManager.InitScene();
     }
 
