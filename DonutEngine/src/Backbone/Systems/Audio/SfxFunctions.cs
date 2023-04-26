@@ -25,7 +25,7 @@ public partial class AudioControl
         Sound sound;
         if (soundsLibrary.TryGetValue(name, out sound)) 
         {
-            Raylib.SetSoundVolume(sound, Sys.settingsVars.currentSFXVolume);
+            Raylib.SetSoundVolume(sound, Sys.settingsContainer.currentSFXVolume);
             PlaySound(sound);
         }
     }
@@ -35,7 +35,7 @@ public partial class AudioControl
         Sound sound;
         if (soundsLibrary.TryGetValue(name, out sound)) 
         {
-            Raylib.SetSoundVolume(sound, Sys.settingsVars.currentSFXVolume);
+            Raylib.SetSoundVolume(sound, Sys.settingsContainer.currentSFXVolume);
             SetSoundPitch(sound, random.NextSingle() * (maxPitch - minPitch) + minPitch);
             PlaySound(sound);
         }

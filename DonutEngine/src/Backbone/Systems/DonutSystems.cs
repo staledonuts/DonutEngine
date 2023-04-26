@@ -53,23 +53,19 @@ public static class DonutSystems
 
     public static void InitSystems()
     {
-        DonutSystems.SubscribeSystem(Sys.windowSystem, true, true, false);
         DonutSystems.SubscribeSystem(Sys.cameraHandler, false, false, true);
         Sys.textureContainer.InitTextureContainer();
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
-        DonutSystems.SubscribeSystem(Sys.uISystem, true, true, true);
         SceneManager.InitScene();
     }
 
     public static void KillSystems()
     {
-        DonutSystems.UnsubscribeSystem(Sys.uISystem);
         DonutSystems.UnsubscribeSystem(Sys.physicsSystem);
         DonutSystems.UnsubscribeSystem(Sys.audioControl);
         DonutSystems.UnsubscribeSystem(Sys.cameraHandler);
         Sys.textureContainer.EmptyTextureLibrary();
-        DonutSystems.UnsubscribeSystem(Sys.windowSystem);
     }
 
     public static void UpdateSystems()

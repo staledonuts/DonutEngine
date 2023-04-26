@@ -4,10 +4,10 @@ using IniParser.Model;
 using IniParser;
 using Raylib_cs;
 using DonutEngine;
-public class SettingsVars
+public class SettingsContainer
 {
     //Contains various settings for the game engine.
-    public SettingsVars()
+    public SettingsContainer()
     {
         if(OperatingSystem.IsWindows())
         {

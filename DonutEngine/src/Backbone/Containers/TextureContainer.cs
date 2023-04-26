@@ -7,7 +7,7 @@ public class TextureContainer
     Dictionary<string, Texture2D> textureLibrary = new Dictionary<string, Texture2D>();
     public void InitTextureContainer()
     {
-        string emptyPath = DonutFilePaths.app + Sys.settingsVars.texturesPath + "empty.png";
+        string emptyPath = DonutFilePaths.app + Sys.settingsContainer.texturesPath + "empty.png";
         if (File.Exists(emptyPath))
         {
             Texture2D tex = Raylib.LoadTexture(emptyPath);
@@ -21,7 +21,7 @@ public class TextureContainer
             Raylib.ExportImage(image, emptyPath);
         }
         
-        string pathToTextures = DonutFilePaths.app+Sys.settingsVars.texturesPath;
+        string pathToTextures = DonutFilePaths.app+Sys.settingsContainer.texturesPath;
         string[] texturePath = Directory.GetFiles(pathToTextures, "*.png");
         
         foreach(string pngFile in texturePath)

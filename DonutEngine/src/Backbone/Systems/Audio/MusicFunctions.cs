@@ -36,7 +36,7 @@ public partial class AudioControl
         {
             currentSongName = name;
             currentMusic = music;
-            Raylib.SetMusicVolume(currentMusic, Sys.settingsVars.currentMusicVolume);
+            Raylib.SetMusicVolume(currentMusic, Sys.settingsContainer.currentMusicVolume);
             PlayMusicStream(currentMusic);
         }
     }
@@ -53,7 +53,7 @@ public partial class AudioControl
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(Sys.settingsVars.currentMusicVolume, 0, 0.05f));
+            Raylib.SetMusicVolume(music, Raymath.Lerp(Sys.settingsContainer.currentMusicVolume, 0, 0.05f));
             elapsedTime += Time.deltaTime;
         }
         yield return null;
@@ -65,7 +65,7 @@ public partial class AudioControl
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(0, Sys.settingsVars.currentMusicVolume, 0.05f));
+            Raylib.SetMusicVolume(music, Raymath.Lerp(0, Sys.settingsContainer.currentMusicVolume, 0.05f));
             elapsedTime += Time.deltaTime;
         }
         yield return null;

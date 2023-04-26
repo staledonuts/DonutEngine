@@ -3,74 +3,74 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static DonutEngine.Backbone.Systems.Debug.CustomLogging;
 
-public unsafe class WindowSystem : SystemsClass
+public unsafe static class WindowSystem
 {
-    Color color = Color.MAGENTA;
+    static Color color = Color.MAGENTA;
 
-    public override void DrawUpdate()
+    public static void DrawUpdate()
     {
         Raylib.ClearBackground(color);
     }
 
-    public override void LateUpdate()
+    public static void LateUpdate()
     {
         
     }
 
-    public override void Shutdown()
+    public static void Shutdown()
     {
         
     }
 
-    public override void Start()
+    public static void Start()
     {
-        InitWindow(Sys.settingsVars.screenWidth, Sys.settingsVars.screenHeight, "DonutEngine");
-        SetTargetFPS(Sys.settingsVars.targetFPS);  
+        InitWindow(Sys.settingsContainer.screenWidth, Sys.settingsContainer.screenHeight, "DonutEngine");
+        SetTargetFPS(Sys.settingsContainer.targetFPS);  
         SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_DEBUG);
         //Custom Logging
         SetTraceLogCallback(&LogCustom);
 
     }
 
-    public override void Update()
+    public static void Update()
     {
         Time.RunDeltaTime();
     }
 
-    public void SetBackgroundColor(Color color)
+    public static void SetBackgroundColor(Color color)
     {
-        this.color = color;
+        WindowSystem.color = color;
     }
 
-    public void SetWindowFlags()
+    public static void SetWindowFlags()
     {
-        if(Sys.settingsVars.fullScreen)
+        if(Sys.settingsContainer.fullScreen)
         {
             SetConfigFlags(ConfigFlags.FLAG_FULLSCREEN_MODE);
         }
-        if(Sys.settingsVars.vSync)
+        if(Sys.settingsContainer.vSync)
         {
             SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
         }
-        if(Sys.settingsVars.windowResizable)
+        if(Sys.settingsContainer.windowResizable)
         {
             SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
         }
 
     }
 
-    public void ToggleVsync()
+    public static void ToggleVsync()
     {
-        if(Sys.settingsVars.vSync)
+        if(Sys.settingsContainer.vSync)
         {
-            Sys.settingsVars.vSync = false;
-            Sys.settingsVars.SaveSettings();
+            Sys.settingsContainer.vSync = false;
+            Sys.settingsContainer.SaveSettings();
             Raylib.SetWindowState(ConfigFlags.FLAG_FULLSCREEN_MODE);
         }
         else
         {
-            Sys.settingsVars.vSync = true;
-            Sys.settingsVars.SaveSettings();
+            Sys.settingsContainer.vSync = true;
+            Sys.settingsContainer.SaveSettings();
             Raylib.SetWindowState(ConfigFlags.FLAG_FULLSCREEN_MODE);
         }
     }

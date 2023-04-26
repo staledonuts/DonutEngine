@@ -1,12 +1,11 @@
 using DonutEngine.Backbone.Systems.Input;
 using Raylib_cs;
-using Box2DX.Common;
 using ImGuiNET;
 using System.Numerics;
 using DonutEngine.Backbone.Systems.UI.Creator;
 namespace DonutEngine.Backbone.Systems.UI;
 
-public class UISystem : SystemsClass
+public class UISystem
 {
     static bool Open = true;
     static bool MenuOpen = false;
@@ -21,7 +20,7 @@ public class UISystem : SystemsClass
     static RenderTexture2D UIRenderTexture;
     static Rectangle rect;
     
-    public override void Start()
+    public void Start()
     {
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up UI System ]------");
         rlImGui.Setup(true);
@@ -32,7 +31,7 @@ public class UISystem : SystemsClass
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ UI System Initialized ]------");
     }
 
-    public override void Update()
+    public void Update()
     {
         if (!Open)
         {
@@ -56,7 +55,7 @@ public class UISystem : SystemsClass
         }
         
     }
-    public override void DrawUpdate()
+    public void DrawUpdate()
     {
         if (!Open)
         {
@@ -79,7 +78,7 @@ public class UISystem : SystemsClass
         }
     }
 
-    public override void LateUpdate()
+    public void LateUpdate()
     {
         if (!Open)
         {
@@ -94,7 +93,7 @@ public class UISystem : SystemsClass
         }
     }
 
-    public override void Shutdown()
+    public void Shutdown()
     {
         Raylib.UnloadRenderTexture(UIRenderTexture);
         rlImGui.Shutdown();

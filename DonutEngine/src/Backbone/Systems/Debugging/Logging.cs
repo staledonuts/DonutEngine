@@ -51,7 +51,7 @@ public unsafe class CustomLogging
         };
         
         Console.WriteLine($"Log: " + message);
-        if(Sys.settingsVars.logging)
+        if(Sys.settingsContainer.logging)
         {
             Logging.WriteLog("Log: "+message);
         }

@@ -45,7 +45,7 @@ public class PlayerComponent : Component
     
     private void OnRightStick(Vec2 InputVector)
     {
-        entity.body.ApplyTorque(InputVector.X * -2000);
+        entity.body.ApplyTorque(InputVector.X * 2000);
     }
     private void OnAttack(CBool boolean)
     {
@@ -54,7 +54,7 @@ public class PlayerComponent : Component
 
     private void OnDpad(Vec2 vector)
     {
-        entity.body.ApplyImpulse(vector * 900, entity.body.GetPosition());
+       // entity.body.ApplyImpulse(vector * 900, entity.body.GetPosition());
     }
 
     public void Update(float deltaTime)
