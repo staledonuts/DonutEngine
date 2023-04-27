@@ -9,11 +9,12 @@ public partial class CameraHandler : SystemsClass
 {
     public Camera2D donutcam = new();
     GameCamera2D? currentTarget;
+
 	CameraUpdateModes cameraUpdateModes = new();
     public override void Start()
     {
         donutcam.zoom = 1.0f;
-        donutcam.offset = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
+        donutcam.offset = new (0,0);
         currentTarget = null;
 		cameraUpdateModes = CameraUpdateModes.Smooth;
     }
@@ -36,17 +37,17 @@ public partial class CameraHandler : SystemsClass
 			{
 				case CameraUpdateModes.Smooth:
 				{
-					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.GetPosition(), Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+					UpdateCameraCenterSmoothFollow(ref donutcam, currentTarget.position, Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 					break;
 				}
 				case CameraUpdateModes.Boundspush:
 				{
-					UpdateCameraPlayerBoundsPush(ref donutcam, currentTarget.GetPosition(), Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+					UpdateCameraPlayerBoundsPush(ref donutcam, currentTarget.position, Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 					break;
 				}
 				case CameraUpdateModes.Center:
 				{
-					UpdateCameraCenter(ref donutcam, currentTarget.GetPosition(), Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+					UpdateCameraCenter(ref donutcam, currentTarget.position, Raylib.GetFrameTime(), Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 					break;
 				}
 			}
@@ -71,7 +72,6 @@ public partial class CameraHandler : SystemsClass
     public void SetCameraTarget(Entity entity)
     {
         currentTarget = entity.GetComponent<GameCamera2D>();
-		donutcam.target = currentTarget.GetPosition();
     }
 
 	public enum CameraUpdateModes

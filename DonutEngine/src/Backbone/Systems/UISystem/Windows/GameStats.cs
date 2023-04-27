@@ -36,7 +36,7 @@ public class GameStats : DocumentWindow
                 {
                     GameCamera2D tempEntity = Sys.cameraHandler.returnCurrentCamTarget();
                     ImGui.TextUnformatted(String.Format("Current Camera Target: "+tempEntity.ToString()));
-                    ImGui.TextUnformatted(String.Format("Current Target Pos: "+tempEntity.GetPosition().ToString()));
+                    //ImGui.TextUnformatted(String.Format("Current Target Pos: "+tempEntity.position.ToString()));
                     ImGui.TextUnformatted(String.Format("Current Camera Pos: "+Sys.cameraHandler.donutcam.target));
                     ImGui.TextUnformatted(String.Format("Current Camera Modes: "+Sys.cameraHandler.returnCameraModes().ToString()));
                     ImGui.EndTabItem();
