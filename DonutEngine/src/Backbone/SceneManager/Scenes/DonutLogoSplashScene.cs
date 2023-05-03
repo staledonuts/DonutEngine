@@ -1,52 +1,56 @@
 namespace DonutEngine;
+using DonutEngine.Backbone.Systems.SceneManager;
 using DonutEngine.Backbone.Systems;
 using Raylib_cs;
 
 public class DonutLogoSplashScene : Scene
 {
+    Texture2D raylibLogo;
+    Texture2D donutLogo;
+    SceneManager? sM = null;
 
-    static Texture2D splashTex;
-    private Scene? nextScene;
+    float exitTime = Sys.settingsContainer.splashScreenLength + Sys.settingsContainer.splashScreenLength;
+    
     int framesCounter = 0;
 
-    public override void InitializeScene()
+
+
+    public void Enter()
     {
-        splashTex = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/DeadDonut-Logo.png");
-        DonutSystems.Update += this.Update;
-        DonutSystems.DrawUpdate += this.DrawUpdate;
+        donutLogo = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/DeadDonut-Logo.png");       
+        raylibLogo = Raylib.LoadTexture(DonutFilePaths.app+"Resources/Splash/raylib-cs.png");
     }
 
-    public override Scene UnloadScene()
+    public void Exit()
     {
-        DonutSystems.Update -= this.Update;
-        DonutSystems.DrawUpdate -= this.DrawUpdate;
-        Raylib.UnloadTexture(splashTex);
-        return nextScene = new GameplayScene();
-        
+        Raylib.UnloadTexture(donutLogo);
+        Raylib.UnloadTexture(raylibLogo);
     }
 
-    public override void LateUpdate()
-    {
-        //throw new NotImplementedException();
+    public void Init(SceneManager SM)
+    {   
+        sM = SM;
     }
 
-    public override void DrawUpdate()
+    public void Update(float deltaTime)
+    {
+        framesCounter++;
+    }
+    public void DrawUpdate()
     {
         Raylib.ClearBackground(Color.BLACK);
-        Raylib.DrawTexture(splashTex, (Raylib.GetScreenWidth() / 2) - (splashTex.width / 2),(Raylib.GetScreenHeight() / 2)  - (splashTex.height / 2),Color.WHITE);
-    }   
 
-    public override void Update()
-    {
-        framesCounter++;    // Count frames
-
-        // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-        if (framesCounter > Sys.settingsContainer.splashScreenLength)
+        if (framesCounter < Sys.settingsContainer.splashScreenLength)
         {
-            // todo: sceneunload
-            SceneManager.UnloadScene();
+            Raylib.DrawTexture(raylibLogo, (Raylib.GetScreenWidth() / 2) - (raylibLogo.width / 2),(Raylib.GetScreenHeight() / 2)  - (raylibLogo.height / 2),Color.WHITE);
+        }
+        if(framesCounter > Sys.settingsContainer.splashScreenLength)
+        {
+            Raylib.DrawTexture(donutLogo, (Raylib.GetScreenWidth() / 2) - (donutLogo.width / 2),(Raylib.GetScreenHeight() / 2)  - (donutLogo.height / 2),Color.WHITE);
+        }
+        if(framesCounter > exitTime)
+        {
+            sM?.SwitchTo(2);
         }
     }
-
-
 }

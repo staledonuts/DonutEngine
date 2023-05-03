@@ -1,24 +1,70 @@
-namespace DonutEngine.Backbone.Systems;
+namespace DonutEngine.Backbone.Systems.SceneManager;
+using System.Collections.Generic;
+using System.Collections;
 
-public static class SceneManager
+public class SceneManager : SystemsClass
 {
-    public static Scene currentScene = new LogoSplashScene();
-    
-    public static void InitScene()
+    Dictionary<Int64, Scene> _Scenes = new();
+    Scene _current = Empty.Scene;
+
+    Scene this[Int64 index]
     {
-        currentScene.InitializeScene();
+        get
+        {
+            if (!_Scenes.ContainsKey(index))
+                throw new MissingSceneException($"Scene of type {index} does not exist in Finite Scene Machine of type {this}!");
+            return _Scenes[index];
+        }
     }
 
-    public static void LoadScene(Scene scene)
+    /*public SceneManager(params (Int64, Scene)[] Scenes)
     {
-        currentScene = scene;
-        InitScene();
+        foreach (var (key, value) in Scenes) 
+            _Scenes.Add(key, value);
+        foreach (var (_, value) in _Scenes) 
+            value.Init(this);
+    }*/
+
+    void AddScene(int sceneNumber, Scene sceneClass)
+    {
+        _Scenes.Add(sceneNumber, sceneClass);
+        sceneClass.Init(this);
     }
 
-    public static void UnloadScene()
+
+
+    public void SwitchTo(Int64 key) => SwitchTo(this[key]);
+
+    public void SwitchTo(Scene Scene)
     {
-        currentScene = currentScene.UnloadScene();
-        InitScene();
+        _current.Exit();
+        _current = Scene ?? Empty.Scene;
+        _current.Enter();
     }
-    
+    public override void Start()
+    {
+        AddScene(1, new DonutLogoSplashScene());
+        AddScene(2, new GameplayScene());
+        SwitchTo(1);
+    }
+
+    public override void Update()
+    {
+        _current.Update(Time.deltaTime);
+    }
+
+    public override void DrawUpdate()
+    {
+        _current.DrawUpdate();
+    }
+
+    public override void LateUpdate()
+    {
+        
+    }
+
+    public override void Shutdown()
+    {
+        
+    }
 }

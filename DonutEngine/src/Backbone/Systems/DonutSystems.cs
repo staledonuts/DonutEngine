@@ -57,7 +57,7 @@ public static class DonutSystems
         Sys.textureContainer.InitTextureContainer();
         DonutSystems.SubscribeSystem(Sys.audioControl, false, false, true);
         DonutSystems.SubscribeSystem(Sys.physicsSystem, true, false, false);
-        SceneManager.InitScene();
+        DonutSystems.SubscribeSystem(Sys.sceneManager, true, true, true);
     }
 
     public static void KillSystems()

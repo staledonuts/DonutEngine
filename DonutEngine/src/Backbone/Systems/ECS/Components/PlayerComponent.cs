@@ -18,6 +18,7 @@ public class PlayerComponent : Component
         InputEventSystem.RectangleButtonEvent += OnAttack;
         InputEventSystem.DpadEvent += OnDpad;
         InputEventSystem.LeftStickEvent += OnLeftStick;
+        InputEventSystem.RightStickEvent += OnRightStick;
     }
 
     public override void OnRemovedFromEntity(Entity entity)
@@ -27,6 +28,7 @@ public class PlayerComponent : Component
         InputEventSystem.RectangleButtonEvent -= OnAttack;
         InputEventSystem.DpadEvent -= OnDpad;
         InputEventSystem.LeftStickEvent -= OnLeftStick;
+        InputEventSystem.RightStickEvent -= OnRightStick;
         Dispose();
     }
 
@@ -40,12 +42,13 @@ public class PlayerComponent : Component
 
     private void OnLeftStick(Vec2 InputVector)
     {
-        entity.body.ApplyImpulse(InputVector * -2000, entity.body.GetPosition());
+        entity.body.ApplyImpulse(InputVector * 2000, entity.body.GetPosition());
     }
     
     private void OnRightStick(Vec2 InputVector)
     {
-        entity.body.ApplyTorque(InputVector.X * 2000);
+        //entity.body.ApplyTorque(InputVector.X * 2000);
+        entity.body.SetAngle(MathD.Vec2Angle(InputVector));
     }
     private void OnAttack(CBool boolean)
     {

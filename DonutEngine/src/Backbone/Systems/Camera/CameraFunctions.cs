@@ -7,7 +7,7 @@ using DonutEngine.Backbone.Systems;
 
 public partial class CameraHandler : SystemsClass
 {
-    internal static Vector2 UpdateCameraPlayerBoundsPush_bbox = new Vector2(0.03f, 0.02f);
+    internal static Vector2 UpdateCameraPlayerBoundsPush_bbox = new Vector2(0.04f, 0.04f);
 	public void UpdateCameraPlayerBoundsPush(ref Camera2D camera, Vector2 pos, float delta, int width, int height)
 	{
 		Vector2 bboxWorldMin = GetScreenToWorld2D(new((1 - UpdateCameraPlayerBoundsPush_bbox.X) * 0.5f * width, (1 - UpdateCameraPlayerBoundsPush_bbox.Y) * 0.5f * height), camera);

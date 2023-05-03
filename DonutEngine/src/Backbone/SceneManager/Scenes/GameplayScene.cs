@@ -1,74 +1,35 @@
 namespace DonutEngine;
 using DonutEngine.Backbone.Systems;
+using DonutEngine.Backbone.Systems.SceneManager;
 using Raylib_cs;
 using Box2DX.Dynamics;
 public class GameplayScene : Scene
 {
-    //CollisionBox collbox1;
     Texture2D tex;
 
-    public override void InitializeScene()
+    public void DrawUpdate()
     {
-        //collbox1 = new(1000, 10, 0, 70, 1, 0.01f, 0.01f);
-        //DonutSystems.SubscribeSystem(Sys.levelDataSystem);
+        Raylib.DrawTextureRec(tex, new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenWidth()), System.Numerics.Vector2.Zero, Raylib_cs.Color.WHITE );
+    }
+
+    public void Init(SceneManager SM)
+    {
+        
+    }
+
+    public void Enter()
+    {
         tex = Sys.textureContainer.GetTexture("background");
-        DonutSystems.Update += this.Update;
-        DonutSystems.DrawUpdate += this.DrawUpdate;
-        DonutSystems.LateUpdate += this.LateUpdate;
-        //entityManager.CreateEntity(DonutFilePaths.entities+"Player.json");
         Sys.entityManager.CreateDirectory();
     }
 
-    public override Scene UnloadScene()
-    {
-        DonutSystems.UnsubscribeSystem(Sys.levelDataSystem);
-        DonutSystems.Update -= this.Update;
-        DonutSystems.DrawUpdate -= this.DrawUpdate;
-        DonutSystems.LateUpdate -= this.LateUpdate;
-        return this;
-    }
-
-    public override void DrawUpdate()
-    {
-
-        Raylib.DrawTextureRec(tex, new(0,0,Raylib.GetScreenWidth(), Raylib.GetScreenWidth()), System.Numerics.Vector2.Zero, Raylib_cs.Color.WHITE );
-        //collbox1.DrawMe();
-    }
-    public override void LateUpdate()
+    public void Update(float deltaTime)
     {
         
     }
 
-    public override void Update()
+    public void Exit()
     {
         
-    }  
-
-    private class CollisionBox
-    {
-        public CollisionBox(float width, float height, float x, float y, float density, float friction, float restitution)
-        {
-            bodyDef = new();
-            bodyDef.Position.Set(x,y);
-            body = Sys.physicsSystem.CreateBody(bodyDef);
-            body.SetStatic();
-            PolygonDef polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(width, height);
-            polygonDef.Density = density;
-            polygonDef.Friction = friction;
-            polygonDef.Restitution = restitution;
-            fixture = body.CreateFixture(polygonDef);
-            rect = new(x, y, width, height);
-        }
-        Raylib_cs.Color color = Raylib_cs.Color.LIGHTGRAY;
-        public Body body;
-        Fixture fixture;
-        BodyDef bodyDef;
-        public Rectangle rect;
-
-        public void DrawMe()
-        {
-            Raylib.DrawRectangleRec(rect, color);
-        }
     }
 }

@@ -74,8 +74,12 @@ public class UISystem
             //loadingScreen.Show();
             rlImGui.End();
             Raylib.EndTextureMode();
-            Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
         }
+    }
+
+    public void OverlayUITexture()
+    {
+        Raylib.DrawTextureRec(UIRenderTexture.texture, rect, Vector2.Zero, Color.WHITE);
     }
 
     public void LateUpdate()

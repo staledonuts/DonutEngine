@@ -20,7 +20,7 @@ public class GameCamera2D : Component
     {
         this.entity = entity;
         Sys.cameraHandler.SetCameraTarget(entity);
-        Sys.cameraHandler.SetCameraUpdateMode(CameraHandler.CameraUpdateModes.Smooth);
+        Sys.cameraHandler.SetCameraUpdateMode(CameraHandler.CameraUpdateModes.Boundspush);
         ECS.ecsLateUpdate += LateUpdate;
     }
     

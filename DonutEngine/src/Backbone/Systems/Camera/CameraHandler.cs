@@ -16,7 +16,7 @@ public partial class CameraHandler : SystemsClass
         donutcam.zoom = 1.0f;
         donutcam.offset = new (0,0);
         currentTarget = null;
-		cameraUpdateModes = CameraUpdateModes.Smooth;
+		cameraUpdateModes = CameraUpdateModes.Center;
     }
 
     public override void Update()

@@ -1,6 +1,7 @@
 namespace DonutEngine.Backbone;
 using DonutEngine.Shaders;
 using Raylib_cs;
+using Box2DX.Common;
 public class SpriteComponent : Component
 {
     public string Sprite { get; set; }
@@ -42,9 +43,13 @@ public class SpriteComponent : Component
         animator.Play();
     }
 
+    Rectangle tempRec;
+    Vec2 tempPos;
     public void Draw(float deltaTime)
     {
-        Raylib.DrawTexturePro(animator.GetSprite(), animator.GetFrameRec(), animator.GetFrameRec(), new(entity.body.GetPosition().X, entity.body.GetPosition().Y), entity.body.GetAngle(), Color.WHITE);
+        tempPos = entity.body.GetPosition();
+        tempRec = animator.GetFrameRec();
+        Raylib.DrawTexturePro(animator.GetSprite(), tempRec, tempRec, new(tempPos.X * -1, tempPos.Y * -1), entity.body.GetAngle(), Color.WHITE);
     }
 
     public void  FlipSprite(bool flipBool)
