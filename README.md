@@ -19,5 +19,5 @@ Currently using:
 
 
 ## Credit to these people!
-twobitcoder101 - for "flat" a simple physics engine i am currently using in this engine.
+twobitcoder101 - for !["flat"](https://github.com/twobitcoder101/Flat) a simple physics engine i am currently using in this engine.
 
