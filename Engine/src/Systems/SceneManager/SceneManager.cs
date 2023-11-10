@@ -1,0 +1,92 @@
+namespace Engine.Systems.SceneSystem;
+
+using Engine.Exceptions;
+using Engine.Systems;
+using Raylib_cs;
+
+
+public class SceneManager : SystemClass
+{
+    public override void DrawUpdate()
+    {
+        if(_current is not null)
+        {
+            _current.DrawScene();
+        }
+    }
+
+    public override void LateUpdate()
+    {
+        if(_current is not null)
+        {
+            _current.LateUpdateScene();
+        }
+    }
+
+    public override void Shutdown()
+    {
+        EngineSystems.dUpdate -= Update;
+        EngineSystems.dDrawUpdate -= DrawUpdate;
+        EngineSystems.dLateUpdate -= LateUpdate;
+        if(_current is not null)
+        {
+            _current.UnloadScene();
+        }
+    }
+
+    public override void Update()
+    {
+        if(_current is not null)
+        {
+            _current.UpdateScene();
+        }
+    }
+
+    Dictionary<Int64, Scene> _Scenes = new();
+    public static Scene _current = Empty.Scene;
+
+    Scene this[Int64 index]
+    {
+        get
+        {
+            if (!_Scenes.ContainsKey(index))
+                throw new MissingSceneException($"Scene of type {index} does not exist in Finite Scene Machine of type {this}!");
+            return _Scenes[index];
+        }
+    }
+
+    /*public SceneManager(params (Int64, Scene)[] Scenes)
+    {
+        foreach (var (key, value) in Scenes) 
+            _Scenes.Add(key, value);
+        foreach (var (_, value) in _Scenes) 
+            value.Init(this);
+    }*/
+
+    public void AddScene(int sceneNumber, Scene sceneClass)
+    {
+        _Scenes.Add(sceneNumber, sceneClass);
+    }
+
+
+
+    public void SwitchTo(Int64 key) => SwitchTo(this[key]);
+
+    public void SwitchTo(Scene Scene)
+    {
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Loading new level");
+        _current.UnloadScene();
+        _current = Scene ?? Empty.Scene;
+        _current.InitScene();
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Level Loaded");
+    }
+
+    public override void Initialize()
+    {
+        EngineSystems.dUpdate += Update;
+        EngineSystems.dDrawUpdate += DrawUpdate;
+        EngineSystems.dLateUpdate += LateUpdate;
+        AddScene(1, new Logo());
+        SwitchTo(1);
+    }
+}
