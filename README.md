@@ -16,3 +16,8 @@ Currently using:
 - Raylib_cs
 - ImgUINet (Optional)
 - Newtonsoft.json
+
+
+## Credit to these people!
+twobitcoder101 - for "flat" a simple physics engine i am currently using in this engine.
+
