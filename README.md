@@ -10,6 +10,8 @@ C# Homebrew framework/engine based on raylib/raylib_cs, a simple and easy-to-use
 
 ## This is GameEngine project to learn programming. If you find me doing things in a bad way or have questions then dont hesitate to reach out! Always fun to connect with people :)
 
+### I will be starting to add instructions and documentations to how to use this little project.
+
 Currently using: 
 - Raylib_cs
 - ImgUINet (Optional)
