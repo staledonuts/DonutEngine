@@ -31,7 +31,7 @@ public class Game
         ShutdownEngine();
     }
 
-    public void ShutdownEngine()
+    private void ShutdownEngine()
     {
         EngineSystems.ShutdownSystems();
         CloseWindow();
@@ -69,7 +69,6 @@ public class Game
         static void UpdateLoop()
         {
             EngineSystems.Update();
-
         }
 
         static void DrawUpdate()
