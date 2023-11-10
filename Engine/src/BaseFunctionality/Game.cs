@@ -46,6 +46,9 @@ public class Game
         //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.BLANK, Color.BLANK, Color.GRAY, Color.DARKBLUE, Color.DARKGRAY, Color.GRAY, Color.SKYBLUE, Color.DARKGRAY, Fonts.GetFont("PixelOperator"), 24, 1)));
     }
 
+    /// <summary>
+    /// This is where you start all your systems and initialize things like setting up scenes <see cref="Point"/>.
+    /// </summary>
     public virtual void SetupGame()
     {
         //override me.
