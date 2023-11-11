@@ -19,12 +19,12 @@ namespace Engine.Data
         {
             try
             {
-                DonutLogging.Log(TraceLogLevel.LOG_INFO, "------[ Trying to Load Settings ]------");
+                Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Trying to Load Settings ]------");
                 LoadSettings();
             }
             catch
             {
-                DonutLogging.Log(TraceLogLevel.LOG_WARNING, "------[ There was a Settings Error: Creating Default Fallback ]------");
+                Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "------[ There was a Settings Error: Creating Default Fallback ]------");
                 SetDefaultSettings(DefaultsPicker.AllDefaults);
             }  
         }

@@ -1,5 +1,7 @@
 namespace Engine;
-
+/// <summary>
+/// Here is shorthand names from strings for the different resources the engine uses.
+/// </summary>
 public static class Paths
 {
     public readonly static string app =  AppDomain.CurrentDomain.BaseDirectory;

@@ -1,5 +1,5 @@
-﻿using Engine.Logging;
-using Engine.Systems;
+﻿using Engine.Systems;
+using Raylib_cs;
 
 namespace Engine.EntityManager;
 public static class EntitySystem
@@ -13,7 +13,7 @@ public static class EntitySystem
         }
         catch(Exception e)
         {
-            DonutLogging.Log(Raylib_cs.TraceLogLevel.LOG_ERROR, "Could not find that Entity: "+e);
+            Raylib.TraceLog(Raylib_cs.TraceLogLevel.LOG_ERROR, "Could not find that Entity: "+e);
             return null;
         }
     }

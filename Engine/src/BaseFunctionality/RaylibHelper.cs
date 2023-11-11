@@ -2,6 +2,9 @@ using Raylib_cs;
 using System.Numerics;
 namespace Engine;
 
+/// <summary>
+/// Raylib Extensions to make your life easier.
+/// </summary>
 public static class RaylibHelper
 {
     public static Vector2 ScreenSize 

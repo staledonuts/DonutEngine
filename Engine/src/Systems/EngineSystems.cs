@@ -1,6 +1,7 @@
 #nullable disable
 using Engine.Data;
 using Engine.Logging;
+using Raylib_cs;
 namespace Engine.Systems;
 public static class EngineSystems
 {
@@ -25,7 +26,7 @@ public static class EngineSystems
         {
             // Add the system to the dictionary with its type as the key
             systems[systemClass.GetType()] = systemClass;
-            DonutLogging.Log(Raylib_cs.TraceLogLevel.LOG_INFO, systemClass.GetType().Name+" was added as a System");
+            Raylib.TraceLog(Raylib_cs.TraceLogLevel.LOG_INFO, systemClass.GetType().Name+" was added as a System");
             systemClass.Initialize();
         }
     }

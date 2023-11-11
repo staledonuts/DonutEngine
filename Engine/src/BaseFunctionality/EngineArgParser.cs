@@ -4,6 +4,10 @@ using Engine.Data;
 
 namespace Engine;
 
+/// <summary>
+/// This is where we parse the different CLI arguments like enabling the writing of Logs.
+/// </summary>
+
 public static class EngineArgParser
 {
 

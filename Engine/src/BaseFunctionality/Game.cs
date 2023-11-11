@@ -17,16 +17,15 @@ public class Game
     {
         Settings.CheckSettings();
         EngineArgParser.ArgInput(args);
-        //Lets set up the different nessesary systems!
         InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
         SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         DonutLogging.SetLogging();
+        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_NONE);
         Textures.InitTextureLibrary();
         Fonts.InitFontLibrary();
         InputEventSystem.Initialize();
         InitSystems();
         SetupGame();
-        //This is where all the update loops go.
         MainLoop();
         ShutdownEngine();
     }
@@ -47,14 +46,17 @@ public class Game
     }
 
     /// <summary>
-    /// This is where you start all your systems and initialize things like setting up scenes <see cref="Point"/>.
+    /// This is where you create and initialize all your systems and scenes <see cref="Point"/>.
     /// </summary>
     public virtual void SetupGame()
     {
         //override me.
     }
 
-
+    /// <summary>
+    /// Main Loop of the Engine.
+    /// The idea of there updaters is that you should be using Update() for game logic, DrawUpdate() for drawing and LateUpdate() for things like physics calculation and non-gameplay affecting systems.
+    /// </summary>
     void MainLoop()
     {
         while (!WindowShouldClose())

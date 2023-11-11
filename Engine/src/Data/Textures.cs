@@ -2,9 +2,18 @@ using Engine.Logging;
 using Raylib_cs;
 namespace Engine.Data
 {
+    /// <summary>
+    /// Texture Library. Uses the TexturesPath to load all .png files from that folder.
+    /// To load a Texture use the correct string name without the extension. 
+    /// For example "donutengine-icon" which is a picture i choose to include in this engine.
+    /// </summary>
     public static class Textures
     {
         static readonly Dictionary<string, Texture2D> textureLibrary = new();
+
+        /// <summary>
+        /// Try to load all Textures into your library.
+        /// </summary>
         public static void InitTextureLibrary()
         {
             try
@@ -30,7 +39,7 @@ namespace Engine.Data
                     foreach(string pngFile in texturePath)
                     {
                         string name = Path.GetFileNameWithoutExtension(pngFile);
-                        DonutLogging.Log(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
+                        Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
                         textureLibrary.TryAdd(name, Raylib.LoadTexture(pngFile));
                     }
                 }
@@ -79,7 +88,7 @@ namespace Engine.Data
             {
                 Raylib.UnloadTexture(texture);
                 textureLibrary.Remove(textureName);
-                DonutLogging.Log(TraceLogLevel.LOG_DEBUG, "Unloaded: "+textureName+" from TexLib");
+                Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Unloaded: "+textureName+" from TexLib");
             }
         }
         

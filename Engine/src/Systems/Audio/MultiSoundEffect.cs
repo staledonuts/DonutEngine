@@ -62,7 +62,7 @@ public class MultiSoundEffect : IDisposable
         catch (Exception e)
         {
             isLoaded = false;
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, $"Failed to load multi-sound collection. Exception: {e.Message}");
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Failed to load multi-sound collection. Exception: {e.Message}");
             return default;
         }       
     }

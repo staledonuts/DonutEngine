@@ -49,7 +49,7 @@ public class MusicTrack : IDisposable
         catch (Exception e)
         {
             isLoaded = false;
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, $"Failed to load Music stream. Exception: {e.Message}");
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Failed to load Music stream. Exception: {e.Message}");
         }
         return music;        
     }

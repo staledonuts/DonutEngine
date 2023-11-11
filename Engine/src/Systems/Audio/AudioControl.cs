@@ -3,7 +3,6 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
 using Engine.Data;
-using Engine.Logging;
 namespace Engine.Systems.Audio;
 
 public class AudioControl : SystemClass
@@ -26,12 +25,12 @@ public class AudioControl : SystemClass
 
     public override void Initialize()
     {
-        DonutLogging.Log(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
         InitAudioDevice();
         InitAudioLibrary();
         EngineSystems.dUpdate += Update;
         EngineSystems.dLateUpdate += LateUpdate;
-        DonutLogging.Log(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
 
     public void ReloadAudioLibrary()
@@ -63,20 +62,20 @@ public class AudioControl : SystemClass
             File.Exists(Paths.AudioDefPath+"MusicDef.json");
             try
             {
-                DonutLogging.Log(TraceLogLevel.LOG_INFO, "------[ Setting up Music Library ]------");
+                Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up Music Library ]------");
                 MusicLibrary = new();
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"MusicDef.json");
                 MusicLibrary = JsonConvert.DeserializeObject<Dictionary<string, MusicTrack>>(JsonData);
-                DonutLogging.Log(TraceLogLevel.LOG_INFO, "------[ Music Library Setup Done ]------");
+                Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Music Library Setup Done ]------");
             }
             catch (Exception e)
             {
-                DonutLogging.Log(TraceLogLevel.LOG_ERROR, e.Message);
+                Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
             }
         }
         catch (Exception e)
         {
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, e.Message);
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
         }
     }
     void LoadSoundEffectsLib()
@@ -94,12 +93,12 @@ public class AudioControl : SystemClass
             }
             catch (Exception e)
             {
-                DonutLogging.Log(TraceLogLevel.LOG_ERROR, e.Message);
+                Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
             }
         }
         catch (Exception e)
         {
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, e.Message);
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
         }
     }
 
@@ -154,11 +153,11 @@ public class AudioControl : SystemClass
             currentMusic = musicTrack;
             Raylib.SetMusicVolume(currentMusic.Music, currentMusic.Volume);
             PlayMusicStream(currentMusic.Music);
-            DonutLogging.Log(TraceLogLevel.LOG_INFO, $"Playing: {name}");
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"Playing: {name}");
         }
         else
         {
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, $"Invalid song name: {name}");
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Invalid song name: {name}");
         }
     }
 
@@ -196,28 +195,28 @@ public class AudioControl : SystemClass
         if(IsMusicStreamPlaying(currentMusic.Music))
         {
             PauseMusicStream(currentMusic.Music);
-            DonutLogging.Log(TraceLogLevel.LOG_INFO, "Music Paused");
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Music Paused");
 
         }
         else
         {
             ResumeMusicStream(currentMusic.Music);
 
-            DonutLogging.Log(TraceLogLevel.LOG_INFO, "Music Resumed");
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Music Resumed");
         }
     }
 
     public void StopMusic() 
     {
         StopMusicStream(currentMusic.Music);
-        DonutLogging.Log(TraceLogLevel.LOG_INFO, "Stopping Music: "+currentMusic.Music.ToString());
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Stopping Music: "+currentMusic.Music.ToString());
     }
 
     public void SetMusicVolume(float volume) 
     {
         currentMusic.Volume = volume;
         SetMusicVolume(currentMusic.Volume);
-        DonutLogging.Log(TraceLogLevel.LOG_INFO, $"Current song volume set to: {volume}");
+        Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"Current song volume set to: {volume}");
     }
 
     public void UnloadMusic(string name) 
@@ -278,7 +277,7 @@ public class AudioControl : SystemClass
         }
         else
         {
-            DonutLogging.Log(TraceLogLevel.LOG_INFO, $"SoundEffect {name} cannot be played. Too many instances playing");
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"SoundEffect {name} cannot be played. Too many instances playing");
         }
     }
     public void PlaySFX(string name) 
@@ -296,7 +295,7 @@ public class AudioControl : SystemClass
         }
         else
         {
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, $"No SoundEffect with name {name} found");
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"No SoundEffect with name {name} found");
         }
     }
 
@@ -324,7 +323,7 @@ public class AudioControl : SystemClass
             // If this sound effect is in the dictionary, remove the sound instance
         else
         {
-            DonutLogging.Log(TraceLogLevel.LOG_INFO, $"No playing instance with name: {name}");
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"No playing instance with name: {name}");
         }
     }
     #endregion

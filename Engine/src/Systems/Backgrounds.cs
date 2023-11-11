@@ -3,7 +3,9 @@ using System;
 using Raylib_cs;
 using System.Numerics;
 using Engine.Utils;
-
+/// <summary>
+/// This is where you control the background color of the window.
+/// </summary>
 public static class Backgrounds
 {
     static Backgrounds()

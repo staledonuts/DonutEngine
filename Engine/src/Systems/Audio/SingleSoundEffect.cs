@@ -62,7 +62,7 @@ public class SingleSoundEffect : IDisposable
         catch (Exception e)
         {
             isLoaded = false;
-            DonutLogging.Log(TraceLogLevel.LOG_ERROR, $"Failed to load sound. Exception: {e.Message}");
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Failed to load sound. Exception: {e.Message}");
             return default;
         }       
     }
