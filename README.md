@@ -8,7 +8,8 @@ C# Homebrew framework/engine based on raylib/raylib_cs, a simple and easy-to-use
 [![Chat on Discord](https://img.shields.io/discord/426912293134270465.svg?logo=discord)](https://discord.gg/raylib)
 
 
-## This is GameEngine project to learn programming. If you find me doing things in a bad way or have questions then dont hesitate to reach out! Always fun to connect with people :)
+### This is a 2D GameEngine project to learn programming. If you find me doing things in a bad way or have questions then dont hesitate to reach out! Always fun to connect with people :) 
+If if feel like it in the future i might create a 3D module too for it. But main focus is 2D to begin with.
 
 ### I will be adding instructions and documentations for using this little project.
 
