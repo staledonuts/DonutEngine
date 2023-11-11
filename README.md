@@ -1,4 +1,4 @@
-![DeadDonut Logo](https://www.deaddonut.se/img/Logos/Logo.png "DeadDonut Logo")
+![DeadDonut Logo](https://www.deaddonut.se/images/deaddonut.png "DeadDonut Logo")
 
 # DonutEngine
 
