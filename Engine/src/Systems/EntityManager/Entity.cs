@@ -1,11 +1,9 @@
+using Engine.Systems.FSM;
 using Engine.FlatPhysics;
 namespace Engine.Systems;
 
 public abstract class Entity
 {
-    public FlatBody body;
-    protected Animator animator;
-
     public abstract void Initialize();
     public abstract void Update();
     public abstract void DrawUpdate();

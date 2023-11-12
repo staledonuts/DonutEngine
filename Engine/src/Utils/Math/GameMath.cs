@@ -48,6 +48,36 @@ public static class GameMath
     public static float Distance(float value1, float value2) { return System.Math.Abs(value1 - value2); }
     public static float Lerp(float value1, float value2, float amount) { return value1 + (value2 - value1) * amount; }
     public static int IntLerp(byte value1, byte value2, int amount) { return value1 + (value2 - value1) * amount; }
+
+    public static T Min<T>(T a, T b) where T : IComparable<T>
+	{
+		if (a.CompareTo(b) < 0)
+			return a;
+		return b;
+	}
+	public static T Min<T>(T a, T b, T c) where T : IComparable<T>
+	{
+		return Min(Min(a, b), c);
+	}
+	public static T Min<T>(T a, T b, T c, T d) where T : IComparable<T>
+	{
+		return Min(Min(Min(a, b), c), d);
+	}
+
+	public static T Max<T>(T a, T b) where T : IComparable<T>
+	{
+		if (a.CompareTo(b) > 0)
+			return a;
+		return b;
+	}
+	public static T Max<T>(T a, T b, T c) where T : IComparable<T>
+	{
+		return Max(Max(a, b), c);
+	}
+	public static T Max<T>(T a, T b, T c, T d) where T : IComparable<T>
+	{
+		return Max(Max(Max(a, b), c), d);
+	}
     
 
     public static Vector3 Direction(float x, float y, float z) { return new Vector3(x, y, z); }

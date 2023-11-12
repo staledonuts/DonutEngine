@@ -1,4 +1,4 @@
-﻿namespace DonutEngine.Backbone.FSM;
+﻿namespace Engine.Systems.FSM;
 
 /// <summary>
 /// A <see cref="State{T}"/> used in a <see cref="FiniteStateMachine{T}"/>.
@@ -26,5 +26,7 @@ public interface State<T>
     /// <summary>
     /// Called when the <see cref="State{T}"/> is exited in the <see cref="FiniteStateMachine{T}"/>.
     /// </summary>
+    void DrawUpdate();
+    void LateUpdate();
     void Exit();
 }

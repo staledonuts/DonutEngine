@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Engine.Systems.FSM;
 
-namespace DonutEngine.Backbone.FSM;
+namespace Engine.Systems;
 
 /// <summary>
 /// A "machine" that can be in exactly one of a finite amount of <see cref="State{T}">States.</see>
@@ -8,6 +9,7 @@ namespace DonutEngine.Backbone.FSM;
 /// <typeparam name="T">The type of key to use to identify <see cref="State{T}">States.</see></typeparam>
 public sealed class FiniteStateMachine<T>
 {
+    public Entity entity;
     readonly Dictionary<T, State<T>> _states = new();
     State<T> _current = Empty<T>.State;
 
@@ -28,6 +30,10 @@ public sealed class FiniteStateMachine<T>
     /// <param name="states">All of the <see cref="State{T}">States</see> and their keys in the <see cref="FiniteStateMachine{T}"/>.</param>
     public FiniteStateMachine(T first, params (T, State<T>)[] states)
     {
+        if(first is Entity e)
+        {
+            entity = e;
+        }
         foreach (var (key, value) in states) 
             _states.Add(key, value);
         foreach (var (_, value) in _states) 
@@ -57,4 +63,8 @@ public sealed class FiniteStateMachine<T>
     /// </summary>
     /// <param name="deltaTime">The time since the last frame.</param>
     public void Update(float deltaTime) => _current.Update(deltaTime);
+
+    public void DrawUpdate() => _current.DrawUpdate();
+
+    public void LateUpdate() => _current.LateUpdate();
 }

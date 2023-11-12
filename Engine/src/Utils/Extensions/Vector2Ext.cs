@@ -68,4 +68,23 @@ public static class Vector2Ext
     { 
         return 360 - (GameMath.Atan2(vector2.X, vector2.Y) * GameMath.Rad2Deg * GameMath.Sign(vector2.X)); 
     }
+
+
+	/// <summary>
+	/// Rounds the individual components of a Vector2
+	/// </summary>
+	public static Point2 RoundToPoint2(this Vector2 vector)
+    {
+		return new((int)MathF.Round(vector.X), (int)MathF.Round(vector.Y));
+    }
+
+    /// <summary>
+	/// Normalizes a Vector2 safely (a zero-length Vector2 returns 0)
+	/// </summary>
+	public static Vector2 Normalized(this Vector2 vector)
+	{
+		if (vector.X == 0 && vector.Y == 0)
+			return Vector2.Zero;
+		return Vector2.Normalize(vector);
+	}
 }

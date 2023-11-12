@@ -9,6 +9,11 @@ namespace Engine.Data
     /// </summary>
     public static class Textures
     {
+        static Textures()
+        {
+            fileExts = new string[] { "*.png", "*.bmp", "*.tga", "*.jpg", "*.gif", "*.qoi*", "*.psd" };
+        }
+        static string[] fileExts;
         static readonly Dictionary<string, Texture2D> textureLibrary = new();
 
         /// <summary>
@@ -34,20 +39,26 @@ namespace Engine.Data
                         Raylib.ExportImage(image, emptyPath);
                     }
                     string pathToTextures = Paths.TexturesPath;
-                    string[] texturePath = Directory.GetFiles(pathToTextures, "*.png");
-                    
-                    foreach(string pngFile in texturePath)
+                    foreach(string s in fileExts)
                     {
-                        string name = Path.GetFileNameWithoutExtension(pngFile);
-                        Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
-                        textureLibrary.TryAdd(name, Raylib.LoadTexture(pngFile));
-                    }
+                        CheckforTextures(Directory.GetFiles(pathToTextures, s, SearchOption.AllDirectories));
+                    }   
                 }
             }
             catch
             {
                 Directory.CreateDirectory(Paths.TexturesPath);
                 InitTextureLibrary();
+            }
+        }
+
+        private static void CheckforTextures(string[] paths)
+        {
+            foreach(string File in paths)
+            {
+                string name = Path.GetFileNameWithoutExtension(File);
+                Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
+                textureLibrary.TryAdd(name, Raylib.LoadTexture(File));
             }
         }
         

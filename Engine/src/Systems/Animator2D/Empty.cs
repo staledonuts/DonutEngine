@@ -1,4 +1,4 @@
-﻿namespace DonutEngine.Backbone.FSM;
+﻿namespace Engine.Systems.FSM;
 
 /// <summary>
 /// An empty <see cref="State{T}"/>.
@@ -25,4 +25,14 @@ sealed class Empty<T> : State<T>
 
     /// <inheritdoc />
     void State<T>.Exit() { }
+
+    public void DrawUpdate()
+    {
+        
+    }
+
+    public void LateUpdate()
+    {
+        
+    }
 }
