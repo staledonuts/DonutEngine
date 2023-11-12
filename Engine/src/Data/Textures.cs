@@ -3,7 +3,7 @@ using Raylib_cs;
 namespace Engine.Data
 {
     /// <summary>
-    /// Texture Library. Uses the TexturesPath to load all .png files from that folder.
+    /// Texture Library. Uses the TexturesPath to load all image files from that folder.
     /// To load a Texture use the correct string name without the extension. 
     /// For example "donutengine-icon" which is a picture i choose to include in this engine.
     /// </summary>
@@ -12,9 +12,10 @@ namespace Engine.Data
         static Textures()
         {
             fileExts = new string[] { "*.png", "*.bmp", "*.tga", "*.jpg", "*.gif", "*.qoi*", "*.psd" };
+            textureLibrary = new();
         }
-        static string[] fileExts;
-        static readonly Dictionary<string, Texture2D> textureLibrary = new();
+        static readonly string[] fileExts;
+        static readonly Dictionary<string, Texture2D> textureLibrary;
 
         /// <summary>
         /// Try to load all Textures into your library.

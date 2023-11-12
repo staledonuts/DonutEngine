@@ -31,14 +31,6 @@ public unsafe static class DonutLogging
             streamWriter.WriteLine(logString);
         }
     }
-
-    public static void Log(TraceLogLevel traceLogLevel, string message)
-    {
-        if(Settings.cVars.Debugging)
-        {
-            Raylib.TraceLog(traceLogLevel, message);
-        }
-    }
 }
 
 public unsafe class CustomLogging

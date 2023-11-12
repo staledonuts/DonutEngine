@@ -20,7 +20,7 @@ public class Game
         InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
         SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         DonutLogging.SetLogging();
-        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_NONE);
+        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);
         Textures.InitTextureLibrary();
         Fonts.InitFontLibrary();
         InputEventSystem.Initialize();
