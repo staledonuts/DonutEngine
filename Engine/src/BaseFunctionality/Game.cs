@@ -13,11 +13,16 @@ using Engine;
 
 public class Game
 {
+    readonly string windowName;
+    public Game(string gamename)
+    {
+        windowName = gamename;
+    }
     public virtual void InitGame(string[] args)
     {
         Settings.CheckSettings();
         EngineArgParser.ArgInput(args);
-        InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
+        InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, windowName);
         SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         DonutLogging.SetLogging();
         Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);

@@ -187,12 +187,14 @@ namespace Engine.Systems.Containers
         {
             WriteTraceLog = false;
             SplashScreenLength = 2f;
+            Windowname = "DonutEngine";
             Debugging = true;
         }
 
         public bool WriteTraceLog { get; set; }
         public float SplashScreenLength { get; set; }
         public bool Debugging { get; set; }
+        public string Windowname { get; set; }
 
     }
 

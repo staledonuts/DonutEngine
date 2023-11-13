@@ -7,6 +7,7 @@ namespace Template;
 
 public class TemplateGame : Game
 {
+    public TemplateGame(string gamename) : base(gamename){}
     public override void InitGame(string[] args)
     {
         base.InitGame(args);
