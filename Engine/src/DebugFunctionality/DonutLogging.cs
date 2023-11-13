@@ -1,9 +1,8 @@
 namespace Engine.Logging;
-
-using Engine.Data;
 using Raylib_cs;
 using System;
 using System.Runtime.InteropServices;
+
 public unsafe static class DonutLogging
 {
     private static bool loggingSet = false;

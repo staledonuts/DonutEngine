@@ -1,4 +1,4 @@
-namespace Engine.Systems.Audio;
+namespace Engine.Assets.Audio;
 using Raylib_cs;
 
 public interface ISoundEffect : IDisposable

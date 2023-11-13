@@ -1,8 +1,4 @@
-﻿using Engine;
-using Engine.Systems;
-using Engine.Systems.Input;
-using Template;
-using static Raylib_cs.Raylib;
+﻿using Template;
 
 static class Program
 {

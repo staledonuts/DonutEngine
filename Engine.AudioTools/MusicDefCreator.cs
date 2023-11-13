@@ -2,7 +2,7 @@ namespace EngineTools;
 using Raylib_cs;
 using Newtonsoft.Json;
 using Engine;
-using Engine.Systems.Audio;
+using Engine.Assets.Audio;
 
 public class MusicDefCreator
 {

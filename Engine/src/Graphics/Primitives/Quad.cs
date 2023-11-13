@@ -1,5 +1,5 @@
 namespace Engine.Graphics.Primitives;
-using Engine.Data;
+using Engine.Assets;
 using Raylib_cs;
 using System.Numerics;
 using static Raylib_cs.Raylib;

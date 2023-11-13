@@ -1,10 +1,9 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Engine.Systems;
-using Engine.Data;
 using Engine.Systems.Input;
 using Engine.Logging;
-using Engine.Systems.Audio;
+using Engine.Assets;
 using Engine.Systems.SceneSystem;
 using Engine.Systems.UI.Skeleton;
 using Engine.Systems.Particles;
@@ -26,8 +25,6 @@ public class Game
         SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         DonutLogging.SetLogging();
         Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);
-        Textures.InitTextureLibrary();
-        Fonts.InitFontLibrary();
         InputEventSystem.Initialize();
         InitSystems();
         SetupGame();
@@ -43,7 +40,9 @@ public class Game
 
     private void InitSystems()
     {
-        EngineSystems.AddSystem(new AudioControl());
+        Textures.InitTextureLibrary();
+        Fonts.InitFontLibrary();
+        AudioControl.InitAudioControl();
         EngineSystems.AddSystem(new ParticleManager<ParticleState>(1024 * Settings.graphicsSettings.MaximumParticles, ParticleState.UpdateParticle));
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());

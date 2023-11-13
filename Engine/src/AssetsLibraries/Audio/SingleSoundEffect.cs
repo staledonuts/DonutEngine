@@ -1,10 +1,8 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
-using Engine.Data;
-using Engine.Logging;
 
-namespace Engine.Systems.Audio;
+namespace Engine.Assets.Audio;
 
 public class SingleSoundEffect : IDisposable
 {
@@ -45,7 +43,7 @@ public class SingleSoundEffect : IDisposable
         {
             await InitSoundEffectAsync();
         }
-        EngineSystems.GetSystem<AudioControl>().PlaySFX(sound, MinPitch, MaxPitch);
+        AudioControl.PlaySFX(sound, MinPitch, MaxPitch);
     }
 
     public async Task<Sound> InitSoundEffectAsync()

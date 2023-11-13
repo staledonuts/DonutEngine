@@ -1,6 +1,5 @@
-using Engine.Logging;
 using Raylib_cs;
-namespace Engine.Data;
+namespace Engine.Assets;
 /// <summary>
 /// Font loader and library. Uses the FontPath to load all .ttf files from that folder.
 /// To load a Font use the correct string name without the extension. 

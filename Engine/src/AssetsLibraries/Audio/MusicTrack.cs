@@ -2,7 +2,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
 using Engine.Logging;
-namespace Engine.Systems.Audio;
+namespace Engine.Assets.Audio;
 
 public class MusicTrack : IDisposable
 {

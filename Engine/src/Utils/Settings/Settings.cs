@@ -1,7 +1,7 @@
 using System.Numerics;
 using Raylib_cs;
 
-namespace Engine.Data
+namespace Engine
 {
     using System.IO;
     using Engine.Logging;

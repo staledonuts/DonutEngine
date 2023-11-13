@@ -1,6 +1,6 @@
 namespace Engine.Systems.SceneSystem;
 using Raylib_cs;
-using Engine.Data;
+using Engine.Assets;
 using Engine.Utils;
 
 public class Logo : Scene

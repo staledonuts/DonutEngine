@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using Engine.Data;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 namespace Engine.Systems.UI.Skeleton;
 

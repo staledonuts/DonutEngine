@@ -1,7 +1,7 @@
 namespace Engine.Systems.UI.Skeleton;
 
 using System.Numerics;
-using Engine.Data;
+using Engine.Assets;
 using Engine.Systems.UI.Skeleton.Widgets;
 using Raylib_cs;
 using Skeleton;

@@ -1,6 +1,5 @@
-using Engine.Logging;
 using Raylib_cs;
-namespace Engine.Data
+namespace Engine.Assets
 {
     /// <summary>
     /// Texture Library. Uses the TexturesPath to load all image files from that folder.

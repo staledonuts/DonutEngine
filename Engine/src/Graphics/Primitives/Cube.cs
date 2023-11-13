@@ -1,5 +1,6 @@
 namespace Engine.Graphics.Primitives;
-using Engine.Data;
+
+using Engine.Assets;
 using Raylib_cs;
 using System.Numerics;
 public class Cube

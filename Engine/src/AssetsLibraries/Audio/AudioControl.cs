@@ -2,20 +2,21 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
-using Engine.Data;
-namespace Engine.Systems.Audio;
+using Engine.Assets.Audio;
+using Engine.Systems;
+namespace Engine.Assets;
 
-public class AudioControl : SystemClass
+public static class AudioControl
 {
     
-    private Dictionary<string, List<Sound>> soundInstances;
-    private Dictionary<string, ISoundEffect> SoundsLibrary { get; set; }
-    private Dictionary<string, MusicTrack> MusicLibrary { get; set; }
-    private MusicTrack currentMusic = null;
-    private Random random;
-    private string currentSongName = null;
+    private static Dictionary<string, List<Sound>> soundInstances;
+    private static Dictionary<string, ISoundEffect> SoundsLibrary { get; set; }
+    private static Dictionary<string, MusicTrack> MusicLibrary { get; set; }
+    private static MusicTrack currentMusic = null;
+    private static Random random;
+    private static string currentSongName = null;
 
-    public AudioControl()
+    static AudioControl()
     {
         soundInstances = new Dictionary<string, List<Sound>>();
         SoundsLibrary = new();
@@ -23,7 +24,7 @@ public class AudioControl : SystemClass
         random = new();
     }
 
-    public override void Initialize()
+    public static void InitAudioControl()
     {
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
         InitAudioDevice();
@@ -33,7 +34,7 @@ public class AudioControl : SystemClass
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
 
-    public void ReloadAudioLibrary()
+    public static void ReloadAudioLibrary()
     {
         Raylib.StopMusicStream(currentMusic.Music);
         foreach(KeyValuePair<string, ISoundEffect> sfx in SoundsLibrary!)
@@ -49,12 +50,12 @@ public class AudioControl : SystemClass
         InitAudioLibrary();
     }
 
-    public void InitAudioLibrary()
+    public static void InitAudioLibrary()
     {
         LoadSoundEffectsLib();
         LoadMusicTrackLib();
     }
-    void LoadMusicTrackLib()
+    static void LoadMusicTrackLib()
     {
         try
         {
@@ -78,7 +79,7 @@ public class AudioControl : SystemClass
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
         }
     }
-    void LoadSoundEffectsLib()
+    static void LoadSoundEffectsLib()
     {
         try
         {
@@ -103,7 +104,7 @@ public class AudioControl : SystemClass
     }
 
 
-    private void CheckSoundInstances()
+    private static void CheckSoundInstances()
     {
         if(soundInstances != null)
         {
@@ -114,17 +115,12 @@ public class AudioControl : SystemClass
         }
     }
 
-    public override void Update()
+    static void Update()
     {
         CheckSoundInstances();
     }
 
-    public override void DrawUpdate()
-    {
-        
-    }
-
-    public override void LateUpdate()
+    static void LateUpdate()
     {
         if(currentMusic != null)
         {
@@ -132,7 +128,7 @@ public class AudioControl : SystemClass
         }
     }
 
-    public override void Shutdown()
+    public static void Shutdown()
     {
         EngineSystems.dUpdate -= Update;
         EngineSystems.dLateUpdate -= LateUpdate;
@@ -144,7 +140,7 @@ public class AudioControl : SystemClass
     }
     #region Music
 
-    public void PlayMusic(string name) 
+    public static void PlayMusic(string name) 
     {
         MusicTrack musicTrack;
         if (MusicLibrary.TryGetValue(name, out musicTrack)) 
@@ -161,7 +157,7 @@ public class AudioControl : SystemClass
         }
     }
 
-    public void FadeOutCurrentMusic()
+    public static void FadeOutCurrentMusic()
     {
         
     }
@@ -172,7 +168,7 @@ public class AudioControl : SystemClass
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(Data.Settings.audioSettings.MusicVolume, 0, 0.05f));
+            Raylib.SetMusicVolume(music, Raymath.Lerp(Settings.audioSettings.MusicVolume, 0, 0.05f));
             elapsedTime += Raylib.GetFrameTime();
         }
         yield return music;
@@ -184,13 +180,13 @@ public class AudioControl : SystemClass
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(0, Data.Settings.audioSettings.MusicVolume, 0.05f));
+            Raylib.SetMusicVolume(music, Raymath.Lerp(0, Settings.audioSettings.MusicVolume, 0.05f));
             elapsedTime += Raylib.GetFrameTime();
         }
         yield return music;
     }
 
-    public void ToggleMusic()
+    public static void ToggleMusic()
     {
         if(IsMusicStreamPlaying(currentMusic.Music))
         {
@@ -206,20 +202,20 @@ public class AudioControl : SystemClass
         }
     }
 
-    public void StopMusic() 
+    public static void StopMusic() 
     {
         StopMusicStream(currentMusic.Music);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Stopping Music: "+currentMusic.Music.ToString());
     }
 
-    public void SetMusicVolume(float volume) 
+    public static void SetMusicVolume(float volume) 
     {
         currentMusic.Volume = volume;
         SetMusicVolume(currentMusic.Volume);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"Current song volume set to: {volume}");
     }
 
-    public void UnloadMusic(string name) 
+    public static void UnloadMusic(string name) 
     {
         MusicTrack music;
         if (MusicLibrary.TryGetValue(name, out music)) 
@@ -232,13 +228,13 @@ public class AudioControl : SystemClass
 
     #region SFX
 
-    public void PlaySFX(Sound sfx, float minPitch, float maxPitch)
+    public static void PlaySFX(Sound sfx, float minPitch, float maxPitch)
     {
         Raylib.SetSoundVolume(sfx, Settings.audioSettings.SfxVolume);
         SetSoundPitch(sfx, random.NextSingle() * (maxPitch - minPitch) + minPitch);
         PlaySound(sfx);
     }
-    private void PlaySFX(string name, MultiSoundEffect multiSoundEffect)
+    private static void PlaySFX(string name, MultiSoundEffect multiSoundEffect)
     {
         // If this sound effect is not in the dictionary yet, add it
         if (!soundInstances.ContainsKey(name))
@@ -258,7 +254,7 @@ public class AudioControl : SystemClass
 
     }
 
-    private void PlaySFX(string name, SingleSoundEffect singleSoundEffect)
+    private static void PlaySFX(string name, SingleSoundEffect singleSoundEffect)
     {
         // If this sound effect is not in the dictionary yet, add it
         if (!soundInstances.ContainsKey(name))
@@ -280,7 +276,7 @@ public class AudioControl : SystemClass
             Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"SoundEffect {name} cannot be played. Too many instances playing");
         }
     }
-    public void PlaySFX(string name) 
+    public static void PlaySFX(string name) 
     {
         if (SoundsLibrary!.TryGetValue(name, out ISoundEffect sound)) 
         {
@@ -299,7 +295,7 @@ public class AudioControl : SystemClass
         }
     }
 
-    public void StopSFX(string name)
+    public static void StopSFX(string name)
     {
         if(SoundsLibrary!.TryGetValue(name, out ISoundEffect sound))
         {
