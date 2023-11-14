@@ -24,6 +24,18 @@ public static class EngineSystems
     {
         if (systemClass != null)
         {
+            if(systemClass is IUpdateSys upd)
+            {
+                dUpdate += upd.Update;
+            }
+            if(systemClass is IDrawUpdateSys drw)
+            {
+                dDrawUpdate += drw.DrawUpdate;
+            }
+            if(systemClass is ILateUpdateSys lte)
+            {
+                dLateUpdate += lte.LateUpdate;
+            }
             // Add the system to the dictionary with its type as the key
             systems[systemClass.GetType()] = systemClass;
             Raylib.TraceLog(Raylib_cs.TraceLogLevel.LOG_INFO, systemClass.GetType().Name+" was added as a System");
@@ -33,8 +45,22 @@ public static class EngineSystems
 
     public static void RemoveSystem<T>() where T : SystemClass
     {
+        
         if(systems.ContainsKey(typeof(T)))
         {
+            SystemClass system = systems.GetValueOrDefault(typeof(T));            
+            if(system is IUpdateSys upd)
+            {
+                dUpdate -= upd.Update;
+            }
+            if(system is IDrawUpdateSys drw)
+            {
+                dDrawUpdate -= drw.DrawUpdate;
+            }
+            if(system is ILateUpdateSys lte)
+            {
+                dLateUpdate -= lte.LateUpdate;
+            }
             GetSystem<T>().Shutdown();
             systems.Remove(typeof(T));
         }
@@ -89,10 +115,22 @@ public static class EngineSystems
 public abstract class SystemClass
 {
     public abstract void Initialize();
-    public abstract void Update();
-    public abstract void DrawUpdate();
-    public abstract void LateUpdate();
     public abstract void Shutdown();
+}
+
+public interface IUpdateSys
+{
+    public void Update();
+}
+
+public interface IDrawUpdateSys
+{
+    public void DrawUpdate();
+}
+
+public interface ILateUpdateSys
+{
+    public void LateUpdate();
 }
 
 

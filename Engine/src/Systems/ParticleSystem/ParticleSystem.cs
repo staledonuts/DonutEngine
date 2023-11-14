@@ -5,7 +5,7 @@ namespace Engine.Systems
     using Raylib_cs;
     using Engine.Systems.Particles;
 
-    public class ParticleManager<T> : SystemClass
+    public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
     {
         // This delegate will be called for each particle.
         private Action<Particle> updateParticle;
@@ -29,7 +29,7 @@ namespace Engine.Systems
         /// <summary>
         /// Update particle state, to be called every frame.
         /// </summary>
-        public override void Update()
+        public void Update()
         {
             int removalCount = 0;
             for (int i = 0; i < particleList.Count; i++)
@@ -60,7 +60,7 @@ namespace Engine.Systems
         /// <summary>
         /// Draw the particles.
         /// </summary>
-        public override void DrawUpdate()
+        public void DrawUpdate()
         {
             for (int i = 0; i < particleList.Count; i++)
             {
@@ -113,16 +113,9 @@ namespace Engine.Systems
 
         public override void Initialize()
         {
-            EngineSystems.dUpdate += Update;
-            EngineSystems.dDrawUpdate += DrawUpdate;
+
         }
         public override void Shutdown()
-        {
-            EngineSystems.dUpdate -= Update;
-            EngineSystems.dDrawUpdate -= DrawUpdate;
-        }
-
-        public override void LateUpdate()
         {
             
         }

@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Systems.UI.Skeleton;
 
-public class SkeletonUISystem : SystemClass
+public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
 {
     public Vector2 WindowSize 
     {
@@ -23,8 +23,6 @@ public class SkeletonUISystem : SystemClass
 
     public override void Initialize()
     {
-        EngineSystems.dUpdate += Update;
-        EngineSystems.dDrawUpdate += DrawUpdate;
         AddContainer(new SettingsWindow(Vector2.Zero, new(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight), GlobalStyle));
     }
 
@@ -57,7 +55,7 @@ public class SkeletonUISystem : SystemClass
     }
 
     // Update all containers and their elements
-    public override void Update() 
+    public void Update() 
     {
         // If GlobalStyle is set, make sure it's applied to all children
         if (GlobalStyle is not null) 
@@ -92,7 +90,7 @@ public class SkeletonUISystem : SystemClass
     }
 
     // Draw all containers and their elements
-    public override void DrawUpdate() 
+    public void DrawUpdate() 
     {
         foreach (var C in Containers) 
         {
@@ -103,14 +101,8 @@ public class SkeletonUISystem : SystemClass
 	    }
     }
 
-    public override void LateUpdate()
-    {
-        
-    }
-
     public override void Shutdown()
     {
-        EngineSystems.dUpdate -= Update;
-        EngineSystems.dDrawUpdate -= DrawUpdate;
+        
     }
 }

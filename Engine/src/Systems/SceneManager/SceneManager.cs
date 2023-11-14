@@ -5,9 +5,9 @@ using Engine.Systems;
 using Raylib_cs;
 
 
-public class SceneManager : SystemClass
+public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
-    public override void DrawUpdate()
+    public void DrawUpdate()
     {
         if(_current is not null)
         {
@@ -15,7 +15,7 @@ public class SceneManager : SystemClass
         }
     }
 
-    public override void LateUpdate()
+    public void LateUpdate()
     {
         if(_current is not null)
         {
@@ -34,7 +34,7 @@ public class SceneManager : SystemClass
         }
     }
 
-    public override void Update()
+    public void Update()
     {
         if(_current is not null)
         {
@@ -83,9 +83,6 @@ public class SceneManager : SystemClass
 
     public override void Initialize()
     {
-        EngineSystems.dUpdate += Update;
-        EngineSystems.dDrawUpdate += DrawUpdate;
-        EngineSystems.dLateUpdate += LateUpdate;
         AddScene(1, new Logo());
         SwitchTo(1);
     }

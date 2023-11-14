@@ -2,9 +2,9 @@ using Engine.Systems;
 
 namespace Template;
 
-class MySystem : SystemClass
+class MySystem : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
-    public override void DrawUpdate()
+    public void DrawUpdate()
     {
         
     }
@@ -14,7 +14,7 @@ class MySystem : SystemClass
         
     }
 
-    public override void LateUpdate()
+    public void LateUpdate()
     {
         
     }
@@ -24,7 +24,7 @@ class MySystem : SystemClass
         
     }
 
-    public override void Update()
+    public void Update()
     {
         
     }

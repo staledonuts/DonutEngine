@@ -10,7 +10,7 @@ public static class AudioControl
 {
     
     private static Dictionary<string, List<Sound>> soundInstances;
-    private static Dictionary<string, ISoundEffect> SoundsLibrary { get; set; }
+    private static Dictionary<string, SingleSoundEffect> SoundsLibrary { get; set; }
     private static Dictionary<string, MusicTrack> MusicLibrary { get; set; }
     private static MusicTrack currentMusic = null;
     private static Random random;
@@ -37,7 +37,7 @@ public static class AudioControl
     public static void ReloadAudioLibrary()
     {
         Raylib.StopMusicStream(currentMusic.Music);
-        foreach(KeyValuePair<string, ISoundEffect> sfx in SoundsLibrary!)
+        foreach(KeyValuePair<string, SingleSoundEffect> sfx in SoundsLibrary!)
         {
             sfx.Value.Dispose();
         }
@@ -45,7 +45,7 @@ public static class AudioControl
         {
             music.Value.Dispose();
         }
-        SoundsLibrary = new Dictionary<string, ISoundEffect>();
+        SoundsLibrary = new Dictionary<string, SingleSoundEffect>();
         MusicLibrary = new Dictionary<string, MusicTrack>();
         InitAudioLibrary();
     }
@@ -89,7 +89,7 @@ public static class AudioControl
             {
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up SFX Library ]------"); }
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"SoundDef.json");
-                SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, ISoundEffect>>(JsonData);
+                SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, SingleSoundEffect>>(JsonData);
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ SFX Library Setup Done ]------"); }
             }
             catch (Exception e)
@@ -132,7 +132,7 @@ public static class AudioControl
     {
         EngineSystems.dUpdate -= Update;
         EngineSystems.dLateUpdate -= LateUpdate;
-        foreach(KeyValuePair<string, ISoundEffect> key in SoundsLibrary)
+        foreach(KeyValuePair<string, SingleSoundEffect> key in SoundsLibrary)
         {
             key.Value.Dispose();
         }
@@ -278,13 +278,13 @@ public static class AudioControl
     }
     public static void PlaySFX(string name) 
     {
-        if (SoundsLibrary!.TryGetValue(name, out ISoundEffect sound)) 
+        if (SoundsLibrary!.TryGetValue(name, out SingleSoundEffect sound)) 
         {
-            if(sound is MultiSoundEffect ms)
+            /*if(sound is MultiSoundEffect ms)
             {
                 PlaySFX(name, ms);
-            }
-            else if(sound is SingleSoundEffect ss)
+            }*/
+            /*else*/ if(sound is SingleSoundEffect ss)
             {
                 PlaySFX(name, ss);
             }
@@ -297,9 +297,9 @@ public static class AudioControl
 
     public static void StopSFX(string name)
     {
-        if(SoundsLibrary!.TryGetValue(name, out ISoundEffect sound))
+        if(SoundsLibrary!.TryGetValue(name, out SingleSoundEffect sound))
         {
-            if(sound is MultiSoundEffect ms)
+            /*if(sound is MultiSoundEffect ms)
             {
                 StopSound(ms.Sound);
                 if (soundInstances.ContainsKey(name))
@@ -307,7 +307,7 @@ public static class AudioControl
                     soundInstances[name].Remove(ms.Sound);
                 }
             }
-            else if(sound is SingleSoundEffect ss)
+            else*/ if(sound is SingleSoundEffect ss)
             {
                 StopSound(ss.Sound);
                 if (soundInstances.ContainsKey(name))
