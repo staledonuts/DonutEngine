@@ -65,6 +65,8 @@ public struct EntitiesData
         EntityID = 0;
     }
 
+    
+
     public int EntityID;
     public Dictionary<int, Entity> entities;
     

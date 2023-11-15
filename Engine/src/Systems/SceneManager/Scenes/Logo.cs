@@ -18,6 +18,8 @@ public class Logo : Scene
     }
     const int splash1 = 120;
     const int splash2 = 240;
+
+    
     public override void DrawScene()
     {
         if (framesCounter < splash1)
