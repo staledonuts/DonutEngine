@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Engine.FlatPhysics
 {
@@ -11,7 +12,7 @@ namespace Engine.FlatPhysics
 
         public readonly static FlatTransform Zero = new FlatTransform(0f, 0f, 0f);
 
-        public FlatTransform(FlatVector position, float angle)
+        public FlatTransform(Vector2 position, float angle)
         {
             this.PositionX = position.X;
             this.PositionY = position.Y;
@@ -27,6 +28,11 @@ namespace Engine.FlatPhysics
             this.Cos = MathF.Cos(angle);
         }
 
-
+        internal static Vector2 Transform(Vector2 v, FlatTransform transform)
+        {
+            return new Vector2(
+                transform.Cos * v.X - transform.Sin * v.Y + transform.PositionX, 
+                transform.Sin * v.X + transform.Cos * v.Y + transform.PositionY);
+        }
     }
 }

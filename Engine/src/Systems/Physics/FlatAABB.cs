@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Engine.FlatPhysics
 {
     public readonly struct FlatAABB
     {
-        public readonly FlatVector Min;
-        public readonly FlatVector Max;
+        public readonly Vector2 Min;
+        public readonly Vector2 Max;
 
-        public FlatAABB(FlatVector min, FlatVector max)
+        public FlatAABB(Vector2 min, Vector2 max)
         {
             this.Min = min;
             this.Max = max;
@@ -15,8 +16,8 @@ namespace Engine.FlatPhysics
 
         public FlatAABB(float minX, float minY, float maxX, float maxY)
         {
-            this.Min = new FlatVector(minX, minY);
-            this.Max = new FlatVector(maxX, maxY);
+            this.Min = new Vector2(minX, minY);
+            this.Max = new Vector2(maxX, maxY);
         }
     }
 }

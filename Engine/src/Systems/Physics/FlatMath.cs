@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Engine.FlatPhysics
 {
@@ -54,32 +55,26 @@ namespace Engine.FlatPhysics
             return value;
         }
 
-
-        public static float Length(FlatVector v)
-        {
-            return MathF.Sqrt(v.X * v.X + v.Y * v.Y);
-        }
-
-        public static float Distance(FlatVector a, FlatVector b)
+        public static float Distance(Vector2 a, Vector2 b)
         {
             float dx = a.X - b.X;
             float dy = a.Y - b.Y;
             return MathF.Sqrt(dx * dx + dy * dy);
         }
 
-        public static FlatVector Normalize(FlatVector v)
+        public static Vector2 Normalize(Vector2 v)
         {
-            float len = FlatMath.Length(v);
-            return new FlatVector(v.X / len, v.Y / len);
+            float len = v.Length();
+            return new Vector2(v.X / len, v.Y / len);
         }
 
-        public static float Dot(FlatVector a, FlatVector b)
+        public static float Dot(Vector2 a, Vector2 b)
         {
             // a · b = ax * bx + ay * by
             return a.X * b.X + a.Y * b.Y;
         }
 
-        public static float Cross(FlatVector a, FlatVector b)
+        public static float Cross(Vector2 a, Vector2 b)
         {
             // cz = ax * by − ay * bx
             return a.X * b.Y - a.Y * b.X;

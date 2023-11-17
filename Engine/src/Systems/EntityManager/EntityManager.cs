@@ -1,4 +1,5 @@
-﻿using Engine.Systems;
+﻿using Engine.FlatPhysics;
+using Engine.Systems;
 using Raylib_cs;
 
 namespace Engine.EntityManager;
@@ -21,6 +22,7 @@ public static class EntitySystem
     public static void CreateEntity(this EntitiesData entitiesData, Entity entity)
     {
         entitiesData.entities.Add(entitiesData.EntityID, entity);
+        entitiesData.world.AddBody(entity.body);
         entitiesData.EntityID +=1;
         entity.Initialize();
     }
@@ -62,12 +64,15 @@ public struct EntitiesData
     public EntitiesData()
     {
         entities = new();
+        world = new();
         EntityID = 0;
     }
 
     
 
     public int EntityID;
+
+    public readonly FlatWorld world;
     public Dictionary<int, Entity> entities;
     
 }
