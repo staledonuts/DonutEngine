@@ -3,6 +3,7 @@ namespace Engine.Systems.LDtk;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Engine.Utils;
@@ -54,7 +55,7 @@ public partial class LDtkLevel
         return file;
     }
 
-    /// <summary> Loads the ldtk world file from disk directly </summary>
+    /*/// <summary> Loads the ldtk world file from disk directly </summary>
     /// <param name="filePath">Path to the .ldtk file excluding file extension</param>
     /// <param name="content">The optional content manager if you are using the content pipeline</param>
     public static LDtkLevel? FromFile(string filePath, ContentManager content)
@@ -66,7 +67,7 @@ public partial class LDtkLevel
         }
         return file;
     }
-
+*/
     /// <summary> Gets an intgrid with the <paramref name="identifier"/> in a <see cref="LDtkLevel"/> </summary>
     public LDtkIntGrid GetIntGrid(string identifier)
     {
@@ -189,13 +190,13 @@ public partial class LDtkLevel
     /// <returns> True if point is inside level </returns>
     public bool Contains(Vector2 point)
     {
-        return point.X >= Position.X && point.Y >= Position.Y && point.X <= Position.X + Size.X && point.Y <= Position.Y + Size.Y;
+        return point.X >= Position.x && point.Y >= Position.y && point.X <= Position.x + Size.x && point.Y <= Position.y + Size.y;
     }
 
     /// <summary> Check if point is inside of a level </summary>
     /// <returns> True if point is inside level </returns>
     public bool Contains(Point point)
     {
-        return point.X >= Position.X && point.Y >= Position.Y && point.X <= Position.X + Size.X && point.Y <= Position.Y + Size.Y;
+        return point.x >= Position.x && point.y >= Position.y && point.x <= Position.x + Size.x && point.y <= Position.y + Size.y;
     }
 }

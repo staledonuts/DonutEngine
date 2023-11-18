@@ -45,17 +45,17 @@ public partial class LDtkFile
         return file;
     }
 
-    /// <summary> Loads the ldtk world file from disk directly. </summary>
+    /*/// <summary> Loads the ldtk world file from disk directly. </summary>
     /// <param name="filePath">Path to the .ldtk file excluding file extension.</param>
     /// <param name="content">The optional content manager if you are using the content pipeline.</param>
     /// <returns> Returns the file loaded from the path. </returns>
-    public static LDtkFile FromFile(string filePath, ContentManager content)
+    public static LDtkFile FromFile(string filePath)
     {
         LDtkFile file = content.Load<LDtkFile>(filePath);
         file.FilePath = filePath;
         file.Content = content;
         return file;
-    }
+    }*/
 
     /// <summary> Loads the ldtkl world file from disk directly or from the embeded one depending on if the file uses externalworlds. </summary>
     /// <param name="iid" > The iid of the world to load. </param>
@@ -80,7 +80,7 @@ public partial class LDtkFile
                 level.WorldFilePath = world.FilePath;
             }
 
-            world.Content = Content;
+            //world.Content = Content;
             return world;
         }
 

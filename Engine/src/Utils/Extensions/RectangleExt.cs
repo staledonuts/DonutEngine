@@ -1,6 +1,6 @@
 namespace Engine.Utils;
 using Raylib_cs;
-using System.Numerics;
+
 using System.Runtime.CompilerServices;
 
 public static class RectangleExt
@@ -33,7 +33,7 @@ public static class RectangleExt
     /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
     /// <returns><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool Contains(this Rectangle rect, Vector2 value)
+    public static bool Contains(this Rectangle rect, System.Numerics.Vector2 value)
     {
         return (rect.X <= value.X) && (value.X < (rect.X + rect.Width)) && (rect.Y <= value.Y) && (value.Y < (rect.Y + rect.Height));
     }
@@ -44,7 +44,7 @@ public static class RectangleExt
     /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
     /// <param name="result"><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void Contains(this Rectangle rect, ref Vector2 value, out bool result)
+    public static void Contains(this Rectangle rect, ref System.Numerics.Vector2 value, out bool result)
     {
         result = (rect.X <= value.X) && (value.X < (rect.X + rect.Width)) && (rect.Y <= value.Y) && (value.Y < (rect.Y + rect.Height));
     }
@@ -121,5 +121,47 @@ public static class RectangleExt
         rect.Y -= (int)verticalAmount;
         rect.Width += (int)horizontalAmount * 2;
         rect.Height += (int)verticalAmount * 2;
+    }
+
+     /// <summary>
+    /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+    /// </summary>
+    /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
+    /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+    public static void Offset(this Rectangle rect, int offsetX, int offsetY)
+    {
+        rect.X += offsetX;
+        rect.Y += offsetY;
+    }
+
+    /// <summary>
+    /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+    /// </summary>
+    /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
+    /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+    public static void Offset(this Rectangle rect, float offsetX, float offsetY)
+    {
+        rect.X += (int)offsetX;
+        rect.Y += (int)offsetY;
+    }
+
+    /// <summary>
+    /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+    /// </summary>
+    /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
+    public static void Offset(this Rectangle rect, Point amount)
+    {
+        rect.X += amount.x;
+        rect.Y += amount.y;
+    }
+
+    /// <summary>
+    /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+    /// </summary>
+    /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
+    public static void Offset(this Rectangle rect, System.Numerics.Vector2 amount)
+    {
+        rect.X += (int)amount.X;
+        rect.Y += (int)amount.Y;
     }
 }

@@ -38,9 +38,6 @@ public partial class LDtkWorld
     public LDtkWorld() { }
 #pragma warning restore
 
-    /// <summary> The content manager used if you are using the contentpipeline </summary>
-    public ContentManager Content { get; set; }
-
     /// <summary> Goes through all the loaded levels looking for the entity </summary>
     public T GetEntity<T>() where T : new()
     {
@@ -121,14 +118,7 @@ public partial class LDtkWorld
         {
             LDtkLevel? level;
 
-            if (Content != null)
-            {
-                level = LDtkLevel.FromFile(Path.Join(Path.GetDirectoryName(FilePath), rawLevel.ExternalRelPath), Content);
-            }
-            else
-            {
-                level = LDtkLevel.FromFile(Path.Join(Path.GetDirectoryName(FilePath), rawLevel.ExternalRelPath));
-            }
+            level = LDtkLevel.FromFile(Path.Join(Path.GetDirectoryName(FilePath), rawLevel.ExternalRelPath));
 
             if (level == null)
             {

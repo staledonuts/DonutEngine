@@ -27,5 +27,5 @@ public static class Constants
     };
 
     /// <summary> The converter used internally with JsonSerializer.Deserialize(, Constants.SerializeOptions) not needed by the user just use .FromFile instead. </summary>
-    //public static readonly LDtkJsonSourceGenerator JsonSourceGenerator = new(SerializeOptions);
+    public static readonly LDtkJsonSourceGenerator JsonSourceGenerator = new(SerializeOptions);
 }

@@ -1,4 +1,4 @@
-namespace LDtk;
+namespace Engine.Systems.LDtk;
 
 using System.Text.Json.Serialization;
 

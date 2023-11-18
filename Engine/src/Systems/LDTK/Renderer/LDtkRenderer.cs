@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using Engine.Assets;
+using Engine.Utils;
 using Raylib_cs;
 
 
@@ -34,7 +35,7 @@ public class LDtkRenderer
     /// <summary> Dispose </summary>
     ~LDtkRenderer()
     {
-        pixel.Dispose();
+        //pixel.Dispose();
     }
     
     /// <summary> Prerender out the level to textures to optimize the rendering process </summary>
@@ -90,8 +91,8 @@ public class LDtkRenderer
                 case LayerType.Tiles:
                 foreach (TileInstance tile in layer.GridTiles.Where(tile => layer._TilesetDefUid.HasValue))
                 {
-                    Vector2 position = new(tile.Px.X + layer._PxTotalOffsetX, tile.Px.Y + layer._PxTotalOffsetY);
-                    Rectangle rect = new(tile.Src.X, tile.Src.Y, layer._GridSize, layer._GridSize);
+                    Vector2 position = new(tile.Px.x + layer._PxTotalOffsetX, tile.Px.y + layer._PxTotalOffsetY);
+                    Rectangle rect = new(tile.Src.x, tile.Src.y, layer._GridSize, layer._GridSize);
                     SpriteEffects mirror = (SpriteEffects)tile.F;
                     SpriteBatch.Draw(texture, position, rect, Color.White, 0, Vector2.Zero, 1f, mirror, 0);
                 }
@@ -103,10 +104,10 @@ public class LDtkRenderer
                 {
                     foreach (TileInstance tile in layer.AutoLayerTiles.Where(tile => layer._TilesetDefUid.HasValue))
                     {
-                        Vector2 position = new(tile.Px.X + layer._PxTotalOffsetX, tile.Px.Y + layer._PxTotalOffsetY);
-                        Rectangle rect = new(tile.Src.X, tile.Src.Y, layer._GridSize, layer._GridSize);
-                        SpriteEffects mirror = (SpriteEffects)tile.F;
-                        SpriteBatch.Draw(texture, position, rect, Color.White, 0, Vector2.Zero, 1f, mirror, 0);
+                        Vector2 position = new(tile.Px.x + layer._PxTotalOffsetX, tile.Px.y + layer._PxTotalOffsetY);
+                        Rectangle rect = new(tile.Src.x, tile.Src.y, layer._GridSize, layer._GridSize);
+                        //SpriteEffects mirror = (SpriteEffects)tile.F;
+                        Raylib.DrawTexturePro(texture, position, rect, Color.WHITE, 0, Vector2.Zero, 1f, mirror, 0);
                     }
                 }
                 break;
@@ -130,7 +131,7 @@ public class LDtkRenderer
         {
             LevelBackgroundPosition bg = level._BgPos;
             Vector2 pos = bg.TopLeftPx.ToVector2();
-            SpriteBatch.Draw(texture, pos, new Rectangle((int)bg.CropRect[0], (int)bg.CropRect[1], (int)bg.CropRect[2], (int)bg.CropRect[3]), Color.White, 0, Vector2.Zero, bg.Scale, SpriteEffects.None, 0);
+            Raylib.DrawTexturePro(texture, pos, new Rectangle((int)bg.CropRect[0], (int)bg.CropRect[1], (int)bg.CropRect[2], (int)bg.CropRect[3]), Color.WHITE, 0, Vector2.Zero, bg.Scale, SpriteEffects.None, 0);
         }
 
         graphicsDevice.SetRenderTarget(null);
@@ -210,7 +211,7 @@ public class LDtkRenderer
     /// <param name="texture">The spritesheet/texture for rendering the entity</param>
     public void RenderEntity<T>(T entity, Texture2D texture) where T : ILDtkEntity
     {
-        Raylib.DrawTexturePro(texture, entity.Position, entity.Tile, Color.White, 0, entity.Pivot * entity.Size, 1, SpriteEffects.None, 0);
+        Raylib.DrawTexturePro(texture, entity.Position, entity.Tile, Color.WHITE, 0, entity.Pivot * entity.Size, 1, SpriteEffects.None, 0);
     }
 
     /// <summary> Renders the entity with the tile it includes </summary>
@@ -219,7 +220,7 @@ public class LDtkRenderer
     /// <param name="flipDirection">The direction to flip the entity when rendering</param>
     public void RenderEntity<T>(T entity, Texture2D texture, SpriteEffects flipDirection) where T : ILDtkEntity
     {
-        Raylib.DrawTexturePro(texture, entity.Position, entity.Tile, Color.White, 0, entity.Pivot * entity.Size, 1, flipDirection, 0);
+        Raylib.DrawTexturePro(texture, entity.Position, entity.Tile, Color.WHITE, 0, entity.Pivot * entity.Size, 1, flipDirection, 0);
     }
 
     /// <summary> Renders the entity with the tile it includes </summary>
@@ -230,7 +231,7 @@ public class LDtkRenderer
     {
         Rectangle animatedTile = entity.Tile;
         animatedTile.Offset(animatedTile.Width * animationFrame, 0);
-        Raylib.DrawTexturePro(texture, entity.Position, animatedTile, Color.White, 0, entity.Pivot * entity.Size, 1, SpriteEffects.None, 0);
+        Raylib.DrawTexturePro(texture, entity.Position, animatedTile, Color.WHITE, 0, entity.Pivot * entity.Size, 1, SpriteEffects.None, 0);
     }
 
     /// <summary> Renders the entity with the tile it includes </summary>
@@ -242,6 +243,6 @@ public class LDtkRenderer
     {
         Rectangle animatedTile = entity.Tile;
         animatedTile.Offset(animatedTile.Width * animationFrame, 0);
-        Raylib.DrawTexturePro(texture, entity.Position, animatedTile, Color.White, 0, entity.Pivot * entity.Size, 1, flipDirection, 0);
+        Raylib.DrawTexturePro(texture, entity.Position, animatedTile, Color.WHITE, 0, entity.Pivot * entity.Size, 1, flipDirection, 0);
     }
 }
