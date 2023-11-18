@@ -20,5 +20,7 @@ Currently using:
 
 
 ## Credit to these people!
-twobitcoder101 - for !["flat"](https://github.com/twobitcoder101/Flat) a simple physics engine i am currently using in this engine.
+twobitcoder101 - for !["flat"](https://github.com/twobitcoder101/Flat) a simple physics lib i am currently using in this engine.
+IrishBruse - who created the !["LDtk Monogame"](https://github.com/IrishBruse/LDtkMonogame) library that i adapted to raylib and this engine.
+
 
