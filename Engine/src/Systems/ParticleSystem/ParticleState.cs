@@ -11,7 +11,7 @@ public struct ParticleState
     public ParticleType Type;
     public float LengthMultiplier;
 
-    private static Random rand = new Random();
+    private Random rand = new Random();
 
     public ParticleState(Vector2 velocity, ParticleType type, float lengthMultiplier = 1f)
     {
@@ -20,7 +20,7 @@ public struct ParticleState
         LengthMultiplier = lengthMultiplier;
     }
 
-    public static ParticleState GetRandom(float minVel, float maxVel)
+    public ParticleState GetRandom(float minVel, float maxVel)
     {
         var state = new ParticleState();
         state.Velocity = rand.NextVector2(minVel, maxVel);

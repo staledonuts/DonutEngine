@@ -4,7 +4,7 @@ using ImGuiNET;
 
 public class UISystem : SystemClass
 {
-    static bool ImGuiDemoOpen = false;
+    static bool ImGuiDemoOpen;
     static SettingsWindow settingsWindow = new();
     static Console console = new();
     static Rectangle rect;

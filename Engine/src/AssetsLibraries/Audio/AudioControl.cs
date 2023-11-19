@@ -12,9 +12,9 @@ public static class AudioControl
     private static Dictionary<string, List<Sound>> soundInstances;
     private static Dictionary<string, SingleSoundEffect> SoundsLibrary { get; set; }
     private static Dictionary<string, MusicTrack> MusicLibrary { get; set; }
-    private static MusicTrack currentMusic = null;
+    private static MusicTrack currentMusic;
     private static Random random;
-    private static string currentSongName = null;
+    private static string currentSongName;
 
     static AudioControl()
     {

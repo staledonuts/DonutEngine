@@ -8,7 +8,7 @@ using ImGuiNET;
 
 public static class rlImGui
 {
-    internal static IntPtr ImGuiContext = IntPtr.Zero;
+    internal static IntPtr ImGuiContext;
 
     private static ImGuiMouseCursor CurrentMouseCursor = ImGuiMouseCursor.COUNT;
     private static Dictionary<ImGuiMouseCursor, MouseCursor> MouseCursorMap;
