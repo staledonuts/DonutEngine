@@ -1,10 +1,19 @@
 namespace Engine.Utils;
 using Raylib_cs;
-
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 public static class RectangleExt
 {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2 GetCenter(this Rectangle rect)
+    {
+        return new(rect.Width / 2, rect.Height / 2);
+    }
+    public static void FlipHorizontal(this Rectangle rect)
+    {        
+        rect.Width = rect.Width * -1;
+    }
     /// <summary>
     /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="Rectangle"/>.
     /// </summary>
