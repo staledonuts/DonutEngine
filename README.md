@@ -20,9 +20,9 @@ Currently using:
 
 
 ## Credit to these people!
-twobitcoder101 - for ![Static Badge](https://img.shields.io/badge/Flat)
+twobitcoder101 - for ![Flat](https://img.shields.io/badge/Flat)
 (https://github.com/twobitcoder101/Flat) a simple physics lib i am currently using in this engine.
-IrishBruse - who created the ![Static Badge](https://img.shields.io/badge/LDtk%20Monogame)
+IrishBruse - who created the ![LDtk Monogame](https://github.com/staledonuts/DonutEngine/blob/main/Engine/Data/Textures/LDtk-small-logo.png)
 (https://github.com/IrishBruse/LDtkMonogame) library that i adapted to raylib and this engine.
 
 
