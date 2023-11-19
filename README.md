@@ -13,16 +13,14 @@ If if feel like it in the future i might create a 3D module too for it. But main
 
 ### I will be adding instructions and documentations for using this little project.
 
-Currently using: 
-- Raylib_cs
-- ImgUINet (Optional)
-- Newtonsoft.json
+[![LDtk Logo](/Engine/Data/Textures/LDtk-small-logo.png)](https://github.com/deepnight/ldtk)
+[![Dotnet Logo](/Engine/Data/Textures/dotnet-small-logo.png)](https://github.com/microsoft/dotnet)
+[![Dotnet Logo](/Engine/Data/Textures/raylib-cs-small-logo.png)](https://github.com/ChrisDill/Raylib-cs)
 
 
 ## Credit to these people!
-twobitcoder101 - for ![Flat](https://img.shields.io/badge/Flat)
-(https://github.com/twobitcoder101/Flat) a simple physics lib i am currently using in this engine.
-IrishBruse - who created the ![LDtk Monogame](https://github.com/staledonuts/DonutEngine/blob/main/Engine/Data/Textures/LDtk-small-logo.png)
-(https://github.com/IrishBruse/LDtkMonogame) library that i adapted to raylib and this engine.
+twobitcoder101 - for [Flat](https://github.com/twobitcoder101/Flat) a simple physics lib i am currently using in this engine.
+
+IrishBruse - who created the [LDtk Monogame](https://github.com/IrishBruse/LDtkMonogame) library that i adapted to raylib and this engine.
 
 
