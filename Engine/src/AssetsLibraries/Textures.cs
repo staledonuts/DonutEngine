@@ -12,9 +12,11 @@ public static class Textures
     {
         fileExts = new string[] { "*.png", "*.bmp", "*.tga", "*.jpg", "*.gif", "*.qoi*", "*.psd" };
         textureLibrary = new();
+        filePaths = new();
     }
     static readonly string[] fileExts;
     static readonly Dictionary<string, Texture2D> textureLibrary;
+    static readonly Dictionary<string, string> filePaths;
 
     /// <summary>
     /// Try to load all Textures into your library.
@@ -58,7 +60,8 @@ public static class Textures
         {
             string name = Path.GetFileNameWithoutExtension(File);
             Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
-            textureLibrary.TryAdd(name, Raylib.LoadTexture(File));
+            textureLibrary.TryAdd(name, new());
+            filePaths.TryAdd(name, File);
         }
     }
     
@@ -68,26 +71,18 @@ public static class Textures
         try
         {
             textureLibrary.TryGetValue(textureName, out texture);
+            if(!Raylib.IsTextureReady(texture))
+            {
+                Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, textureName+" was not loaded.");
+                filePaths.TryGetValue(textureName, out string toLoadString);
+                texture = Raylib.LoadTexture(toLoadString);
+            }
             return texture;
         }
         catch
         {
             textureLibrary.TryGetValue("empty", out texture);
             return texture;
-        }
-    }
-
-    public static bool TryGetTexture(string textureName, out Texture2D tex)
-    {
-        try
-        {
-            textureLibrary.TryGetValue(textureName, out tex);
-            return true;
-        }
-        catch
-        {
-            textureLibrary.TryGetValue("empty", out tex);
-            return false;
         }
     }
 

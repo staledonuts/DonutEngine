@@ -1,9 +1,9 @@
 namespace Engine.Systems.LDtk.Parsing;
 using System.Text.Json;
 
-
+/*
 /// <summary> LDtkLevelReader. </summary>
-public class LDtkLevelReader : ContentTypeReader<LDtkLevel>
+public class LDtkLevelReader //: ContentTypeReader<LDtkLevel>
 {
     /// <summary> Read. </summary>
     /// <param name="input"> The ContentReader. </param>
@@ -13,4 +13,4 @@ public class LDtkLevelReader : ContentTypeReader<LDtkLevel>
     {
         return existingInstance ?? JsonSerializer.Deserialize<LDtkLevel>(input.ReadString(), Constants.SerializeOptions)!;
     }
-}
+}*/

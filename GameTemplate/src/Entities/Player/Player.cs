@@ -5,7 +5,6 @@ using Engine.Systems;
 using Engine.Systems.FSM;
 using Engine.Systems.SceneSystem;
 using Engine.Utils;
-using Template.Entities.FSM;
 
 namespace Template;
 

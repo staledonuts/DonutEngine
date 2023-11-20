@@ -1,4 +1,5 @@
-namespace Engine.Systems.LDtk.Parsing;
+/*namespace Engine.Systems.LDtk.Parsing;
+using Engine.Systems.LDtk;
 using System.Text.Json;
 
 /// <summary> LDtkFileReader. </summary>
@@ -10,6 +11,6 @@ public class LDtkFileReader : LDtkFile
     /// <returns> The LDtkFile read from the content pipeline. </returns>
     protected override LDtkFile Read(LDtkFile fileString)
     {
-        return existingInstance ?? JsonSerializer.Deserialize<LDtkFile>(input.ReadString(), Constants.SerializeOptions)!;
+        return fileString ?? JsonSerializer.Deserialize<LDtkFile>(input.ReadString(), Constants.SerializeOptions)!;
     }
-}
+}*/

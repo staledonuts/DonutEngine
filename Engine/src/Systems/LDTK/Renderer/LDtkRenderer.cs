@@ -9,7 +9,7 @@ using Engine.Assets;
 using Engine.Utils;
 using Raylib_cs;
 
-
+/*
 /// <summary>
 /// Renderer for the ldtkWorld, ldtkLevel, intgrids and entities.
 /// This can all be done in your own class if you want to reimplement it and customize it differently
@@ -45,8 +45,10 @@ public class LDtkRenderer
             return;
         }
 
-        RenderedLevel renderLevel = new();
-        renderLevel.Layers = RenderLayers(level);
+        RenderedLevel renderLevel = new()
+        {
+            Layers = RenderLayers(level)
+        };
         PrerenderedLevels.Add(level.Identifier, renderLevel);
     }
 
@@ -212,3 +214,4 @@ public class LDtkRenderer
     }
 
 }
+*/
