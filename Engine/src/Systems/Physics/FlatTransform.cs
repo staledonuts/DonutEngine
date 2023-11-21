@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Engine.FlatPhysics
 {
-    internal readonly struct FlatTransform
+    internal readonly struct FlatTransform : IEquatable<FlatTransform>
     {
         public readonly float PositionX;
         public readonly float PositionY;
@@ -33,6 +33,11 @@ namespace Engine.FlatPhysics
             return new Vector2(
                 transform.Cos * v.X - transform.Sin * v.Y + transform.PositionX, 
                 transform.Sin * v.X + transform.Cos * v.Y + transform.PositionY);
+        }
+
+        public bool Equals(FlatTransform other)
+        {
+            throw new NotImplementedException();
         }
     }
 }

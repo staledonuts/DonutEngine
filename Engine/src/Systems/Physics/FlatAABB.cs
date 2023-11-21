@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Engine.FlatPhysics
 {
-    public readonly struct FlatAABB
+    public readonly struct FlatAABB : IEquatable<FlatAABB>
     {
         public readonly Vector2 Min;
         public readonly Vector2 Max;
@@ -18,6 +18,11 @@ namespace Engine.FlatPhysics
         {
             this.Min = new Vector2(minX, minY);
             this.Max = new Vector2(maxX, maxY);
+        }
+
+        public bool Equals(FlatAABB other)
+        {
+            throw new NotImplementedException();
         }
     }
 }
