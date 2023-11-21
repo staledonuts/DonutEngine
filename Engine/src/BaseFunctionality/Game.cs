@@ -21,13 +21,11 @@ public class Game
     {
         Settings.CheckSettings();
         EngineArgParser.ArgInput(args);
-        InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, windowName);
-        SetTargetFPS(Settings.graphicsSettings.TargetFPS);
-        DonutLogging.SetLogging();
-        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);
+        App.Initialize();
         InputEventSystem.Initialize();
         InitSystems();
         SetupGame();
+        SetWindowTitle(windowName);
         MainLoop();
         ShutdownEngine();
     }
@@ -65,12 +63,11 @@ public class Game
     {
         while (!WindowShouldClose())
         {
+            //App.UpdateApp();
             //Physics, Player logic and so forth. Before draw.
             UpdateLoop();
-
             //All draw logic.
             DrawUpdate();
-            
             //Camera and less priority nesseccary things go here.
             LateUpdate();
         }

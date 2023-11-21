@@ -12,14 +12,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Sprites\\";
-            }
-            else
-            {
-                return app+"Data/Sprites/";
-            } 
+            #elif OS_LINUX
+                return app+"Data/Sprites/"; 
+            #endif
         }
     }
 
@@ -27,14 +24,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Sound\\SFX\\";
-            }
-            else
-            {
+            #elif OS_LINUX 
                 return app+"Data/Sound/SFX/";
-            } 
+            #endif
         }
     }
 
@@ -42,14 +36,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Sound\\Music\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Sound/Music/";
-            } 
+            #endif
         }
     }
 
@@ -57,14 +48,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Sound\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Sound/";
-            } 
+            #endif
         }
     }
 
@@ -72,14 +60,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Mesh\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Mesh/";
-            } 
+            #endif 
         }
     }
 
@@ -87,14 +72,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Scenes\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Scenes/";
-            } 
+            #endif 
         }
     }
 
@@ -102,14 +84,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Textures\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Textures/";
-            } 
+            #endif 
         }
     }
 
@@ -117,14 +96,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Font\\";
-            }
-            else
-            {
-                return app+"Data/Font/";
-            } 
+            #elif OS_LINUX
+                return app+"Data/Font/"; 
+            #endif
         }
     }
 
@@ -132,14 +108,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Shaders\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Shaders/";
-            } 
+            #endif 
         }
     }
 
@@ -147,14 +120,11 @@ public static class Paths
     {
         get
         {
-            if(OperatingSystem.IsWindows())
-            {
+            #if OS_WINDOWS
                 return app+"Data\\Bsp\\";
-            }
-            else
-            {
+            #elif OS_LINUX
                 return app+"Data/Bsp/";
-            } 
+            #endif 
         }
     }
 }

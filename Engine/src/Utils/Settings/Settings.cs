@@ -1,10 +1,10 @@
 using System.Numerics;
+using Engine.Assets;
 using Raylib_cs;
 
 namespace Engine
 {
     using System.IO;
-    using Engine.Logging;
     using Engine.Systems.Containers;
     using Newtonsoft.Json;
 
@@ -176,7 +176,7 @@ namespace Engine.Systems.Containers
 
         public void ApplyAudioSettings()
         {
-            //SoundEffect.MasterVolume = audioSettings.SfxVolume;
+            AudioControl.SetMasterVolume();
             //MediaPlayer.Volume = audioSettings.MusicVolume;
         }
     }
@@ -189,12 +189,14 @@ namespace Engine.Systems.Containers
             SplashScreenLength = 2f;
             Windowname = "DonutEngine";
             Debugging = true;
+            Focused = true;
         }
 
         public bool WriteTraceLog { get; set; }
         public float SplashScreenLength { get; set; }
         public bool Debugging { get; set; }
         public string Windowname { get; set; }
+        public bool Focused { get; set; }
 
     }
 

@@ -1,7 +1,8 @@
 using CommandLine;
 using CommandLine.Text;
-
 namespace Engine;
+
+
 
 /// <summary>
 /// This is where we parse the different CLI arguments like enabling the writing of Logs.
