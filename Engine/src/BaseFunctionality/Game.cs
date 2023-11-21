@@ -72,23 +72,23 @@ public class Game
             LateUpdate();
         }
 
-        static void UpdateLoop()
-        {
-            EngineSystems.Update();
-        }
+    }
+    static void UpdateLoop()
+    {
+        EngineSystems.Update();
+    }
 
-        static void DrawUpdate()
-        {
-            BeginDrawing();
-            Backgrounds.DrawBackground();
-            EngineSystems.DrawUpdate();
-            EndDrawing();
-        }
+    static void DrawUpdate()
+    {
+        BeginDrawing();
+        Backgrounds.DrawBackground();
+        EngineSystems.DrawUpdate();
+        EndDrawing();
+    }
 
-        static void LateUpdate()
-        {
-            EngineSystems.LateUpdate();
-        }
+    static void LateUpdate()
+    {
+        EngineSystems.LateUpdate();
     }
 }
 

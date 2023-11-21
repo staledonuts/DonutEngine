@@ -35,10 +35,7 @@ public static class App
         }*/
     }
 
-    static void Mobile()
-    {
 
-    }
 
 
 }
