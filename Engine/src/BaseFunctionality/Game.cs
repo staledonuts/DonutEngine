@@ -6,7 +6,6 @@ using Engine.Logging;
 using Engine.Assets;
 using Engine.Systems.SceneSystem;
 using Engine.Systems.UI.Skeleton;
-using Engine.Systems.Particles;
 using Engine.Utils;
 using Engine;
 
@@ -41,7 +40,6 @@ public class Game
         Textures.InitTextureLibrary();
         Fonts.InitFontLibrary();
         AudioControl.InitAudioControl();
-        EngineSystems.AddSystem(new ParticleManager<ParticleState>(1024 * Settings.graphicsSettings.MaximumParticles, ParticleState.UpdateParticle));
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
         //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.BLANK, Color.BLANK, Color.GRAY, Color.DARKBLUE, Color.DARKGRAY, Color.GRAY, Color.SKYBLUE, Color.DARKGRAY, Fonts.GetFont("PixelOperator"), 24, 1)));
