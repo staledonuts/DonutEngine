@@ -75,7 +75,9 @@ public static class Textures
             {
                 Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, textureName+" was not loaded.");
                 filePaths.TryGetValue(textureName, out string toLoadString);
-                texture = Raylib.LoadTexture(toLoadString);
+                textureLibrary.Remove(textureName);
+                textureLibrary.Add(textureName, Raylib.LoadTexture(toLoadString));
+                textureLibrary.TryGetValue(textureName, out texture);
             }
             return texture;
         }
