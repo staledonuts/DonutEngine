@@ -239,4 +239,9 @@ public static class GameMath
 		return noiseData;
 	}
 
+    public static float RadiansToDegrees(float radians)
+    {
+        return radians * (float)(180 / Math.PI);
+    }
+
 }

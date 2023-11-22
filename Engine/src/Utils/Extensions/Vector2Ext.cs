@@ -64,9 +64,9 @@ public static class Vector2Ext
         return (float)Math.Atan2(vector.Y, vector.X);
     }
 
-    public static float ToDegrees(this Vector2 vector2) 
-    { 
-        return 360 - (GameMath.Atan2(vector2.X, vector2.Y) * GameMath.Rad2Deg * GameMath.Sign(vector2.X)); 
+    public static float ToDegrees(this Vector2 vector)
+    {
+        return GameMath.RadiansToDegrees(vector.ToAngle());
     }
 
 
