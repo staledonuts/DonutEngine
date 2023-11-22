@@ -241,7 +241,7 @@ public static class GameMath
 
     public static float RadiansToDegrees(float radians)
     {
-        return radians * (180f / MathF.PI);
+        return radians * 180f / Pi;
     }
 
 }
