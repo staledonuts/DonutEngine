@@ -49,8 +49,8 @@ public class Logo : Scene
     }
     public override void UnloadScene()
     {
-        Textures.UnloadTexture("DeadDonut-Logo");       
-        Textures.UnloadTexture("raylib-cs");  
+        Textures.UnloadTexture("DeadDonut-Logo");
+        Textures.UnloadTexture("raylib-cs");
     }
 
 }

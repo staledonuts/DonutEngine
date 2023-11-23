@@ -9,24 +9,25 @@ public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
     {
         get
         {
-            return new(Raylib.GetRenderWidth(), Raylib.GetRenderHeight());
+            return RaylibHelper.ScreenSize;
         }
     }
     public List<Container> Containers { get; private set; }
-    public Style GlobalStyle { get; set; }
+    public static Style GlobalStyle { get; private set; }
+    bool empty = true;
 
     public SkeletonUISystem(Style global_style) 
     {
-        GlobalStyle = global_style;
+        SkeletonUISystem.GlobalStyle = global_style;
         Containers = new List<Container>();
     }
 
     public override void Initialize()
     {
-        AddContainer(new SettingsWindow(Vector2.Zero, new(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight), GlobalStyle));
+        //AddContainer(new SettingsWindow(Vector2.Zero, new(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight), GlobalStyle));
     }
 
-    // Add a container to the interface if the contianer isn't already a child of the interface
+    // Add a container to the interface if the container isn't already a child of the interface
     public bool AddContainer(Container c) 
     {
         if (Containers.Contains(c))
@@ -36,6 +37,7 @@ public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
 
         c.Parent = this;
         Containers.Add(c);
+        if(empty) { empty = false; }
         c.Initialize();
         return true;
     }
@@ -57,48 +59,55 @@ public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
     // Update all containers and their elements
     public void Update() 
     {
-        // If GlobalStyle is set, make sure it's applied to all children
-        if (GlobalStyle is not null) 
+        if(!empty)
         {
-			foreach (var C in Containers) 
+            // If GlobalStyle is set, make sure it's applied to all children
+            if (GlobalStyle is not null) 
             {
-                // Container
-                if (C.Active && !C.IgnoreGlobalStyle && C.Style != GlobalStyle)
+                foreach (var C in Containers) 
                 {
-                    C.Style = GlobalStyle;
+                    // Container
+                    if (C.Active && !C.IgnoreGlobalStyle && C.Style != GlobalStyle)
+                    {
+                        C.Style = GlobalStyle;
+                    }
+
+                    // Widgets
+                    foreach (var W in C.Widgets) 
+                    {
+                        if (!W.IgnoreGlobalStyle && W.Style != GlobalStyle)
+                        {
+                            W.Style = GlobalStyle;
+                        }
+                    }
                 }
 
-                // Widgets
-			    foreach (var W in C.Widgets) 
+            }
+            foreach (var C in Containers) 
+            {
+                if (C.Active)
                 {
-                    if (!W.IgnoreGlobalStyle && W.Style != GlobalStyle)
-                    {
-                        W.Style = GlobalStyle;
-                    }
-				}
-		    }
+                    C.Update();
+                }
+            }
         }
 
         // Update all containers and their elements
-        foreach (var C in Containers) 
-        {
-            if (C.Active)
-            {
-			    C.Update();
-            }
-        }
     }
 
     // Draw all containers and their elements
     public void DrawUpdate() 
     {
-        foreach (var C in Containers) 
+        if(!empty)
         {
-            if (C.Active)
+            foreach (var C in Containers) 
             {
-			    C.Draw();
+                if (C.Active)
+                {
+                    C.Draw();
+                }
             }
-	    }
+        }
     }
 
     public override void Shutdown()

@@ -27,7 +27,7 @@ public class Container {
 	public bool IgnoreGlobalStyle { get; set; } = false;
 
 
-	public Container(Vector2 position, Vector2 size, Style style, float? margin=null, float? padding=null, float? spacing=null) 
+	public Container(Vector2 position, Vector2 size, Style style, bool active = true, float? margin=null, float? padding=null, float? spacing=null) 
 	{
 		Position = position;
 		Size = size;
@@ -35,12 +35,13 @@ public class Container {
 		Padding = padding ?? 5.0f;
 		Spacing = spacing ?? 5.0f;
 		Style = style;
+		Active = active;
 
 		Widgets = new List<Widget>();
 	}
 
 	// Add a widget to this container if the widget isn't already a child of this container
-	public bool AddWidget(Widget w) 
+	public bool AddWidget(Widget w, bool active = true) 
 	{
 		if (Widgets.Contains(w))
 		{
@@ -50,6 +51,7 @@ public class Container {
 		
 		Raylib.TraceLog(TraceLogLevel.LOG_INFO , $"Added "+w.GetType().Name+" widget!");
 		w.Parent = this;
+		w.Active = active;
 		Widgets.Add(w);
 		return true;
     }

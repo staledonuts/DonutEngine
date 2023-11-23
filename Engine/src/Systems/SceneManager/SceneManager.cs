@@ -75,10 +75,18 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
     public void SwitchTo(Scene Scene)
     {
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Loading new level");
-        _current.UnloadScene();
-        _current = Scene ?? Empty.Scene;
-        _current.InitScene();
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Level Loaded");
+        try
+        {
+            _current.UnloadScene();
+            _current = Scene;
+            _current.InitScene();
+            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Level Loaded");
+        }
+        catch(Exception e)
+        {
+            _current = Empty.Scene;
+            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, "Level Loading Failed: "+e);
+        }
     }
 
     public override void Initialize()

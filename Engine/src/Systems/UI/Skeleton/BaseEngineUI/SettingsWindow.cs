@@ -8,12 +8,13 @@ using Skeleton;
 
 public class SettingsWindow : Container
 {
-    Style style1;
+    Style style;
     public SettingsWindow
     (
         Vector2 position, 
         Vector2 size, 
-        Style style, 
+        Style style,
+        bool active = true, 
         float? margin = null, 
         float? padding = null, 
         float? spacing = null
@@ -23,15 +24,16 @@ public class SettingsWindow : Container
         position,
         size,
         style,
+        active,
         margin,
         padding,
         spacing 
     )
-    { style1 = style; Active = true; }
+    { this.style = style; Active = true; }
 
     public override void Initialize()
     {
-        AddWidget(new Label("Settings", style1));
+        AddWidget(new Label("Settings", style));
         base.Initialize();
     }
 }

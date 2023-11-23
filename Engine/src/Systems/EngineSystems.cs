@@ -114,8 +114,14 @@ public static class EngineSystems
 }
 public abstract class SystemClass
 {
-    public abstract void Initialize();
-    public abstract void Shutdown();
+    public virtual void Initialize()
+    {
+
+    }
+    public virtual void Shutdown()
+    {
+
+    }
 }
 
 public interface IUpdateSys
