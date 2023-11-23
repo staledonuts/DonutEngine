@@ -24,7 +24,7 @@ public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
 
     public override void Initialize()
     {
-        //AddContainer(new SettingsWindow(Vector2.Zero, new(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight), GlobalStyle));
+        
     }
 
     // Add a container to the interface if the container isn't already a child of the interface
