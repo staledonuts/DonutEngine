@@ -66,8 +66,7 @@ public class MusicTrack : IDisposable
 
     public void Dispose(bool disposing)
     {
-        Dispose(disposing: true);
-        if (isLoaded)
+        if (isLoaded && disposing)
         {
             UnloadMusicStream(music);
             isLoaded = false;

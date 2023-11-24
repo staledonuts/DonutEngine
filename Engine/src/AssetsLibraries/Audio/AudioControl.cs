@@ -6,34 +6,34 @@ using Engine.Assets.Audio;
 using Engine.Systems;
 namespace Engine.Assets;
 
-public static class AudioControl
+public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 {
     
-    private static Dictionary<string, List<Sound>> soundInstances;
-    private static Dictionary<string, SingleSoundEffect> SoundsLibrary { get; set; }
-    private static Dictionary<string, MusicTrack> MusicLibrary { get; set; }
-    private static MusicTrack currentMusic;
-    private static Random random;
-    private static string currentSongName;
+    private Dictionary<string, List<SoundEffect>> soundInstances;
+    private Dictionary<string, SoundEffect> SoundsLibrary { get; set; }
+    private Dictionary<string, MusicTrack> MusicLibrary { get; set; }
+    private MusicTrack currentMusic;
+    private Random random;
+    private string currentSongName;
 
-    static AudioControl()
+    public AudioControl()
     {
-        soundInstances = new Dictionary<string, List<Sound>>();
+        soundInstances = new Dictionary<string, List<SoundEffect>>();
         SoundsLibrary = new();
         MusicLibrary = new();
         random = new();
     }
-    public static void InitAudioControl()
+    public override void Initialize()
     {
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
         InitAudioDevice();
         InitAudioLibrary();
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
-    public static void ReloadAudioLibrary()
+    public void ReloadAudioLibrary()
     {
         Raylib.StopMusicStream(currentMusic.Music);
-        foreach(KeyValuePair<string, SingleSoundEffect> sfx in SoundsLibrary!)
+        foreach(KeyValuePair<string, SoundEffect> sfx in SoundsLibrary!)
         {
             sfx.Value.Dispose();
         }
@@ -41,20 +41,20 @@ public static class AudioControl
         {
             music.Value.Dispose();
         }
-        SoundsLibrary = new Dictionary<string, SingleSoundEffect>();
+        SoundsLibrary = new Dictionary<string, SoundEffect>();
         MusicLibrary = new Dictionary<string, MusicTrack>();
         InitAudioLibrary();
     }
-    public static void InitAudioLibrary()
+    public void InitAudioLibrary()
     {
         LoadSoundEffectsLib();
         LoadMusicTrackLib();
     }
-    public static void SetMasterVolume()
+    public void SetMasterVolume()
     {
         Raylib.SetMasterVolume(Settings.audioSettings.MasterVolume);
     }
-    static void LoadMusicTrackLib()
+    void LoadMusicTrackLib()
     {
         try
         {
@@ -78,7 +78,7 @@ public static class AudioControl
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
         }
     }
-    static void LoadSoundEffectsLib()
+    void LoadSoundEffectsLib()
     {
         try
         {
@@ -88,7 +88,7 @@ public static class AudioControl
             {
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up SFX Library ]------"); }
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"SoundDef.json");
-                SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, SingleSoundEffect>>(JsonData);
+                SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, SoundEffect>>(JsonData);
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ SFX Library Setup Done ]------"); }
             }
             catch (Exception e)
@@ -101,37 +101,37 @@ public static class AudioControl
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, e.Message);
         }
     }
-    static void CheckSoundInstances()
+    void CheckSoundInstances()
     {
         if(soundInstances != null)
         {
-            foreach(KeyValuePair<string, List<Sound>> sfx in soundInstances)
+            foreach(KeyValuePair<string, List<SoundEffect>> sfx in soundInstances)
             {
-                sfx.Value.RemoveAll(snd => !IsSoundPlaying(snd));
+                sfx.Value.RemoveAll(snd => !IsSoundPlaying(snd.Sound));
             }
         }
     }
-    static void Update()
+    public void Update()
     {
         CheckSoundInstances();
     }
-    static void LateUpdate()
+    public void LateUpdate()
     {
         if(currentMusic != null)
         {
             UpdateMusicStream(currentMusic.Music);
         }
     }
-    public static void Shutdown()
+    public override void Shutdown()
     {
-        foreach(KeyValuePair<string, SingleSoundEffect> key in SoundsLibrary)
+        foreach(KeyValuePair<string, SoundEffect> key in SoundsLibrary)
         {
             key.Value.Dispose();
         }
         CloseAudioDevice();
     }
     #region Music
-    public static void PlayMusic(string name) 
+    public void PlayMusic(string name) 
     {
         MusicTrack musicTrack;
         if (MusicLibrary.TryGetValue(name, out musicTrack)) 
@@ -147,11 +147,11 @@ public static class AudioControl
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Invalid song name: {name}");
         }
     }
-    public static void FadeOutCurrentMusic()
+    public void FadeOutCurrentMusic()
     {
         
     }
-    public static IEnumerable<Music> CrossFadeOut(Music music)
+    public IEnumerable<Music> CrossFadeOut(Music music)
     {
         float elapsedTime = 0;
         float waitTime = 3f;
@@ -162,7 +162,7 @@ public static class AudioControl
         }
         yield return music;
     }
-    public static IEnumerable<Music> CrossFadeIn(Music music)
+    public IEnumerable<Music> CrossFadeIn(Music music)
     {
         float elapsedTime = 0;
         float waitTime = 3f;
@@ -173,7 +173,7 @@ public static class AudioControl
         }
         yield return music;
     }
-    public static void ToggleMusic()
+    public void ToggleMusic()
     {
         if(IsMusicStreamPlaying(currentMusic.Music))
         {
@@ -188,18 +188,18 @@ public static class AudioControl
             Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Music Resumed");
         }
     }
-    public static void StopMusic() 
+    public void StopMusic() 
     {
         StopMusicStream(currentMusic.Music);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Stopping Music: "+currentMusic.Music.ToString());
     }
-    public static void SetMusicVolume(float volume) 
+    public void SetMusicVolume(float volume) 
     {
         currentMusic.SetVolume(volume);
         SetMusicVolume(currentMusic.Volume);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"Current song volume set to: {volume}");
     }
-    public static void UnloadMusic(string name) 
+    public void UnloadMusic(string name) 
     {
         MusicTrack music;
         if (MusicLibrary.TryGetValue(name, out music)) 
@@ -211,62 +211,40 @@ public static class AudioControl
     #endregion
 
     #region SFX
-    public static void PlaySFX(Sound sfx, float minPitch, float maxPitch)
+    public void PlaySFX(Sound sfx, float minPitch, float maxPitch)
     {
         Raylib.SetSoundVolume(sfx, Settings.audioSettings.SfxVolume);
         SetSoundPitch(sfx, random.NextSingle() * (maxPitch - minPitch) + minPitch);
         PlaySound(sfx);
     }
-    static void PlaySFX(string name, MultiSoundEffect multiSoundEffect)
+    
+    void PlaySFX(string name, SoundEffect soundEffect)
     {
         // If this sound effect is not in the dictionary yet, add it
         if (!soundInstances.ContainsKey(name))
         {
-            soundInstances[name] = new List<Sound>();
+            soundInstances[name] = new List<SoundEffect>();
         }
 
         // Only play the sound if the maximum number of instances has not been reached
-        if (soundInstances[name].Count < multiSoundEffect.MaxInstances)
+        if (soundInstances[name].Count <= soundEffect.MaxInstances)
         {
             // Add this instance to the list
-            soundInstances[name].Add(multiSoundEffect.Sound);
-            Raylib.SetSoundVolume(multiSoundEffect.Sound, Settings.audioSettings.SfxVolume);
-            Raylib.SetSoundPitch(multiSoundEffect.Sound, random.NextSingle() * (multiSoundEffect.MaxPitch - multiSoundEffect.MinPitch) + multiSoundEffect.MinPitch);
-            Raylib.PlaySound(multiSoundEffect.Sound);
-        }
-
-    }
-    static void PlaySFX(string name, SingleSoundEffect singleSoundEffect)
-    {
-        // If this sound effect is not in the dictionary yet, add it
-        if (!soundInstances.ContainsKey(name))
-        {
-            soundInstances[name] = new List<Sound>();
-        }
-
-        // Only play the sound if the maximum number of instances has not been reached
-        if (soundInstances[name].Count < singleSoundEffect.MaxInstances)
-        {
-            // Add this instance to the list
-            soundInstances[name].Add(singleSoundEffect.Sound);
-            Raylib.SetSoundVolume(singleSoundEffect.Sound, Settings.audioSettings.SfxVolume);
-            Raylib.SetSoundPitch(singleSoundEffect.Sound, random.NextSingle() * (singleSoundEffect.MaxPitch - singleSoundEffect.MinPitch) + singleSoundEffect.MinPitch);
-            Raylib.PlaySound(singleSoundEffect.Sound);
+            Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
+            Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
+            Raylib.PlaySound(soundEffect.Sound);
+            soundInstances[name].Add(soundEffect);
         }
         else
         {
             Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"SoundEffect {name} cannot be played. Too many instances playing");
         }
     }
-    public static void PlaySFX(string name) 
+    public void PlaySFX(string name) 
     {
-        if (SoundsLibrary!.TryGetValue(name, out SingleSoundEffect sound)) 
+        if (SoundsLibrary!.TryGetValue(name, out SoundEffect sound)) 
         {
-            /*if(sound is MultiSoundEffect ms)
-            {
-                PlaySFX(name, ms);
-            }*/
-            /*else*/ if(sound is SingleSoundEffect ss)
+            if(sound is SoundEffect ss)
             {
                 PlaySFX(name, ss);
             }
@@ -276,25 +254,15 @@ public static class AudioControl
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"No SoundEffect with name {name} found");
         }
     }
-    public static void StopSFX(string name)
+    public void StopSFX(string name)
     {
-        if(SoundsLibrary!.TryGetValue(name, out SingleSoundEffect sound))
+        if(SoundsLibrary!.TryGetValue(name, out SoundEffect sound))
         {
-            /*if(sound is MultiSoundEffect ms)
+            
+            StopSound(sound.Sound);
+            if (soundInstances.ContainsKey(name))
             {
-                StopSound(ms.Sound);
-                if (soundInstances.ContainsKey(name))
-                {
-                    soundInstances[name].Remove(ms.Sound);
-                }
-            }
-            else*/ if(sound is SingleSoundEffect ss)
-            {
-                StopSound(ss.Sound);
-                if (soundInstances.ContainsKey(name))
-                {
-                    soundInstances[name].Remove(ss.Sound);
-                }
+                soundInstances[name].Remove(sound);
             }
         }
             // If this sound effect is in the dictionary, remove the sound instance

@@ -39,7 +39,7 @@ public class Game
     {
         Textures.InitTextureLibrary();
         Fonts.InitFontLibrary();
-        AudioControl.InitAudioControl();
+        EngineSystems.AddSystem(new AudioControl());
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
         //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.BLANK, Color.BLANK, Color.GRAY, Color.DARKBLUE, Color.DARKGRAY, Color.GRAY, Color.SKYBLUE, Color.DARKGRAY, Fonts.GetFont("PixelOperator"), 24, 1)));

@@ -1,10 +1,11 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
+using Engine.Systems;
 
 namespace Engine.Assets.Audio;
 
-public class SingleSoundEffect : IDisposable
+public class SoundEffect : IDisposable
 {
     [JsonProperty] float Volume;
     [JsonProperty] public float MaxPitch { get; private set; }
@@ -28,7 +29,7 @@ public class SingleSoundEffect : IDisposable
         }
     }
 
-    public SingleSoundEffect(float volume, float minPitch, float maxPitch, int maxInstances, string fileName)
+    public SoundEffect(float volume, float minPitch, float maxPitch, int maxInstances, string fileName)
     {
         this.Volume = volume;
         this.MaxPitch = maxPitch;
@@ -43,7 +44,7 @@ public class SingleSoundEffect : IDisposable
         {
             await InitSoundEffectAsync();
         }
-        AudioControl.PlaySFX(sound, MinPitch, MaxPitch);
+        EngineSystems.GetSystem<AudioControl>().PlaySFX(sound, MinPitch, MaxPitch);
     }
 
     public async Task<Sound> InitSoundEffectAsync()
@@ -72,8 +73,7 @@ public class SingleSoundEffect : IDisposable
 
     public void Dispose(bool disposing)
     {
-        Dispose(disposing: true);
-        if (isLoaded)
+        if (isLoaded && disposing)
         {
             UnloadSound(sound);
             isLoaded = false;

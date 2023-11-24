@@ -10,7 +10,7 @@ using System.IO;
 
 public class SfxDefCreator
 {
-    static Dictionary<string, SingleSoundEffect> soundsLibrary = new();
+    static Dictionary<string, SoundEffect> soundsLibrary = new();
     public void CreateSoundDef()
     {
         string jsonString = JsonConvert.SerializeObject(soundsLibrary, Formatting.Indented);
@@ -25,7 +25,7 @@ public class SfxDefCreator
             string name = Path.GetFileNameWithoutExtension(file);
             string currentFile = Path.GetFileName(file);
             Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Adding: "+name+" to Sound Library");
-            soundsLibrary.TryAdd(name, new SingleSoundEffect(1, 1f, 1f, 5, currentFile));
+            soundsLibrary.TryAdd(name, new SoundEffect(1, 1f, 1f, 5, currentFile));
         }
     }
 }
