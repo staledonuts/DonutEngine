@@ -43,7 +43,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
     }
 
     Dictionary<Int64, Scene> _Scenes = new();
-    public static Scene _current = Empty.Scene;
+    Scene _current = Empty.Scene;
 
     Scene this[Int64 index]
     {
