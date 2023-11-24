@@ -195,7 +195,7 @@ public static class AudioControl
     }
     public static void SetMusicVolume(float volume) 
     {
-        currentMusic.Volume = volume;
+        currentMusic.SetVolume(volume);
         SetMusicVolume(currentMusic.Volume);
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"Current song volume set to: {volume}");
     }

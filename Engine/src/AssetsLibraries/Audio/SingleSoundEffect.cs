@@ -12,7 +12,7 @@ public class SingleSoundEffect : IDisposable
     [JsonProperty] public int MaxInstances { get; private set; }
     [JsonProperty] string FileName { get; set; }
 
-    private Sound sound;
+    Sound sound;
     [JsonIgnore] bool isLoaded = false;
 
     [JsonIgnore]

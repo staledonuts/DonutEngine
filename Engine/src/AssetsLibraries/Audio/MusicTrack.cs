@@ -6,13 +6,13 @@ namespace Engine.Assets.Audio;
 
 public class MusicTrack : IDisposable
 {
-    [JsonProperty] public float Volume = 0;
+    [JsonProperty] public float Volume { get; private set; }
     [JsonProperty] public bool FadeIn = true;
     [JsonProperty] public bool FadeOut = true;
     [JsonProperty] string FileName { get; set; }
 
-    private Music music;
-    private bool isLoaded = false;
+    Music music;
+    bool isLoaded = false;
 
     [JsonIgnore]
     public Music Music 
@@ -52,6 +52,11 @@ public class MusicTrack : IDisposable
             Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Failed to load Music stream. Exception: {e.Message}");
         }
         return music;        
+    }
+
+    public void SetVolume(float volume)
+    {
+        Volume = volume;
     }
 
     public void Dispose()
