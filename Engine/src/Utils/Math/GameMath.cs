@@ -16,38 +16,50 @@ public static class GameMath
     public static readonly float PiOver4 = 3.1415927f / 4.0f;
     public static readonly float TwoPi = 3.1415927f * 2.0f;
     public static readonly float E = 2.7182817f;
-    public static float Abs(float value) => (float)Math.Abs(value);
-    public static float Acos(float d) => (float)Math.Acos(d);
-    public static float Asin(float d) => (float)Math.Asin(d);
-    public static float Atan(float d) => (float)Math.Atan(d);
-    public static float Atan2(float y, float x) => (float)Math.Atan2(y, x);
-    public static float Ceiling(float a) => (float)Math.Ceiling(a);
-    public static float Cos(float d) => (float)Math.Cos(d);
-    public static float Cosh(float value) => (float)Math.Cosh(value);
-    public static float Exp(float d) => (float)Math.Exp(d);
-    public static float Floor(float d) => (float)Math.Floor(d);
-    public static float IEEERemainder(float x, float y) => (float)Math.IEEERemainder(x, y);
-    public static float Log(float a, float newBase) => (float)Math.Log(a, newBase);
-    public static float Log(float d) => (float)Math.Log(d);
-    public static float Log10(float d) => (float)Math.Log10(d);
-    public static float Max(float val1, float val2) => (float)Math.Max(val1, val2);
-    public static float Min(float val1, float val2) => (float)Math.Min(val1, val2);
-    public static float Pow(float x, float y) => (float)Math.Pow(x, y);
-    public static float Round(float value, int digits, MidpointRounding mode) => (float)Math.Round(value, digits, mode);
-    public static float Round(float value, MidpointRounding mode) => (float)Math.Round(value, mode);
-    public static float Round(float value, int digits) => (float)Math.Round(value, digits);
-    public static float Round(float a) => (float)Math.Round(a);
-    public static int Sign(float value) => Math.Sign(value);
-    public static float Sin(float a) => (float)Math.Sin(a);
-    public static float Sinh(float value) => (float)Math.Sinh(value);
-    public static float Sqrt(float d) => (float)Math.Sqrt(d);
-    public static float Tan(float a) => (float)Math.Tan(a);
-    public static float Tanh(float value) => (float)Math.Tanh(value);
-    public static float Truncate(this float d) => (float)Math.Truncate(d);
-    public static float Magnitude(Vector3 vector) { return (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z); }
-    public static float Distance(float value1, float value2) { return System.Math.Abs(value1 - value2); }
-    public static float Lerp(float value1, float value2, float amount) { return value1 + (value2 - value1) * amount; }
-    public static int IntLerp(byte value1, byte value2, int amount) { return value1 + (value2 - value1) * amount; }
+    public static float Abs(float value) => MathF.Abs(value);
+    public static float Acos(float d) => MathF.Acos(d);
+    public static float Asin(float d) => MathF.Asin(d);
+    public static float Atan(float d) => MathF.Atan(d);
+    public static float Atan2(float y, float x) => MathF.Atan2(y, x);
+    public static float Ceiling(float a) => MathF.Ceiling(a);
+    public static float Cos(float d) => MathF.Cos(d);
+    public static float Cosh(float value) => MathF.Cosh(value);
+    public static float Exp(float d) => MathF.Exp(d);
+    public static float Floor(float d) => MathF.Floor(d);
+    public static float IEEERemainder(float x, float y) => MathF.IEEERemainder(x, y);
+    public static float Log(float a, float newBase) => MathF.Log(a, newBase);
+    public static float Log(float d) => MathF.Log(d);
+    public static float Log10(float d) => MathF.Log10(d);
+    public static float Max(float val1, float val2) => MathF.Max(val1, val2);
+    public static float Min(float val1, float val2) => MathF.Min(val1, val2);
+    public static float Pow(float x, float y) => MathF.Pow(x, y);
+    public static float Round(float value, int digits, MidpointRounding mode) => MathF.Round(value, digits, mode);
+    public static float Round(float value, MidpointRounding mode) => MathF.Round(value, mode);
+    public static float Round(float value, int digits) => MathF.Round(value, digits);
+    public static float Round(float a) => MathF.Round(a);
+    public static int Sign(float value) => MathF.Sign(value);
+    public static float Sin(float a) => MathF.Sin(a);
+    public static float Sinh(float value) => MathF.Sinh(value);
+    public static float Sqrt(float d) => MathF.Sqrt(d);
+    public static float Tan(float a) => MathF.Tan(a);
+    public static float Tanh(float value) => MathF.Tanh(value);
+    public static float Truncate(this float d) => MathF.Truncate(d);
+    public static float Magnitude(Vector3 vector) 
+    { 
+        return MathF.Sqrt(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z); 
+    }
+    public static float Distance(float value1, float value2) 
+    { 
+        return MathF.Abs(value1 - value2); 
+    }
+    public static float Lerp(float value1, float value2, float amount) 
+    { 
+        return value1 + (value2 - value1) * amount; 
+    }
+    public static int IntLerp(byte value1, byte value2, int amount) 
+    { 
+        return value1 + (value2 - value1) * amount; 
+    }
 
     public static T Min<T>(T a, T b) where T : IComparable<T>
 	{
@@ -80,7 +92,10 @@ public static class GameMath
 	}
     
 
-    public static Vector3 Direction(float x, float y, float z) { return new Vector3(x, y, z); }
+    public static Vector3 Direction(float x, float y, float z) 
+    { 
+        return new Vector3(x, y, z); 
+    }
 
     public static Quaternion QuaternionLookAt(Vector3 sourcePoint, Vector3 destPoint)
     {
