@@ -23,7 +23,9 @@ public static class ColorUtil
         float chroma = v - Math.Min(c.X, Math.Min(c.Y, c.Z));
 
         if (chroma == 0f)
+        {
             return new Vector3(0, 0, v);
+        }
 
         float s = chroma / v;
 
@@ -31,13 +33,19 @@ public static class ColorUtil
         {
             float h = (c.Y - c.Z) / chroma;
             if (h < 0)
+            {
                 h += 6;
+            }
             return new Vector3(h, s, v);
         }
         else if (c.Y >= c.Z && c.Y >= c.X)
+        {
             return new Vector3((c.Z - c.X) / chroma + 2, s, v);
+        }
         else
+        {
             return new Vector3((c.X - c.Y) / chroma + 4, s, v);
+        }
     }
 
     public static Color HSVToColor(Vector3 hsv)
@@ -48,18 +56,38 @@ public static class ColorUtil
     public static Color HSVToColor(int h, int s, int v)
     {
         if (h == 0 && s == 0)
+        {
             return new Color(v, v, v, v);
+        }
 
         int c = s * v;
         int x = c * (1 - Math.Abs(h % 2 - 1));
         int m = v - c;
 
-        if (h < 1) return new Color(c + m, x + m, m, v);
-        else if (h < 2) return new Color(x + m, c + m, m, v);
-        else if (h < 3) return new Color(m, c + m, x + m, v);
-        else if (h < 4) return new Color(m, x + m, c + m, v);
-        else if (h < 5) return new Color(x + m, m, c + m, v);
-        else return new Color(c + m, m, x + m, v);
+        if (h < 1) 
+        {
+            return new Color(c + m, x + m, m, v);
+        }
+        else if (h < 2) 
+        {
+            return new Color(x + m, c + m, m, v);
+        }
+        else if (h < 3) 
+        {
+            return new Color(m, c + m, x + m, v);
+        }
+        else if (h < 4) 
+        {
+            return new Color(m, x + m, c + m, v);
+        }
+        else if (h < 5) 
+        {
+            return new Color(x + m, m, c + m, v);
+        }
+        else
+        {
+            return new Color(c + m, m, x + m, v);
+        }
     }
 
     /// <summary>
