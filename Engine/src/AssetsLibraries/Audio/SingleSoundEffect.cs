@@ -6,14 +6,14 @@ namespace Engine.Assets.Audio;
 
 public class SingleSoundEffect : IDisposable
 {
-    [JsonProperty] public float Volume = 0;
-    [JsonProperty] public float MaxPitch = 0;
-    [JsonProperty] public float MinPitch = 0;
-    [JsonProperty] public int MaxInstances = 0;
+    [JsonProperty] float Volume = 0;
+    [JsonProperty] public float MaxPitch { get; private set; }
+    [JsonProperty] public float MinPitch { get; private set; }
+    [JsonProperty] public int MaxInstances { get; private set; }
     [JsonProperty] string FileName { get; set; }
 
     private Sound sound;
-    [JsonIgnore] public bool isLoaded = false;
+    [JsonIgnore] bool isLoaded = false;
 
     [JsonIgnore]
     public Sound Sound 
