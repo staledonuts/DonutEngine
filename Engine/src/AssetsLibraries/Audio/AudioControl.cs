@@ -28,8 +28,6 @@ public static class AudioControl
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Setting up AudioSystem ]------");
         InitAudioDevice();
         InitAudioLibrary();
-        EngineSystems.dUpdate += Update;
-        EngineSystems.dLateUpdate += LateUpdate;
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ AudioSystem Initialized ]------");
     }
     public static void ReloadAudioLibrary()
@@ -126,8 +124,6 @@ public static class AudioControl
     }
     public static void Shutdown()
     {
-        EngineSystems.dUpdate -= Update;
-        EngineSystems.dLateUpdate -= LateUpdate;
         foreach(KeyValuePair<string, SingleSoundEffect> key in SoundsLibrary)
         {
             key.Value.Dispose();

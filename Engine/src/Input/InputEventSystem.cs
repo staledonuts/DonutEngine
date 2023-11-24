@@ -26,7 +26,6 @@ public static class InputEventSystem
 
     public static void Initialize()
     {
-        EngineSystems.dUpdate += UpdateInputEvent;
         Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Initialized Input System");
     }
     // Define a method that raises the event.

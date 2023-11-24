@@ -25,9 +25,6 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public override void Shutdown()
     {
-        EngineSystems.dUpdate -= Update;
-        EngineSystems.dDrawUpdate -= DrawUpdate;
-        EngineSystems.dLateUpdate -= LateUpdate;
         if(_current is not null)
         {
             _current.UnloadScene();

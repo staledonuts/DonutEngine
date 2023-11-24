@@ -13,12 +13,12 @@ public static class EngineSystems
     
 
     private readonly static Dictionary<Type, SystemClass> systems;
-    public delegate void delegateUpdate();
-    public static delegateUpdate dUpdate;
-    public delegate void delegateDrawUpdate();
-    public static delegateDrawUpdate dDrawUpdate;
-    public delegate void delegateLateUpdate();
-    public static delegateLateUpdate dLateUpdate;
+    delegate void delegateUpdate();
+    static delegateUpdate dUpdate;
+    delegate void delegateDrawUpdate();
+    static delegateDrawUpdate dDrawUpdate;
+    delegate void delegateLateUpdate();
+    static delegateLateUpdate dLateUpdate;
 
     public static void AddSystem(SystemClass systemClass)
     {
