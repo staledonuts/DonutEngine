@@ -6,7 +6,7 @@ namespace Engine.Assets.Audio;
 
 public class SingleSoundEffect : IDisposable
 {
-    [JsonProperty] float Volume = 0;
+    [JsonProperty] float Volume;
     [JsonProperty] public float MaxPitch { get; private set; }
     [JsonProperty] public float MinPitch { get; private set; }
     [JsonProperty] public int MaxInstances { get; private set; }
