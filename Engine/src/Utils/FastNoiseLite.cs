@@ -1099,14 +1099,20 @@ public class FastNoiseLite
         float n0, n1, n2;
 
         float a = 0.5f - x0 * x0 - y0 * y0;
-        if (a <= 0) n0 = 0;
+        if (a <= 0) 
+        {
+            n0 = 0;
+        }
         else
         {
             n0 = (a * a) * (a * a) * GradCoord(seed, i, j, x0, y0);
         }
 
         float c = (float)(2 * (1 - 2 * G2) * (1 / G2 - 2)) * t + ((float)(-2 * (1 - 2 * G2) * (1 - 2 * G2)) + a);
-        if (c <= 0) n2 = 0;
+        if (c <= 0) 
+        {
+            n2 = 0;
+        }
         else
         {
             float x2 = x0 + (2 * (float)G2 - 1);
@@ -1207,7 +1213,10 @@ public class FastNoiseLite
                 }
             }
 
-            if (l == 1) break;
+            if (l == 1) 
+            {
+                break;
+            }
 
             ax0 = 0.5f - ax0;
             ay0 = 0.5f - ay0;
