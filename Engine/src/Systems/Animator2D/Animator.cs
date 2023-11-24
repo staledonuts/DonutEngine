@@ -596,9 +596,13 @@ public class Animator
 			PlaybackPosition = 0;
 
 			if (bConstant)
+			{
 				FrameRec.X += Speed * GetFrameTime();
+			}
 			else
+			{
 				FrameRec.X = Lerp(FrameRec.X, Sprite.Width, Speed * GetFrameTime());
+			}
 		}
 	}
 
@@ -607,7 +611,9 @@ public class Animator
 		UnPause();
 
 		if (!bHasStartedPlaying)
+		{
 			bHasStartedPlaying = true;
+		}
 	}
 
 	public void Stop()
@@ -676,7 +682,9 @@ public class Animator
 	public bool IsAtColumn(int ColumnNumber)
 	{
 		if (ColumnNumber < Columns)
+		{
 			return ColumnNumber == CurrentColumn;
+		}
 
 		Console.WriteLine("ERROR from IsAtColumn(): Column does not exist!\n");
 		return false;
@@ -765,10 +773,14 @@ public class Animator
 	public bool IsPlaying()
 	{
 		if (bCanLoop)
+		{
 			return !bPaused;
+		}
 
 		if (!bCanLoop && bContinuous)
+		{
 			return !bIsAnimationFinished;
+		}
 
 		return !bIsAnimationFinished;
 	}

@@ -5,17 +5,17 @@ using Raylib_cs;
 
 public static class GameMath
 {
-    public const float Epsilon = 0.000001f;
-    public const float GoldenRatio = 1.61803398875f;
-    public const float Tau = 6.28318530717959f;
-    public const float Sqrt2 = 1.41421356237f;
-    public const float Rad2Deg = 360f / Tau;
-    public const float Deg2Rad = Tau / 360f;
-    public const float Pi = (float)Math.PI;
-    public const float PiOver2 = (float)(Math.PI / 2.0);
-    public const float PiOver4 = (float)(Math.PI / 4.0);
-    public const float TwoPi = (float)(Math.PI * 2.0);
-    public const float E = (float)Math.E;
+    public static readonly float Epsilon = 0.000001f;
+    public static readonly float GoldenRatio = 1.61803398875f;
+    public static readonly float Tau = 6.28318530717959f;
+    public static readonly float Sqrt2 = 1.41421356237f;
+    public static readonly float Rad2Deg = 360f / Tau;
+    public static readonly float Deg2Rad = Tau / 360f;
+    public static readonly float Pi = 3.1415927f;
+    public static readonly float PiOver2 = 3.1415927f / 2.0f;
+    public static readonly float PiOver4 = 3.1415927f / 4.0f;
+    public static readonly float TwoPi = 3.1415927f * 2.0f;
+    public static readonly float E = 2.7182817f;
     public static float Abs(float value) => (float)Math.Abs(value);
     public static float Acos(float d) => (float)Math.Acos(d);
     public static float Asin(float d) => (float)Math.Asin(d);
@@ -161,14 +161,20 @@ public static class GameMath
         double sSquared = s * s;
 
         if (amount == 0f)
+        {
             result = value1;
+        }
         else if (amount == 1f)
+        {
             result = value2;
+        }
         else
+        {
             result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed +
                 (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared +
                 t1 * s +
                 v1;
+        }
         return (float)result;
     }
 
@@ -230,8 +236,10 @@ public static class GameMath
 
 		float[,] noiseData = new float[width, height];
 	
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) 
+        {
+			for (int y = 0; y < height; y++) 
+            {
 				noiseData[x,y] = (noise.GetNoise(x*size,y*size)+1)/2*power;
 			}
 		}
