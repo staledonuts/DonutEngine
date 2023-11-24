@@ -18,7 +18,7 @@ public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
 
     public SkeletonUISystem(Style global_style) 
     {
-        SkeletonUISystem.GlobalStyle = global_style;
+        GlobalStyle = global_style;
         Containers = new List<Container>();
     }
 

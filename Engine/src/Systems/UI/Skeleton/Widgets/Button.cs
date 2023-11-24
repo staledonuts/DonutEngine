@@ -6,7 +6,8 @@ using Engine.Systems.UI.Skeleton.Events;
 
 namespace Engine.Systems.UI.Skeleton.Widgets;
 
-public class Button : Widget {
+public class Button : Widget 
+{
     public string Text { get; set; }
     public Action? Action { get; set; }
     public bool Toggleable { get; set; }
@@ -24,15 +25,19 @@ public class Button : Widget {
 
     public bool Toggled { get; private set; } = false;
 
-    public Button(string text, Action? action=null, bool? toggle=null, Style? style=null) : base(style) {
+    public Button(string text, Action? action=null, bool? toggle=null, Style? style=null) : base(style) 
+    {
         Text = text;
         Action = action;
         Toggleable = toggle ?? false;
     }
 
-    public override bool FireEvent(Event e) {
-        if (e is MouseLeftEvent) {
-            if (CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) {
+    public override bool FireEvent(Event e) 
+    {
+        if (e is MouseLeftEvent) 
+        {
+            if (CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) 
+            {
                 if (Action is not null) Action.Invoke();
                 if (Toggleable) Toggled = !Toggled;
                 return true;
@@ -42,7 +47,8 @@ public class Button : Widget {
         return base.FireEvent(e);
 	}
 
-    public override void Draw() {
+    public override void Draw() 
+    {
         Color BG = Style.ButtonBackground;
         if (Hovered) BG = Style.ButtonBackgroundHover;
         if (Clicked || Toggled) BG = Style.ButtonBackgroundClick;

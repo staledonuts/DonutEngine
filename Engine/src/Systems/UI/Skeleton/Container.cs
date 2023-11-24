@@ -68,7 +68,9 @@ public class Container {
 		foreach (var W in Widgets) 
 		{
 			if (W.FireEvent(e))
+			{
 				return true;
+			}
 		}
 
 		return false;
@@ -83,7 +85,9 @@ public class Container {
 	public void Update() 
 	{
 		foreach (var W in Widgets)
+		{
 			W.Update();
+		}
     }
 
 	// Draw the container and all child elements

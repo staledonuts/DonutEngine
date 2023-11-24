@@ -4,7 +4,8 @@ using static Raylib_cs.Raylib;
 
 namespace Engine.Systems.UI.Skeleton;
 
-public class Style {
+public class Style 
+{
     // Main
     public Color Background;
     public Color Foreground;
