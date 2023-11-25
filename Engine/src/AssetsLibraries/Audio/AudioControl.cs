@@ -234,20 +234,19 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
             Raylib.PlaySound(soundEffect.Sound);
             soundInstances[name].Add(soundEffect);
+            Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name}");
         }
         else
         {
-            Raylib.TraceLog(TraceLogLevel.LOG_INFO, $"SoundEffect {name} cannot be played. Too many instances playing");
+            
+            //Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, $"SoundEffect {name} cannot be played. Too many instances playing");
         }
     }
     public void PlaySFX(string name) 
     {
         if (SoundsLibrary!.TryGetValue(name, out SoundEffect sound)) 
         {
-            if(sound is SoundEffect ss)
-            {
-                PlaySFX(name, ss);
-            }
+            PlaySFX(name, sound);
         }
         else
         {
