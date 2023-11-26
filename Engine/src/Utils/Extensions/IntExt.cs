@@ -1,10 +1,9 @@
-namespace Engine.Utils;
+namespace Engine.Utils.Extensions;
 using Raylib_cs;
 using System.Numerics;
 
 public static class IntExt
 {
-
 	/// <summary>
 	/// Clamps a number between two values
 	/// </summary>

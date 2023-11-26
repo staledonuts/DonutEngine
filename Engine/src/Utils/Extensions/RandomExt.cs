@@ -1,4 +1,4 @@
-namespace Engine.Utils;
+namespace Engine.Utils.Extensions;
 using Raylib_cs;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 public static class RandomExt
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector2 NextVector2(this Random rand, float minLength, float maxLength)
+    public static Vector2 NextVector2(this System.Random rand, float minLength, float maxLength)
     {
         double theta = rand.NextDouble() * 2 * Math.PI;
         float length = rand.NextFloat(minLength, maxLength);
@@ -14,19 +14,19 @@ public static class RandomExt
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float NextFloat(this Random rand, float minValue, float maxValue)
+    public static float NextFloat(this System.Random rand, float minValue, float maxValue)
     {
         return (float)rand.NextDouble() * (maxValue - minValue) + minValue;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int RandomInteger(this Random rand)
+    public static int RandomInteger(this System.Random rand)
     {
         return rand.Next();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool RandomBooleon(this Random rand)
+    public static bool RandomBooleon(this System.Random rand)
     {
         int value = RandomInteger(rand, 0, 2);
 
@@ -41,7 +41,7 @@ public static class RandomExt
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int RandomInteger(this Random rand, int min, int max)
+    public static int RandomInteger(this System.Random rand, int min, int max)
     {
         if(min == max)
         {
