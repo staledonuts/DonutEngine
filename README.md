@@ -23,4 +23,6 @@ twobitcoder101 - for [Flat](https://github.com/twobitcoder101/Flat) a simple phy
 
 IrishBruse - who created the [LDtk Monogame](https://github.com/IrishBruse/LDtkMonogame) library that i am working on adapting to raylib and this engine.
 
+Shiroechi - For putting together these which im using parts of [Litdex.Random](https://github.com/staledonuts/Litdex.Random)
+
 
