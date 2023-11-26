@@ -1,6 +1,4 @@
-﻿#if NET5_0_OR_GREATER
-using System.Numerics;
-#endif
+﻿using System.Numerics;
 
 namespace Engine.Utils.Random
 {

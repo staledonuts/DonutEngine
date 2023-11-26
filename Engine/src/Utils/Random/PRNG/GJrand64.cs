@@ -25,7 +25,13 @@ namespace Engine.Utils.Random.PRNG;
 		/// <param name="seed4">
 		///	Fourth seed.
 		/// </param>
-		public GJrand64(ulong seed1 = 0xCAFEF00DBEEF5EED, ulong seed2 = 0, ulong seed3 = 0, ulong seed4 = 0)
+		///
+
+		public GJrand64() : this(0xCAFEF00DBEEF5EED,0,0,0) { }
+		public GJrand64(ulong seed1) : this(seed1,0,0,0) { }
+		public GJrand64(ulong seed1, ulong seed2) : this(seed1, seed2, 0, 0) { }
+		public GJrand64(ulong seed1, ulong seed2, ulong seed3) : this(seed1, seed2, seed3, 0) { }
+		public GJrand64(ulong seed1, ulong seed2, ulong seed3, ulong seed4)
 		{
 			this._State = new ulong[4];
 			this.SetSeed(seed1, seed2, seed3, seed4);
@@ -89,12 +95,6 @@ namespace Engine.Utils.Random.PRNG;
 		{
 			using (var rng = RandomNumberGenerator.Create())
 			{
-#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-			
-#else
-
-#endif
-#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
 				Span<byte> span = new byte[32];
 				rng.GetNonZeroBytes(span);
 				this.SetSeed(
@@ -102,15 +102,6 @@ namespace Engine.Utils.Random.PRNG;
 					seed2: BinaryPrimitives.ReadUInt64LittleEndian(span.Slice(8)),
 					seed3: BinaryPrimitives.ReadUInt64LittleEndian(span.Slice(16)),
 					seed4: BinaryPrimitives.ReadUInt64LittleEndian(span.Slice(24)));
-#else
-				var bytes = new byte[32];
-				rng.GetNonZeroBytes(bytes);
-				this.SetSeed(
-					seed1: BitConverter.ToUInt64(bytes, 0),
-					seed2: BitConverter.ToUInt64(bytes, 8),
-					seed3: BitConverter.ToUInt64(bytes, 16),
-					seed4: BitConverter.ToUInt64(bytes, 24));
-#endif
 			}
 		}
 

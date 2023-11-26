@@ -1,4 +1,4 @@
-﻿namespace Engine.Utils.Random;
+﻿namespace Engine.Utils;
 
 	/// <summary>
 	///	Provide 128-bit math operations

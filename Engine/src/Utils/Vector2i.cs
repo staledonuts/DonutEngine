@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Engine.Utils;
+using Engine.Utils.Extensions;
 
 namespace Engine.Utils;
 
