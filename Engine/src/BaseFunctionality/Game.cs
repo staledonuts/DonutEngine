@@ -8,10 +8,13 @@ using Engine.Systems.SceneSystem;
 using Engine.Systems.UI.Skeleton;
 using Engine.Utils;
 using Engine;
+using System.Numerics;
 
 public class Game
 {
     readonly string windowName;
+    protected static Shader shader;
+    protected static RenderTexture2D target;
     public Game(string gamename)
     {
         windowName = gamename;
@@ -23,6 +26,8 @@ public class Game
         App.Initialize();
         InputEventSystem.Initialize();
         InitSystems();
+        shader = Raylib.LoadShader(null ,Paths.ShaderPath+"glsl330/bloom.fs");
+        target = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         SetupGame();
         SetWindowTitle(windowName);
         MainLoop();
@@ -79,8 +84,14 @@ public class Game
     static void DrawUpdate()
     {
         BeginDrawing();
+        BeginTextureMode(target);
         Backgrounds.DrawBackground();
+        //ClearBackground(Color.BLANK);
         EngineSystems.DrawUpdate();
+        Raylib.EndTextureMode();
+        Raylib.BeginShaderMode(shader);
+        Raylib.DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.WHITE);
+        Raylib.EndShaderMode();
         EndDrawing();
     }
 

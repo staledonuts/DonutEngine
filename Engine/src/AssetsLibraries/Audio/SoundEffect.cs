@@ -2,6 +2,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
 using Engine.Systems;
+using Engine.Utils.Extensions;
 
 namespace Engine.Assets.Audio;
 
@@ -13,7 +14,7 @@ public class SoundEffect : IDisposable
     [JsonProperty] public int MaxInstances { get; private set; }
     [JsonProperty] List<string> FileNames { get; set; }
     
-    List<Sound> sound;
+    List<Sound> sound = new();
     [JsonIgnore] List<bool> isLoaded;
 
     [JsonIgnore] 
@@ -21,7 +22,7 @@ public class SoundEffect : IDisposable
     {
         get
         {
-            int randomSound = Gen.RandomInt(0, sound.Count);
+            int randomSound = Gen._random.RandomInteger(0, sound.Count);
             if (!isLoaded[randomSound])
             {
                 GetSoundEffect(randomSound);
