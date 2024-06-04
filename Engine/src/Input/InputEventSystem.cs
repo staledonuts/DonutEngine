@@ -26,32 +26,32 @@ public static class InputEventSystem
 
     public static void Initialize()
     {
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Initialized Input System");
+        Raylib.TraceLog(TraceLogLevel.Info, "Initialized Input System");
     }
     // Define a method that raises the event.
     public static void UpdateInputEvent()
     {
         // Keyboard
-        CrossButtonEvent?.Invoke(IsKeyPressed(KeyboardKey.KEY_Z));
-        RectangleButtonEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_X));
-        R1ButtonEvent?.Invoke(IsKeyDown(KeyboardKey.KEY_C));
+        CrossButtonEvent?.Invoke(IsKeyPressed(KeyboardKey.Z));
+        RectangleButtonEvent?.Invoke(IsKeyDown(KeyboardKey.X));
+        R1ButtonEvent?.Invoke(IsKeyDown(KeyboardKey.C));
         DpadEvent?.Invoke(Vector2Composite(useKeyboard:true));
-        ToggleUI?.Invoke(IsKeyPressed(KeyboardKey.KEY_F11));
+        ToggleUI?.Invoke(IsKeyPressed(KeyboardKey.F11));
             
         // Gamepad
         if(Raylib.IsGamepadAvailable(0))
         {
-            CrossButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
-            RectangleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT));
-            CircleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_RIGHT));
-            TriangleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_UP));
-            R1ButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_1));
-            L1ButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_LEFT_TRIGGER_1));
+            CrossButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.RightFaceDown));
+            RectangleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.RightFaceLeft));
+            CircleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.RightFaceRight));
+            TriangleButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.RightFaceUp));
+            R1ButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.RightTrigger1));
+            L1ButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.LeftTrigger1));
             DpadEvent?.Invoke(Vector2Composite(useKeyboard:false));
             LeftStickEvent?.Invoke(LeftStick(0));
             RightStickEvent?.Invoke(RightStick(0));
-            SelectButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_MIDDLE_LEFT));
-            StartButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.GAMEPAD_BUTTON_MIDDLE_RIGHT));
+            SelectButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.MiddleLeft));
+            StartButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.MiddleRight));
 
         }
     }
@@ -66,26 +66,26 @@ public static class InputEventSystem
         {
             case 0:
             {
-                gamePadInput0.X = GetGamepadAxisMovement(0, GamepadAxis.GAMEPAD_AXIS_LEFT_X);
-                gamePadInput0.Y = GetGamepadAxisMovement(0, GamepadAxis.GAMEPAD_AXIS_LEFT_Y);
+                gamePadInput0.X = GetGamepadAxisMovement(0, GamepadAxis.LeftX);
+                gamePadInput0.Y = GetGamepadAxisMovement(0, GamepadAxis.LeftY);
                 return gamePadInput0;
             }
             case 1:
             {
-                gamePadInput1.X = GetGamepadAxisMovement(1, GamepadAxis.GAMEPAD_AXIS_LEFT_X);
-                gamePadInput1.Y = GetGamepadAxisMovement(1, GamepadAxis.GAMEPAD_AXIS_LEFT_Y);
+                gamePadInput1.X = GetGamepadAxisMovement(1, GamepadAxis.LeftX);
+                gamePadInput1.Y = GetGamepadAxisMovement(1, GamepadAxis.LeftY);
                 return gamePadInput1;
             }
             case 2:
             {
-                gamePadInput2.X = GetGamepadAxisMovement(2, GamepadAxis.GAMEPAD_AXIS_LEFT_X);
-                gamePadInput2.Y = GetGamepadAxisMovement(2, GamepadAxis.GAMEPAD_AXIS_LEFT_Y);
+                gamePadInput2.X = GetGamepadAxisMovement(2, GamepadAxis.LeftX);
+                gamePadInput2.Y = GetGamepadAxisMovement(2, GamepadAxis.LeftY);
                 return gamePadInput2;
             }
             case 3:
             {
-                gamePadInput3.X = GetGamepadAxisMovement(3, GamepadAxis.GAMEPAD_AXIS_LEFT_X);
-                gamePadInput3.Y = GetGamepadAxisMovement(3, GamepadAxis.GAMEPAD_AXIS_LEFT_Y);
+                gamePadInput3.X = GetGamepadAxisMovement(3, GamepadAxis.LeftX);
+                gamePadInput3.Y = GetGamepadAxisMovement(3, GamepadAxis.LeftY);
                 return gamePadInput3;
             }
             default:
@@ -105,26 +105,26 @@ public static class InputEventSystem
         {
             case 0:
             {
-                gamePadInput0.X = GetGamepadAxisMovement(0, GamepadAxis.GAMEPAD_AXIS_RIGHT_X);
-                gamePadInput0.Y = GetGamepadAxisMovement(0, GamepadAxis.GAMEPAD_AXIS_RIGHT_Y);
+                gamePadInput0.X = GetGamepadAxisMovement(0, GamepadAxis.RightX);
+                gamePadInput0.Y = GetGamepadAxisMovement(0, GamepadAxis.RightY);
                 return gamePadInput0;
             }
             case 1:
             {
-                gamePadInput1.X = GetGamepadAxisMovement(1, GamepadAxis.GAMEPAD_AXIS_RIGHT_X);
-                gamePadInput1.Y = GetGamepadAxisMovement(1, GamepadAxis.GAMEPAD_AXIS_RIGHT_Y);
+                gamePadInput1.X = GetGamepadAxisMovement(1, GamepadAxis.RightX);
+                gamePadInput1.Y = GetGamepadAxisMovement(1, GamepadAxis.RightY);
                 return gamePadInput1;
             }
             case 2:
             {
-                gamePadInput2.X = GetGamepadAxisMovement(2, GamepadAxis.GAMEPAD_AXIS_RIGHT_X);
-                gamePadInput2.Y = GetGamepadAxisMovement(2, GamepadAxis.GAMEPAD_AXIS_RIGHT_Y);
+                gamePadInput2.X = GetGamepadAxisMovement(2, GamepadAxis.RightX);
+                gamePadInput2.Y = GetGamepadAxisMovement(2, GamepadAxis.RightY);
                 return gamePadInput2;
             }
             case 3:
             {
-                gamePadInput3.X = GetGamepadAxisMovement(3, GamepadAxis.GAMEPAD_AXIS_RIGHT_X);
-                gamePadInput3.Y = GetGamepadAxisMovement(3, GamepadAxis.GAMEPAD_AXIS_RIGHT_Y);
+                gamePadInput3.X = GetGamepadAxisMovement(3, GamepadAxis.RightX);
+                gamePadInput3.Y = GetGamepadAxisMovement(3, GamepadAxis.RightY);
                 return gamePadInput3;
             }
             default:
@@ -143,30 +143,30 @@ public static class InputEventSystem
 
         if(useKeyboard)
         {
-            gamePadInput0.X = -(int)IsKeyDown(KeyboardKey.KEY_LEFT) +(int)IsKeyDown(KeyboardKey.KEY_RIGHT);
-            gamePadInput0.Y = -(int)IsKeyDown(KeyboardKey.KEY_UP) +(int)IsKeyDown(KeyboardKey.KEY_DOWN);
+            gamePadInput0.X = -(int)IsKeyDown(KeyboardKey.Left) +(int)IsKeyDown(KeyboardKey.Right);
+            gamePadInput0.Y = -(int)IsKeyDown(KeyboardKey.Up) +(int)IsKeyDown(KeyboardKey.Down);
             return gamePadInput0;
         }
         else
         {
-            gamePadInput0.X = -(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_LEFT) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-            gamePadInput0.Y = -(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_UP) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+            gamePadInput0.X = -(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceLeft) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceRight);
+            gamePadInput0.Y = -(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceUp) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceDown);
             if(Raylib.IsGamepadAvailable(1))
             {
-                gamePadInput1.X = -(int)IsGamepadButtonDown(1, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_LEFT) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-                gamePadInput1.Y = -(int)IsGamepadButtonDown(1, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_UP) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+                gamePadInput1.X = -(int)IsGamepadButtonDown(1, GamepadButton.LeftFaceLeft) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceRight);
+                gamePadInput1.Y = -(int)IsGamepadButtonDown(1, GamepadButton.LeftFaceUp) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceDown);
                 return gamePadInput1;
             }
             if(Raylib.IsGamepadAvailable(2))
             {
-                gamePadInput2.X = -(int)IsGamepadButtonDown(2, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_LEFT) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-                gamePadInput2.Y = -(int)IsGamepadButtonDown(2, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_UP) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+                gamePadInput2.X = -(int)IsGamepadButtonDown(2, GamepadButton.LeftFaceLeft) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceRight);
+                gamePadInput2.Y = -(int)IsGamepadButtonDown(2, GamepadButton.LeftFaceUp) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceDown);
                 return gamePadInput2;
             }
             if(Raylib.IsGamepadAvailable(3))
             {
-                gamePadInput3.X = -(int)IsGamepadButtonDown(3, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_LEFT) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-                gamePadInput3.Y = -(int)IsGamepadButtonDown(3, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_UP) +(int)IsGamepadButtonDown(0, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+                gamePadInput3.X = -(int)IsGamepadButtonDown(3, GamepadButton.LeftFaceLeft) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceRight);
+                gamePadInput3.Y = -(int)IsGamepadButtonDown(3, GamepadButton.LeftFaceUp) +(int)IsGamepadButtonDown(0, GamepadButton.LeftFaceDown);
                 return gamePadInput3;
             }
             return gamePadInput0;

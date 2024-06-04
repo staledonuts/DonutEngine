@@ -63,7 +63,7 @@ public class SoundEffect : IDisposable
         catch (Exception e)
         {
             isLoaded[randomInt] = false;
-            Raylib.TraceLog(TraceLogLevel.LOG_ERROR, $"Failed to load sound. Exception: {e.Message}");
+            Raylib.TraceLog(TraceLogLevel.Error, $"Failed to load sound. Exception: {e.Message}");
             return default;
         }       
     }

@@ -14,7 +14,7 @@ public static class App
         Raylib.InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
         Raylib.SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         DonutLogging.SetLogging();
-        Raylib.SetTraceLogLevel(TraceLogLevel.LOG_ALL);
+        Raylib.SetTraceLogLevel(TraceLogLevel.All);
     }
     internal static void UpdateApp()
     {

@@ -7,7 +7,7 @@ public class Logo : Scene
 {
     Texture2D raylibLogo;
     Texture2D donutLogo;
-    Color textureColor = Color.BLANK;
+    Color textureColor = Color.Blank;
     
     int framesCounter = 0;
     public override void InitScene()
@@ -24,14 +24,14 @@ public class Logo : Scene
     {
         if (framesCounter < splash1)
         {
-            Backgrounds.LerpBackground(Color.RAYWHITE, 0.05f);
-            textureColor = ColorUtil.ColorLerp(textureColor, Color.WHITE, 0.05f);
+            Backgrounds.LerpBackground(Color.RayWhite, 0.05f);
+            textureColor = ColorUtil.ColorLerp(textureColor, Color.White, 0.05f);
             Raylib.DrawTexture(raylibLogo, (Raylib.GetScreenWidth() / 2) - (raylibLogo.Width / 2),(Raylib.GetScreenHeight() / 2)  - (raylibLogo.Height / 2), textureColor);
         }
         else if(framesCounter > splash1 && framesCounter < splash2 )
         {
             Backgrounds.LerpBackground(new Color(4, 12, 6, 255), 0.2f);
-            Raylib.DrawTexture(donutLogo, (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2),(Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2), Color.WHITE);
+            Raylib.DrawTexture(donutLogo, (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2),(Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2), Color.White);
         }
         else if(framesCounter > 121)
         {

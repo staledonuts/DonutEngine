@@ -36,7 +36,7 @@ public static class Textures
                 else
                 {
                     // Create a new empty texture with a solid color 
-                    Image image = Raylib.GenImageColor(16, 16, Color.RED);
+                    Image image = Raylib.GenImageColor(16, 16, Color.Red);
                     // Save the new texture to a PNG file
                     Raylib.ExportImage(image, emptyPath);
                 }
@@ -59,7 +59,7 @@ public static class Textures
         foreach(string File in paths)
         {
             string name = Path.GetFileNameWithoutExtension(File);
-            Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to TexLib");
+            Raylib.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to TexLib");
             textureLibrary.TryAdd(name, new());
             filePaths.TryAdd(name, File);
         }
@@ -73,7 +73,7 @@ public static class Textures
             textureLibrary.TryGetValue(textureName, out texture);
             if(!Raylib.IsTextureReady(texture))
             {
-                Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, textureName+" was not loaded.");
+                Raylib.TraceLog(TraceLogLevel.Debug, textureName+" was not loaded.");
                 filePaths.TryGetValue(textureName, out string toLoadString);
                 textureLibrary.Remove(textureName);
                 textureLibrary.Add(textureName, Raylib.LoadTexture(toLoadString));
@@ -96,7 +96,7 @@ public static class Textures
         {
             Raylib.UnloadTexture(texture);
             textureLibrary.Remove(textureName);
-            Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Unloaded: "+textureName+" from TexLib");
+            Raylib.TraceLog(TraceLogLevel.Debug, "Unloaded: "+textureName+" from TexLib");
         }
     }
     

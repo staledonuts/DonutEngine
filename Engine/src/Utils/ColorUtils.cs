@@ -98,7 +98,7 @@ public static class ColorUtil
 	/// <returns>a 2d vector with the values from the string!</returns>
 	public static Color ToColor(this string color)
 	{
-		var myColor = Color.RAYWHITE;
+		var myColor = Color.RayWhite;
 
 		if (!string.IsNullOrEmpty(color))
 		{

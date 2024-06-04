@@ -37,15 +37,15 @@ public class Style
         int? font_size = null,
         int? font_spacing = null
 	) {
-        Foreground = foreground ?? Color.WHITE;
-        Background = background ?? Color.DARKGRAY;
+        Foreground = foreground ?? Color.White;
+        Background = background ?? Color.DarkGray;
 
-        ButtonBackground = button_background ?? Color.GRAY;
-        ButtonBackgroundHover = button_background_hover ?? Color.RED;
-        ButtonBackgroundClick = button_background_click ?? Color.MAROON;
-        ButtonForeground = button_foreground ?? Color.WHITE;
-        ButtonForegroundHover = button_foreground_hover ?? Color.WHITE;
-        ButtonForegroundClick = button_foreground_click ?? Color.WHITE;
+        ButtonBackground = button_background ?? Color.Gray;
+        ButtonBackgroundHover = button_background_hover ?? Color.Red;
+        ButtonBackgroundClick = button_background_click ?? Color.Maroon;
+        ButtonForeground = button_foreground ?? Color.White;
+        ButtonForegroundHover = button_foreground_hover ?? Color.White;
+        ButtonForegroundClick = button_foreground_click ?? Color.White;
 
 		//Font = font ?? LoadFont("Resources/pixantiqua.png");
 		Font = Fonts.GetFont("PixelOperator");

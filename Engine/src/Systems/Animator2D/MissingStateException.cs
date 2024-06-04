@@ -9,15 +9,15 @@ public sealed class MissingStateException : Exception
 {
     public MissingStateException() 
     {
-        Raylib.TraceLog(TraceLogLevel.LOG_ERROR, "Animation State missing");
+        Raylib.TraceLog(TraceLogLevel.Error, "Animation State missing");
     }
     public MissingStateException(string message) : base(message) 
     {
-        Raylib.TraceLog(TraceLogLevel.LOG_ERROR, message);
+        Raylib.TraceLog(TraceLogLevel.Error, message);
     }
     public MissingStateException(string message, Exception inner) : base(message, inner) 
     {
-        Raylib.TraceLog(TraceLogLevel.LOG_ERROR, message);
-        Raylib.TraceLog(TraceLogLevel.LOG_INFO, inner.Message);
+        Raylib.TraceLog(TraceLogLevel.Error, message);
+        Raylib.TraceLog(TraceLogLevel.Info, inner.Message);
     }
 }

@@ -41,10 +41,10 @@ public class Checkbox : Widget
 
     public override void Draw() 
     {
-        DrawRectangleV(Position, Size, Color.WHITE);
+        DrawRectangleV(Position, Size, Color.White);
         if (Checked) 
         {
-            DrawRectangle((int)Position.X + 2, (int)Position.Y + 2, (int)Size.X - 4, (int)Size.Y - 4, Color.RED);
+            DrawRectangle((int)Position.X + 2, (int)Position.Y + 2, (int)Size.X - 4, (int)Size.Y - 4, Color.Red);
         }
     }
 }

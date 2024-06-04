@@ -38,7 +38,7 @@ public static class EngineSystems
             }
             // Add the system to the dictionary with its type as the key
             systems[systemClass.GetType()] = systemClass;
-            Raylib.TraceLog(TraceLogLevel.LOG_INFO, systemClass.GetType().Name+" was added as a System");
+            Raylib.TraceLog(TraceLogLevel.Info, systemClass.GetType().Name+" was added as a System");
             systemClass.Initialize();
         }
     }

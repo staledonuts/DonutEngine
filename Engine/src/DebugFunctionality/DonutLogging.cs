@@ -17,7 +17,7 @@ public unsafe static class DonutLogging
     {
         if(!loggingSet)
         {
-            Raylib.SetTraceLogLevel(Raylib_cs.TraceLogLevel.LOG_DEBUG);
+            Raylib.SetTraceLogLevel(Raylib_cs.TraceLogLevel.Debug);
             Raylib.SetTraceLogCallback(&CustomLogging.LogCustom);
             //Custom Logging
             loggingSet = true;
@@ -42,26 +42,26 @@ public unsafe class CustomLogging
 
         Console.ForegroundColor = (TraceLogLevel)logLevel switch
         {
-            TraceLogLevel.LOG_ALL => ConsoleColor.White,
-            TraceLogLevel.LOG_TRACE => ConsoleColor.Black,
-            TraceLogLevel.LOG_DEBUG => ConsoleColor.White,
-            TraceLogLevel.LOG_INFO => ConsoleColor.Cyan,
-            TraceLogLevel.LOG_WARNING => ConsoleColor.DarkYellow,
-            TraceLogLevel.LOG_ERROR => ConsoleColor.Black,
-            TraceLogLevel.LOG_FATAL => ConsoleColor.Black,
-            TraceLogLevel.LOG_NONE => ConsoleColor.Black,
+            TraceLogLevel.All => ConsoleColor.White,
+            TraceLogLevel.Trace => ConsoleColor.Black,
+            TraceLogLevel.Debug => ConsoleColor.White,
+            TraceLogLevel.Info => ConsoleColor.Cyan,
+            TraceLogLevel.Warning => ConsoleColor.DarkYellow,
+            TraceLogLevel.Error => ConsoleColor.Black,
+            TraceLogLevel.Fatal => ConsoleColor.Black,
+            TraceLogLevel.None => ConsoleColor.Black,
             _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
         };
         Console.BackgroundColor = (TraceLogLevel)logLevel switch
         {
-            TraceLogLevel.LOG_ALL => ConsoleColor.Black,
-            TraceLogLevel.LOG_TRACE => ConsoleColor.White,
-            TraceLogLevel.LOG_DEBUG => ConsoleColor.DarkGreen,
-            TraceLogLevel.LOG_INFO => ConsoleColor.Black,
-            TraceLogLevel.LOG_WARNING => ConsoleColor.Black,
-            TraceLogLevel.LOG_ERROR => ConsoleColor.Red,
-            TraceLogLevel.LOG_FATAL => ConsoleColor.Red,
-            TraceLogLevel.LOG_NONE => ConsoleColor.White,
+            TraceLogLevel.All => ConsoleColor.Black,
+            TraceLogLevel.Trace => ConsoleColor.White,
+            TraceLogLevel.Debug => ConsoleColor.DarkGreen,
+            TraceLogLevel.Info => ConsoleColor.Black,
+            TraceLogLevel.Warning => ConsoleColor.Black,
+            TraceLogLevel.Error => ConsoleColor.Red,
+            TraceLogLevel.Fatal => ConsoleColor.Red,
+            TraceLogLevel.None => ConsoleColor.White,
             _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
         };
         

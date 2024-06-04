@@ -22,13 +22,13 @@ public static class Fonts
                 foreach(string fontFile in fontPath)
                 {
                     string name = Path.GetFileNameWithoutExtension(fontFile);
-                    Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, "Adding: "+name+" to FontLib");
+                    Raylib.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to FontLib");
                     fontLibrary.TryAdd(name, Raylib.LoadFont(fontFile));
                 }
             }
             else
             {
-                Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "There is no font folder. Creating...");
+                Raylib.TraceLog(TraceLogLevel.Warning, "There is no font folder. Creating...");
                 Directory.CreateDirectory(Paths.FontPath);
             }
         }
@@ -48,7 +48,7 @@ public static class Fonts
     {
         if(fontLibrary.TryGetValue(fontName, out Font font))
         {
-            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Using "+fontName);
+            Raylib.TraceLog(TraceLogLevel.Info, "Using "+fontName);
             return font;
         }
         else

@@ -90,7 +90,7 @@ public class Game
         EngineSystems.DrawUpdate();
         Raylib.EndTextureMode();
         Raylib.BeginShaderMode(shader);
-        Raylib.DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.WHITE);
+        Raylib.DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.White);
         Raylib.EndShaderMode();
         EndDrawing();
     }

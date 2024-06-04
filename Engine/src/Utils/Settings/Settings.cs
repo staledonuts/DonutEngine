@@ -19,12 +19,12 @@ namespace Engine
         {
             try
             {
-                Raylib.TraceLog(TraceLogLevel.LOG_INFO, "------[ Trying to Load Settings ]------");
+                Raylib.TraceLog(TraceLogLevel.Info, "------[ Trying to Load Settings ]------");
                 LoadSettings();
             }
             catch
             {
-                Raylib.TraceLog(TraceLogLevel.LOG_WARNING, "------[ There was a Settings Error: Creating Default Fallback ]------");
+                Raylib.TraceLog(TraceLogLevel.Warning, "------[ There was a Settings Error: Creating Default Fallback ]------");
                 SetDefaultSettings(DefaultsPicker.AllDefaults);
             }  
         }

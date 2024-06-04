@@ -21,7 +21,7 @@ public class Button : Widget
     public override float Height { get { return MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing).Y + PaddingY; } }
 
     public bool Hovered { get { return CheckCollisionPointRec(GetMousePosition(), ClickBox);  } }
-    public bool Clicked { get { return Hovered && IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT);  } }
+    public bool Clicked { get { return Hovered && IsMouseButtonDown(MouseButton.Left);  } }
 
     public bool Toggled { get; private set; } = false;
 

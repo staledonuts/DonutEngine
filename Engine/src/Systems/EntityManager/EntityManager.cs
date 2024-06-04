@@ -14,7 +14,7 @@ public static class EntitySystem
         }
         catch(Exception e)
         {
-            Raylib.TraceLog(Raylib_cs.TraceLogLevel.LOG_ERROR, "Could not find that Entity: "+e);
+            Raylib.TraceLog(Raylib_cs.TraceLogLevel.Error, "Could not find that Entity: "+e);
             return null;
         }
     }

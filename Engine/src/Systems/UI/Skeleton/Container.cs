@@ -45,11 +45,11 @@ public class Container {
 	{
 		if (Widgets.Contains(w))
 		{
-			Raylib.TraceLog(TraceLogLevel.LOG_INFO , "The widget "+w.GetType().Name+" already exists in this Container!");
+			Raylib.TraceLog(TraceLogLevel.Info , "The widget "+w.GetType().Name+" already exists in this Container!");
 			return false;
 		}
 		
-		Raylib.TraceLog(TraceLogLevel.LOG_INFO , $"Added "+w.GetType().Name+" widget!");
+		Raylib.TraceLog(TraceLogLevel.Info , $"Added "+w.GetType().Name+" widget!");
 		w.Parent = this;
 		w.Active = active;
 		Widgets.Add(w);
@@ -61,7 +61,7 @@ public class Container {
 	{
 		if (e is MouseWheelEvent) 
 		{
-			Raylib.TraceLog(TraceLogLevel.LOG_INFO , $"Mouse was moved! {((MouseWheelEvent)e).Amount}");
+			Raylib.TraceLog(TraceLogLevel.Info , $"Mouse was moved! {((MouseWheelEvent)e).Amount}");
 			return true;
 		}
 
