@@ -15,7 +15,7 @@ public class MusicDefCreator
         {
             string name = Path.GetFileNameWithoutExtension(file);
             string currentFile = Path.GetFileName(file);
-            Raylib.TraceLog(TraceLogLevel.LOG_INFO, "Adding: "+name+" to Music Library");
+            Raylib.TraceLog(TraceLogLevel.Info, "Adding: "+name+" to Music Library");
             musicLibrary.TryAdd(name, new MusicTrack(1, currentFile, true, true));
         }
     }
