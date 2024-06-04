@@ -12,57 +12,56 @@ public class SoundEffect : IDisposable
     [JsonProperty] public float MaxPitch { get; private set; }
     [JsonProperty] public float MinPitch { get; private set; }
     [JsonProperty] public int MaxInstances { get; private set; }
-    [JsonProperty] List<string> FileNames { get; set; }
+    [JsonProperty] string FileName { get; set; }
     
-    List<Sound> sound = new();
-    [JsonIgnore] List<bool> isLoaded;
+    Sound _sound = new();
+    [JsonIgnore] bool isLoaded;
 
     [JsonIgnore] 
     public Sound Sound 
     {
         get
         {
-            int randomSound = Gen._random.RandomInteger(0, sound.Count);
-            if (!isLoaded[randomSound])
+            if (!isLoaded)
             {
-                GetSoundEffect(randomSound);
+                GetSoundEffect();
             }
-            return sound[randomSound];
+            return _sound;
         }
     }
 
-    public SoundEffect(float volume, float minPitch, float maxPitch, int maxInstances, List<string> fileNames)
+    public SoundEffect(float volume, float minPitch, float maxPitch, int maxInstances, string fileName)
     {
         this.Volume = volume;
         this.MaxPitch = maxPitch;
         this.MinPitch = minPitch;
-        this.FileNames = fileNames;
+        this.FileName = fileName;
         this.MaxInstances = maxInstances;
     }
 
-    public async void GetSoundEffect(int randomInt)
+    public async void GetSoundEffect()
     {
-        if (!isLoaded[randomInt])
+        if (!isLoaded)
         {
-            await InitSoundEffectAsync(randomInt);
+            await InitSoundEffectAsync();
         }
-        EngineSystems.GetSystem<AudioControl>().PlaySFX(sound[randomInt], MinPitch, MaxPitch);
+        EngineSystems.GetSystem<AudioControl>().PlaySFX(_sound, MinPitch, MaxPitch);
     }
 
-    public async Task<Sound> InitSoundEffectAsync(int randomInt)
+    public async Task<Sound> InitSoundEffectAsync()
     {
         try
         {
             return await Task.Run(() =>
             {
-                isLoaded[randomInt] = true;
-                sound[randomInt] = LoadSound(Paths.SfxPath+FileNames[randomInt]);
-                return sound[randomInt];
+                isLoaded = true;
+                _sound = LoadSound(Paths.SfxPath+FileName);
+                return _sound;
             });
         }
         catch (Exception e)
         {
-            isLoaded[randomInt] = false;
+            isLoaded = false;
             Raylib.TraceLog(TraceLogLevel.Error, $"Failed to load sound. Exception: {e.Message}");
             return default;
         }       
@@ -75,13 +74,9 @@ public class SoundEffect : IDisposable
 
     public void Dispose(bool disposing)
     {
-        foreach(Sound _sound in sound)
+        if (isLoaded && disposing)
         {
-            int current = sound.IndexOf(_sound);
-            if (isLoaded[current] && disposing)
-            {
-                UnloadSound(_sound);
-            }
+            UnloadSound(_sound);
         }
         GC.SuppressFinalize(this);
     }

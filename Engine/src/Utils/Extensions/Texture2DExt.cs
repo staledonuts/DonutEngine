@@ -4,6 +4,10 @@ using System.Numerics;
 
 public static class Texture2DExt
 {
+    public static Vector2 GetSize(this Texture2D tex)
+    {
+        return new(tex.Width, tex.Height);
+    }
 
     public static Vector2 GetCenter(this Texture2D tex)
     {
