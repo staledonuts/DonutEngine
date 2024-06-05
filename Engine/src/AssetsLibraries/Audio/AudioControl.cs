@@ -4,12 +4,13 @@ using static Raylib_cs.Raylib;
 using Newtonsoft.Json;
 using Engine.Assets.Audio;
 using Engine.Systems;
+using System.Collections;
 namespace Engine.Assets;
 
 public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 {
     
-    private Dictionary<string, List<SoundEffect>> soundInstances;
+    private Dictionary<string, Queue<SoundEffect>> soundInstances;
     private Dictionary<string, SoundEffect> SoundsLibrary { get; set; }
     private Dictionary<string, MusicTrack> MusicLibrary { get; set; }
     private MusicTrack currentMusic;
@@ -18,7 +19,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 
     public AudioControl()
     {
-        soundInstances = new Dictionary<string, List<SoundEffect>>();
+        soundInstances = new Dictionary<string, Queue<SoundEffect>>();
         SoundsLibrary = new();
         MusicLibrary = new();
         random = new();
@@ -105,15 +106,18 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     {
         if(soundInstances != null)
         {
-            foreach(KeyValuePair<string, List<SoundEffect>> sfx in soundInstances)
+            foreach(KeyValuePair<string, Queue<SoundEffect>> sfx in soundInstances)
             {
-                sfx.Value.RemoveAll(snd => !IsSoundPlaying(snd.Sound));
+                if(!IsSoundPlaying(sfx.Value.Peek().Sound))
+                {
+                    sfx.Value.Dequeue();
+                }
             }
         }
     }
     public void Update()
     {
-        CheckSoundInstances();
+        //CheckSoundInstances();
     }
     public void LateUpdate()
     {
@@ -223,25 +227,30 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         // If this sound effect is not in the dictionary yet, add it
         if (!soundInstances.ContainsKey(name))
         {
-            soundInstances[name] = new List<SoundEffect>();
+            soundInstances[name] = new Queue<SoundEffect>();
         }
 
         // Only play the sound if the maximum number of instances has not been reached
         if (soundInstances[name].Count <= soundEffect.MaxInstances)
         {
             // Add this instance to the list
+            soundInstances[name].Enqueue(soundEffect);
             Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
             Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
             Raylib.PlaySound(soundEffect.Sound);
-            soundInstances[name].Add(soundEffect);
             Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name}");
         }
         else
         {
-            
-            //Raylib.TraceLog(TraceLogLevel.LOG_DEBUG, $"SoundEffect {name} cannot be played. Too many instances playing");
+            StopSFX(name);
+            soundInstances[name].Enqueue(soundEffect);
+            Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
+            Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
+            Raylib.PlaySound(soundEffect.Sound);
+            Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name}");
         }
     }
+
     public void PlaySFX(string name) 
     {
         if (SoundsLibrary!.TryGetValue(name, out SoundEffect sound)) 
@@ -261,7 +270,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             StopSound(sound.Sound);
             if (soundInstances.ContainsKey(name))
             {
-                soundInstances[name].Remove(sound);
+                Raylib.StopSound(soundInstances[name].Dequeue().Sound);
             }
         }
             // If this sound effect is in the dictionary, remove the sound instance
