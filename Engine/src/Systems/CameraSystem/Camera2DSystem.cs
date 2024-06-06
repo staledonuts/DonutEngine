@@ -17,7 +17,7 @@ public class Camera2DSystem : SystemClass, IUpdateSys
     public void SetCameraTarget(Entity entity)
     {
         currentTarget = entity;
-        //camera2D.Target = currentTarget.body.Position;
+        camera2D.Target = currentTarget.body.Position;
     }
 
     public void SetRotation(float ToAngle)
@@ -47,6 +47,6 @@ public class Camera2DSystem : SystemClass, IUpdateSys
 
     public override void Initialize()
     {
-
+        camera2D.Target = new(0,0);
     }
 }

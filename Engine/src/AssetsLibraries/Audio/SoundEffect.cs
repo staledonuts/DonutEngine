@@ -45,7 +45,7 @@ public class SoundEffect : IDisposable
         {
             await InitSoundEffectAsync();
         }
-        EngineSystems.GetSystem<AudioControl>().PlaySFX(_sound, MinPitch, MaxPitch);
+        EngineSystems.GetSystem<AudioControl>().PlaySFX(_sound, MinPitch, MaxPitch, new(0,0));
     }
 
     public async Task<Sound> InitSoundEffectAsync()

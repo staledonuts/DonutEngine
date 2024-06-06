@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using Engine.Assets.Audio;
 using Engine.Systems;
 using System.Collections;
+using System.Numerics;
+using Engine.Utils;
 namespace Engine.Assets;
 
 public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
@@ -215,14 +217,15 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     #endregion
 
     #region SFX
-    public void PlaySFX(Sound sfx, float minPitch, float maxPitch)
+    public void PlaySFX(Sound sfx, float minPitch, float maxPitch, Vector2 position)
     {
         Raylib.SetSoundVolume(sfx, Settings.audioSettings.SfxVolume);
         SetSoundPitch(sfx, random.NextSingle() * (maxPitch - minPitch) + minPitch);
+        SetSoundPan(sfx, SoundPannerCalc2D(position));
         PlaySound(sfx);
     }
     
-    void PlaySFX(string name, SoundEffect soundEffect)
+    void PlaySFX(string name, SoundEffect soundEffect, Vector2 position)
     {
         // If this sound effect is not in the dictionary yet, add it
         if (!soundInstances.ContainsKey(name))
@@ -237,8 +240,9 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             soundInstances[name].Enqueue(soundEffect);
             Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
             Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
+            Raylib.SetSoundPan(soundEffect.Sound, SoundPannerCalc2D(position));
             Raylib.PlaySound(soundEffect.Sound);
-            Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name}");
+            //Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name} at position {SoundPannerCalc2D(position)}");
         }
         else
         {
@@ -246,16 +250,22 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             soundInstances[name].Enqueue(soundEffect);
             Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
             Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
+            Raylib.SetSoundPan(soundEffect.Sound, SoundPannerCalc2D(position));
             Raylib.PlaySound(soundEffect.Sound);
-            Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name}");
+            //Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name} at position {SoundPannerCalc2D(position)}");
         }
     }
 
-    public void PlaySFX(string name) 
+    float SoundPannerCalc2D(Vector2 position)
+    {
+        return (EngineSystems.GetSystem<Camera2DSystem>().Bounds.Width - position.X) / EngineSystems.GetSystem<Camera2DSystem>().Bounds.Width;
+    }
+
+    public void PlaySFX(string name, Vector2 position) 
     {
         if (SoundsLibrary!.TryGetValue(name, out SoundEffect sound)) 
         {
-            PlaySFX(name, sound);
+            PlaySFX(name, sound, position);
         }
         else
         {
