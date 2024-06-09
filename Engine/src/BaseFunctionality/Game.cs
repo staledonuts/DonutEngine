@@ -86,12 +86,11 @@ public class Game
         BeginDrawing();
         BeginTextureMode(target);
         Backgrounds.DrawBackground();
-        //ClearBackground(Color.BLANK);
         EngineSystems.DrawUpdate();
-        Raylib.EndTextureMode();
-        Raylib.BeginShaderMode(shader);
-        Raylib.DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.White);
-        Raylib.EndShaderMode();
+        EndTextureMode();
+        BeginShaderMode(shader);
+        DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.White);
+        EndShaderMode();
         EndDrawing();
     }
 

@@ -6,14 +6,14 @@ public static class Rendering2D
 {
     static Rendering2D()
     {
-        layers = new();
+        _layers = new();
     }
 
-    static Dictionary<int, Layer> layers;
+    static Dictionary<int, Layer> _layers;
 
     public static void Render()
     {
-        foreach(KeyValuePair<int, Layer> key in layers)
+        foreach(KeyValuePair<int, Layer> key in _layers)
         {
             RenderLayer(key.Value);
         }
@@ -21,11 +21,11 @@ public static class Rendering2D
 
     public static void QueueAtLayer(int layer, Action action)
     {
-        if(!layers.ContainsKey(layer))
+        if(!_layers.ContainsKey(layer))
         {
-            layers.Add(layer, new());
+            _layers.Add(layer, new());
         }
-        layers.GetValueOrDefault(layer).queue.Append(action);
+        _layers.GetValueOrDefault(layer).queue.Append(action);
     }
 
     static void RenderLayer(Layer layer)
