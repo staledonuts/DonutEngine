@@ -26,7 +26,7 @@ public class Game
         App.Initialize();
         InputEventSystem.Initialize();
         InitSystems();
-        shader = Raylib.LoadShader(null ,Paths.ShaderPath+"glsl330/bloom.fs");
+        shader = Raylib.LoadShader(null ,Paths.ShaderPath+"Main.fs");
         target = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         SetupGame();
         SetWindowTitle(windowName);

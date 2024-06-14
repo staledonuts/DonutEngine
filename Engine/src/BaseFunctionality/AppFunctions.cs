@@ -28,11 +28,11 @@ public static class App
     static void Desktop()
     {
         //Settings.cVars.Focused = Raylib.IsWindowFocused();
-        /*if(Raylib.IsWindowResized())
+        if(Raylib.IsWindowResized())
         {
             Settings.graphicsSettings.ScreenWidth = Raylib.GetScreenWidth();
             Settings.graphicsSettings.ScreenHeight = Raylib.GetScreenHeight();
-        }*/
+        }
     }
 
 
