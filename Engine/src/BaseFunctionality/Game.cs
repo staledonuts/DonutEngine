@@ -13,7 +13,6 @@ using System.Numerics;
 public class Game
 {
     readonly string windowName;
-    protected static Shader shader;
     protected static RenderTexture2D target;
     public Game(string gamename)
     {
@@ -26,7 +25,6 @@ public class Game
         App.Initialize();
         InputEventSystem.Initialize();
         InitSystems();
-        shader = Raylib.LoadShader(null ,Paths.ShaderPath+"Main.fs");
         target = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         SetupGame();
         SetWindowTitle(windowName);
@@ -45,9 +43,10 @@ public class Game
         Textures.InitTextureLibrary();
         Fonts.InitFontLibrary();
         EngineSystems.AddSystem(new AudioControl());
+        EngineSystems.AddSystem(new ShaderLib());
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
-        //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.BLANK, Color.BLANK, Color.GRAY, Color.DARKBLUE, Color.DARKGRAY, Color.GRAY, Color.SKYBLUE, Color.DARKGRAY, Fonts.GetFont("PixelOperator"), 24, 1)));
+        EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.Blank, Color.Blank, Color.Gray, Color.DarkBlue, Color.DarkGray, Color.Gray, Color.SkyBlue, Color.DarkGray, Fonts.GetFont("PixelOperator"), 24, 1)));
     }
 
     /// <summary>
@@ -88,7 +87,7 @@ public class Game
         Backgrounds.DrawBackground();
         EngineSystems.DrawUpdate();
         EndTextureMode();
-        BeginShaderMode(shader);
+        BeginShaderMode(EngineSystems.GetSystem<ShaderLib>().UseShader("main"));
         DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.White);
         EndShaderMode();
         EndDrawing();

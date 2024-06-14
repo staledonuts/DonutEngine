@@ -25,7 +25,7 @@ public class SfxDefCreator
             string name = Path.GetFileNameWithoutExtension(file);
             string currentFile = Path.GetFileName(file);
             Raylib.TraceLog(TraceLogLevel.Info, "Adding: "+name+" to Sound Library");
-            //soundsLibrary.TryAdd(name, new SoundEffect(1, 1f, 1f, 5, currentFile));
+            soundsLibrary.TryAdd(name, new SoundEffect(1, 1f, 1f, 5, currentFile));
         }
     }
 }

@@ -1,6 +1,7 @@
 #nullable disable
 using Engine.Assets;
 using Engine.Logging;
+using Engine.Utils;
 using Raylib_cs;
 namespace Engine.Systems;
 public static class EngineSystems
@@ -11,7 +12,7 @@ public static class EngineSystems
         systems = new Dictionary<Type, SystemClass>();
     }
     
-
+    static TimeSpan time = new();
     private readonly static Dictionary<Type, SystemClass> systems;
     delegate void delegateUpdate();
     static delegateUpdate dUpdate;
@@ -78,6 +79,7 @@ public static class EngineSystems
 
     public static void Update()
     {
+        Time.Advance(time);
         if(dUpdate is not null)
         {
             dUpdate();

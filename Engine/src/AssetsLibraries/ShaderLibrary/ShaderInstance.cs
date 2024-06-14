@@ -1,11 +1,19 @@
+using Microsoft.VisualBasic;
 using Raylib_cs;
 namespace Engine.Assets;
 
-public abstract class ShaderInstance
+public class ShaderInstance
 {
     Shader _shader;
 
-    Shader Shader 
+    
+
+    public ShaderInstance(Shader shader)
+    {
+        _shader = shader;
+    }
+
+    public Shader Shader 
     {
         get
         {
