@@ -2,12 +2,12 @@ using Engine.Systems;
 using Raylib_cs;
 namespace Engine.Assets;
 
-public class ShaderLib : SystemClass , IUpdateSys
+public static class ShaderLib
 {
-    Dictionary<string, ShaderInstance> shaderLibrary = new();
+    static Dictionary<string, MaterialInstance> shaderLibrary = new();
     
 
-    public override void Initialize()
+    public static void Initialize()
     {
         string[] shaderFiles = Directory.GetFiles(Paths.ShaderPath);
         foreach(string file in shaderFiles)
@@ -33,14 +33,10 @@ public class ShaderLib : SystemClass , IUpdateSys
         }
     }
 
-    public void Update()
-    {
-        
-    }
 
-    public Shader UseShader(string name)
+    public static Shader UseShader(string name)
     {
-        shaderLibrary.TryGetValue(name, out ShaderInstance shader);
+        shaderLibrary.TryGetValue(name, out MaterialInstance shader);
         
         return shader.Shader;
     }

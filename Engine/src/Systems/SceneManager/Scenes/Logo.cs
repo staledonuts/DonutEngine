@@ -2,6 +2,7 @@ namespace Engine.Systems.SceneSystem;
 using Raylib_cs;
 using Engine.Assets;
 using Engine.Utils;
+using System.Numerics;
 
 public class Logo : Scene
 {
@@ -14,24 +15,27 @@ public class Logo : Scene
     {
         donutLogo = Textures.GetTexture("DeadDonut-Logo");       
         raylibLogo = Textures.GetTexture("raylib-cs");
-
     }
     const int splash1 = 120;
     const int splash2 = 240;
-
+    Vector2 position = new();
     
     public override void DrawScene()
     {
         if (framesCounter < splash1)
         {
+            position.X = (Raylib.GetScreenWidth() / 2) - (raylibLogo.Width / 2);
+            position.Y = (Raylib.GetScreenHeight() / 2)  - (raylibLogo.Height / 2);
             Backgrounds.LerpBackground(Color.RayWhite, 0.05f);
             textureColor = ColorUtil.ColorLerp(textureColor, Color.White, 0.05f);
-            Raylib.DrawTexture(raylibLogo, (Raylib.GetScreenWidth() / 2) - (raylibLogo.Width / 2),(Raylib.GetScreenHeight() / 2)  - (raylibLogo.Height / 2), textureColor);
+            Draw2D.DrawImage(1, raylibLogo, position, textureColor);
         }
         else if(framesCounter > splash1 && framesCounter < splash2 )
         {
+            position.X = (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2);
+            position.Y = (Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2);
             Backgrounds.LerpBackground(new Color(4, 12, 6, 255), 0.2f);
-            Raylib.DrawTexture(donutLogo, (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2),(Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2), Color.White);
+            Draw2D.DrawImage(1, donutLogo, position, Color.White);
         }
         else if(framesCounter > 121)
         {

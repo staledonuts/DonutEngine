@@ -9,6 +9,7 @@ using Engine.Systems.UI.Skeleton;
 using Engine.Utils;
 using Engine;
 using System.Numerics;
+using Engine.RenderSystems;
 
 public class Game
 {
@@ -40,10 +41,10 @@ public class Game
 
     private void InitSystems()
     {
-        Textures.InitTextureLibrary();
-        Fonts.InitFontLibrary();
+        Textures.Initialize();
+        Fonts.Initialize();
+        ShaderLib.Initialize();
         EngineSystems.AddSystem(new AudioControl());
-        EngineSystems.AddSystem(new ShaderLib());
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
         EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.Blank, Color.Blank, Color.Gray, Color.DarkBlue, Color.DarkGray, Color.Gray, Color.SkyBlue, Color.DarkGray, Fonts.GetFont("PixelOperator"), 24, 1)));
@@ -82,15 +83,8 @@ public class Game
 
     static void DrawUpdate()
     {
-        BeginDrawing();
-        BeginTextureMode(target);
-        Backgrounds.DrawBackground();
         EngineSystems.DrawUpdate();
-        EndTextureMode();
-        BeginShaderMode(EngineSystems.GetSystem<ShaderLib>().UseShader("main"));
-        DrawTextureRec(target.Texture, new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height), new Vector2(0, 0), Color.White);
-        EndShaderMode();
-        EndDrawing();
+        Rendering2D.Render();
     }
 
     static void LateUpdate()

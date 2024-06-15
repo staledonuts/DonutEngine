@@ -21,7 +21,7 @@ public static class Textures
     /// <summary>
     /// Try to load all Textures into your library.
     /// </summary>
-    public static void InitTextureLibrary()
+    public static void Initialize()
     {
         try
         {
@@ -50,7 +50,7 @@ public static class Textures
         catch
         {
             Directory.CreateDirectory(Paths.TexturesPath);
-            InitTextureLibrary();
+            Initialize();
         }
     }
 

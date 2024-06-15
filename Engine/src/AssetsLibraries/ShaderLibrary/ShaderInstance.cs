@@ -1,22 +1,24 @@
-using Microsoft.VisualBasic;
 using Raylib_cs;
 namespace Engine.Assets;
 
-public class ShaderInstance
+public class MaterialInstance
 {
     Shader _shader;
-
-    
-
-    public ShaderInstance(Shader shader)
+    public MaterialInstance(Shader shader)
     {
         _shader = shader;
+    }
+
+    private void UpdateMaterial()
+    {
+        //Raylib.SetShaderValue(_shader, Raylib.GetShaderLocation(_shader, ), )
     }
 
     public Shader Shader 
     {
         get
         {
+            UpdateMaterial();
             return _shader;
         }
     }

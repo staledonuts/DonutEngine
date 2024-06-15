@@ -11,7 +11,7 @@ public static class Fonts
     /// <summary>
     /// Try to load all your fonts into the libray.
     /// </summary>
-    public static void InitFontLibrary()
+    public static void Initialize()
     {
         try
         {
@@ -35,7 +35,7 @@ public static class Fonts
         catch
         {
             Directory.CreateDirectory(Paths.TexturesPath);
-            InitFontLibrary();
+            Initialize();
         }
     }
     /// <summary>
