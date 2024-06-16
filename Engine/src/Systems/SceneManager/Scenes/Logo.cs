@@ -28,14 +28,14 @@ public class Logo : Scene
             position.Y = (Raylib.GetScreenHeight() / 2)  - (raylibLogo.Height / 2);
             Backgrounds.LerpBackground(Color.RayWhite, 0.05f);
             textureColor = ColorUtil.ColorLerp(textureColor, Color.White, 0.05f);
-            Draw2D.DrawImage(1, raylibLogo, position, textureColor);
+            Draw2D.DrawImage(1, raylibLogo, position, textureColor, "main");
         }
         else if(framesCounter > splash1 && framesCounter < splash2 )
         {
             position.X = (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2);
             position.Y = (Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2);
-            Backgrounds.LerpBackground(Color.DarkBlue, 0.2f);
-            Draw2D.DrawImage(1, donutLogo, position, Color.White);
+            Backgrounds.LerpBackground(Color.Black, 0.2f);
+            Draw2D.DrawImage(1, donutLogo, position, Color.White, "main");
         }
         else if(framesCounter > 121)
         {

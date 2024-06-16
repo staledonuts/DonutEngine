@@ -11,20 +11,19 @@ public static partial class Rendering2D
     {
         public Layer()
         {
-            Shader = "main";
             RenderBatch = new();
         }
 
         internal string Shader;
 
-        internal Queue<IRenderSorting> RenderBatch;
+        internal Dictionary<string, Queue<IRenderSorting>> RenderBatch;
     }
 
 
 
     internal struct Texture2DData : IRenderSorting, IDisposable
     {
-        internal Texture2DData(Texture2D T, Rectangle R1, Rectangle R2, Vector2 V, float F, Color C)
+        internal Texture2DData(Texture2D T, Rectangle R1, Rectangle R2, Vector2 V, float F, Color C, string Shader)
         {
             _tex = T;
             _UVpos = R1;
@@ -32,6 +31,7 @@ public static partial class Rendering2D
             _origin = V;
             _orientation = F;
             _color = C;
+            _shader  = Shader;
         }
         internal Texture2D _tex;
         internal Rectangle _UVpos;
@@ -39,7 +39,14 @@ public static partial class Rendering2D
         internal Vector2 _origin;
         internal float _orientation;
         internal Color _color;
-
+        internal string _shader;
+        string IRenderSorting.Shader
+        { 
+            get
+            {
+                return _shader;
+            }
+        }
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -48,16 +55,25 @@ public static partial class Rendering2D
 
     internal struct ImageData : IRenderSorting
     {
-        internal ImageData(Texture2D tex, Vector2 pos, Color color)
+        internal ImageData(Texture2D tex, Vector2 pos, Color color, string Shader)
         {
             _tex = tex;
             _color = color;
             _pos = pos;
+            _shader  = Shader;
         }
 
-            internal Texture2D _tex;
-            internal Vector2 _pos;
-            internal Color _color;
+        internal Texture2D _tex;
+        internal Vector2 _pos;
+        internal Color _color;
+        internal string _shader;
+        string IRenderSorting.Shader
+        { 
+            get
+            {
+                return _shader;
+            }
+        }
 
         public void Dispose()
         {
@@ -67,18 +83,27 @@ public static partial class Rendering2D
 
     internal struct LineData : IRenderSorting, IDisposable
     {
-        internal LineData(Vector2 pos1, Vector2 pos2, float width, Color color)
+        internal LineData(Vector2 pos1, Vector2 pos2, float width, Color color, string Shader)
         {
             _pos1 = pos1;
             _pos2 = pos2;
             _width = width;
             _color = color;
+            _shader  = Shader;
         }
 
         internal Vector2 _pos1;
         internal Vector2 _pos2;
         internal float _width;
         internal Color _color;
+        internal string _shader;
+        string IRenderSorting.Shader
+        { 
+            get
+            {
+                return _shader;
+            }
+        }
 
         public void Dispose()
         {
@@ -88,7 +113,10 @@ public static partial class Rendering2D
 
     internal interface IRenderSorting
     {
-        
+        internal string Shader
+        {
+            get;
+        }
     }
 
 }

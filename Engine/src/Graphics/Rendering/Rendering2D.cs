@@ -47,12 +47,11 @@ public static partial class Rendering2D
 
     static void RenderComposition()
     {
-        //Raylib.BeginShaderMode(ShaderLib.UseShader("main"));
+        
         foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
         {
             Raylib.DrawTextureRec(rt.Value.Texture, new Rectangle(0, 0, rt.Value.Texture.Width, -rt.Value.Texture.Height), new(0, 0), Color.White);
         }
-        //Raylib.EndShaderMode();
     }
 
     internal static void QueueAtLayer(int layerPos, IRenderSorting renderData)
@@ -64,31 +63,46 @@ public static partial class Rendering2D
             Raylib.TraceLog(TraceLogLevel.Info, "Created RenderTexture with ID:"+renderTexture.Id);
             _layers.Add(layerPos, new Layer());
         }
-        _layers.GetValueOrDefault(layerPos).RenderBatch.Enqueue(renderData);
+        Layer l = _layers.GetValueOrDefault(layerPos);
+        if(l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> qu))
+        {
+            qu.Enqueue(renderData);
+        }
+        else
+        {
+            l.RenderBatch.Add(renderData.Shader, new());
+            l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> q);
+            q.Enqueue(renderData);
+        }
             
     }
 
     internal static void RenderLayer(Layer layer)
     {
-        layer.RenderBatch.TrimExcess();
-        int length = layer.RenderBatch.Count;
-        for (int i = 0; i < length; i++)
+        foreach(KeyValuePair<string, Queue<IRenderSorting>> l in layer.RenderBatch)
         {
-            IRenderSorting r = layer.RenderBatch.Dequeue();
-            switch (r)
+            layer.RenderBatch.TrimExcess();
+            int length = layer.RenderBatch.Count;
+            for (int i = 0; i < length; i++)
             {
-                case Texture2DData t2d:
-                   Raylib.DrawTexturePro(t2d._tex, t2d._UVpos, t2d._rectTarget, t2d._origin, t2d._orientation, t2d._color);
-                   t2d.Dispose();
-                   break;
-                case LineData lineD:
-                    Raylib.DrawLineEx(lineD._pos1, lineD._pos2, lineD._width, lineD._color);
-                    lineD.Dispose();
+                IRenderSorting r = l.Value.Dequeue();
+                //Raylib.BeginShaderMode(ShaderLib.UseShader(l.Key));
+                switch (l.Value.Dequeue())
+                {
+                    case Texture2DData t2d:
+                    Raylib.DrawTexturePro(t2d._tex, t2d._UVpos, t2d._rectTarget, t2d._origin, t2d._orientation, t2d._color);
+                    t2d.Dispose();
                     break;
-                case ImageData imgData:
-                    Raylib.DrawTexture(imgData._tex, (int)imgData._pos.X, (int)imgData._pos.Y, imgData._color);
-                    imgData.Dispose();
-                    break;
+                    case LineData lineD:
+                        Raylib.DrawLineEx(lineD._pos1, lineD._pos2, lineD._width, lineD._color);
+                        lineD.Dispose();
+                        break;
+                    case ImageData imgData:
+                        Raylib.DrawTexture(imgData._tex, (int)imgData._pos.X, (int)imgData._pos.Y, imgData._color);
+                        imgData.Dispose();
+                        break;
+                }
+                //Raylib.EndShaderMode(); 
             }
         }
     }
