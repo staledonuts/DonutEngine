@@ -37,7 +37,6 @@ public static class ShaderLib
     public static Shader UseShader(string name)
     {
         shaderLibrary.TryGetValue(name, out MaterialInstance shader);
-        
         return shader.Shader;
     }
 }

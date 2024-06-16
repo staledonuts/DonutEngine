@@ -62,33 +62,44 @@ public static partial class Rendering2D
             _renderTextures.Add(layerPos, renderTexture);
             Raylib.TraceLog(TraceLogLevel.Info, "Created RenderTexture with ID:"+renderTexture.Id);
             _layers.Add(layerPos, new Layer());
+            Layer l = _layers.GetValueOrDefault(layerPos); 
+            QueueAsShader(l, renderData);
+        }
+        else
+        {
             Layer l = _layers.GetValueOrDefault(layerPos);
-            if(l.RenderBatch.ContainsKey(renderData.Shader))
-            {
-                l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> qu);
-                qu.Enqueue(renderData);
-            }
-            else
-            {
-                l.RenderBatch.Add(renderData.Shader, new());
-                l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> q);
-                q.Enqueue(renderData);
-            }
+            QueueAsShader(l, renderData);
         }
             
+    }
+
+    static void QueueAsShader(Layer l, IRenderSorting renderData)
+    {
+        if(l.RenderBatch.ContainsKey(renderData.Shader))
+        {
+            l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> qu);
+            qu.Enqueue(renderData);
+        }
+        else
+        {
+            l.RenderBatch.Add(renderData.Shader, new());
+            l.RenderBatch.TryGetValue(renderData.Shader, out Queue<IRenderSorting> q);
+            q.Enqueue(renderData);
+        }
     }
 
     internal static void RenderLayer(Layer layer)
     {
         foreach(KeyValuePair<string, Queue<IRenderSorting>> l in layer.RenderBatch)
         {
-            layer.RenderBatch.TrimExcess();
-            int length = layer.RenderBatch.Count;
+            //Raylib.BeginShaderMode(ShaderLib.UseShader(l.Key));
+            l.Value.TrimExcess();
+            int length = l.Value.Count;
             for (int i = 0; i < length; i++)
             {
-                if(l.Value.TryDequeue(out IRenderSorting r))
+                if(l.Value.TryDequeue(out IRenderSorting r));
                 {
-                    //Raylib.BeginShaderMode(ShaderLib.UseShader(r.Shader));
+                    
                     switch (r)
                     {
                         case Texture2DData t2d:
@@ -106,13 +117,10 @@ public static partial class Rendering2D
                         default:
                             break;
                     }
-                    //Raylib.EndShaderMode(); 
-                }
-                else
-                {
-                    return;
+                    
                 }
             }
+            //Raylib.EndShaderMode();
         }
     }
 }
