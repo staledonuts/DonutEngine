@@ -14,7 +14,6 @@ using Engine.RenderSystems;
 public class Game
 {
     readonly string windowName;
-    protected static RenderTexture2D target;
     public Game(string gamename)
     {
         windowName = gamename;
@@ -26,7 +25,6 @@ public class Game
         App.Initialize();
         InputEventSystem.Initialize();
         InitSystems();
-        target = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         SetupGame();
         SetWindowTitle(windowName);
         MainLoop();
@@ -47,7 +45,7 @@ public class Game
         EngineSystems.AddSystem(new AudioControl());
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
-        EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.Blank, Color.Blank, Color.Gray, Color.DarkBlue, Color.DarkGray, Color.Gray, Color.SkyBlue, Color.DarkGray, Fonts.GetFont("PixelOperator"), 24, 1)));
+        //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.Blank, Color.Blank, Color.Gray, Color.DarkBlue, Color.DarkGray, Color.Gray, Color.SkyBlue, Color.DarkGray, Fonts.GetFont("PixelOperator"), 24, 1)));
     }
 
     /// <summary>

@@ -34,7 +34,7 @@ public class Logo : Scene
         {
             position.X = (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2);
             position.Y = (Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2);
-            Backgrounds.LerpBackground(new Color(4, 12, 6, 255), 0.2f);
+            Backgrounds.LerpBackground(Color.DarkBlue, 0.2f);
             Draw2D.DrawImage(1, donutLogo, position, Color.White);
         }
         else if(framesCounter > 121)

@@ -1,4 +1,6 @@
+using System.Diagnostics.Tracing;
 using Engine.Assets;
+using Engine.Logging;
 using Engine.Systems;
 using Raylib_cs;
 
@@ -19,7 +21,7 @@ public static partial class Rendering2D
         Raylib.BeginDrawing();
         Backgrounds.DrawBackground();
         DrawToRenderTextures();
-        //RenderComposition();
+        RenderComposition();
         Raylib.EndDrawing();
     }
 
@@ -27,12 +29,12 @@ public static partial class Rendering2D
     {
         foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
         {
-            //Raylib.BeginTextureMode(rt.Value);
+            Raylib.BeginTextureMode(rt.Value);
             foreach(KeyValuePair<int, Layer> layr in _layers)
             {
                 RenderLayer(layr.Value);
             }
-            //Raylib.EndTextureMode();
+            Raylib.EndTextureMode();
         }
     }
 
@@ -50,8 +52,10 @@ public static partial class Rendering2D
     {
         if(!_layers.ContainsKey(layerPos))
         {
-            _renderTextures.Add(layerPos, new());
-            _layers.Add(layerPos, new());
+            RenderTexture2D renderTexture = new();
+            _renderTextures.Add(layerPos, renderTexture);
+            Raylib.TraceLog(TraceLogLevel.Info, "Created RenderTexture with ID:"+renderTexture.Id);
+            _layers.Add(layerPos, new Layer());
         }
         _layers.GetValueOrDefault(layerPos).RenderBatch.Enqueue(renderData);
             

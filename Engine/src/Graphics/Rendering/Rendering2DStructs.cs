@@ -7,7 +7,7 @@ namespace Engine.RenderSystems;
 
 public static partial class Rendering2D
 {
-    internal struct Layer
+    public struct Layer
     {
         public Layer()
         {
@@ -22,7 +22,7 @@ public static partial class Rendering2D
 
 
 
-    internal struct Texture2DData : IRenderSorting, IDisposable
+    public struct Texture2DData : IRenderSorting, IDisposable
     {
         public Texture2DData(Texture2D T, Rectangle R1, Rectangle R2, Vector2 V, float F, Color C)
         {
@@ -33,12 +33,12 @@ public static partial class Rendering2D
             _orientation = F;
             _color = C;
         }
-        internal Texture2D _tex;
-        internal Rectangle _UVpos;
-        internal Rectangle _rectTarget;
-        internal Vector2 _origin;
-        internal float _orientation;
-        internal Color _color;
+        public Texture2D _tex;
+        public Rectangle _UVpos;
+        public Rectangle _rectTarget;
+        public Vector2 _origin;
+        public float _orientation;
+        public Color _color;
 
         public void Dispose()
         {
@@ -46,7 +46,7 @@ public static partial class Rendering2D
         }
     }
 
-    internal struct ImageData : IRenderSorting
+    public struct ImageData : IRenderSorting
     {
         public ImageData(Texture2D tex, Vector2 pos, Color color)
         {
@@ -55,9 +55,9 @@ public static partial class Rendering2D
             _pos = pos;
         }
 
-            internal Texture2D _tex;
-            internal Vector2 _pos;
-            internal Color _color;
+            public Texture2D _tex;
+            public Vector2 _pos;
+            public Color _color;
 
         public void Dispose()
         {
@@ -65,7 +65,7 @@ public static partial class Rendering2D
         }
     }
 
-    internal struct LineData : IRenderSorting, IDisposable
+    public struct LineData : IRenderSorting, IDisposable
     {
         public LineData(Vector2 pos1, Vector2 pos2, float width, Color color)
         {
@@ -75,10 +75,10 @@ public static partial class Rendering2D
             _color = color;
         }
 
-        internal Vector2 _pos1;
-        internal Vector2 _pos2;
-        internal float _width;
-        internal Color _color;
+        public Vector2 _pos1;
+        public Vector2 _pos2;
+        public float _width;
+        public Color _color;
 
         public void Dispose()
         {
@@ -86,7 +86,7 @@ public static partial class Rendering2D
         }
     }
 
-    internal interface IRenderSorting
+    public interface IRenderSorting
     {
         
     }
