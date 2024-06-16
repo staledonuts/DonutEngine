@@ -16,6 +16,14 @@ public static partial class Rendering2D
     static Dictionary<int, Layer> _layers;
     static Dictionary<int, RenderTexture2D> _renderTextures;
 
+    public static void Shutdown()
+    {
+        foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
+        {
+            Raylib.UnloadRenderTexture(rt.Value);
+        }
+    }
+
     public static void Render()
     {
         Raylib.BeginDrawing();
@@ -27,32 +35,31 @@ public static partial class Rendering2D
 
     static void DrawToRenderTextures()
     {
-        foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
+        foreach(KeyValuePair<int, Layer> layr in _layers)
         {
-            Raylib.BeginTextureMode(rt.Value);
-            foreach(KeyValuePair<int, Layer> layr in _layers)
-            {
-                RenderLayer(layr.Value);
-            }
+            Raylib.BeginTextureMode(_renderTextures.GetValueOrDefault(layr.Key)); 
+            Raylib.ClearBackground(Color.Blank);
+            RenderLayer(layr.Value);
             Raylib.EndTextureMode();
         }
+        
     }
 
     static void RenderComposition()
     {
-        Raylib.BeginShaderMode(ShaderLib.UseShader("main"));
+        //Raylib.BeginShaderMode(ShaderLib.UseShader("main"));
         foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
         {
             Raylib.DrawTextureRec(rt.Value.Texture, new Rectangle(0, 0, rt.Value.Texture.Width, -rt.Value.Texture.Height), new(0, 0), Color.White);
         }
-        Raylib.EndShaderMode();
+        //Raylib.EndShaderMode();
     }
 
     internal static void QueueAtLayer(int layerPos, IRenderSorting renderData)
     {
         if(!_layers.ContainsKey(layerPos))
         {
-            RenderTexture2D renderTexture = new();
+            RenderTexture2D renderTexture = Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             _renderTextures.Add(layerPos, renderTexture);
             Raylib.TraceLog(TraceLogLevel.Info, "Created RenderTexture with ID:"+renderTexture.Id);
             _layers.Add(layerPos, new Layer());

@@ -8,7 +8,14 @@ using Raylib_cs;
 
 public class Camera2DSystem : SystemClass, IUpdateSys
 {
-    Camera2D camera2D = new();
+    static Camera2D _camera2D = new();
+    public static Camera2D camera
+    {
+        get
+        {
+            return _camera2D;
+        }
+    }
 
     public Rectangle Bounds = RaylibHelper.Viewport;
 
@@ -17,18 +24,18 @@ public class Camera2DSystem : SystemClass, IUpdateSys
     public void SetCameraTarget(Entity entity)
     {
         currentTarget = entity;
-        camera2D.Target = currentTarget.body.Position;
+        _camera2D.Target = currentTarget.body.Position;
     }
 
     public void SetRotation(float ToAngle)
     {
-        camera2D.Rotation = ToAngle;
+        _camera2D.Rotation = ToAngle;
     }
 
     public void LerpRotation(float ToAngle, float amount)
     {
-        float current = camera2D.Rotation;
-        camera2D.Rotation = GameMath.LerpPrecise(current, ToAngle, amount);
+        float current = _camera2D.Rotation;
+        _camera2D.Rotation = GameMath.LerpPrecise(current, ToAngle, amount);
     }
 
     public override void Shutdown()
@@ -47,6 +54,7 @@ public class Camera2DSystem : SystemClass, IUpdateSys
 
     public override void Initialize()
     {
-        camera2D.Target = new(0,0);
+        _camera2D.Target = new(0,0);
     }
+
 }
