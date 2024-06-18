@@ -47,11 +47,12 @@ public static partial class Rendering2D
 
     static void RenderComposition()
     {
-        
+        Raylib.BeginShaderMode(ShaderLib.UseShader("bloom"));
         foreach(KeyValuePair<int, RenderTexture2D> rt in _renderTextures)
         {
             Raylib.DrawTextureRec(rt.Value.Texture, new Rectangle(0, 0, rt.Value.Texture.Width, -rt.Value.Texture.Height), new(0, 0), Color.White);
         }
+        Raylib.EndShaderMode();
     }
 
     internal static void QueueAtLayer(int layerPos, IRenderSorting renderData)
@@ -92,7 +93,6 @@ public static partial class Rendering2D
     {
         foreach(KeyValuePair<string, Queue<IRenderSorting>> l in layer.RenderBatch)
         {
-            //Raylib.BeginShaderMode(ShaderLib.UseShader(l.Key));
             l.Value.TrimExcess();
             int length = l.Value.Count;
             for (int i = 0; i < length; i++)
@@ -120,7 +120,6 @@ public static partial class Rendering2D
                     
                 }
             }
-            //Raylib.EndShaderMode();
         }
     }
 }
