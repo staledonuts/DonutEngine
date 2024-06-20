@@ -1,5 +1,6 @@
 ﻿using Engine.FlatPhysics;
 using Engine.Systems;
+using Engine.Systems.Particles;
 using Raylib_cs;
 
 namespace Engine.EntityManager;
@@ -11,6 +12,27 @@ public static class EntitySystem
         {
             entitiesData.entities.TryGetValue(intID, out Entity entity);
             return entity;
+        }
+        catch(Exception e)
+        {
+            Raylib.TraceLog(Raylib_cs.TraceLogLevel.Error, "Could not find that Entity: "+e);
+            return null;
+        }
+    }
+
+    public static List<Entity> GetEntities<T>(this EntitiesData entitiesData)
+    {
+        try
+        {
+            List<Entity> typeList = new();
+            foreach(KeyValuePair<int, Entity> keyValuePair in entitiesData.entities)
+            {
+                if(keyValuePair.Value is T t)
+                {
+                    typeList.Add(keyValuePair.Value);
+                }
+            }
+            return typeList;
         }
         catch(Exception e)
         {

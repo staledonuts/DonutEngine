@@ -1,5 +1,6 @@
 namespace Engine.Systems.SceneSystem;
 
+using Engine.EntityManager;
 using Engine.Exceptions;
 using Engine.Systems;
 using Raylib_cs;
@@ -41,6 +42,11 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     Dictionary<Int64, Scene> _Scenes = new();
     Scene _current = Empty.Scene;
+
+    public EntitiesData GetEntitiesData()
+    {
+        return _current.entitiesData;
+    }
 
     Scene this[Int64 index]
     {

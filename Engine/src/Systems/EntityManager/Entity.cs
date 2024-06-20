@@ -6,6 +6,13 @@ namespace Engine.Systems;
 public abstract class Entity
 {
     public FlatBody body { get; protected set; }
+    public Vector2 Position 
+    {
+        get
+        {
+            return body.Position;
+        }
+    }
     public abstract void Initialize();
     public abstract void Update();
     public abstract void DrawUpdate();
