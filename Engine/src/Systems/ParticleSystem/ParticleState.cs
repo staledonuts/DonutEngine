@@ -52,10 +52,13 @@ public struct ParticleState
 
         // the length of bullet particles will be less dependent on their speed than other particles
         if (particle.State.Type == ParticleType.Bullet)
+        {   
             particle.Scale.Y = particle.State.LengthMultiplier * Math.Min(Math.Min(1f, 0.1f * speed + 0.1f), alpha);
+        }
         else
+        {
             particle.Scale.Y = particle.State.LengthMultiplier * Math.Min(Math.Min(1f, 0.2f * speed + 0.1f), alpha);
-
+        }
         particle.Orientation = vel.ToDegrees();
 
         var pos = particle.Position;
@@ -64,13 +67,21 @@ public struct ParticleState
 
         // collide with the edges of the screen
         if (pos.X < 0)
+        {
             vel.X = Math.Abs(vel.X);
+        }
         else if (pos.X > width)
+        {
             vel.X = -Math.Abs(vel.X);
+        }
         if (pos.Y < 0)
+        {
             vel.Y = Math.Abs(vel.Y);
+        }
         else if (pos.Y > height)
+        {
             vel.Y = -Math.Abs(vel.Y);
+        }
 
         if (particle.State.Type != ParticleType.IgnoreGravity)
         {
@@ -89,11 +100,17 @@ public struct ParticleState
         }
 
         if (Math.Abs(vel.X) + Math.Abs(vel.Y) < 0.00000000001f)	// denormalized floats cause significant performance issues
+        {
             vel = Vector2.Zero;
+        }
         else if (particle.State.Type == ParticleType.Enemy)
+        {
             vel *= 0.94f;
+        }
         else
+        {
             vel *= 0.96f + Math.Abs(pos.X) % 0.04f;	// rand.Next() isn't thread-safe, so use the position for pseudo-randomness
+        }
 
         particle.State.Velocity = vel;
     }

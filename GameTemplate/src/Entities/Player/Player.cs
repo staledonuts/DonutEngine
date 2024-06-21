@@ -11,9 +11,13 @@ namespace Template;
 public class Player : Entity
 {
 
-    public Player(FlatBody body)
+    public Player(FlatBody flatBody) : base(flatBody)
     {
-        this.body = body;
+
+    }
+    public Player(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, ShapeType shapeType) : base(position, density, mass, restitution, area, isStatic, radius, width, height, shapeType)
+    {
+        
     }
 
     public override void Destroy()

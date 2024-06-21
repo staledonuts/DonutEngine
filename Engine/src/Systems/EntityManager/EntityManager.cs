@@ -1,4 +1,5 @@
-﻿using Engine.FlatPhysics;
+﻿using System.Diagnostics.CodeAnalysis;
+using Engine.FlatPhysics;
 using Engine.Systems;
 using Engine.Systems.Particles;
 using Raylib_cs;
@@ -19,7 +20,7 @@ public static class EntitySystem
             return null;
         }
     }
-
+ 
     public static List<Entity> GetEntities<T>(this EntitiesData entitiesData)
     {
         try
@@ -71,6 +72,8 @@ public static class EntitySystem
         {
             e.Value.LateUpdate();
         }
+        entitiesData.UpdatePhysics();
+
     }
 
     public static void LoadJSON(this EntitiesData entitiesData, string filePath)
@@ -90,11 +93,17 @@ public struct EntitiesData
         EntityID = 0;
     }
 
-    
-
     public int EntityID;
 
+    const int iterations = 6;
     public readonly FlatWorld world;
     public Dictionary<int, Entity> entities;
+
+    public void UpdatePhysics()
+    {
+        world.Step(Raylib.GetFrameTime(), iterations);
+    }
+
+
     
 }

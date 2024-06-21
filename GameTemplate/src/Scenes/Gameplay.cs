@@ -8,12 +8,11 @@ namespace Template.Scenes;
 
 public class Gameplay : Scene
 {
-    const int iterations = 6;
+    
     public Gameplay()
     {
         entitiesData = new();
     }
-    EntitiesData entitiesData;
     public override void DrawScene()
     {
         entitiesData.DrawUpdate();
@@ -26,7 +25,6 @@ public class Gameplay : Scene
 
     public override void LateUpdateScene()
     {
-        entitiesData.world.Step(Raylib.GetFrameTime(), iterations);
         entitiesData.LateUpdate();
     }
 
