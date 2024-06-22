@@ -6,6 +6,7 @@ namespace Engine.Systems
     using Engine.Systems;
     using Engine.Systems.Particles;
     using Engine;
+    using Engine.Assets;
 
     public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
     {
@@ -73,7 +74,7 @@ namespace Engine.Systems
                 }
                 else
                 {
-                    Draw2D.DrawLine2D(1, particle.Position, particle.TailPosition, particle.Scale.X, particle.Tint, "bloom");
+                    Draw2D.DrawLine2D(1, particle.Position, particle.TailPosition, particle.Scale.X, particle.Tint, ShaderLib.UseShader("bloom"));
                 }
             }
             
