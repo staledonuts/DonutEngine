@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.AudioTools", "Engine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTemplate", "GameTemplate\GameTemplate.csproj", "{464D0EA4-E0E0-4C15-8786-06FCBD254927}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDtk.Codegen", "LDtk.Codegen\LDtk.Codegen.csproj", "{0E2F50EE-B222-4967-BA62-DDA8272B688D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.AssetsTools", "Engine.AssetsTools\Engine.AssetsTools.csproj", "{0609E824-2358-46BB-BB93-45268900D6AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{464D0EA4-E0E0-4C15-8786-06FCBD254927}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{464D0EA4-E0E0-4C15-8786-06FCBD254927}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{464D0EA4-E0E0-4C15-8786-06FCBD254927}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E2F50EE-B222-4967-BA62-DDA8272B688D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E2F50EE-B222-4967-BA62-DDA8272B688D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E2F50EE-B222-4967-BA62-DDA8272B688D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E2F50EE-B222-4967-BA62-DDA8272B688D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0609E824-2358-46BB-BB93-45268900D6AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0609E824-2358-46BB-BB93-45268900D6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0609E824-2358-46BB-BB93-45268900D6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0609E824-2358-46BB-BB93-45268900D6AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

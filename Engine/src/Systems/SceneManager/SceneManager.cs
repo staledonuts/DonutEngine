@@ -10,7 +10,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 {
     public void DrawUpdate()
     {
-        if(_current is not null)
+        if(_current != null)
         {
             _current.DrawScene();
         }
@@ -18,7 +18,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public void LateUpdate()
     {
-        if(_current is not null)
+        if(_current != null)
         {
             _current.LateUpdateScene();
         }
@@ -26,7 +26,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public override void Shutdown()
     {
-        if(_current is not null)
+        if(_current != null)
         {
             _current.UnloadScene();
         }
@@ -34,7 +34,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public void Update()
     {
-        if(_current is not null)
+        if(_current != null)
         {
             _current.UpdateScene();
         }

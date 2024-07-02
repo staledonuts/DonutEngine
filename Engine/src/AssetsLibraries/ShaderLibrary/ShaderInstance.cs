@@ -4,9 +4,11 @@ namespace Engine.Assets;
 public class MaterialInstance
 {
     Shader _shader;
-    public MaterialInstance(Shader shader)
+    string _shaderName;
+    public MaterialInstance(Shader shader, string name)
     {
         _shader = shader;
+        _shaderName = name;
     }
 
     private void UpdateMaterial()
@@ -18,8 +20,15 @@ public class MaterialInstance
     {
         get
         {
-            UpdateMaterial();
             return _shader;
+        }
+    }
+
+    public string GetShaderName
+    {
+        get
+        {
+            return _shaderName;
         }
     }
 

@@ -1,4 +1,7 @@
+using System.Diagnostics.Tracing;
 using Engine.Assets;
+using Engine.Logging;
+using Engine.Systems;
 using Raylib_cs;
 
 namespace Engine.RenderSystems;
@@ -6,154 +9,92 @@ public static partial class Rendering2D
 {
     static Rendering2D()
     {
-        _renderSortingPool = new();
-        _frameBuffer = new();
         _layers = new();
-        _materials = new();
-        _renderTextures = new()
-        {
-            Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight())
-        };
-
     }
 
-    static List<IRenderSorting> _renderSortingPool;
-    static List<IRenderSorting> _frameBuffer;
-    static List<IRenderSorting> _layers;
-    static List<IRenderSorting> _materials;
-    static List<RenderTexture2D> _renderTextures;
-
+    static Dictionary<int, Layer> _layers;
 
     public static void Shutdown()
     {
-        foreach(RenderTexture2D rt in _renderTextures)
+        foreach(KeyValuePair<int, Layer> rt in _layers)
         {
-            Raylib.UnloadRenderTexture(rt);
+            Raylib.UnloadRenderTexture(rt.Value.RenderTexture);
         }
     }
 
     public static void Render()
     {
-        SortByFrameBuffer();
-        SortByLayer();
-        SortByShader();
         Raylib.BeginDrawing();
-        Raylib.BeginTextureMode(_renderTextures.ElementAt(0));
         Backgrounds.DrawBackground();
-        Raylib.BeginShaderMode(ShaderLib.UseShader("main").Shader);
-        Raylib.ClearBackground(Color.Blank);
+        DrawToRenderTextures();
         RenderComposition();
-        Raylib.EndShaderMode();
-        Raylib.EndTextureMode();
-        foreach(RenderTexture2D rt in _renderTextures)
-        {
-            Raylib.DrawTextureRec(rt.Texture, new Rectangle(0, 0, rt.Texture.Width, -rt.Texture.Height), new(0, 0), Color.White);
-        }
         Raylib.EndDrawing();
     }
 
-    static int currentSorting = 0;
-    static void SortByFrameBuffer()
-    { 
-        _frameBuffer.Clear();
-        while(_frameBuffer.Count != _renderSortingPool.Count )
-        {
-            currentSorting++;
-            foreach(IRenderSorting r in _renderSortingPool)
-            {
-                if(r.Framebuffer == currentSorting)
-                {
-                    _frameBuffer.Add(r);
-                }
-            }    
-        }
-        currentSorting = 0;
-    }
-    static void SortByLayer()
+    static void DrawToRenderTextures()
     {
-        _layers.Clear();
-        while(_layers.Count != _renderSortingPool.Count )
+        foreach(KeyValuePair<int, Layer> layr in _layers)
         {
-            currentSorting++;
-            foreach(IRenderSorting r in _renderSortingPool)
-            {
-                if(r.Framebuffer == currentSorting)
-                {
-                    _layers.Add(r);
-                }
-            }
-        }
-        currentSorting = 0;
-    }
-
-
-    static void SortByShader()
-    { 
-        _materials.Clear();
-        while(_materials.Count != _renderSortingPool.Count)
-        {
-            currentSorting++;
-            foreach(IRenderSorting r in _renderSortingPool)
-            {
-                if(r.Mat.Shader.Id == currentSorting)
-                {
-                    _materials.Add(r);
-                }
-            }
-
-        }
-        currentSorting = 0;
+            Raylib.BeginTextureMode(layr.Value.RenderTexture); 
+            Raylib.ClearBackground(Color.Blank);
+            RenderLayer(layr.Value);
+            Raylib.EndTextureMode();
+        }   
     }
 
     static void RenderComposition()
     {
-        int currentFrameBuffer = -1;
-        int currentLayer = -1;
-        int currentMaterial = -1;      
-        int amount = _renderSortingPool.Count;
-
-        for (int i = 0; i < amount; i++)
+        foreach(KeyValuePair<int, Layer> rt in _layers)
         {
-            IRenderSorting r = _frameBuffer.ElementAt(i);
-            if(currentFrameBuffer != r.Framebuffer)
-            {
-                Raylib.EndTextureMode();
-                try
-                {
-                    Raylib.BeginTextureMode(_renderTextures.ElementAt(r.Framebuffer));
-                    Raylib.ClearBackground(Color.Blank);
-                }
-                catch
-                {
-                    _renderTextures.Add(Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight()));
-                    Raylib.BeginTextureMode(_renderTextures.ElementAt(r.Framebuffer));
-                    Raylib.ClearBackground(Color.Blank);
-                }
-                
-            }
-
-            if(currentMaterial != r.Mat.Shader.Id)
-            {
-                Raylib.EndShaderMode();
-                Raylib.BeginShaderMode(r.Mat.Shader);
-            }
-
-            r.RenderMe();
-
+            Raylib.DrawTextureRec(rt.Value.RenderTexture.Texture, new Rectangle(0, 0, rt.Value.RenderTexture.Texture.Width, -rt.Value.RenderTexture.Texture.Height), new(0, 0), Color.White);
         }
-
-        _renderSortingPool.Clear();
     }
 
-
-
-    internal static void AddToRenderPool(IRenderSorting rs)
+    internal static void QueueAtLayer(int layerPos, IRenderSorting renderData)
     {
-        //incoming Renderdata
-        _renderSortingPool.Add(rs);
+        if(!_layers.ContainsKey(layerPos))
+        {
+            _layers.Add(layerPos, new Layer(Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), ShaderLib.UseShader("bloom")));
+            Layer l = _layers.GetValueOrDefault(layerPos); 
+            QueueAsShader(l, renderData);
+        }
+        else
+        {
+            Layer l = _layers.GetValueOrDefault(layerPos);
+            QueueAsShader(l, renderData);
+        }
     }
 
-    
+    static void QueueAsShader(Layer l, IRenderSorting renderData)
+    {
+        if(l.RenderBatch.ContainsKey(renderData.Mat.GetShaderName))
+        {
+            l.RenderBatch.TryGetValue(renderData.Mat.GetShaderName, out Queue<IRenderSorting> qu);
+            qu.Enqueue(renderData);
+        }
+        else
+        {
+            l.RenderBatch.Add(renderData.Mat.GetShaderName, new());
+            l.RenderBatch.TryGetValue(renderData.Mat.GetShaderName, out Queue<IRenderSorting> q);
+            q.Enqueue(renderData);
+        }
+    }
+
+    internal static void RenderLayer(Layer layer)
+    {
+        foreach(KeyValuePair<string, Queue<IRenderSorting>> l in layer.RenderBatch)
+        {
+            //Raylib.BeginShaderMode(ShaderLib.UseShader(l.Key).Shader);
+            l.Value.TrimExcess();
+            int length = l.Value.Count;
+            for (int i = 0; i < length; i++)
+            {
+                if(l.Value.TryDequeue(out IRenderSorting r))
+                {
+                    r.RenderMe();     
+                }
+            }
+            //Raylib.EndShaderMode();
+        }
+    }
 }
-
-

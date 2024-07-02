@@ -80,7 +80,7 @@ public static class EngineSystems
     public static void Update()
     {
         Time.Advance(time);
-        if(dUpdate is not null)
+        if(dUpdate != null)
         {
             dUpdate();
         }
@@ -88,7 +88,7 @@ public static class EngineSystems
 
     public static void DrawUpdate()
     {
-        if(dDrawUpdate is not null)
+        if(dDrawUpdate != null)
         {
             dDrawUpdate();
         }
@@ -96,7 +96,7 @@ public static class EngineSystems
 
     public static void LateUpdate()
     {
-        if(dLateUpdate is not null)
+        if(dLateUpdate != null)
         {
             dLateUpdate();
         }

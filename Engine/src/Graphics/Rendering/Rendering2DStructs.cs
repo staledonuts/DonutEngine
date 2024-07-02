@@ -9,13 +9,15 @@ public static partial class Rendering2D
 {
     internal struct Layer
     {
-        public Layer(RenderTexture2D rt)
+        public Layer(RenderTexture2D rt, MaterialInstance matInstance)
         {
             RenderBatch = new();
             RenderTexture = rt;
+            materialInstance = matInstance;
         }
         public Dictionary<string, Queue<IRenderSorting>> RenderBatch;
         public RenderTexture2D RenderTexture;
+        public MaterialInstance materialInstance;
     }
 
 
