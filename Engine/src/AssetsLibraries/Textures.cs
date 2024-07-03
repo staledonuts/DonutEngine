@@ -59,7 +59,9 @@ public static class Textures
         foreach(string File in paths)
         {
             string name = Path.GetFileNameWithoutExtension(File);
+            #if DEBUG
             Raylib.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to TexLib");
+            #endif
             textureLibrary.TryAdd(name, new());
             filePaths.TryAdd(name, File);
         }
@@ -73,7 +75,9 @@ public static class Textures
             textureLibrary.TryGetValue(textureName, out texture);
             if(!Raylib.IsTextureReady(texture))
             {
+                #if DEBUG
                 Raylib.TraceLog(TraceLogLevel.Debug, textureName+" was not loaded.");
+                #endif
                 filePaths.TryGetValue(textureName, out string toLoadString);
                 textureLibrary.Remove(textureName);
                 textureLibrary.Add(textureName, Raylib.LoadTexture(toLoadString));
@@ -96,7 +100,9 @@ public static class Textures
         {
             Raylib.UnloadTexture(texture);
             textureLibrary.Remove(textureName);
+            #if DEBUG
             Raylib.TraceLog(TraceLogLevel.Debug, "Unloaded: "+textureName+" from TexLib");
+            #endif
         }
     }
     

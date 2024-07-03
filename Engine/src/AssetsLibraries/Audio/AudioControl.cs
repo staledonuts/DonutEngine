@@ -28,10 +28,14 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     }
     public override void Initialize()
     {
+        #if DEBUG
         Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up AudioSystem ]------");
+        #endif
         InitAudioDevice();
         InitAudioLibrary();
+        #if DEBUG
         Raylib.TraceLog(TraceLogLevel.Info, "------[ AudioSystem Initialized ]------");
+        #endif
     }
     public void ReloadAudioLibrary()
     {
@@ -65,11 +69,15 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             File.Exists(Paths.AudioDefPath+"MusicDef.json");
             try
             {
+                #if DEBUG
                 Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up Music Library ]------");
+                #endif
                 MusicLibrary = new();
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"MusicDef.json");
                 MusicLibrary = JsonConvert.DeserializeObject<Dictionary<string, MusicTrack>>(JsonData);
+                #if DEBUG
                 Raylib.TraceLog(TraceLogLevel.Info, "------[ Music Library Setup Done ]------");
+                #endif
             }
             catch (Exception e)
             {
@@ -89,10 +97,14 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             File.Exists(Paths.AudioDefPath+"SoundDef.json");
             try
             {
+                #if DEBUG
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up SFX Library ]------"); }
+                #endif
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"SoundDef.json");
                 SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, SoundEffect>>(JsonData);
+                #if DEBUG
                 if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.Info, "------[ SFX Library Setup Done ]------"); }
+                #endif
             }
             catch (Exception e)
             {
@@ -125,7 +137,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     {
         if(currentMusic != null)
         {
-            UpdateMusicStream(currentMusic.Music);
+            currentMusic.UpdateMusicStream();
         }
     }
     public override void Shutdown()
@@ -146,7 +158,9 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             currentMusic = musicTrack;
             Raylib.SetMusicVolume(currentMusic.Music, currentMusic.Volume);
             PlayMusicStream(currentMusic.Music);
+            #if DEBUG
             Raylib.TraceLog(TraceLogLevel.Info, $"Playing: {name}");
+            #endif
         }
         else
         {

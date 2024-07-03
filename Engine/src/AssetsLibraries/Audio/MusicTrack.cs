@@ -35,28 +35,30 @@ public class MusicTrack : IDisposable
         this.FileName = fileName;
     }
 
-    public Music SetMusicStream()
+    private Music SetMusicStream()
     {
         try
         {
             isLoaded = true;
-            Task.Run(() =>
-            {
-                music = LoadMusicStream(Paths.MusicPath+FileName);
-                return music;
-            });
+            music = LoadMusicStream(Paths.MusicPath+FileName);
+            return music;
         }
         catch (Exception e)
         {
             isLoaded = false;
             Raylib.TraceLog(TraceLogLevel.Error, $"Failed to load Music stream. Exception: {e.Message}");
         }
-        return music;        
+        return music;
     }
 
     public void SetVolume(float volume)
     {
         Volume = volume;
+    }
+
+    public void UpdateMusicStream()
+    {
+        Raylib.UpdateMusicStream(Music);
     }
 
     public void Dispose()

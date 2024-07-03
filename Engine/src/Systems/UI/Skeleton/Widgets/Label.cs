@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Engine.Enums;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
@@ -17,7 +18,7 @@ public class Label : Widget
 
     public override void Draw() 
     {
-        DrawTextEx(Style.Font, Text, Position, Style.FontSize, Style.FontSpacing, Style.Foreground);
+        Draw2D.DrawText2D(Layers.UI, Style, Text, Position, new(),  Style.Background, Style.Foreground);
     }
 }
 

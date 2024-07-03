@@ -2,6 +2,7 @@ using System.Numerics;
 using Engine.Assets;
 using Engine.Enums;
 using Engine.Systems;
+using Engine.Systems.UI.Skeleton;
 using Raylib_cs;
 
 namespace Engine.RenderSystems;
@@ -271,13 +272,96 @@ public static partial class Rendering2D
 
     }
 
+    public struct RectangleData : IRenderSorting, IDisposable
+    {
+        public RectangleData(Vector2 pos, Vector2 size, Color color, Layers lay)
+        {
+            _pos = pos;
+            _size = size;
+            _color = color;
+            _layer = lay;
+        }
+
+
+
+        public Vector2 _pos;
+        public Vector2 _size;
+        public Color _color;
+        private Layers _layer;
+
+        public Layers Layer
+        {
+            get
+            {
+                return _layer;
+            }
+            set
+            {
+                _layer = value;
+            }
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public void RenderMe()
+        {
+            Raylib.DrawRectangleV(_pos, _size, _color);
+        }
+
+    }
+
+    public struct TextDrawData : IRenderSorting, IDisposable
+    {
+        public TextDrawData(Style style, string text, Vector2 pos, Vector2 padding, Color backgroundColor, Layers lay, Color foregroundColor)
+        {
+            _style = style;
+            _text = text;
+            _pos = pos;
+            _bgColor = backgroundColor;
+            _fgColor = foregroundColor;
+            _layer = lay;
+            _padding = padding;
+        }
+
+
+
+        private Vector2 _pos;
+        public Color _bgColor;
+        public Color _fgColor;
+        private Layers _layer;
+        private Style _style;
+        private string _text;
+        private Vector2 _padding;
+
+        public Layers Layer
+        {
+            get
+            {
+                return _layer;
+            }
+            set
+            {
+                _layer = value;
+            }
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public void RenderMe()
+        {
+            Raylib.DrawTextEx(_style.Font, _text, _pos, _style.FontSize, _style.FontSpacing, _fgColor);
+        }
+
+    }
+
     public interface IRenderSorting
     {
-        public int Framebuffer
-        {
-            internal get;
-            set;
-        }
 
         public Layers Layer
         {

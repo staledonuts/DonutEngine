@@ -3,6 +3,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 using Engine.Systems.UI.Skeleton.Events;
+using Engine.Enums;
 
 namespace Engine.Systems.UI.Skeleton.Widgets;
 
@@ -43,7 +44,6 @@ public class Button : Widget
                 return true;
 	        }
 	    }
-
         return base.FireEvent(e);
 	}
 
@@ -57,7 +57,6 @@ public class Button : Widget
         if (Hovered) FG = Style.ButtonForegroundHover;
         if (Clicked) FG = Style.ButtonForegroundClick;
 
-        DrawRectangleV(Position, Size, BG);
-        DrawTextEx(Style.Font, Text, Position + new Vector2(PaddingX / 2, PaddingY / 2), Style.FontSize, Style.FontSpacing, FG);
+        Draw2D.DrawText2D(Layers.UI, Style, Text, Position, new Vector2(PaddingX / 2, PaddingY / 2), BG, FG);
     }
 }

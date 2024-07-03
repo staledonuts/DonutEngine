@@ -59,7 +59,6 @@ public static partial class Rendering2D
         foreach(LayerData l in _layers)
         {
             Raylib.BeginShaderMode(l.materialInstance.Shader);
-            //Raylib.TraceLog(TraceLogLevel.Debug, "Rendering Layer: "+l+" with shader "+l.materialInstance.GetShaderName);
             Raylib.DrawTextureRec(l.RenderTexture.Texture, new Rectangle(0, 0, l.RenderTexture.Texture.Width, -l.RenderTexture.Texture.Height), new(0, 0), Color.White);
             Raylib.EndShaderMode();
         }

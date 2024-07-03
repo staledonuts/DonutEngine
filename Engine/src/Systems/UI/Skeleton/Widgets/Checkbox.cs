@@ -3,6 +3,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 using Engine.Systems.UI.Skeleton.Events;
+using Engine.Enums;
 
 namespace Engine.Systems.UI.Skeleton.Widgets;
 
@@ -41,10 +42,10 @@ public class Checkbox : Widget
 
     public override void Draw() 
     {
-        DrawRectangleV(Position, Size, Color.White);
+        Draw2D.DrawRectangle2D(Layers.UI, Position, Size, Style.Background);
         if (Checked) 
         {
-            DrawRectangle((int)Position.X + 2, (int)Position.Y + 2, (int)Size.X - 4, (int)Size.Y - 4, Color.Red);
+            Draw2D.DrawRectangle2D(Layers.UI, Position, Size, Style.ButtonBackgroundClick);
         }
     }
 }
