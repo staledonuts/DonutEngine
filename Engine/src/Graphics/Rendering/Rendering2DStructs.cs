@@ -1,5 +1,6 @@
 using System.Numerics;
 using Engine.Assets;
+using Engine.Enums;
 using Engine.Systems;
 using Raylib_cs;
 
@@ -7,15 +8,15 @@ namespace Engine.RenderSystems;
 
 public static partial class Rendering2D
 {
-    internal struct Layer
+    internal struct LayerData
     {
-        public Layer(RenderTexture2D rt, MaterialInstance matInstance)
+        public LayerData(RenderTexture2D rt, MaterialInstance matInstance)
         {
             RenderBatch = new();
             RenderTexture = rt;
             materialInstance = matInstance;
         }
-        public Dictionary<string, Queue<IRenderSorting>> RenderBatch;
+        public Queue<IRenderSorting> RenderBatch;
         public RenderTexture2D RenderTexture;
         public MaterialInstance materialInstance;
     }
@@ -24,7 +25,7 @@ public static partial class Rendering2D
 
     public struct Texture2DData : IRenderSorting, IDisposable
     {
-        public Texture2DData(Texture2D T, Rectangle R1, Rectangle R2, Vector2 V, float F, Color C, int lay, int frameBuffer, MaterialInstance mat)
+        public Texture2DData(Texture2D T, Rectangle R1, Rectangle R2, Vector2 V, float F, Color C, Layers lay, int frameBuffer)
         {
             _tex = T;
             _UVpos = R1;
@@ -34,7 +35,6 @@ public static partial class Rendering2D
             _color = C;
             _layer = lay;
             _frameBuffer = frameBuffer;
-            _mat = mat;
         }
         public Texture2D _tex;
         public Rectangle _UVpos;
@@ -43,7 +43,7 @@ public static partial class Rendering2D
         public float _orientation;
         public Color _color;
         private string _shader;
-        private int _layer;
+        private Layers _layer;
         private int _frameBuffer;
         private MaterialInstance _mat;
         public string Shader
@@ -70,7 +70,7 @@ public static partial class Rendering2D
             }
         }
 
-        public int Layer
+        public Layers Layer
         {
             get
             {
@@ -107,23 +107,21 @@ public static partial class Rendering2D
 
     public struct ImageData : IRenderSorting
     {
-        public ImageData(Texture2D tex, Vector2 pos, Color color, int lay, int frameBuffer, MaterialInstance mat)
+        public ImageData(Texture2D tex, Vector2 pos, Color color, Layers lay, int frameBuffer)
         {
             _tex = tex;
             _color = color;
             _pos = pos;
             _layer = lay;
             _frameBuffer = frameBuffer;
-            _mat = mat;
         }
 
         public Texture2D _tex;
         public Vector2 _pos;
         public Color _color;
         private string _shader;
-        private int _layer;
+        private Layers _layer;
         private int _frameBuffer;
-        private MaterialInstance _mat;
 
         public int Framebuffer
         {
@@ -137,7 +135,7 @@ public static partial class Rendering2D
             }
         }
 
-        public int Layer
+        public Layers Layer
         {
             get
             {
@@ -146,18 +144,6 @@ public static partial class Rendering2D
             set
             {
                 _layer = value;
-            }
-        }
-
-        public MaterialInstance Mat
-        {
-            get
-            {
-                return _mat;
-            }
-            set
-            {
-                _mat = value;
             }
         }
 
@@ -172,28 +158,25 @@ public static partial class Rendering2D
         }
     }
 
-    public struct LineData : IRenderSorting, IDisposable
+
+    public struct CircleData : IRenderSorting, IDisposable
     {
-        public LineData(Vector2 pos1, Vector2 pos2, float width, Color color, int lay, int frameBuffer, MaterialInstance mat)
+        public CircleData(Vector2 pos, float radius, Color color, Layers lay, int frameBuffer)
         {
-            _pos1 = pos1;
-            _pos2 = pos2;
-            _width = width;
+            _pos = pos;
+            _radius = radius;
             _color = color;
             _layer = lay;
             _frameBuffer = frameBuffer;
-            _mat = mat;
         }
 
 
 
-        public Vector2 _pos1;
-        public Vector2 _pos2;
-        public float _width;
+        public Vector2 _pos;
+        public float _radius;
         public Color _color;
-        private int _layer;
+        private Layers _layer;
         private int _frameBuffer;
-        private MaterialInstance _mat;
 
         public int Framebuffer
         {
@@ -207,7 +190,7 @@ public static partial class Rendering2D
             }
         }
 
-        public int Layer
+        public Layers Layer
         {
             get
             {
@@ -219,15 +202,60 @@ public static partial class Rendering2D
             }
         }
 
-        public MaterialInstance Mat
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public void RenderMe()
+        {
+            Raylib.DrawCircleV(_pos, _radius, _color);
+        }
+
+    }
+
+    public struct LineData : IRenderSorting, IDisposable
+    {
+        public LineData(Vector2 pos1, Vector2 pos2, float width, Color color, Layers lay, int frameBuffer)
+        {
+            _pos1 = pos1;
+            _pos2 = pos2;
+            _width = width;
+            _color = color;
+            _layer = lay;
+            _frameBuffer = frameBuffer;
+        }
+
+
+
+        public Vector2 _pos1;
+        public Vector2 _pos2;
+        public float _width;
+        public Color _color;
+        private Layers _layer;
+        private int _frameBuffer;
+
+        public int Framebuffer
         {
             get
             {
-                return _mat;
+                return _frameBuffer;
             }
             set
             {
-                _mat = value;
+                _frameBuffer = value;
+            }
+        }
+
+        public Layers Layer
+        {
+            get
+            {
+                return _layer;
+            }
+            set
+            {
+                _layer = value;
             }
         }
 
@@ -251,13 +279,7 @@ public static partial class Rendering2D
             set;
         }
 
-        public int Layer
-        {
-            internal get;
-            set;
-        }
-
-        public MaterialInstance Mat
+        public Layers Layer
         {
             internal get;
             set;

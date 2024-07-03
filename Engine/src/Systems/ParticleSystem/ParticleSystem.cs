@@ -7,6 +7,7 @@ namespace Engine.Systems
     using Engine.Systems.Particles;
     using Engine;
     using Engine.Assets;
+    using Engine.Enums;
 
     public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
     {
@@ -70,11 +71,11 @@ namespace Engine.Systems
                 Particle particle = particleList[i];
                 if(particle.State is ParticleState particleState && particleState.Type == Engine.Enums.ParticleType.Exhaust)
                 {
-                    //Raylib.DrawCircleV(particle.Position, 4, particle.Tint);
+                    Draw2D.DrawCircle2D(Layers.Particles, particle.Position, 4, particle.Tint);
                 }
                 else
                 {
-                    Draw2D.DrawLine2D(1, particle.Position, particle.TailPosition, particle.Scale.X, particle.Tint, ShaderLib.UseShader("bloom"));
+                    Draw2D.DrawLine2D(Layers.Particles, particle.Position, particle.TailPosition, particle.Scale.X, particle.Tint);
                 }
             }
             

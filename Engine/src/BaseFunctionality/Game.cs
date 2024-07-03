@@ -42,6 +42,7 @@ public class Game
         Textures.Initialize();
         Fonts.Initialize();
         ShaderLib.Initialize();
+        Rendering2D.InitializeLayers();
         EngineSystems.AddSystem(new AudioControl());
         EngineSystems.AddSystem(new SceneManager());
         EngineSystems.AddSystem(new Camera2DSystem());
