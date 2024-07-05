@@ -12,7 +12,6 @@ namespace Engine.Assets;
 public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 {
     
-    private Dictionary<string, Queue<SoundEffect>> soundInstances;
     private Dictionary<string, SoundEffect> SoundsLibrary { get; set; }
     private Dictionary<string, MusicTrack> MusicLibrary { get; set; }
     private MusicTrack currentMusic;
@@ -21,7 +20,6 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 
     public AudioControl()
     {
-        soundInstances = new Dictionary<string, Queue<SoundEffect>>();
         SoundsLibrary = new();
         MusicLibrary = new();
         random = new();
@@ -116,22 +114,10 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             Raylib.TraceLog(TraceLogLevel.Error, e.Message);
         }
     }
-    void CheckSoundInstances()
-    {
-        if(soundInstances != null)
-        {
-            foreach(KeyValuePair<string, Queue<SoundEffect>> sfx in soundInstances)
-            {
-                if(!IsSoundPlaying(sfx.Value.Peek().Sound))
-                {
-                    sfx.Value.Dequeue();
-                }
-            }
-        }
-    }
+    
     public void Update()
     {
-        //CheckSoundInstances();
+        
     }
     public void LateUpdate()
     {
@@ -239,35 +225,13 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         PlaySound(sfx);
     }
     
-    void PlaySFX(string name, SoundEffect soundEffect, Vector2 position)
+    public void PlaySFX(SoundEffect soundEffect, Vector2 position)
     {
-        // If this sound effect is not in the dictionary yet, add it
-        if (!soundInstances.ContainsKey(name))
-        {
-            soundInstances[name] = new Queue<SoundEffect>();
-        }
-
-        // Only play the sound if the maximum number of instances has not been reached
-        if (soundInstances[name].Count <= soundEffect.MaxInstances)
-        {
-            // Add this instance to the list
-            soundInstances[name].Enqueue(soundEffect);
             Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
             Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
             Raylib.SetSoundPan(soundEffect.Sound, SoundPannerCalc2D(position));
             Raylib.PlaySound(soundEffect.Sound);
             //Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name} at position {SoundPannerCalc2D(position)}");
-        }
-        else
-        {
-            StopSFX(name);
-            soundInstances[name].Enqueue(soundEffect);
-            Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
-            Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
-            Raylib.SetSoundPan(soundEffect.Sound, SoundPannerCalc2D(position));
-            Raylib.PlaySound(soundEffect.Sound);
-            //Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name} at position {SoundPannerCalc2D(position)}");
-        }
     }
 
     float SoundPannerCalc2D(Vector2 position)
@@ -279,7 +243,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     {
         if (SoundsLibrary!.TryGetValue(name, out SoundEffect sound)) 
         {
-            PlaySFX(name, sound, position);
+            PlaySFX(sound, position);
         }
         else
         {
@@ -289,15 +253,9 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     public void StopSFX(string name)
     {
         if(SoundsLibrary!.TryGetValue(name, out SoundEffect sound))
-        {
-            
+        {          
             StopSound(sound.Sound);
-            if (soundInstances.ContainsKey(name))
-            {
-                Raylib.StopSound(soundInstances[name].Dequeue().Sound);
-            }
         }
-            // If this sound effect is in the dictionary, remove the sound instance
         else
         {
             Raylib.TraceLog(TraceLogLevel.Info, $"No playing instance with name: {name}");
