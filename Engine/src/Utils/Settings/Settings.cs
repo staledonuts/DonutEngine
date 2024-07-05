@@ -177,7 +177,6 @@ namespace Engine.Systems.Containers
         public void ApplyAudioSettings()
         {
             EngineSystems.GetSystem<AudioControl>().SetMasterVolume();
-            //MediaPlayer.Volume = audioSettings.MusicVolume;
         }
     }
 

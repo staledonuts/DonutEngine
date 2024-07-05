@@ -114,4 +114,12 @@ public static class Textures
             textureLibrary.Remove(pair.Key);
         }
     }
+
+    public static void UnloadTextureLibrary()
+    {
+        foreach(KeyValuePair<string, Texture2D> pair in textureLibrary)
+        {
+            Raylib.UnloadTexture(pair.Value);
+        }
+    }
 }

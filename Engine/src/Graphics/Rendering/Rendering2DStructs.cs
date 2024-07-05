@@ -365,7 +365,7 @@ public static partial class Rendering2D
 
         public Layers Layer
         {
-            internal get;
+            get;
             set;
         }
 

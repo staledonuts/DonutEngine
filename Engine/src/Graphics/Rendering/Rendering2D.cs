@@ -64,10 +64,10 @@ public static partial class Rendering2D
         }
     }
 
-    internal static void QueueAtLayer(Layers layerPos, IRenderSorting renderData)
+    public static void QueueAtLayer(Layers layerPos, IRenderSorting renderData)
     {
-            LayerData l = _layers.ElementAt((int)layerPos);
-            l.RenderBatch.Enqueue(renderData);
+        LayerData l = _layers.ElementAt((int)layerPos);
+        l.RenderBatch.Enqueue(renderData);
     }
 
     internal static void RenderLayer(LayerData layer)

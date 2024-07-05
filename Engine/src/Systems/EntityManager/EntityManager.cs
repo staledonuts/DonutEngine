@@ -80,11 +80,21 @@ public static class EntitySystem
     {
 
     }
+
+    public static void WipeEntities(this EntitiesData entitiesData)
+    {
+        foreach(KeyValuePair<int, Entity> e in entitiesData.entities)
+        {
+            e.Value.Destroy();
+            e.Value.Dispose();
+        }
+        entitiesData.entities.Clear();
+    }
     
 }
 
 
-public struct EntitiesData
+public class EntitiesData
 {
     public EntitiesData()
     {

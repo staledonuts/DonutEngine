@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace Engine;
 
-public static class Draw2D
+public static partial class Draw2D
 {
     public static void DrawTexture2D(Layers layer, Texture2D tex, Raylib_cs.Rectangle UVcoord, Raylib_cs.Rectangle targetRect, Vector2 origin, float orientation, Raylib_cs.Color color)
     {

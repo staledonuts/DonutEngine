@@ -52,7 +52,6 @@ public static class InputEventSystem
             RightStickEvent?.Invoke(RightStick(0));
             SelectButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.MiddleLeft));
             StartButtonEvent?.Invoke(IsGamepadButtonPressed(0, GamepadButton.MiddleRight));
-
         }
     }
 

@@ -1,9 +1,10 @@
 using Engine.Systems.FSM;
 using Engine.FlatPhysics;
 using System.Numerics;
+using Newtonsoft.Json;
 namespace Engine.Systems;
 
-public abstract class Entity
+public abstract class Entity : IDisposable
 {
     protected Entity(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, ShapeType shapeType)
     {
@@ -15,7 +16,7 @@ public abstract class Entity
         body = flatBody;
     }
 
-    public FlatBody body { get; protected set; }
+    [JsonProperty] public FlatBody body { get; protected set; }
     public Vector2 Position 
     {
         get
@@ -28,4 +29,9 @@ public abstract class Entity
     public abstract void DrawUpdate();
     public abstract void LateUpdate();
     public abstract void Destroy();
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
 }

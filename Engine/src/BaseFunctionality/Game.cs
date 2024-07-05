@@ -77,6 +77,7 @@ public class Game
     }
     static void UpdateLoop()
     {
+        InputEventSystem.UpdateInputEvent();
         EngineSystems.Update();
     }
 

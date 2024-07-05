@@ -5,6 +5,17 @@ using System.Numerics;
 public static class Vector2Ext
 {
     /// <summary>
+    /// Modifies current <see cref="Vector2"/> to point down.
+    /// </summary>
+    /// <returns>current Vector2 as (0,1)</returns>
+    public static Vector2 Down(this Vector2 v)
+    {
+        v.X = 0;
+        v.Y = 1;
+        return v;
+    }
+
+    /// <summary>
     /// Creates a new <see cref="Vector2"/> that contains cubic interpolation of the specified vectors.
     /// </summary>
     /// <param name="value1">Source <see cref="Vector2"/>.</param>

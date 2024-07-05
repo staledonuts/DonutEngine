@@ -32,7 +32,7 @@ public class Animator
 	string Name;
 
 
-	protected Animator(string AnimatorName, int NumOfFramesPerRow, int NumOfRows, int Speed, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
+	public Animator(string AnimatorName, int NumOfFramesPerRow, int NumOfRows, int Speed, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
 	{
 		Name = AnimatorName;
 		Framerate = Speed == 0 ? 1 : Speed;

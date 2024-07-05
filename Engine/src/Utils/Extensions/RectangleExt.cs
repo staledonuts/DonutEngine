@@ -173,4 +173,12 @@ public static class RectangleExt
         rect.X += (int)amount.X;
         rect.Y += (int)amount.Y;
     }
+    
+    public static void GetRaylibViewport(this Rectangle rect)
+    {
+        rect.X = 0;
+        rect.Y = 0;
+        rect.Width = Raylib.GetScreenWidth();
+        rect.Height = Raylib.GetScreenHeight();
+    }
 }
