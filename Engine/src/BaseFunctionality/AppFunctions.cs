@@ -3,6 +3,7 @@
 using Engine.Logging;
 using Engine.Systems;
 using Raylib_CSharp.Logging;
+using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 
 
@@ -16,7 +17,7 @@ public static class App
         Logger.SetTraceLogLevel(TraceLogLevel.All);
         Window.Init(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
         Window.SetState(ConfigFlags.ResizableWindow);
-        //Window.SetTargetFPS(Settings.graphicsSettings.TargetFPS);
+        Raylib_CSharp.Time.SetTargetFPS(Settings.graphicsSettings.TargetFPS);
         //DonutLogging.SetLogging();
     }
     internal static void UpdateApp()

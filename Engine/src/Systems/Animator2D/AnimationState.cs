@@ -1,18 +1,21 @@
-﻿namespace Engine.Systems.FSM;
+﻿using Newtonsoft.Json;
+
+namespace Engine.Systems.FSM;
 
 /// <summary>
 /// An empty <see cref="State{T}"/>.
 /// </summary>
 /// <remarks>Use <see cref="State">Empty&lt;T&gt;.State </see>to get an empty <see cref="State{T}"/></remarks>
 /// <inheritdoc cref="State{T}"/>
-sealed class Empty<T> : State<T>
+sealed class AnimationState<T> : State<T>
 {
+    [JsonProperty(propertyName:"Animation Data")] AnimationData _animationData;
     /// <summary>
     /// An instance of an empty <see cref="State{T}"/>.
     /// </summary>
-    public static readonly Empty<T> State = new();
+    public static readonly AnimationState<T> State = new();
 
-    Empty() { }
+    AnimationState() { }
 
     /// <inheritdoc />
     void State<T>.Init(FiniteStateMachine<T> fsm) { }

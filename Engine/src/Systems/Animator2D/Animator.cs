@@ -1,163 +1,126 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Numerics;
+﻿
 using Raylib_CSharp.Textures;
-using Engine.Utils;
 using Raylib_CSharp;
 using Raylib_CSharp.Transformations;
+using Engine.Systems.FSM;
 
 namespace Engine.Systems;
 public class Animator
 {
-	float FrameWidth;
-	float FrameHeight;
-	float TimeRemainingFramesCounter;
-	int PlaybackPosition;
-	int DelayFramesCounter;
-	int Rows;
-	int Columns;
-	int Framerate;
-	int CurrentRow;
-	int CurrentColumn;
-	int CurrentFrame;
-	bool bFlipH;
-	bool bFlipV;
-	bool bCanLoop;
-	bool bReverse;
-	bool bContinuous;
-	bool bPaused;
-	bool bIsAnimationFinished;
-	bool bHasStartedPlaying;
-	Rectangle FrameRec;
-	Texture2D Sprite;
-	string Name;
+	AnimationData animationData;
 
 
-	public Animator(string AnimatorName, int NumOfFramesPerRow, int NumOfRows, int Speed, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
+	public Animator(AnimationData animationData)
 	{
-		Name = AnimatorName;
-		Framerate = Speed == 0 ? 1 : Speed;
-		Columns = NumOfFramesPerRow;
-		Rows = NumOfRows == 0 ? 1 : NumOfRows;
-		bReverse = bPlayInReverse;
-		bCanLoop = bLooping;
-		this.bContinuous = bContinuous;
-		PlaybackPosition = 0;
-		DelayFramesCounter = 0;
-		CurrentFrame = 0;
-		CurrentRow = 0;
-		CurrentColumn = 0;
-		bFlipH = false;
-		bFlipV = false;
+		this.animationData = animationData;
 	}
 
-	public void AssignSprite(Texture2D Sprite)
+	public void AssignAnimationData(AnimationData animationData)
 	{
-		this.Sprite = Sprite;
+		this.animationData = animationData;
 
 		Restart();
 	}
 
-	public void ChangeSprite(Texture2D NewSprite, int NumOfFramesPerRow, int NumOfRows, int Speed, float DelayInSeconds, bool bPlayInReverse, bool bContinuous, bool bLooping)
+	/*public void ChangeSprite(Texture2D NewSprite, int NumOfFramesPerRow, int NumOfRows, int Speed, float DelayInSeconds, bool bPlayInReverse, bool bContinuous, bool bLooping)
 	{
-		DelayFramesCounter++;
+		animationData.DelayFramesCounter++;
 
 		if (Time.GetFPS() >= 0)
 		{
-			if (DelayFramesCounter > DelayInSeconds * Time.GetFPS())
+			if (animationData.DelayFramesCounter > DelayInSeconds * Time.GetFPS())
 			{
-				Rows = NumOfRows == 0 ? 1 : NumOfRows;
-				Columns = NumOfFramesPerRow;
-				Framerate = Speed;
-				bCanLoop = bLooping;
-				this.bContinuous = bContinuous;
-				bReverse = bPlayInReverse;
-				PlaybackPosition = 0;
-				DelayFramesCounter = 0;
-				bIsAnimationFinished = false;
-				bHasStartedPlaying = !bPaused;
+				animationData.Rows = NumOfRows == 0 ? 1 : NumOfRows;
+				animationData.Columns = NumOfFramesPerRow;
+				animationData.Framerate = Speed;
+				animationData.bCanLoop = bLooping;
+				animationData.bContinuous = bContinuous;
+				animationData.bReverse = bPlayInReverse;
+				animationData.PlaybackPosition = 0;
+				animationData.DelayFramesCounter = 0;
+				animationData.bIsAnimationFinished = false;
+				animationData.bHasStartedPlaying = !animationData.bPaused;
 
-				AssignSprite(NewSprite);
+				//animationData.AssignSprite(NewSprite);
 			}
 		}
-	}
+	}*/
 
 	public void FlipSprite(bool bHorizontalFlip, bool bVerticalFlip)
 	{
-		bFlipH = bHorizontalFlip;
-		bFlipV = !bFlipV;
+		animationData.bFlipH = bHorizontalFlip;
+		animationData.bFlipV = !animationData.bFlipV;
 
 		if (bHorizontalFlip && bVerticalFlip)
 		{
-			FrameRec.Width *= -1;
-			FrameRec.Height *= -1;
+			animationData.FrameRec.Width *= -1;
+			animationData.FrameRec.Height *= -1;
 		}
 		else if (bHorizontalFlip)
 		{
-			FrameRec.Width *= -1;
+			animationData.FrameRec.Width *= -1;
 		}
 		else if (bVerticalFlip)
 		{
-			FrameRec.Height *= -1;
+			animationData.FrameRec.Height *= -1;
 		}
 	}
 
 	public void SetLooping(bool bLooping)
 	{
-		bCanLoop = bLooping;
+		animationData.bCanLoop = bLooping;
 	}
 
 	public void SetContinuous(bool bIsContinuous)
 	{
-		bContinuous = bIsContinuous;
+		animationData.bContinuous = bIsContinuous;
 	}
 
 	public void ResetFrameRec()
 	{
-		FrameRec.Width = bFlipH ? -Sprite.Width / Columns : Sprite.Width / Columns;
-		FrameRec.Height = bFlipV ? -Sprite.Height / Rows : Sprite.Height / Rows;
-		FrameWidth = FrameRec.Width;
-		FrameHeight = FrameRec.Height;
-		FrameRec.X = bReverse && bContinuous ? Sprite.Width - FrameWidth : 0;
-		FrameRec.Y = bReverse && bContinuous ? Sprite.Height - FrameHeight : 0;
+		animationData.FrameRec.Width = animationData.bFlipH ? -animationData.Sprite.Width / animationData.Columns : animationData.Sprite.Width / animationData.Columns;
+		animationData.FrameRec.Height = animationData.bFlipV ? -animationData.Sprite.Height / animationData.Rows : animationData.Sprite.Height / animationData.Rows;
+		animationData.FrameWidth = animationData.FrameRec.Width;
+		animationData.FrameHeight = animationData.FrameRec.Height;
+		animationData.FrameRec.X = animationData.bReverse && animationData.bContinuous ? animationData.Sprite.Width - animationData.FrameWidth : 0;
+		animationData.FrameRec.Y = animationData.bReverse && animationData.bContinuous ? animationData.Sprite.Height - animationData.FrameHeight : 0;
 
-		CurrentFrame = bReverse ? Columns - 1 : 0;
-		CurrentRow = bReverse ? Rows - 1 : 0;
-		CurrentColumn = bReverse ? Columns - 1 : 0;
+		animationData.CurrentFrame = animationData.bReverse ? animationData.Columns - 1 : 0;
+		animationData.CurrentRow = animationData.bReverse ? animationData.Rows - 1 : 0;
+		animationData.CurrentColumn = animationData.bReverse ? animationData.Columns - 1 : 0;
 	}
 
 	public void GoToRow(int RowNumber)
 	{
-		if (RowNumber >= Rows)
+		if (RowNumber >= animationData.Rows)
 		{
-			FrameRec.Y = (Rows - 1) * FrameHeight;
-			CurrentRow = Rows - 1;
-			TimeRemainingFramesCounter = GetTotalTimeInFrames();
+			animationData.FrameRec.Y = (animationData.Rows - 1) * animationData.FrameHeight;
+			animationData.CurrentRow = animationData.Rows - 1;
+			animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames();
 		}
-		else if (Rows >= 1)
+		else if (animationData.Rows >= 1)
 		{
-			FrameRec.Y = RowNumber == 0 ? 0 : RowNumber * FrameHeight;
-			CurrentRow = RowNumber;
-			TimeRemainingFramesCounter = GetTotalTimeInFrames() - (RowNumber * Columns + Columns);
+			animationData.FrameRec.Y = RowNumber == 0 ? 0 : RowNumber * animationData.FrameHeight;
+			animationData.CurrentRow = RowNumber;
+			animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames() - (RowNumber * animationData.Columns + animationData.Columns);
 		}
 	}
 
 	public void GoToColumn(int ColumnNumber)
 	{
-		if (ColumnNumber >= Columns)
+		if (ColumnNumber >= animationData.Columns)
 		{
-			FrameRec.X = (Columns - 1) * FrameWidth;
-			CurrentColumn = Columns - 1;
-			CurrentFrame = Columns - 1;
-			TimeRemainingFramesCounter = GetTotalTimeInFrames() - CurrentRow * Columns;
+			animationData.FrameRec.X = (animationData.Columns - 1) * animationData.FrameWidth;
+			animationData.CurrentColumn = animationData.Columns - 1;
+			animationData.CurrentFrame = animationData.Columns - 1;
+			animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames() - animationData.CurrentRow * animationData.Columns;
 		}
-		else if (Columns >= 1)
+		else if (animationData.Columns >= 1)
 		{
-			FrameRec.X = ColumnNumber == 0 ? 0 : ColumnNumber * FrameWidth;
-			CurrentColumn = ColumnNumber;
-			CurrentFrame = ColumnNumber;
-			TimeRemainingFramesCounter = GetTotalTimeInFrames() - CurrentRow * Columns - ColumnNumber;
+			animationData.FrameRec.X = ColumnNumber == 0 ? 0 : ColumnNumber * animationData.FrameWidth;
+			animationData.CurrentColumn = ColumnNumber;
+			animationData.CurrentFrame = ColumnNumber;
+			animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames() - animationData.CurrentRow * animationData.Columns - ColumnNumber;
 		}
 	}
 
@@ -166,25 +129,25 @@ public class Animator
 		GoToRow(0);
 
 		// Update time remaining
-		TimeRemainingFramesCounter = GetTotalTimeInFrames() - CurrentColumn;
+		animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames() - animationData.CurrentColumn;
 	}
 
 	public void GoToFirstColumn()
 	{
-		if (!bIsAnimationFinished)
+		if (!animationData.bIsAnimationFinished)
 		{
 			GoToColumn(0);
 
 			// Update time remaining
-			if (bContinuous)
-				TimeRemainingFramesCounter = GetTotalTimeInFrames() - Columns * CurrentRow;
+			if (animationData.bContinuous)
+				animationData.TimeRemainingFramesCounter = GetTotalTimeInFrames() - animationData.Columns * animationData.CurrentRow;
 			else
-				TimeRemainingFramesCounter = Columns;
+				animationData.TimeRemainingFramesCounter = animationData.Columns;
 		}
 		else
 		{
 			GoToColumn(0);
-			TimeRemainingFramesCounter = bContinuous ? GetTotalTimeInFrames() - GetTotalTimeInFrames() / Rows * CurrentRow : 0;
+			animationData.TimeRemainingFramesCounter = animationData.bContinuous ? GetTotalTimeInFrames() - GetTotalTimeInFrames() / animationData.Rows * animationData.CurrentRow : 0;
 		}
 	}
 

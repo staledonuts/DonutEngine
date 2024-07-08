@@ -9,12 +9,26 @@ public abstract class Entity : IDisposable
     protected Entity(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, ShapeType shapeType)
     {
         body = new(position, density, mass, restitution, area, isStatic, radius, width, height, shapeType);
+        _guid = Guid.NewGuid();
     }
 
     protected Entity(FlatBody flatBody)
     {
         body = flatBody;
+        _guid = Guid.NewGuid();
     }
+
+    private Guid _guid;
+
+    public Guid EntityID
+    {
+        get
+        {
+            return _guid;
+        }
+    }
+
+
 
     [JsonProperty] public FlatBody body { get; protected set; }
     public Vector2 Position 
