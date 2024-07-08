@@ -1,12 +1,12 @@
-namespace Engine.Systems.LDtk;
-using Engine.Utils;
-using Raylib_cs;
+namespace LDtk;
+
+using Microsoft.Xna.Framework;
 
 #pragma warning disable CA2225
 
 public partial class TilesetRectangle
 {
-    /// <summary> Monogame Implicit Rectangle Cast </summary>
+    /// <summary> Monogame Implicit Rectangle Cast. </summary>
     public static implicit operator Rectangle(TilesetRectangle r)
     {
         return new Rectangle(r.X, r.Y, r.W, r.H);

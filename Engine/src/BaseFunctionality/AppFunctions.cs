@@ -2,7 +2,8 @@
 //#define Mobile
 using Engine.Logging;
 using Engine.Systems;
-using Raylib_cs;
+using Raylib_CSharp.Logging;
+using Raylib_CSharp.Windowing;
 
 
 namespace Engine;
@@ -11,10 +12,12 @@ public static class App
 {
     internal static void Initialize()
     {
-        Raylib.InitWindow(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
-        Raylib.SetTargetFPS(Settings.graphicsSettings.TargetFPS);
-        DonutLogging.SetLogging();
-        Raylib.SetTraceLogLevel(TraceLogLevel.All);
+        Logger.Init();
+        Logger.SetTraceLogLevel(TraceLogLevel.All);
+        Window.Init(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
+        Window.SetState(ConfigFlags.ResizableWindow);
+        //Window.SetTargetFPS(Settings.graphicsSettings.TargetFPS);
+        //DonutLogging.SetLogging();
     }
     internal static void UpdateApp()
     {
@@ -22,16 +25,16 @@ public static class App
             Desktop();
         #endif
     }
-    public static void ToggleFullScreen() => Raylib.ToggleFullscreen();
+    public static void ToggleFullScreen() => Window.ToggleFullscreen();
 
 
     static void Desktop()
     {
         //Settings.cVars.Focused = Raylib.IsWindowFocused();
-        if(Raylib.IsWindowResized())
+        if(Window.IsResized())
         {
-            Settings.graphicsSettings.ScreenWidth = Raylib.GetScreenWidth();
-            Settings.graphicsSettings.ScreenHeight = Raylib.GetScreenHeight();
+            Settings.graphicsSettings.ScreenWidth = Window.GetScreenWidth();
+            Settings.graphicsSettings.ScreenHeight = Window.GetScreenHeight();
         }
     }
 

@@ -4,9 +4,6 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
-using Raylib_cs;
-using System.Numerics;
-using Engine.Utils;
 
 /// <summary> Utility for parsing ldtk json data into more typed versions. </summary>
 static class LDtkFieldParser
@@ -122,9 +119,12 @@ static class LDtkFieldParser
                     variableDef.SetValue(classFields, null);
                     break;
 
-                    default:
                     case JsonValueKind.Undefined:
-                    throw new LDtkException("Oops");
+                    throw new LDtkException("Field Undefined");
+
+                    default:
+                    throw new LDtkException("Unknown FieldKind");
+
                 }
             }
         }
@@ -142,7 +142,7 @@ static class LDtkFieldParser
         }
         else
         {
-            return new Color(129, 76, 158, 255);
+            return new Color(0xFF00FFFF);
         }
     }
 
@@ -185,7 +185,7 @@ static class LDtkFieldParser
             }
             else
             {
-                Vector2[] points = JsonSerializer.Deserialize<Vector2[]>(element.ToString(), Constants.SerializeOptions) ?? Array.Empty<Vector2>();
+                Vector2[] points = JsonSerializer.Deserialize<Vector2[]>(element.ToString(), Constants.SerializeOptions) ?? [];
                 for (int i = 0; i < points.Length; i++)
                 {
                     points[i] *= new Vector2(gridSize, gridSize);
@@ -201,7 +201,7 @@ static class LDtkFieldParser
     static int GetGridSize(LDtkLevel level)
     {
         int gridSize = 0;
-        for (int j = 0; j < level.LayerInstances.Length; j++)
+        for (int j = 0; j < level.LayerInstances?.Length; j++)
         {
             if (level.LayerInstances[j]._Type == LayerType.Entities)
             {

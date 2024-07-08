@@ -15,6 +15,7 @@ public static class Vector2Ext
         return v;
     }
 
+
     /// <summary>
     /// Creates a new <see cref="Vector2"/> that contains cubic interpolation of the specified vectors.
     /// </summary>
@@ -80,6 +81,11 @@ public static class Vector2Ext
         return GameMath.RadiansToDegrees(vector.ToAngle());
     }
 
+    public static Point ToPoint(this Vector2 vector)
+    {
+        return new Point((int) vector.X,(int) vector.Y);
+    }
+
 
 	/// <summary>
 	/// Rounds the individual components of a Vector2
@@ -98,4 +104,11 @@ public static class Vector2Ext
 			return Vector2.Zero;
 		return Vector2.Normalize(vector);
 	}
+
+    public static Vector2 Floor(this Vector2 vector) 
+    {
+        vector.X = MathF.Floor(vector.X);
+        vector.Y = MathF.Floor(vector.Y);
+        return vector;
+    }
 }

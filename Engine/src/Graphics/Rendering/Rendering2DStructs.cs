@@ -1,9 +1,11 @@
 using System.Numerics;
 using Engine.Assets;
 using Engine.Enums;
-using Engine.Systems;
 using Engine.Systems.UI.Skeleton;
-using Raylib_cs;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Rendering;
+using Raylib_CSharp.Textures;
+using Raylib_CSharp.Transformations;
 
 namespace Engine.RenderSystems;
 
@@ -102,7 +104,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawTexturePro(_tex, _UVpos, _rectTarget, _origin, _orientation, _color);
+            Graphics.DrawTexturePro(_tex, _UVpos, _rectTarget, _origin, _orientation, _color);
         }
     }
 
@@ -155,7 +157,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawTexture(_tex, (int)_pos.X, (int)_pos.Y, _color);
+            Graphics.DrawTexture(_tex, (int)_pos.X, (int)_pos.Y, _color);
         }
     }
 
@@ -210,7 +212,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawCircleV(_pos, _radius, _color);
+            Graphics.DrawCircleV(_pos, _radius, _color);
         }
 
     }
@@ -267,7 +269,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawLineEx(_pos1, _pos2, _width, _color);
+            Graphics.DrawLineEx(_pos1, _pos2, _width, _color);
         }
 
     }
@@ -308,7 +310,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawRectangleV(_pos, _size, _color);
+            Graphics.DrawRectangleV(_pos, _size, _color);
         }
 
     }
@@ -355,7 +357,7 @@ public static partial class Rendering2D
 
         public void RenderMe()
         {
-            Raylib.DrawTextEx(_style.Font, _text, _pos, _style.FontSize, _style.FontSpacing, _fgColor);
+            Graphics.DrawTextEx(_style.Font, _text, _pos, _style.FontSize, _style.FontSpacing, _fgColor);
         }
 
     }

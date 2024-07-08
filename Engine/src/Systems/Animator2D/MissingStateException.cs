@@ -1,4 +1,4 @@
-﻿using Raylib_cs;
+﻿using Raylib_CSharp.Logging;
 
 namespace Engine.Systems.FSM;
 
@@ -9,15 +9,15 @@ public sealed class MissingStateException : Exception
 {
     public MissingStateException() 
     {
-        Raylib.TraceLog(TraceLogLevel.Error, "Animation State missing");
+        Logger.TraceLog(TraceLogLevel.Error, "Animation State missing");
     }
     public MissingStateException(string message) : base(message) 
     {
-        Raylib.TraceLog(TraceLogLevel.Error, message);
+        Logger.TraceLog(TraceLogLevel.Error, message);
     }
     public MissingStateException(string message, Exception inner) : base(message, inner) 
     {
-        Raylib.TraceLog(TraceLogLevel.Error, message);
-        Raylib.TraceLog(TraceLogLevel.Info, inner.Message);
+        Logger.TraceLog(TraceLogLevel.Error, message);
+        Logger.TraceLog(TraceLogLevel.Info, inner.Message);
     }
 }

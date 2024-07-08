@@ -2,7 +2,8 @@
 using Engine.FlatPhysics;
 using Engine.Systems;
 using Engine.Systems.Particles;
-using Raylib_cs;
+using Raylib_CSharp;
+using Raylib_CSharp.Logging;
 
 namespace Engine.EntityManager;
 public static class EntitySystem
@@ -16,7 +17,7 @@ public static class EntitySystem
         }
         catch(Exception e)
         {
-            Raylib.TraceLog(Raylib_cs.TraceLogLevel.Error, "Could not find that Entity: "+e);
+            Logger.TraceLog(TraceLogLevel.Error, "Could not find that Entity: "+e);
             return null;
         }
     }
@@ -37,7 +38,7 @@ public static class EntitySystem
         }
         catch(Exception e)
         {
-            Raylib.TraceLog(Raylib_cs.TraceLogLevel.Error, "Could not find that Entity: "+e);
+            Logger.TraceLog(TraceLogLevel.Error, "Could not find that Entity: "+e);
             return null;
         }
     }
@@ -111,7 +112,7 @@ public class EntitiesData
 
     public void UpdatePhysics()
     {
-        world.Step(Raylib.GetFrameTime(), iterations);
+        world.Step(Time.GetFrameTime(), iterations);
     }
 
 

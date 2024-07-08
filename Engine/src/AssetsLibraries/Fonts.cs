@@ -1,4 +1,5 @@
-using Raylib_cs;
+using Raylib_CSharp.Fonts;
+using Raylib_CSharp.Logging;
 namespace Engine.Assets;
 /// <summary>
 /// Font loader and library. Uses the FontPath to load all .ttf files from that folder.
@@ -23,15 +24,15 @@ public static class Fonts
                 {
                     string name = Path.GetFileNameWithoutExtension(fontFile);
                     #if DEBUG
-                    Raylib.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to FontLib");
+                    Logger.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to FontLib");
                     #endif
-                    fontLibrary.TryAdd(name, Raylib.LoadFont(fontFile));
+                    fontLibrary.TryAdd(name, Font.Load(fontFile));
                 }
             }
             else
             {
                 #if DEBUG
-                Raylib.TraceLog(TraceLogLevel.Warning, "There is no font folder. Creating...");
+                Logger.TraceLog(TraceLogLevel.Warning, "There is no font folder. Creating...");
                 #endif
                 Directory.CreateDirectory(Paths.FontPath);
             }
@@ -53,13 +54,13 @@ public static class Fonts
         if(fontLibrary.TryGetValue(fontName, out Font font))
         {
             #if DEBUG
-            Raylib.TraceLog(TraceLogLevel.Info, "Using "+fontName);
+            Logger.TraceLog(TraceLogLevel.Info, "Using "+fontName);
             #endif
             return font;
         }
         else
         {
-            return Raylib.GetFontDefault();
+            return Font.GetDefault();
         }
     }
 
@@ -70,7 +71,7 @@ public static class Fonts
     {
         foreach(KeyValuePair<string, Font> pair in fontLibrary)
         {
-            Raylib.UnloadFont(pair.Value);
+            pair.Value.Unload();
             fontLibrary.Remove(pair.Key);
         }
     }

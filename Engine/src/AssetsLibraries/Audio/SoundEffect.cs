@@ -1,8 +1,9 @@
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+using Raylib_CSharp;
+using Raylib_CSharp.Audio;
 using Newtonsoft.Json;
 using Engine.Systems;
 using Engine.Utils.Extensions;
+using Raylib_CSharp.Logging;
 
 namespace Engine.Assets.Audio;
 
@@ -55,16 +56,48 @@ public class SoundEffect : IDisposable
             return await Task.Run(() =>
             {
                 isLoaded = true;
-                _sound = LoadSound(Paths.SfxPath+FileName);
+                Sound.Load(Paths.SfxPath+FileName);
                 return _sound;
             });
         }
         catch (Exception e)
         {
             isLoaded = false;
-            Raylib.TraceLog(TraceLogLevel.Error, $"Failed to load sound. Exception: {e.Message}");
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Error, $"Failed to load sound. Exception: {e.Message}");
+            #endif
             return default;
         }       
+    }
+
+    public void Play()
+    {
+        _sound.Play();
+    }
+    
+    public void Stop()
+    {
+        _sound.Stop();
+    }
+
+    public void SetSoundPan(float pan)
+    {
+        _sound.SetPan(pan);
+    }
+
+    public void SetSoundPitch(float pitch)
+    {
+        
+    }
+
+    public void RandomizePitch(Random rand)
+    {
+        _sound.SetPitch(rand.NextSingle() * (MaxPitch - MinPitch) + MinPitch);
+    }
+
+    public void SetVolume(float volume)
+    {
+        _sound.SetVolume(volume);
     }
 
     public void Dispose()
@@ -76,7 +109,7 @@ public class SoundEffect : IDisposable
     {
         if (isLoaded && disposing)
         {
-            UnloadSound(_sound);
+            _sound.Unload();
         }
         GC.SuppressFinalize(this);
     }

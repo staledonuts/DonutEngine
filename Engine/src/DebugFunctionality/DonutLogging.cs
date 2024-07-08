@@ -1,9 +1,9 @@
 namespace Engine.Logging;
-using Raylib_cs;
 using System;
 using System.Runtime.InteropServices;
+using Raylib_CSharp.Logging;
 
-public unsafe static class DonutLogging
+/*public unsafe static class DonutLogging
 {
     private static bool loggingSet = false;
     static DonutLogging()
@@ -17,8 +17,9 @@ public unsafe static class DonutLogging
     {
         if(!loggingSet)
         {
-            Raylib.SetTraceLogLevel(Raylib_cs.TraceLogLevel.Debug);
-            Raylib.SetTraceLogCallback(&CustomLogging.LogCustom);
+            Logger.Init();
+            Logger.SetTraceLogLevel(TraceLogLevel.Debug);
+            Raylib_CSharp.Logging.Logger.SetTraceLogCallback(&CustomLogging.LogCustom);
             //Custom Logging
             loggingSet = true;
         }
@@ -72,4 +73,4 @@ public unsafe class CustomLogging
         }
         Console.ResetColor();
     }
-}
+}*/

@@ -1,4 +1,9 @@
-using Raylib_cs;
+
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Images;
+using Raylib_CSharp.Logging;
+using Raylib_CSharp.Textures;
+
 namespace Engine.Assets;
 
 /// <summary>
@@ -30,15 +35,15 @@ public static class Textures
                 string emptyPath = Paths.TexturesPath + "empty.png";
                 if (File.Exists(emptyPath))
                 {
-                    Texture2D tex = Raylib.LoadTexture(emptyPath);
+                    Texture2D tex = Texture2D.Load(emptyPath);
                     textureLibrary.Add("empty", tex);
                 }
                 else
                 {
                     // Create a new empty texture with a solid color 
-                    Image image = Raylib.GenImageColor(16, 16, Color.Red);
+                    Image image = Image.GenColor(16, 16, Color.Red);
                     // Save the new texture to a PNG file
-                    Raylib.ExportImage(image, emptyPath);
+                    image.Export(emptyPath);
                 }
                 string pathToTextures = Paths.TexturesPath;
                 foreach(string s in fileExts)
@@ -60,7 +65,7 @@ public static class Textures
         {
             string name = Path.GetFileNameWithoutExtension(File);
             #if DEBUG
-            Raylib.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to TexLib");
+            Logger.TraceLog(TraceLogLevel.Debug, "Adding: "+name+" to TexLib");
             #endif
             textureLibrary.TryAdd(name, new());
             filePaths.TryAdd(name, File);
@@ -73,14 +78,14 @@ public static class Textures
         try
         {
             textureLibrary.TryGetValue(textureName, out texture);
-            if(!Raylib.IsTextureReady(texture))
+            if(!texture.IsReady())
             {
                 #if DEBUG
-                Raylib.TraceLog(TraceLogLevel.Debug, textureName+" was not loaded.");
+                Logger.TraceLog(TraceLogLevel.Debug, textureName+" was not loaded.");
                 #endif
                 filePaths.TryGetValue(textureName, out string toLoadString);
                 textureLibrary.Remove(textureName);
-                textureLibrary.Add(textureName, Raylib.LoadTexture(toLoadString));
+                textureLibrary.Add(textureName, Texture2D.Load(toLoadString));
                 textureLibrary.TryGetValue(textureName, out texture);
             }
             return texture;
@@ -98,10 +103,10 @@ public static class Textures
                 
         if(textureLibrary.TryGetValue(textureName, out texture))
         {
-            Raylib.UnloadTexture(texture);
+            texture.Unload();
             textureLibrary.Remove(textureName);
             #if DEBUG
-            Raylib.TraceLog(TraceLogLevel.Debug, "Unloaded: "+textureName+" from TexLib");
+            Logger.TraceLog(TraceLogLevel.Debug, "Unloaded: "+textureName+" from TexLib");
             #endif
         }
     }
@@ -110,7 +115,7 @@ public static class Textures
     {
         foreach(KeyValuePair<string, Texture2D> pair in textureLibrary)
         {
-            Raylib.UnloadTexture(pair.Value);
+            pair.Value.Unload();
             textureLibrary.Remove(pair.Key);
         }
     }
@@ -119,7 +124,7 @@ public static class Textures
     {
         foreach(KeyValuePair<string, Texture2D> pair in textureLibrary)
         {
-            Raylib.UnloadTexture(pair.Value);
+            pair.Value.Unload();
         }
     }
 }

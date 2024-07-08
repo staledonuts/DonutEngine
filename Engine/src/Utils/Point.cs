@@ -27,13 +27,13 @@ public struct Point : IEquatable<Point>
     /// The x coordinate of this <see cref="Point"/>.
     /// </summary>
     [DataMember]
-    public int x;
+    public int X;
 
     /// <summary>
     /// The y coordinate of this <see cref="Point"/>.
     /// </summary>
     [DataMember]
-    public int y;
+    public int Y;
 
     #endregion
 
@@ -56,8 +56,8 @@ public struct Point : IEquatable<Point>
         get
         {
             return string.Concat(
-                this.x.ToString(), "  ",
-                this.y.ToString()
+                this.X.ToString(), "  ",
+                this.Y.ToString()
             );
         }
     }
@@ -73,8 +73,8 @@ public struct Point : IEquatable<Point>
     /// <param name="y">The y coordinate in 2d-space.</param>
     public Point(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        this.X = x;
+        this.Y = y;
     }
 
     /// <summary>
@@ -83,8 +83,8 @@ public struct Point : IEquatable<Point>
     /// <param name="value">The x and y coordinates in 2d-space.</param>
     public Point(int value)
     {
-        this.x = value;
-        this.y = value;
+        this.X = value;
+        this.Y = value;
     }
 
     #endregion
@@ -99,7 +99,7 @@ public struct Point : IEquatable<Point>
     /// <returns>Sum of the points.</returns>
     public static Point operator +(Point value1, Point value2)
     {
-        return new Point(value1.x + value2.x, value1.y + value2.y);
+        return new Point(value1.X + value2.X, value1.Y + value2.Y);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public struct Point : IEquatable<Point>
     /// <returns>Result of the subtraction.</returns>
     public static Point operator -(Point value1, Point value2)
     {
-        return new Point(value1.x - value2.x, value1.y - value2.y);
+        return new Point(value1.X - value2.X, value1.Y - value2.Y);
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public struct Point : IEquatable<Point>
     /// <returns>Result of the multiplication.</returns>
     public static Point operator *(Point value1, Point value2)
     {
-        return new Point(value1.x * value2.x, value1.y * value2.y);
+        return new Point(value1.X * value2.X, value1.Y * value2.Y);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public struct Point : IEquatable<Point>
     /// <returns>The result of dividing the points.</returns>
     public static Point operator /(Point source, Point divisor)
     {
-        return new Point(source.x / divisor.x, source.y / divisor.y);
+        return new Point(source.X / divisor.X, source.Y / divisor.Y);
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public struct Point : IEquatable<Point>
     /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
     public bool Equals(Point other)
     {
-        return ((x == other.x) && (y == other.y));
+        return ((X == other.Y) && (Y == other.Y));
     }
 
     /// <summary>
@@ -190,8 +190,8 @@ public struct Point : IEquatable<Point>
         unchecked
         {
             var hash = 17;
-            hash = hash * 23 + x.GetHashCode();
-            hash = hash * 23 + y.GetHashCode();
+            hash = hash * 23 + X.GetHashCode();
+            hash = hash * 23 + Y.GetHashCode();
             return hash;
         }
 
@@ -204,7 +204,7 @@ public struct Point : IEquatable<Point>
     /// <returns><see cref="String"/> representation of this <see cref="Point"/>.</returns>
     public override string ToString()
     {
-        return "{x:" + x + " y:" + y + "}";
+        return "{x:" + X + " y:" + Y + "}";
     }
 
     /// <summary>
@@ -214,7 +214,7 @@ public struct Point : IEquatable<Point>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2 ToVector2()
     {
-        return new Vector2(x, y);
+        return new Vector2(X, Y);
     }
 
     /// <summary>
@@ -224,8 +224,8 @@ public struct Point : IEquatable<Point>
     /// <param name="y"></param>
     public void Deconstruct(out int X, out int Y)
     {
-        X = x;
-        Y = y;
+        X = this.X;
+        Y = this.Y;
     }
 
     #endregion

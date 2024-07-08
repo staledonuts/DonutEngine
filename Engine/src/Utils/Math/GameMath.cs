@@ -239,11 +239,6 @@ public static class GameMath
 
 		return firstFloat * (1 - smoothed) + secondFloat * smoothed;
 	}
-
-    public static Point ToPoint(float X, float Y)
-    {
-        return new Point((int) X,(int) Y);
-    }
 	public static float[,] GetNoiseData(int seed, int width, int height, float size, float power)
 	{
 		FastNoiseLite noise = new FastNoiseLite(seed);

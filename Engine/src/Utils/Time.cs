@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace Engine.Utils;
 
-public static class Time
+public static class EngineTime
 {
 	private static readonly Stopwatch timer = new();
 	/// <summary>

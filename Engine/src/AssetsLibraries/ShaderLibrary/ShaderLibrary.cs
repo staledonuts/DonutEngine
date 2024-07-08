@@ -1,5 +1,7 @@
 using Engine.Systems;
-using Raylib_cs;
+using Raylib_CSharp;
+using Raylib_CSharp.Logging;
+using Raylib_CSharp.Shaders;
 namespace Engine.Assets;
 
 public static class ShaderLib
@@ -20,13 +22,13 @@ public static class ShaderLib
                 if(Path.Exists(Path.ChangeExtension(Paths.ShaderPath+currentFile, ".vs")))
                 {
                     string vs = Path.ChangeExtension(currentFile, ".vs");
-                    shaderLibrary.TryAdd(name, new(Raylib.LoadShader(Paths.ShaderPath+vs, Paths.ShaderPath+currentFile), name));
-                    Raylib.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Vertex and Fragment to Shader Library");
+                    shaderLibrary.TryAdd(name, new(Shader.Load(Paths.ShaderPath+vs, Paths.ShaderPath+currentFile), name));
+                    Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Vertex and Fragment to Shader Library");
                 }
                 else
                 {
-                    Raylib.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Fragment to Shader Library");
-                    shaderLibrary.TryAdd(name, new(Raylib.LoadShader(null, Paths.ShaderPath+currentFile), name));
+                    Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Fragment to Shader Library");
+                    shaderLibrary.TryAdd(name, new(Shader.Load(null, Paths.ShaderPath+currentFile), name));
                 }
             }
             

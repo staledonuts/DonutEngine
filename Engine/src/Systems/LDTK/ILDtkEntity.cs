@@ -2,7 +2,10 @@ namespace Engine.Systems.LDtk;
 
 using System;
 using System.Numerics;
-using Raylib_cs;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Transformations;
+
+
 
 /// <summary>
 /// Interface that implements the Entity.

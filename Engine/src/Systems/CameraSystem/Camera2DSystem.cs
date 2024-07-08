@@ -1,10 +1,9 @@
 namespace Engine.Systems;
 
-using Engine.Exceptions;
-using Engine.Systems;
 using Engine.Utils;
-using Raylib_cs;
-
+using Raylib_CSharp.Camera.Cam2D;
+using Raylib_CSharp.Transformations;
+using Raylib_CSharp.Windowing;
 
 public class Camera2DSystem : SystemClass, IUpdateSys
 {
@@ -17,7 +16,7 @@ public class Camera2DSystem : SystemClass, IUpdateSys
         }
     }
 
-    public Rectangle Bounds = RaylibHelper.Viewport;
+    public Rectangle Bounds = new(0, 0, Window.GetScreenWidth(), Window.GetScreenHeight());
 
     Entity? currentTarget;
 
@@ -45,7 +44,7 @@ public class Camera2DSystem : SystemClass, IUpdateSys
 
     public void Update()
     {
-        if(Raylib.IsWindowResized())
+        if(Window.IsResized())
         {
 
         }

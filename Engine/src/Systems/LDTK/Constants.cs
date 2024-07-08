@@ -3,15 +3,15 @@ namespace Engine.Systems.LDtk;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using Parsing;
+using Engine.Systems.LDtk.Parsers;
 
 /// <summary> General Constants used in LDtkMonogame. </summary>
 public static class Constants
 {
     /// <summary> The supported version of ldtk so you are in a newer version any new features may not be added yet please create an issue on the github requesting them. </summary>
-    public static readonly string SupportedLDtkVersion = "1.3.3";
+    public static readonly string SupportedLDtkVersion = "1.5.3";
 
-    /// <summary> The converter used internally with JsonSerializer.Deserialize(, Constants.SerializeOptions) not needed by the user just use .FromFileReflection instead. </summary>
+    /// <summary> The converter used internally with JsonSerializer.Deserialize(..., Constants.SerializeOptions) not needed by the user just use .FromFileReflection instead. </summary>
     public static readonly JsonSerializerOptions SerializeOptions = new()
     {
         Converters =
@@ -24,8 +24,10 @@ public static class Constants
             new GuidConverter(),
         },
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true,
     };
 
-    /// <summary> The converter used internally with JsonSerializer.Deserialize(, Constants.SerializeOptions) not needed by the user just use .FromFile instead. </summary>
+    /// <summary> The converter used internally with JsonSerializer.Deserialize(..., Constants.SerializeOptions) not needed by the user just use .FromFile instead. </summary>
     public static readonly LDtkJsonSourceGenerator JsonSourceGenerator = new(SerializeOptions);
 }

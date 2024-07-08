@@ -9,7 +9,6 @@ namespace Engine.Systems;
 /// <typeparam name="T">The type of key to use to identify <see cref="State{T}">States.</see></typeparam>
 public sealed class FiniteStateMachine<T>
 {
-    public Entity entity;
     readonly Dictionary<T, State<T>> _states = new();
     State<T> _current = Empty<T>.State;
 
@@ -30,14 +29,17 @@ public sealed class FiniteStateMachine<T>
     /// <param name="states">All of the <see cref="State{T}">States</see> and their keys in the <see cref="FiniteStateMachine{T}"/>.</param>
     public FiniteStateMachine(T first, params (T, State<T>)[] states)
     {
-        if(first is Entity e)
-        {
-            entity = e;
-        }
+
         foreach (var (key, value) in states) 
+        {
             _states.Add(key, value);
+        }
+
         foreach (var (_, value) in _states) 
+        {
             value.Init(this);
+        }
+
         SwitchTo(first);
     }
 

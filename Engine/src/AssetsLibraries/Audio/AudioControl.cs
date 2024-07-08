@@ -1,12 +1,13 @@
 #nullable disable
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+using Raylib_CSharp;
+using Raylib_CSharp.Audio;
 using Newtonsoft.Json;
 using Engine.Assets.Audio;
 using Engine.Systems;
 using System.Collections;
 using System.Numerics;
 using Engine.Utils;
+using Raylib_CSharp.Logging;
 namespace Engine.Assets;
 
 public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
@@ -15,7 +16,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     private Dictionary<string, SoundEffect> SoundsLibrary { get; set; }
     private Dictionary<string, MusicTrack> MusicLibrary { get; set; }
     private MusicTrack currentMusic;
-    private Random random;
+    private readonly Random random;
     private string currentSongName;
 
     public AudioControl()
@@ -27,17 +28,17 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     public override void Initialize()
     {
         #if DEBUG
-        Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up AudioSystem ]------");
+        Logger.TraceLog(TraceLogLevel.Info, "------[ Setting up AudioSystem ]------");
         #endif
-        InitAudioDevice();
+        AudioDevice.Init();
         InitAudioLibrary();
         #if DEBUG
-        Raylib.TraceLog(TraceLogLevel.Info, "------[ AudioSystem Initialized ]------");
+        Logger.TraceLog(TraceLogLevel.Info, "------[ AudioSystem Initialized ]------");
         #endif
     }
     public void ReloadAudioLibrary()
     {
-        Raylib.StopMusicStream(currentMusic.Music);
+        currentMusic.Unload();
         foreach(KeyValuePair<string, SoundEffect> sfx in SoundsLibrary!)
         {
             sfx.Value.Dispose();
@@ -57,7 +58,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
     }
     public void SetMasterVolume()
     {
-        Raylib.SetMasterVolume(Settings.audioSettings.MasterVolume);
+        AudioDevice.SetMasterVolume(Settings.audioSettings.MasterVolume);
     }
     void LoadMusicTrackLib()
     {
@@ -68,23 +69,23 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             try
             {
                 #if DEBUG
-                Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up Music Library ]------");
+                Logger.TraceLog(TraceLogLevel.Info, "------[ Setting up Music Library ]------");
                 #endif
                 MusicLibrary = new();
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"MusicDef.json");
                 MusicLibrary = JsonConvert.DeserializeObject<Dictionary<string, MusicTrack>>(JsonData);
                 #if DEBUG
-                Raylib.TraceLog(TraceLogLevel.Info, "------[ Music Library Setup Done ]------");
+                Logger.TraceLog(TraceLogLevel.Info, "------[ Music Library Setup Done ]------");
                 #endif
             }
             catch (Exception e)
             {
-                Raylib.TraceLog(TraceLogLevel.Error, e.Message);
+                Logger.TraceLog(TraceLogLevel.Error, e.Message);
             }
         }
         catch (Exception e)
         {
-            Raylib.TraceLog(TraceLogLevel.Error, e.Message);
+            Logger.TraceLog(TraceLogLevel.Error, e.Message);
         }
     }
     void LoadSoundEffectsLib()
@@ -96,22 +97,22 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
             try
             {
                 #if DEBUG
-                if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.Info, "------[ Setting up SFX Library ]------"); }
+                if(Settings.cVars.Debugging) { Logger.TraceLog(TraceLogLevel.Info, "------[ Setting up SFX Library ]------"); }
                 #endif
                 string JsonData = File.ReadAllText(Paths.AudioDefPath+"SoundDef.json");
                 SoundsLibrary = JsonConvert.DeserializeObject<Dictionary<string, SoundEffect>>(JsonData);
                 #if DEBUG
-                if(Settings.cVars.Debugging) { Raylib.TraceLog(TraceLogLevel.Info, "------[ SFX Library Setup Done ]------"); }
+                if(Settings.cVars.Debugging) { Logger.TraceLog(TraceLogLevel.Info, "------[ SFX Library Setup Done ]------"); }
                 #endif
             }
             catch (Exception e)
             {
-                Raylib.TraceLog(TraceLogLevel.Error, e.Message);
+                Logger.TraceLog(TraceLogLevel.Error, e.Message);
             }
         }
         catch (Exception e)
         {
-            Raylib.TraceLog(TraceLogLevel.Error, e.Message);
+            Logger.TraceLog(TraceLogLevel.Error, e.Message);
         }
     }
     
@@ -132,7 +133,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         {
             key.Value.Dispose();
         }
-        CloseAudioDevice();
+        AudioDevice.Close();
     }
     #region Music
     public void PlayMusic(string name) 
@@ -142,15 +143,15 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         {
             currentSongName = name;
             currentMusic = musicTrack;
-            Raylib.SetMusicVolume(currentMusic.Music, currentMusic.Volume);
-            PlayMusicStream(currentMusic.Music);
+            currentMusic.SetVolume(currentMusic.Volume);
+            currentMusic.PlayMusic();
             #if DEBUG
-            Raylib.TraceLog(TraceLogLevel.Info, $"Playing: {name}");
+            Logger.TraceLog(TraceLogLevel.Info, $"Playing: {name}");
             #endif
         }
         else
         {
-            Raylib.TraceLog(TraceLogLevel.Error, $"Invalid song name: {name}");
+            Logger.TraceLog(TraceLogLevel.Error, $"Invalid song name: {name}");
         }
     }
     public void FadeOutCurrentMusic()
@@ -163,8 +164,8 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(Settings.audioSettings.MusicVolume, 0, 0.05f));
-            elapsedTime += Raylib.GetFrameTime();
+            music.SetVolume(RayMath.Lerp(Settings.audioSettings.MusicVolume, 0, 0.05f));
+            elapsedTime += Raylib_CSharp.Time.GetFrameTime();
         }
         yield return music;
     }
@@ -174,64 +175,74 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         float waitTime = 3f;
         while (elapsedTime < waitTime)
         {
-            Raylib.SetMusicVolume(music, Raymath.Lerp(0, Settings.audioSettings.MusicVolume, 0.05f));
-            elapsedTime += Raylib.GetFrameTime();
+            music.SetVolume(RayMath.Lerp(0, Settings.audioSettings.MusicVolume, 0.05f));
+            elapsedTime += Raylib_CSharp.Time.GetFrameTime();
         }
         yield return music;
     }
     public void ToggleMusic()
     {
-        if(IsMusicStreamPlaying(currentMusic.Music))
+        if(currentMusic.isPlaying())
         {
-            PauseMusicStream(currentMusic.Music);
-            Raylib.TraceLog(TraceLogLevel.Info, "Music Paused");
+            currentMusic.PauseMusic();
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Info, "Music Paused");
+            #endif
 
         }
         else
         {
-            ResumeMusicStream(currentMusic.Music);
-
-            Raylib.TraceLog(TraceLogLevel.Info, "Music Resumed");
+            currentMusic.ResumeMusic();
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Info, "Music Resumed");
+            #endif
         }
     }
     public void StopMusic() 
     {
-        StopMusicStream(currentMusic.Music);
-        Raylib.TraceLog(TraceLogLevel.Info, "Stopping Music: "+currentMusic.Music.ToString());
+        currentMusic.StopMusic();
+        Logger.TraceLog(TraceLogLevel.Info, "Stopping Music: "+currentMusic.Name);
     }
     public void SetMusicVolume(float volume) 
     {
         currentMusic.SetVolume(volume);
         SetMusicVolume(currentMusic.Volume);
-        Raylib.TraceLog(TraceLogLevel.Info, $"Current song volume set to: {volume}");
+        Logger.TraceLog(TraceLogLevel.Info, $"Current song volume set to: {volume}");
     }
     public void UnloadMusic(string name) 
     {
         MusicTrack music;
         if (MusicLibrary.TryGetValue(name, out music)) 
         {
-            UnloadMusicStream(music.Music);
+            music.Unload();
             MusicLibrary.Remove(name);
         }
     }
     #endregion
 
     #region SFX
+
+    public void PlaySFX(Sound sfx, float pitch, Vector2 position)
+    {
+        sfx.SetVolume(Settings.audioSettings.SfxVolume);
+        sfx.SetPitch(pitch);
+        sfx.SetPan(SoundPannerCalc2D(position));
+        sfx.Play();
+    }
     public void PlaySFX(Sound sfx, float minPitch, float maxPitch, Vector2 position)
     {
-        Raylib.SetSoundVolume(sfx, Settings.audioSettings.SfxVolume);
-        SetSoundPitch(sfx, random.NextSingle() * (maxPitch - minPitch) + minPitch);
-        SetSoundPan(sfx, SoundPannerCalc2D(position));
-        PlaySound(sfx);
+        sfx.SetVolume(Settings.audioSettings.SfxVolume);
+        sfx.SetPitch(random.NextSingle() * (maxPitch - minPitch) + minPitch);
+        sfx.SetPan(SoundPannerCalc2D(position));
+        sfx.Play();
     }
     
     public void PlaySFX(SoundEffect soundEffect, Vector2 position)
     {
-            Raylib.SetSoundVolume(soundEffect.Sound, Settings.audioSettings.SfxVolume);
-            Raylib.SetSoundPitch(soundEffect.Sound, random.NextSingle() * (soundEffect.MaxPitch - soundEffect.MinPitch) + soundEffect.MinPitch);
-            Raylib.SetSoundPan(soundEffect.Sound, SoundPannerCalc2D(position));
-            Raylib.PlaySound(soundEffect.Sound);
-            //Raylib.TraceLog(TraceLogLevel.Debug, $"Playing {soundInstances[name].Count} of {soundEffect.MaxInstances} for {name} at position {SoundPannerCalc2D(position)}");
+            soundEffect.SetVolume(Settings.audioSettings.SfxVolume);
+            soundEffect.RandomizePitch(random);
+            soundEffect.SetSoundPan(SoundPannerCalc2D(position));
+            soundEffect.Play();
     }
 
     float SoundPannerCalc2D(Vector2 position)
@@ -247,18 +258,22 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
         }
         else
         {
-            Raylib.TraceLog(TraceLogLevel.Error, $"No SoundEffect with name {name} found");
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Error, $"No SoundEffect with name {name} found");
+            #endif
         }
     }
     public void StopSFX(string name)
     {
         if(SoundsLibrary!.TryGetValue(name, out SoundEffect sound))
         {          
-            StopSound(sound.Sound);
+            sound.Sound.Stop();
         }
         else
         {
-            Raylib.TraceLog(TraceLogLevel.Info, $"No playing instance with name: {name}");
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Info, $"No playing instance with name: {name}");
+            #endif
         }
     }
     #endregion

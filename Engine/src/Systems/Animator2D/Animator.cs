@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
 using System.Numerics;
+using System.Drawing;
+using Raylib_CSharp.Textures;
+using Engine.Utils;
+using Raylib_CSharp;
 
 namespace Engine.Systems;
 public class Animator
 {
-	float FrameWidth;
-	float FrameHeight;
+	int FrameWidth;
+	int FrameHeight;
 	float TimeRemainingFramesCounter;
 	int PlaybackPosition;
 	int DelayFramesCounter;
@@ -61,9 +63,9 @@ public class Animator
 	{
 		DelayFramesCounter++;
 
-		if (GetFPS() >= 0)
+		if (Time.GetFPS() >= 0)
 		{
-			if (DelayFramesCounter > DelayInSeconds * GetFPS())
+			if (DelayFramesCounter > DelayInSeconds * Time.GetFPS())
 			{
 				Rows = NumOfRows == 0 ? 1 : NumOfRows;
 				Columns = NumOfFramesPerRow;
@@ -385,6 +387,16 @@ public class Animator
 		return (1.0f - Alpha) * Start + Alpha * End;
 	}
 
+	int IntLerp(int a, int b, float t)
+	{
+		if (t > 0.9999f)
+		{
+			return b;
+		}
+
+		return a + (int)(((float)b - (float)a) * t);
+	}
+
 	public void NextRow()
 	{
 		FrameRec.Y += FrameHeight;
@@ -550,7 +562,7 @@ public class Animator
 	private void CountdownInFrames()
 	{
 		if (TimeRemainingFramesCounter != 0.0f)
-			TimeRemainingFramesCounter -= GetFrameTime() < 0.01f ? Framerate * GetFrameTime() : 0.0f;
+			TimeRemainingFramesCounter -= Time.GetFrameTime() < 0.01f ? Framerate * Time.GetFrameTime() : 0.0f;
 
 		if (TimeRemainingFramesCounter <= 0.0f)
 			TimeRemainingFramesCounter = 0.0f;
@@ -567,7 +579,7 @@ public class Animator
 				CountdownInFrames();
 
 			// Has 'X' amount of frames passed?
-			if (PlaybackPosition > GetFPS() / Framerate)
+			if (PlaybackPosition > Time.GetFPS() / Framerate)
 			{
 				// Reset playback position
 				PlaybackPosition = 0;
@@ -582,7 +594,7 @@ public class Animator
 
 			// Only go to next frame if animation has not finished playing
 			if (!bIsAnimationFinished)
-				FrameRec.X = (float)(CurrentFrame) * FrameWidth;
+				FrameRec.X = CurrentFrame * FrameWidth;
 
 			bHasStartedPlaying = false;
 		}
@@ -591,17 +603,17 @@ public class Animator
 	private void LerpAnim(float Speed, bool bConstant)
 	{
 		PlaybackPosition++;
-		if (PlaybackPosition > GetFPS() / Framerate)
+		if (PlaybackPosition > Time.GetFPS() / Framerate)
 		{
 			PlaybackPosition = 0;
 
 			if (bConstant)
 			{
-				FrameRec.X += Speed * GetFrameTime();
+				FrameRec.X = (int)(FrameRec.X + Speed * Time.GetFrameTime());
 			}
 			else
 			{
-				FrameRec.X = Lerp(FrameRec.X, Sprite.Width, Speed * GetFrameTime());
+				FrameRec.X = IntLerp(FrameRec.X, Sprite.Width, Speed * Time.GetFrameTime());
 			}
 		}
 	}

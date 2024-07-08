@@ -1,5 +1,3 @@
-using Raylib_cs;
-using static Raylib_cs.Raylib;
 using Engine.Systems;
 using Engine.Systems.Input;
 using Engine.Logging;
@@ -10,6 +8,7 @@ using Engine.Utils;
 using Engine;
 using System.Numerics;
 using Engine.RenderSystems;
+using Raylib_CSharp.Windowing;
 
 public class Game
 {
@@ -26,7 +25,7 @@ public class Game
         InputEventSystem.Initialize();
         InitSystems();
         SetupGame();
-        SetWindowTitle(windowName);
+        Window.SetTitle(windowName);
         MainLoop();
         ShutdownEngine();
     }
@@ -34,7 +33,7 @@ public class Game
     private void ShutdownEngine()
     {
         EngineSystems.ShutdownSystems();
-        CloseWindow();
+        Window.Close();
     }
 
     private void InitSystems()
@@ -63,7 +62,7 @@ public class Game
     /// </summary>
     void MainLoop()
     {
-        while (!WindowShouldClose())
+        while (!Window.ShouldClose())
         {
             //App.UpdateApp();
             //Physics, Player logic and so forth. Before draw.

@@ -3,7 +3,11 @@ using Engine.Assets;
 using Engine.Enums;
 using Engine.Logging;
 using Engine.Systems;
-using Raylib_cs;
+using Raylib_CSharp.Windowing;
+using Raylib_CSharp.Textures;
+using Raylib_CSharp.Rendering;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Transformations;
 
 namespace Engine.RenderSystems;
 public static partial class Rendering2D
@@ -21,7 +25,7 @@ public static partial class Rendering2D
     {
         foreach(Layers _layersEnum in Enum.GetValues<Layers>())
         {
-            _layers.Add(new(Raylib.LoadRenderTexture(Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), ShaderLib.UseShader(_layerShaders[(int)_layersEnum])));
+            _layers.Add(new(RenderTexture2D.Load(Window.GetScreenWidth(), Window.GetScreenHeight()), ShaderLib.UseShader(_layerShaders[(int)_layersEnum])));
         }
     }
 
@@ -29,27 +33,27 @@ public static partial class Rendering2D
     {
         foreach(LayerData rt in _layers)
         {
-            Raylib.UnloadRenderTexture(rt.RenderTexture);
+            rt.RenderTexture.Unload();
         }
     }
 
     public static void Render()
     {
-        Raylib.BeginDrawing();
+        Graphics.BeginDrawing();
         Backgrounds.DrawBackground();
         DrawToRenderTextures();
         RenderComposition();
-        Raylib.EndDrawing();
+        Graphics.EndDrawing();
     }
 
     static void DrawToRenderTextures()
     {
         foreach(LayerData layr in _layers)
         {
-            Raylib.BeginTextureMode(layr.RenderTexture); 
-            Raylib.ClearBackground(Color.Blank);
+            Graphics.BeginTextureMode(layr.RenderTexture); 
+            Graphics.ClearBackground(Color.Blank);
             RenderLayer(layr);
-            Raylib.EndTextureMode();
+            Graphics.EndTextureMode();
         }   
     }
 
@@ -58,9 +62,9 @@ public static partial class Rendering2D
         
         foreach(LayerData l in _layers)
         {
-            Raylib.BeginShaderMode(l.materialInstance.Shader);
-            Raylib.DrawTextureRec(l.RenderTexture.Texture, new Rectangle(0, 0, l.RenderTexture.Texture.Width, -l.RenderTexture.Texture.Height), new(0, 0), Color.White);
-            Raylib.EndShaderMode();
+            Graphics.BeginShaderMode(l.materialInstance.Shader);
+            Graphics.DrawTextureRec(l.RenderTexture.Texture, new Rectangle(0, 0, l.RenderTexture.Texture.Width, -l.RenderTexture.Texture.Height), new(0, 0), Color.White);
+            Graphics.EndShaderMode();
         }
     }
 

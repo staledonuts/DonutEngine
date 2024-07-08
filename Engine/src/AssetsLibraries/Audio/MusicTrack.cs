@@ -1,7 +1,9 @@
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+using Raylib_CSharp;
+using Raylib_CSharp.Audio;
 using Newtonsoft.Json;
 using Engine.Logging;
+using Raylib_CSharp.Logging;
+using System.Diagnostics.CodeAnalysis;
 namespace Engine.Assets.Audio;
 
 public class MusicTrack : IDisposable
@@ -11,22 +13,24 @@ public class MusicTrack : IDisposable
     [JsonProperty] public bool FadeOut = true;
     [JsonProperty] string FileName { get; set; }
 
-    Music music;
-    bool isLoaded = false;
-
-    [JsonIgnore]
-    public Music Music 
+    [JsonIgnore] public string Name
     {
         get
         {
-            if (!isLoaded)
+            if(_music.IsReady())
             {
-                SetMusicStream();
+                return _music.ToString();
             }
-            return music;
+            else
+            {
+                return "No name";
+            }
         }
     }
 
+    [AllowNull] Music _music;
+    bool isLoaded = false;
+    
     public MusicTrack(float volume, string fileName, bool fadeIn, bool fadeOut)
     {
         this.Volume = volume;
@@ -35,30 +39,60 @@ public class MusicTrack : IDisposable
         this.FileName = fileName;
     }
 
-    private Music SetMusicStream()
+    private void SetMusicStream()
     {
         try
         {
             isLoaded = true;
-            music = LoadMusicStream(Paths.MusicPath+FileName);
-            return music;
+            Music.Load(Paths.MusicPath+FileName);
         }
         catch (Exception e)
         {
             isLoaded = false;
-            Raylib.TraceLog(TraceLogLevel.Error, $"Failed to load Music stream. Exception: {e.Message}");
+            #if DEBUG
+            Logger.TraceLog(TraceLogLevel.Error, $"Failed to load Music stream. Exception: {e.Message}");
+            #endif
+            return;
         }
-        return music;
+        _music.PlayStream();
+    }
+
+    public void PlayMusic()
+    {
+        if (!isLoaded)
+        {
+            SetMusicStream();
+        }
+    }
+
+    public void StopMusic()
+    {
+        _music.StopStream();
+    }
+
+    public void PauseMusic()
+    {
+        _music.PauseStream();
+    }
+
+    public void ResumeMusic()
+    {
+        _music.ResumeStream();
     }
 
     public void SetVolume(float volume)
     {
-        Volume = volume;
+        _music.SetVolume(volume);
+    }
+
+    public void Unload()
+    {
+        _music.UnloadStream();
     }
 
     public void UpdateMusicStream()
     {
-        Raylib.UpdateMusicStream(Music);
+        _music.UpdateStream();
     }
 
     public void Dispose()
@@ -66,11 +100,16 @@ public class MusicTrack : IDisposable
         this.Dispose(true);
     }
 
+    public bool isPlaying()
+    {
+        return _music.IsStreamPlaying();
+    }
+
     public void Dispose(bool disposing)
     {
         if (isLoaded && disposing)
         {
-            UnloadMusicStream(music);
+            _music.UnloadStream();
             isLoaded = false;
         }
         GC.SuppressFinalize(this);
