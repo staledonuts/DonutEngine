@@ -1,7 +1,8 @@
 namespace Engine.Utils.Extensions;
-using Raylib_cs;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Raylib_CSharp.Transformations;
+using Raylib_CSharp.Windowing;
 
 public static class RectangleExt
 {
@@ -22,7 +23,7 @@ public static class RectangleExt
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool Contains(this Rectangle rect, Point value)
     {
-        return (rect.X <= value.x) && (value.x < (rect.X + rect.Width)) && (rect.Y <= value.y) && (value.y < (rect.Y + rect.Height));
+        return (rect.X <= value.X) && (value.X < (rect.X + rect.Width)) && (rect.Y <= value.Y) && (value.Y < (rect.Y + rect.Height));
     }
 
     /// <summary>
@@ -33,7 +34,7 @@ public static class RectangleExt
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Contains(this Rectangle rect, ref Point value, out bool result)
     {
-        result = (rect.X <= value.x) && (value.x < (rect.X + rect.Width)) && (rect.Y <= value.y) && (value.y < (rect.Y + rect.Height));
+        result = (rect.X <= value.X) && (value.X < (rect.X + rect.Width)) && (rect.Y <= value.Y) && (value.Y < (rect.Y + rect.Height));
     }
 
     /// <summary>
@@ -160,8 +161,8 @@ public static class RectangleExt
     /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
     public static void Offset(this Rectangle rect, Point amount)
     {
-        rect.X += amount.x;
-        rect.Y += amount.y;
+        rect.X += amount.X;
+        rect.Y += amount.Y;
     }
 
     /// <summary>
@@ -178,7 +179,7 @@ public static class RectangleExt
     {
         rect.X = 0;
         rect.Y = 0;
-        rect.Width = Raylib.GetScreenWidth();
-        rect.Height = Raylib.GetScreenHeight();
+        rect.Width = Window.GetScreenWidth();
+        rect.Height = Window.GetScreenHeight();
     }
 }

@@ -5,9 +5,7 @@ namespace Engine.FlatPhysics;
 
 public static class Collisions
 {
-    public static bool IntersectCirclePolygon(Vector2 circleCenter, float circleRadius,
-                                                Vector2 polygonCenter, Vector2[] vertices,
-                                                out Vector2 normal, out float depth)
+    public static bool IntersectCirclePolygon(Vector2 circleCenter, float circleRadius, Vector2 polygonCenter, Vector2[] vertices, out Vector2 normal, out float depth)
     {
         normal = Vector2.Zero;
         depth = float.MaxValue;

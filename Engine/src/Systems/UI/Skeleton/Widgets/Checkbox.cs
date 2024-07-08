@@ -1,9 +1,9 @@
 using System.Numerics;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
-
 using Engine.Systems.UI.Skeleton.Events;
 using Engine.Enums;
+using Raylib_CSharp.Transformations;
+using Raylib_CSharp;
+using Raylib_CSharp.Collision;
 
 namespace Engine.Systems.UI.Skeleton.Widgets;
 
@@ -29,7 +29,7 @@ public class Checkbox : Widget
     {
         if (e is MouseLeftEvent) 
         {
-            if (CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) 
+            if (ShapeHelper.CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) 
             {
                 if (Action is not null) Action.Invoke();
                 Checked = !Checked;

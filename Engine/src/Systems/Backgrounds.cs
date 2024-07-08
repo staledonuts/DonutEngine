@@ -1,6 +1,8 @@
 namespace Engine;
 using System;
-using Raylib_cs;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Textures;
+using Raylib_CSharp.Rendering;
 using System.Numerics;
 using Engine.Utils;
 /// <summary>
@@ -30,7 +32,7 @@ public static class Backgrounds
 
     public static void DrawBackground()
     {
-        Raylib.ClearBackground(clearColor);
+        Graphics.ClearBackground(clearColor);
         /*if(renderBackground)
         {    
             if (scrollingBack <= -background.Width * 2)

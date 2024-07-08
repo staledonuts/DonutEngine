@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
-using System.Drawing;
 using Raylib_CSharp.Textures;
 using Engine.Utils;
 using Raylib_CSharp;
+using Raylib_CSharp.Transformations;
 
 namespace Engine.Systems;
 public class Animator
 {
-	int FrameWidth;
-	int FrameHeight;
+	float FrameWidth;
+	float FrameHeight;
 	float TimeRemainingFramesCounter;
 	int PlaybackPosition;
 	int DelayFramesCounter;
@@ -613,7 +613,7 @@ public class Animator
 			}
 			else
 			{
-				FrameRec.X = IntLerp(FrameRec.X, Sprite.Width, Speed * Time.GetFrameTime());
+				FrameRec.X = Lerp(FrameRec.X, Sprite.Width, Speed * Time.GetFrameTime());
 			}
 		}
 	}

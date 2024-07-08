@@ -1,7 +1,5 @@
 namespace Engine.Utils;
 using System.Numerics;
-using Engine.Enums;
-using Raylib_cs;
 
 public static class GameMath
 {

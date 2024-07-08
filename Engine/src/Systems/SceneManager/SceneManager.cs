@@ -3,8 +3,7 @@ namespace Engine.Systems.SceneSystem;
 using Engine.EntityManager;
 using Engine.Exceptions;
 using Engine.Systems;
-using Raylib_cs;
-
+using Raylib_CSharp.Logging;
 
 public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
@@ -77,18 +76,18 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public void SwitchTo(Scene Scene)
     {
-        Raylib.TraceLog(TraceLogLevel.Info, "Loading new level");
+       Logger.TraceLog(TraceLogLevel.Info, "Loading new level");
         try
         {
             _current.UnloadScene();
             _current = Scene;
             _current.InitScene();
-            Raylib.TraceLog(TraceLogLevel.Info, "Level Loaded");
+            Logger.TraceLog(TraceLogLevel.Info, "Level Loaded");
         }
         catch(Exception e)
         {
             _current = Empty.Scene;
-            Raylib.TraceLog(TraceLogLevel.Error, "Level Loading Failed: "+e);
+            Logger.TraceLog(TraceLogLevel.Error, "Level Loading Failed: "+e);
         }
     }
 

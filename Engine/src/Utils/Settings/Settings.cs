@@ -1,12 +1,13 @@
 using System.Numerics;
 using Engine.Assets;
-using Raylib_cs;
+using Raylib_CSharp.Windowing;
 
 namespace Engine
 {
     using System.IO;
     using Engine.Systems.Containers;
     using Newtonsoft.Json;
+    using Raylib_CSharp.Logging;
 
     public static class Settings
     {
@@ -19,12 +20,12 @@ namespace Engine
         {
             try
             {
-                Raylib.TraceLog(TraceLogLevel.Info, "------[ Trying to Load Settings ]------");
+                Logger.TraceLog(TraceLogLevel.Info, "------[ Trying to Load Settings ]------");
                 LoadSettings();
             }
             catch
             {
-                Raylib.TraceLog(TraceLogLevel.Warning, "------[ There was a Settings Error: Creating Default Fallback ]------");
+                Logger.TraceLog(TraceLogLevel.Warning, "------[ There was a Settings Error: Creating Default Fallback ]------");
                 SetDefaultSettings(DefaultsPicker.AllDefaults);
             }  
         }
@@ -138,8 +139,8 @@ namespace Engine.Systems.Containers
         public int ScreenWidth { get; set; }
         public int ScreenHeight { get; set; }
         public int TargetFPS { get; set; }
-        public int FullscreenWidth { get { return Raylib.GetMonitorPhysicalWidth(Raylib.GetCurrentMonitor()); } }
-        public int FullscreenHeight { get { return Raylib.GetMonitorPhysicalHeight(Raylib.GetCurrentMonitor()); } }
+        public int FullscreenWidth { get { return Window.GetMonitorPhysicalWidth(Window.GetCurrentMonitor()); } }
+        public int FullscreenHeight { get { return Window.GetMonitorPhysicalHeight(Window.GetCurrentMonitor()); } }
         public int VirtualScreenWidth { get; set; }
         public int VirtualScreenHeight { get; set; }
         public bool Fullscreen { get; set; }

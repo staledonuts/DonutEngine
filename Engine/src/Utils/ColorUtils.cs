@@ -1,6 +1,6 @@
 using System;
 using System.Numerics;
-using Raylib_cs;
+using Raylib_CSharp.Colors;
 
 namespace Engine.Utils;
 public static class ColorUtil
@@ -57,7 +57,7 @@ public static class ColorUtil
     {
         if (h == 0 && s == 0)
         {
-            return new Color(v, v, v, v);
+            return new Color((byte)v, (byte)v, (byte)v, (byte)v);
         }
 
         int c = s * v;
@@ -66,27 +66,27 @@ public static class ColorUtil
 
         if (h < 1) 
         {
-            return new Color(c + m, x + m, m, v);
+            return new Color((byte)(c + m), (byte)(x + m), (byte)m, (byte)v);
         }
         else if (h < 2) 
         {
-            return new Color(x + m, c + m, m, v);
+            return new Color((byte)(x + m), (byte)(c + m), (byte)m, (byte)v);
         }
         else if (h < 3) 
         {
-            return new Color(m, c + m, x + m, v);
+            return new Color((byte)m, (byte)(c + m), (byte)(x + m), (byte)v);
         }
         else if (h < 4) 
         {
-            return new Color(m, x + m, c + m, v);
+            return new Color((byte)m, (byte)(x + m), (byte)(c + m), (byte)v);
         }
         else if (h < 5) 
         {
-            return new Color(x + m, m, c + m, v);
+            return new Color((byte)(x + m), (byte)m, (byte)(c + m), (byte)v);
         }
         else
         {
-            return new Color(c + m, m, x + m, v);
+            return new Color((byte)(c + m), (byte)m, (byte)(x + m), (byte)v);
         }
     }
 

@@ -1,6 +1,6 @@
 namespace Engine.Utils.Extensions;
-using Raylib_cs;
 using System.Numerics;
+using Raylib_CSharp.Textures;
 
 public static class Texture2DExt
 {

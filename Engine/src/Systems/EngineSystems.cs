@@ -2,7 +2,7 @@
 using Engine.Assets;
 using Engine.Logging;
 using Engine.Utils;
-using Raylib_cs;
+using Raylib_CSharp.Logging;
 namespace Engine.Systems;
 public static class EngineSystems
 {
@@ -39,7 +39,7 @@ public static class EngineSystems
             }
             // Add the system to the dictionary with its type as the key
             systems[systemClass.GetType()] = systemClass;
-            Raylib.TraceLog(TraceLogLevel.Info, systemClass.GetType().Name+" was added as a System");
+            Logger.TraceLog(TraceLogLevel.Info, systemClass.GetType().Name+" was added as a System");
             systemClass.Initialize();
         }
     }
@@ -79,7 +79,7 @@ public static class EngineSystems
 
     public static void Update()
     {
-        Time.Advance(time);
+        EngineTime.Advance(time);
         if(dUpdate != null)
         {
             dUpdate();

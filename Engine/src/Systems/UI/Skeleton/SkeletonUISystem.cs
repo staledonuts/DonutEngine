@@ -1,17 +1,9 @@
 ﻿using System.Numerics;
-using Raylib_cs;
 
 namespace Engine.Systems.UI.Skeleton;
 
 public class SkeletonUISystem : SystemClass, IUpdateSys, IDrawUpdateSys
 {
-    public Vector2 WindowSize 
-    {
-        get
-        {
-            return RaylibHelper.ScreenSize;
-        }
-    }
     public List<Container> Containers { get; private set; }
     public static Style GlobalStyle { get; private set; }
     bool empty = true;

@@ -1,9 +1,12 @@
 namespace Engine.Systems.SceneSystem;
-using Raylib_cs;
+
 using Engine.Assets;
 using Engine.Utils;
 using System.Numerics;
 using Engine.Enums;
+using Raylib_CSharp.Textures;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Windowing;
 
 public class Logo : Scene
 {
@@ -25,16 +28,16 @@ public class Logo : Scene
     {
         if (framesCounter < splash1)
         {
-            position.X = (Raylib.GetScreenWidth() / 2) - (raylibLogo.Width / 2);
-            position.Y = (Raylib.GetScreenHeight() / 2)  - (raylibLogo.Height / 2);
+            position.X = (Window.GetScreenWidth() / 2) - (raylibLogo.Width / 2);
+            position.Y = (Window.GetScreenHeight() / 2)  - (raylibLogo.Height / 2);
             Backgrounds.LerpBackground(Color.RayWhite, 0.05f);
             textureColor = ColorUtil.ColorLerp(textureColor, Color.White, 0.05f);
             Draw2D.DrawImage(Layers.Midground, raylibLogo, position, textureColor);
         }
         else if(framesCounter > splash1 && framesCounter < splash2 )
         {
-            position.X = (Raylib.GetScreenWidth() / 2) - (donutLogo.Width / 2);
-            position.Y = (Raylib.GetScreenHeight() / 2)  - (donutLogo.Height / 2);
+            position.X = (Window.GetScreenWidth() / 2) - (donutLogo.Width / 2);
+            position.Y = (Window.GetScreenHeight() / 2)  - (donutLogo.Height / 2);
             Backgrounds.LerpBackground(Color.Black, 0.2f);
             Draw2D.DrawImage(Layers.Midground, donutLogo, position, Color.White);
         }

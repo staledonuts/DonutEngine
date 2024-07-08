@@ -1,6 +1,6 @@
 ﻿using Engine.Assets;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Fonts;
 
 namespace Engine.Systems.UI.Skeleton;
 

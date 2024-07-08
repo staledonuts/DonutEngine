@@ -1,10 +1,9 @@
 ﻿using System.Numerics;
 using System;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 using Engine.Systems.UI.Skeleton.Events;
 using Engine.Enums;
+using Raylib_CSharp.Logging;
 
 namespace Engine.Systems.UI.Skeleton;
 
@@ -46,11 +45,11 @@ public class Container {
 	{
 		if (Widgets.Contains(w))
 		{
-			Raylib.TraceLog(TraceLogLevel.Info , "The widget "+w.GetType().Name+" already exists in this Container!");
+			Logger.TraceLog(TraceLogLevel.Info , "The widget "+w.GetType().Name+" already exists in this Container!");
 			return false;
 		}
 		
-		Raylib.TraceLog(TraceLogLevel.Info , $"Added "+w.GetType().Name+" widget!");
+		Logger.TraceLog(TraceLogLevel.Info , $"Added "+w.GetType().Name+" widget!");
 		w.Parent = this;
 		w.Active = active;
 		Widgets.Add(w);
@@ -62,7 +61,7 @@ public class Container {
 	{
 		if (e is MouseWheelEvent) 
 		{
-			Raylib.TraceLog(TraceLogLevel.Info , $"Mouse was moved! {((MouseWheelEvent)e).Amount}");
+			Logger.TraceLog(TraceLogLevel.Info , $"Mouse was moved! {((MouseWheelEvent)e).Amount}");
 			return true;
 		}
 

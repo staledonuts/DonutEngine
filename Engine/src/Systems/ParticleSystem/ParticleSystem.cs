@@ -2,12 +2,13 @@ namespace Engine.Systems;
 
 using System;
 using System.Numerics;
-using Raylib_cs;
 using Engine.Systems;
 using Engine.Systems.Particles;
 using Engine;
 using Engine.Assets;
 using Engine.Enums;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Textures;
 
 public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
 {

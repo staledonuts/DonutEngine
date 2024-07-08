@@ -1,9 +1,12 @@
 ﻿using System.Numerics;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+using Raylib_CSharp.Fonts;
 
 using Engine.Systems.UI.Skeleton.Events;
 using Engine.Enums;
+using Raylib_CSharp.Transformations;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Interact;
+using Raylib_CSharp.Collision;
 
 namespace Engine.Systems.UI.Skeleton.Widgets;
 
@@ -15,14 +18,14 @@ public class Button : Widget
     public float PaddingX { get; set; } = 20.0f;
     public float PaddingY { get; set; } = 20.0f;
 
-    public Vector2 Size { get { return MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing) + new Vector2(PaddingX, PaddingY); } }
+    public Vector2 Size { get { return TextManager.MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing) + new Vector2(PaddingX, PaddingY); } }
     public Rectangle ClickBox { get { return new Rectangle(Position.X, Position.Y, Size.X, Size.Y); } }
 
-    public override float Width { get { return MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing).X + PaddingX; } }
-    public override float Height { get { return MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing).Y + PaddingY; } }
+    public override float Width { get { return TextManager.MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing).X + PaddingX; } }
+    public override float Height { get { return TextManager.MeasureTextEx(Style.Font, Text, Style.FontSize, Style.FontSpacing).Y + PaddingY; } }
 
-    public bool Hovered { get { return CheckCollisionPointRec(GetMousePosition(), ClickBox);  } }
-    public bool Clicked { get { return Hovered && IsMouseButtonDown(MouseButton.Left);  } }
+    public bool Hovered { get { return ShapeHelper.CheckCollisionPointRec(Input.GetMousePosition(), ClickBox);  } }
+    public bool Clicked { get { return Hovered && Input.IsMouseButtonDown(MouseButton.Left);  } }
 
     public bool Toggled { get; private set; } = false;
 
@@ -37,7 +40,7 @@ public class Button : Widget
     {
         if (e is MouseLeftEvent) 
         {
-            if (CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) 
+            if (ShapeHelper.CheckCollisionPointRec(((MouseLeftEvent)e).Position, ClickBox)) 
             {
                 if (Action is not null) Action.Invoke();
                 if (Toggleable) Toggled = !Toggled;
