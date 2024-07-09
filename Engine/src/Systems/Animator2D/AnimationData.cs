@@ -1,9 +1,9 @@
 using Raylib_CSharp.Textures;
-using Raylib_CSharp;
 using Raylib_CSharp.Transformations;
 using Newtonsoft.Json;
 using Engine.Assets;
-namespace Engine.Systems.FSM;
+using System.Diagnostics.CodeAnalysis;
+namespace Engine.Systems.ASM;
 
 public class AnimationData
 {
@@ -42,7 +42,7 @@ public class AnimationData
     }
 	[JsonProperty(propertyName:"Animation Name")] public string Name;
 
-    public AnimationData(string AnimatonName, int NumOfFramesPerRow, int NumOfRows, int Speed, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
+    public AnimationData(string AnimatonName, int NumOfFramesPerRow, int NumOfRows, int Speed, string textureName, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
 	{
 		Name = AnimatonName;
 		Framerate = Speed == 0 ? 1 : Speed;
@@ -58,5 +58,14 @@ public class AnimationData
 		CurrentColumn = 0;
 		bFlipH = false;
 		bFlipV = false;
+		this.textureName = textureName;
 	}
+
+	#if DEBUG
+	public void GenerateJson()
+	{
+
+	}
+	#endif
+
 }
