@@ -61,11 +61,4 @@ public class AnimationData
 		this.textureName = textureName;
 	}
 
-	#if DEBUG
-	public void GenerateJson()
-	{
-
-	}
-	#endif
-
 }

@@ -44,6 +44,18 @@ public static class Paths
         }
     }
 
+    public static string AnimationsPath
+    {
+        get
+        {
+            #if OS_WINDOWS
+                return app+"Data\\\Animations\\";
+            #elif OS_LINUX
+                return app+"Data/Animations/";
+            #endif
+        }
+    }
+
     public static string AudioDefPath 
     {
         get

@@ -10,38 +10,16 @@ public class Animator
 	[AllowNull] AnimationData animationData = null;
 
 
-	public Animator() {	}
+	public Animator() 
+	{	
+
+	}
 
 	public void AssignAnimationData(AnimationData animationData)
 	{
 		this.animationData = animationData;
-
 		Restart();
 	}
-
-	/*public void ChangeSprite(Texture2D NewSprite, int NumOfFramesPerRow, int NumOfRows, int Speed, float DelayInSeconds, bool bPlayInReverse, bool bContinuous, bool bLooping)
-	{
-		animationData.DelayFramesCounter++;
-
-		if (Time.GetFPS() >= 0)
-		{
-			if (animationData.DelayFramesCounter > DelayInSeconds * Time.GetFPS())
-			{
-				animationData.Rows = NumOfRows == 0 ? 1 : NumOfRows;
-				animationData.Columns = NumOfFramesPerRow;
-				animationData.Framerate = Speed;
-				animationData.bCanLoop = bLooping;
-				animationData.bContinuous = bContinuous;
-				animationData.bReverse = bPlayInReverse;
-				animationData.PlaybackPosition = 0;
-				animationData.DelayFramesCounter = 0;
-				animationData.bIsAnimationFinished = false;
-				animationData.bHasStartedPlaying = !animationData.bPaused;
-
-				//animationData.AssignSprite(NewSprite);
-			}
-		}
-	}*/
 
 	public void FlipSprite(bool bHorizontalFlip, bool bVerticalFlip)
 	{

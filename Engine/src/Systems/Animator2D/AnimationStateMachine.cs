@@ -7,7 +7,11 @@ namespace Engine.Systems.ASM;
 public sealed class AnimationStateMachine
 {
     readonly Animator _animator = new();
-    [AllowNull] AnimationState _current;
+    [AllowNull] public AnimationState _current
+    {
+        get;
+        private set;
+    }
     
     private Dictionary<Entity, AnimationState> _entityStates = new Dictionary<Entity, AnimationState>();
 
@@ -16,8 +20,15 @@ public sealed class AnimationStateMachine
         if (!_entityStates.ContainsKey(entity))
         {
             _entityStates[entity] = initialState;
-            initialState.Enter(_animator);
+            initialState.Init(entity);
+            _current = initialState;
+            _current.Enter(_animator);
         }
+    }
+
+    public void LoadFolder()
+    {
+
     }
 
     public void ChangeState(Entity entity, AnimationState newState)
