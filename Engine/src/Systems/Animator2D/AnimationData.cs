@@ -3,6 +3,7 @@ using Raylib_CSharp.Transformations;
 using Newtonsoft.Json;
 using Engine.Assets;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 namespace Engine.Systems.ASM;
 
 public class AnimationData
@@ -40,9 +41,11 @@ public class AnimationData
             return _sprite;
         }
     }
+
+	[JsonProperty(propertyName:"Frames to Play")] public int[] FramesToPlay { get; set; } // Add this line
 	[JsonProperty(propertyName:"Animation Name")] public string Name;
 
-    public AnimationData(string AnimatonName, int NumOfFramesPerRow, int NumOfRows, int Speed, string textureName, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true)
+    public AnimationData(string AnimatonName, int NumOfFramesPerRow, int NumOfRows, int Speed, string textureName, bool bPlayInReverse = false, bool bContinuous = false, bool bLooping = true, params int[] frames)
 	{
 		Name = AnimatonName;
 		Framerate = Speed == 0 ? 1 : Speed;
@@ -59,6 +62,6 @@ public class AnimationData
 		bFlipH = false;
 		bFlipV = false;
 		this.textureName = textureName;
+		FramesToPlay = frames;
 	}
-
 }

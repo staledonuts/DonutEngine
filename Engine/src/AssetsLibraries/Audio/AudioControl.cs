@@ -8,6 +8,8 @@ using System.Collections;
 using System.Numerics;
 using Engine.Utils;
 using Raylib_CSharp.Logging;
+using Engine.RenderSystems;
+using Raylib_CSharp.Windowing;
 namespace Engine.Assets;
 
 public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
@@ -247,7 +249,7 @@ public class AudioControl : SystemClass, IUpdateSys, ILateUpdateSys
 
     float SoundPannerCalc2D(Vector2 position)
     {
-        return (EngineSystems.GetSystem<Camera2DSystem>().Bounds.Width - position.X) / EngineSystems.GetSystem<Camera2DSystem>().Bounds.Width;
+        return (Window.GetScreenWidth() - position.X) / Window.GetScreenWidth();
     }
 
     public void PlaySFX(string name, Vector2 position) 

@@ -3,17 +3,17 @@ using System.Numerics;
 
 public static class GameMath
 {
-    public static readonly float Epsilon = 0.000001f;
-    public static readonly float GoldenRatio = 1.61803398875f;
-    public static readonly float Tau = 6.28318530717959f;
-    public static readonly float Sqrt2 = 1.41421356237f;
-    public static readonly float Rad2Deg = 360f / Tau;
-    public static readonly float Deg2Rad = Tau / 360f;
-    public static readonly float Pi = 3.1415927f;
-    public static readonly float PiOver2 = 3.1415927f / 2.0f;
-    public static readonly float PiOver4 = 3.1415927f / 4.0f;
-    public static readonly float TwoPi = 3.1415927f * 2.0f;
-    public static readonly float E = 2.7182817f;
+    public const float Epsilon = 0.000001f;
+    public const float GoldenRatio = 1.61803398875f;
+    public const float Tau = 6.28318530717959f;
+    public const float Sqrt2 = 1.41421356237f;
+    public const float Rad2Deg = 360f / Tau;
+    public const float Deg2Rad = Tau / 360f;
+    public const float Pi = 3.1415927f;
+    public const float PiOver2 = 3.1415927f / 2.0f;
+    public const float PiOver4 = 3.1415927f / 4.0f;
+    public const float TwoPi = 3.1415927f * 2.0f;
+    public const float E = 2.7182817f;
     public static float Abs(float value) => MathF.Abs(value);
     public static float Acos(float d) => MathF.Acos(d);
     public static float Asin(float d) => MathF.Asin(d);

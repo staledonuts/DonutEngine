@@ -20,7 +20,7 @@ public readonly struct FlatRay
         distance = 0f;
 
         // TODO: what to do if ray starts inside the circle?
-        if(circle.Intersects(this.Position))
+        if(circle.Intersects(Position))
         {
             return false;
         }

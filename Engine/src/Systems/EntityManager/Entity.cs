@@ -7,9 +7,9 @@ namespace Engine.Systems;
 
 public abstract class Entity : IDisposable
 {
-    protected Entity(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, ShapeType shapeType)
+    protected Entity(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, float sizeMultiplier, ShapeType shapeType)
     {
-        body = new(position, density, mass, restitution, area, isStatic, radius, width, height, shapeType);
+        body = new(position, density, mass, restitution, area, isStatic, radius, width, height, sizeMultiplier, shapeType);
         _guid = Guid.NewGuid();
     }
 

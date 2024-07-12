@@ -13,8 +13,6 @@ public static class App
 {
     internal static void Initialize()
     {
-        Logger.Init();
-        Logger.SetTraceLogLevel(TraceLogLevel.All);
         Window.Init(Settings.graphicsSettings.ScreenWidth, Settings.graphicsSettings.ScreenHeight, "DonutEngine");
         Window.SetState(ConfigFlags.ResizableWindow);
         Raylib_CSharp.Time.SetTargetFPS(Settings.graphicsSettings.TargetFPS);

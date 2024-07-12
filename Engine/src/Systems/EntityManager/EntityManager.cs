@@ -106,7 +106,7 @@ public class EntitiesData
 
     public int EntityID;
 
-    const int iterations = 6;
+    const int iterations = 8;
     public readonly FlatWorld world;
     public Dictionary<int, Entity> entities;
 

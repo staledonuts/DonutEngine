@@ -7,5 +7,5 @@ namespace Engine;
 /// </summary>
 public static class Gen
 {
-    public static readonly System.Random _random = new();
+    public static readonly Random _random = new();
 }

@@ -25,14 +25,17 @@ public static partial class Draw2D
     
     public static void DrawCircle2D(Layers layer, Vector2 pos, float radius, Color color)
     {
-        
         Rendering2D.QueueAtLayer(layer, new Rendering2D.CircleData(pos, radius, color, layer, 1));
     }
 
     public static void DrawRectangle2D(Layers layer, Vector2 pos, Vector2 size, Color color)
     {
-        
         Rendering2D.QueueAtLayer(layer, new Rendering2D.RectangleData(pos, size, color, layer));
+    }
+
+    public static void DrawRectanglePro2D(Layers layer, Rectangle rectangle, Color color)
+    {
+        Rendering2D.QueueAtLayer(layer, new Rendering2D.RectangleProData(rectangle, color, layer));
     }
 
     public static void DrawText2D(Layers layer, Style style, string text, Vector2 pos, Vector2 padding, Color bgColor, Color fgColor)

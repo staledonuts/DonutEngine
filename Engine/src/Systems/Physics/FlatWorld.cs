@@ -9,7 +9,7 @@ public class FlatWorld
     public static readonly float MinBodySize = 0.01f * 0.01f;
     public static readonly float MaxBodySize = 64f * 64f;
 
-    public static readonly float MinDensity = 0.5f;     // g/cm^3
+    public static readonly float MinDensity = 0.5f;    // g/cm^3
     public static readonly float MaxDensity = 21.4f;
 
     public static readonly int MinIterations = 1;
@@ -20,35 +20,35 @@ public class FlatWorld
 
     public int BodyCount
     {
-        get { return this.bodyList.Count; }
+        get { return bodyList.Count; }
     }
 
     public FlatWorld()
     {
-        this.gravity = new Vector2(0f, 9.81f);
-        this.bodyList = new List<FlatBody>();
+        gravity = new Vector2(0f, 98.10f);
+        bodyList = new List<FlatBody>();
     }
 
     public void AddBody(FlatBody body)
     {
-        this.bodyList.Add(body);
+        bodyList.Add(body);
     }
 
     public bool RemoveBody(FlatBody body)
     {
-        return this.bodyList.Remove(body);
+        return bodyList.Remove(body);
     }
 
     public bool GetBody(int index, out FlatBody body)
     {
         body = null;
 
-        if(index < 0 || index >= this.bodyList.Count)
+        if(index < 0 || index >= bodyList.Count)
         {
             return false;
         }
 
-        body = this.bodyList[index];
+        body = bodyList[index];
         return true;
     }
 
@@ -59,26 +59,26 @@ public class FlatWorld
         for (int it = 0; it < iterations; it++)
         {
             // Movement step
-            for (int i = 0; i < this.bodyList.Count; i++)
+            for (int i = 0; i < bodyList.Count; i++)
             {
-                this.bodyList[i].Step(time, this.gravity, iterations);
+                bodyList[i].Step(time, gravity, iterations);
             }
 
             // collision step
-            for (int i = 0; i < this.bodyList.Count - 1; i++)
+            for (int i = 0; i < bodyList.Count - 1; i++)
             {
-                FlatBody bodyA = this.bodyList[i];
+                FlatBody bodyA = bodyList[i];
 
-                for (int j = i + 1; j < this.bodyList.Count; j++)
+                for (int j = i + 1; j < bodyList.Count; j++)
                 {
-                    FlatBody bodyB = this.bodyList[j];
+                    FlatBody bodyB = bodyList[j];
 
                     if (bodyA.IsStatic && bodyB.IsStatic)
                     {
                         continue;
                     }
 
-                    if (this.Collide(bodyA, bodyB, out Vector2 normal, out float depth))
+                    if (Collide(bodyA, bodyB, out Vector2 normal, out float depth))
                     {
                         if (bodyA.IsStatic)
                         {
@@ -94,7 +94,7 @@ public class FlatWorld
                             bodyB.Move(normal * depth / 2f);
                         }
 
-                        this.ResolveCollision(bodyA, bodyB, normal, depth);
+                        ResolveCollision(bodyA, bodyB, normal, depth);
                     }
                 }
             }

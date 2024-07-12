@@ -2,20 +2,17 @@
 
 namespace Engine.Systems.ASM;
 
-/// <summary>
-/// <see cref="Exception"/> thrown when a <see cref="State{T}"/> with the specified key does not exist in the specified <see cref="FiniteStateMachine{T}"/>.
-/// </summary>
-public sealed class MissingStateException : Exception
+public sealed class MissingAnimationStateException : Exception
 {
-    public MissingStateException() 
+    public MissingAnimationStateException() 
     {
         Logger.TraceLog(TraceLogLevel.Error, "Animation State missing");
     }
-    public MissingStateException(string message) : base(message) 
+    public MissingAnimationStateException(string message) : base(message) 
     {
         Logger.TraceLog(TraceLogLevel.Error, message);
     }
-    public MissingStateException(string message, Exception inner) : base(message, inner) 
+    public MissingAnimationStateException(string message, Exception inner) : base(message, inner) 
     {
         Logger.TraceLog(TraceLogLevel.Error, message);
         Logger.TraceLog(TraceLogLevel.Info, inner.Message);

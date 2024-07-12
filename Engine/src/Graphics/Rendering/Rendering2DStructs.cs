@@ -2,16 +2,18 @@ using System.Numerics;
 using Engine.Assets;
 using Engine.Enums;
 using Engine.Systems.UI.Skeleton;
+using Engine.Utils.Extensions;
 using Raylib_CSharp.Colors;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Textures;
 using Raylib_CSharp.Transformations;
+using Raylib_CSharp.Windowing;
 
 namespace Engine.RenderSystems;
 
 public static partial class Rendering2D
 {
-    internal struct LayerData
+    internal struct LayerData : IDisposable
     {
         public LayerData(RenderTexture2D rt, MaterialInstance matInstance)
         {
@@ -22,6 +24,12 @@ public static partial class Rendering2D
         public Queue<IRenderSorting> RenderBatch;
         public RenderTexture2D RenderTexture;
         public MaterialInstance materialInstance;
+
+        public void Dispose()
+        {
+            RenderTexture.Unload();
+            GC.SuppressFinalize(this); 
+        }
     }
 
 
@@ -311,6 +319,45 @@ public static partial class Rendering2D
         public void RenderMe()
         {
             Graphics.DrawRectangleV(_pos, _size, _color);
+        }
+
+    }
+
+    public struct RectangleProData : IRenderSorting, IDisposable
+    {
+        public RectangleProData(Rectangle rect, Color color, Layers lay)
+        {
+            _rect = rect;
+            _color = color;
+            _layer = lay;
+        }
+
+
+
+        public Rectangle _rect;
+        public Color _color;
+        private Layers _layer;
+
+        public Layers Layer
+        {
+            get
+            {
+                return _layer;
+            }
+            set
+            {
+                _layer = value;
+            }
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public void RenderMe()
+        {
+            Graphics.DrawRectanglePro(_rect, _rect.GetCenter(), 0, _color);
         }
 
     }

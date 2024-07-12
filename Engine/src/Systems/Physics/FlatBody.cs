@@ -24,7 +24,17 @@ public class FlatBody
     public readonly float Restitution;
     public readonly float Area;
 
+    public float SizeMultiplier = 1;
+
     public readonly bool IsStatic;
+
+    public Vector2 Size
+    {
+        get
+        {
+            return new(Width, Height);
+        }
+    }
 
     public readonly float Radius;
     public readonly float Width;
@@ -52,12 +62,12 @@ public class FlatBody
 
     public Vector2 LinearVelocity
     {
-        get { return this.linearVelocity; }
-        internal set { this.linearVelocity = value; }
+        get { return linearVelocity; }
+        internal set { linearVelocity = value; }
     }
 
     public FlatBody(Vector2 position, float density, float mass, float restitution, float area, 
-        bool isStatic, float radius, float width, float height, ShapeType shapeType)
+        bool isStatic, float radius, float width, float height, float sizeMultiplier, ShapeType shapeType)
     {
         this.position = position;
         this.linearVelocity = Vector2.Zero;
@@ -70,11 +80,11 @@ public class FlatBody
         this.Mass = mass;
         this.Restitution = restitution;
         this.Area = area;
-
+        this.SizeMultiplier = sizeMultiplier;
         this.IsStatic = isStatic;
         this.Radius = radius;
-        this.Width = width;
-        this.Height = height;
+        this.Width = width * SizeMultiplier;
+        this.Height = height * SizeMultiplier;
         this.ShapeType = shapeType;
 
         if(!this.IsStatic)
@@ -133,33 +143,33 @@ public class FlatBody
 
     public Vector2[] GetTransformedVertices()
     {
-        if(this.transformUpdateRequired)
+        if(transformUpdateRequired)
         {
-            FlatTransform transform = new FlatTransform(this.position, this.rotation);
+            FlatTransform transform = new FlatTransform(position, rotation);
 
-            for(int i = 0; i < this.vertices.Length; i++)
+            for(int i = 0; i < vertices.Length; i++)
             {
-                Vector2 v = this.vertices[i];
-                this.transformedVertices[i] = FlatTransform.Transform(v, transform);
+                Vector2 v = vertices[i];
+                transformedVertices[i] = FlatTransform.Transform(v, transform);
             }
         }
 
-        this.transformUpdateRequired = false;
-        return this.transformedVertices;
+        transformUpdateRequired = false;
+        return transformedVertices;
     }
 
     public FlatAABB GetAABB()
     {
-        if (this.aabbUpdateRequired)
+        if (aabbUpdateRequired)
         {
             float minX = float.MaxValue;
             float minY = float.MaxValue;
             float maxX = float.MinValue;
             float maxY = float.MinValue;
 
-            if (this.ShapeType is ShapeType.Box)
+            if (ShapeType is ShapeType.Box)
             {
-                Vector2[] vertices = this.GetTransformedVertices();
+                Vector2[] vertices = GetTransformedVertices();
 
                 for (int i = 0; i < vertices.Length; i++)
                 {
@@ -171,83 +181,83 @@ public class FlatBody
                     if (v.Y > maxY) { maxY = v.Y; }
                 }
             }
-            else if (this.ShapeType is ShapeType.Circle)
+            else if (ShapeType is ShapeType.Circle)
             {
-                minX = this.position.X - this.Radius;
-                minY = this.position.Y - this.Radius;
-                maxX = this.position.X + this.Radius;
-                maxY = this.position.Y + this.Radius;
+                minX = position.X - Radius;
+                minY = position.Y - Radius;
+                maxX = position.X + Radius;
+                maxY = position.Y + Radius;
             }
             else
             {
                 throw new Exception("Unknown ShapeType.");
             }
 
-            this.aabb = new FlatAABB(minX, minY, maxX, maxY);
+            aabb = new FlatAABB(minX, minY, maxX, maxY);
         }
 
-        this.aabbUpdateRequired = false;
-        return this.aabb;
+        aabbUpdateRequired = false;
+        return aabb;
     }
 
     internal void Step(float time, Vector2 gravity, int iterations)
     {
-        if(this.IsStatic)
+        if(IsStatic)
         {
             return;
         }
 
-        time /= (float)iterations;
+        time /= iterations;
 
         //force = mass * acc
         //acc = force / mass;
 
-        Vector2 acceleration = this.force / this.Mass;
-        this.linearVelocity += acceleration * time;
+        Vector2 acceleration = force / Mass;
+        linearVelocity += acceleration * time;
 
 
-        this.linearVelocity += gravity * time;
-        this.position += this.linearVelocity * time;
+        linearVelocity += gravity * (2 *time);
+        position += linearVelocity * time;
 
-        this.rotation += this.rotationalVelocity * time;
+        rotation += rotationalVelocity * time;
 
-        this.force = Vector2.Zero;
-        this.transformUpdateRequired = true;
-        this.aabbUpdateRequired = true;
+        force = Vector2.Zero;
+        transformUpdateRequired = true;
+        aabbUpdateRequired = true;
     }
 
     public void Move(Vector2 amount)
     {
-        this.position += amount;
-        this.transformUpdateRequired = true;
-        this.aabbUpdateRequired = true;
+        position += amount;
+        transformUpdateRequired = true;
+        aabbUpdateRequired = true;
     }
 
     public void MoveTo(Vector2 position)
     {
         this.position = position;
-        this.transformUpdateRequired = true;
-        this.aabbUpdateRequired = true;
+        transformUpdateRequired = true;
+        aabbUpdateRequired = true;
     }
 
     public void Rotate(float amount)
     {
-        this.rotation += amount;
-        this.transformUpdateRequired = true;
-        this.aabbUpdateRequired = true;
+        rotation += amount;
+        transformUpdateRequired = true;
+        aabbUpdateRequired = true;
     }
 
     public void AddForce(Vector2 amount)
     {
-        this.force = amount;
+        force += amount;
     }
 
-    public static bool CreateCircleBody(float radius, Vector2 position, float density, bool isStatic, float restitution, out FlatBody body, out string errorMessage)
+    public static bool CreateCircleBody(float radius, float sizeMultiplier, Vector2 position, float density, bool isStatic, float restitution, out FlatBody body, out string errorMessage)
     {
         body = null;
         errorMessage = string.Empty;
 
-        float area = radius * radius * MathF.PI;
+        float area = (radius * radius * MathF.PI) * sizeMultiplier;
 
         if(area < FlatWorld.MinBodySize)
         {
@@ -278,16 +288,16 @@ public class FlatBody
         // mass = area * depth * density
         float mass = area * density;
 
-        body = new FlatBody(position, density, mass, restitution, area, isStatic, radius, 0f, 0f, ShapeType.Circle);
+        body = new FlatBody(position, density, mass, restitution, area, isStatic, radius, 0f, 0f, sizeMultiplier, ShapeType.Circle);
         return true;
     }
 
-    public static bool CreateBoxBody(float width, float height, Vector2 position, float density, bool isStatic, float restitution, out FlatBody body, out string errorMessage)
+    public static bool CreateBoxBody(float width, float height, float sizeMultiplier, Vector2 position, float density, bool isStatic, float restitution, out FlatBody body, out string errorMessage)
     {
         body = null;
         errorMessage = string.Empty;
 
-        float area = width * height;
+        float area = width * height * sizeMultiplier;
 
         if (area < FlatWorld.MinBodySize)
         {
@@ -318,7 +328,7 @@ public class FlatBody
         // mass = area * depth * density
         float mass = area * density;
 
-        body = new FlatBody(position, density, mass, restitution, area, isStatic, 0f, width, height, ShapeType.Box);
+        body = new FlatBody(position, density, mass, restitution, area, isStatic, 0f, width, height, sizeMultiplier, ShapeType.Box);
         return true;
     }
 }
