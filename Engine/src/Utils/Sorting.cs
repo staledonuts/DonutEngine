@@ -1,146 +1,70 @@
-/*namespace Engine.Utils;
+namespace Engine.Utils;
 using Engine.Utils.Interfaces;
 using Engine.Utils.Extensions;
-using Raylib_cs;
+using Raylib_CSharp.Logging;
 using Engine.RenderSystems;
 
 #region Radix Sort
 internal class RadixSort<T> : ISortingAlgorithm<T>
+{
+    private readonly int _base;
+
+    internal RadixSort(int radix = 10)
     {
-        private readonly int _base;
+        _base = radix;
+    }
 
-        internal RadixSort(int radix = 10)
+    public T[] Sort(IEnumerable<T> elements)
+    {
+        Logger.TraceLog(TraceLogLevel.Info, "Initiating Radix sort (LSD)");
+
+        T[] array = elements.ToArray();
+
+        Logger.TraceLog(TraceLogLevel.Info, $"Initial array: {array.JoinWithSpace()}");
+
+        if (array is int[] intArray)
         {
-            _base = radix;
+            Sort(intArray);
         }
 
-        public T[] Sort(IEnumerable<T> elements)
+        Logger.TraceLog(TraceLogLevel.Info, $"Final array: {array.JoinWithSpace()}");
+
+        return array;
+    }
+
+    private void Sort(int[] array)
+    {
+        List<int>[] buckets = new List<int>[_base];
+
+        for (int index = 0; index < buckets.Length; ++index)
         {
-            //Raylib.TraceLog(TraceLogLevel.Info, "Initiating Radix sort (LSD)");
-
-            T[] array = elements.ToArray();
-
-            //Raylib.TraceLog(TraceLogLevel.Info, $"Initial array: {array.JoinWithSpace()}");
-
-            if (array is int[] intArray)
-            {
-                Sort(intArray);
-            }
-            else if (array is Rendering2D.IRenderSorting[] renderArray)
-            {
-                SortFramebuffer(renderArray);
-                //SortLayers(renderArray);
-            }
-
-            Raylib.TraceLog(TraceLogLevel.Info, $"Final array: {array.JoinWithSpace()}");
-
-            return array;
+            buckets[index] = new List<int>();
         }
 
-        private void SortLayers(Rendering2D.IRenderSorting[] array)
+        int maxValue = array.Max();
+
+        int placeValue;
+
+        for (int iteration = 0; (placeValue = (int)Math.Pow(_base, iteration)) <= maxValue; ++iteration)
         {
-            List<Rendering2D.IRenderSorting>[] buckets = new List<Rendering2D.IRenderSorting>[_base];
-
-            for (int index = 0; index < buckets.Length; ++index)
+            foreach (int element in array)
             {
-                buckets[index] = new List<Rendering2D.IRenderSorting>();
+                buckets[element / placeValue % _base].Add(element);
             }
 
-            int maxValue = array.Max(p => p.Layer);
+            Logger.TraceLog(TraceLogLevel.Debug, $"Buckets: {buckets.Select(bucket => bucket.JoinWithSpace()).Join(" | ")}");
 
-            int placeValue;
+            int arrayCopyIndex = 0;
 
-            for (int iteration = 0; (placeValue = (int)Math.Pow(_base, iteration)) <= maxValue; ++iteration)
+            foreach (List<int> bucket in buckets)
             {
-                foreach (Rendering2D.IRenderSorting element in array)
-                {
-                    buckets[element.Layer / placeValue % _base].Add(element);
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Buckets: {buckets.Select(bucket => bucket.JoinWithSpace()).Join(" | ")}");
-
-                int arrayCopyIndex = 0;
-
-                foreach (List<Rendering2D.IRenderSorting> bucket in buckets)
-                {
-                    bucket.CopyTo(array, arrayCopyIndex);
-                    arrayCopyIndex += bucket.Count;
-                    bucket.Clear();
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Pass {iteration + 1}: {array.JoinWithSpace()}");
-            }
-        }
-
-        private void SortFramebuffer(Rendering2D.IRenderSorting[] array)
-        {
-            List<Rendering2D.IRenderSorting>[] buckets = new List<Rendering2D.IRenderSorting>[_base];
-
-            for (int index = 0; index < buckets.Length; ++index)
-            {
-                buckets[index] = new List<Rendering2D.IRenderSorting>();
-            }
-            
-            int maxValue = array.Max(p => p.Framebuffer);
-
-            int placeValue;
-
-            for (int iteration = 0; (placeValue = (int)Math.Pow(_base, iteration)) <= maxValue; ++iteration)
-            {
-                foreach (Rendering2D.IRenderSorting element in array)
-                {
-                    buckets[element.Framebuffer / placeValue % _base].Add(element);
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Buckets: {buckets.Select(bucket => bucket.JoinWithSpace()).Join(" | ")}");
-
-                int arrayCopyIndex = 0;
-
-                foreach (List<Rendering2D.IRenderSorting> bucket in buckets)
-                {
-                    bucket.CopyTo(array, arrayCopyIndex);
-                    arrayCopyIndex += bucket.Count;
-                    bucket.Clear();
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Pass {iteration + 1}: {array.JoinWithSpace()}");
-            }
-        }
-
-        private void Sort(int[] array)
-        {
-            List<int>[] buckets = new List<int>[_base];
-
-            for (int index = 0; index < buckets.Length; ++index)
-            {
-                buckets[index] = new List<int>();
+                bucket.CopyTo(array, arrayCopyIndex);
+                arrayCopyIndex += bucket.Count;
+                bucket.Clear();
             }
 
-            int maxValue = array.Max();
-
-            int placeValue;
-
-            for (int iteration = 0; (placeValue = (int)Math.Pow(_base, iteration)) <= maxValue; ++iteration)
-            {
-                foreach (int element in array)
-                {
-                    buckets[element / placeValue % _base].Add(element);
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Buckets: {buckets.Select(bucket => bucket.JoinWithSpace()).Join(" | ")}");
-
-                int arrayCopyIndex = 0;
-
-                foreach (List<int> bucket in buckets)
-                {
-                    bucket.CopyTo(array, arrayCopyIndex);
-                    arrayCopyIndex += bucket.Count;
-                    bucket.Clear();
-                }
-
-                //Raylib.TraceLog(TraceLogLevel.Debug, $"Pass {iteration + 1}: {array.JoinWithSpace()}");
-            }
+            Logger.TraceLog(TraceLogLevel.Debug, $"Pass {iteration + 1}: {array.JoinWithSpace()}");
         }
     }
+}
 #endregion
-*/

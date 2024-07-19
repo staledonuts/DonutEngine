@@ -39,7 +39,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
         }
     }
 
-    Dictionary<Int64, Scene> _Scenes = new();
+    Dictionary<long, Scene> _Scenes = new();
     Scene _current = Empty.Scene;
 
     public EntitiesData GetEntitiesData()
@@ -47,7 +47,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
         return _current.entitiesData;
     }
 
-    Scene this[Int64 index]
+    Scene this[long index]
     {
         get
         {
@@ -72,7 +72,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
 
 
-    public void SwitchTo(Int64 key) => SwitchTo(this[key]);
+    public void SwitchTo(long key) => SwitchTo(this[key]);
 
     public void SwitchTo(Scene Scene)
     {

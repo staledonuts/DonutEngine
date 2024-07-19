@@ -4,6 +4,7 @@ using Engine.Systems;
 using Engine.Systems.Particles;
 using Raylib_CSharp;
 using Raylib_CSharp.Logging;
+using Engine.Entities;
 
 namespace Engine.EntityManager;
 public static class EntitySystem

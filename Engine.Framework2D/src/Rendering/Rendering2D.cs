@@ -1,18 +1,129 @@
-using System.Numerics;
 using Engine.Assets;
 using Engine.Enums;
-using Engine.Systems.UI.Skeleton;
-using Engine.Utils.Extensions;
-using Raylib_CSharp.Colors;
-using Raylib_CSharp.Rendering;
-using Raylib_CSharp.Textures;
-using Raylib_CSharp.Transformations;
 using Raylib_CSharp.Windowing;
+using Raylib_CSharp.Textures;
+using Raylib_CSharp.Rendering;
+using Raylib_CSharp.Colors;
+using Raylib_CSharp.Transformations;
+using System.Numerics;
+using Engine.Utils.Extensions;
+using Engine.Systems;
+using Engine.Systems.UI.Skeleton;
 
 namespace Engine.RenderSystems;
-
-public static partial class Rendering2D
+public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
 {
+    public Rendering2D()
+    {
+        _layers = new();
+        Camera = new();
+    }
+
+    public readonly Cam2D Camera;
+    List<LayerData> _layers;
+    string[] _layerShaders = new string[] {"main", "main", "bloom", "standardbloom", "main", "main", "main"};
+    static bool skipFrame = false;
+    static bool lastFrameResized = false;
+    private void Render()
+    {
+        if(Window.IsResized() && !lastFrameResized)
+        {
+            skipFrame = true;
+            lastFrameResized = true;
+            foreach(LayerData layr in _layers)
+            {
+                layr.Dispose();
+            }
+            _layers = new();
+        }
+        if(!skipFrame)
+        {
+            Graphics.BeginDrawing();
+            Backgrounds.DrawBackground();
+            DrawToRenderTextures();
+            //RenderComposition();
+            Graphics.EndDrawing();
+            lastFrameResized = false;
+        }
+        else
+        {
+            Initialize();
+            skipFrame = false;
+        }
+    }
+
+    private void DrawToRenderTextures()
+    {
+        Graphics.BeginMode2D(Camera.GetCamera2D());
+        foreach(LayerData layr in _layers)
+        {
+            //Graphics.BeginTextureMode(layr.RenderTexture); 
+            //Graphics.ClearBackground(Color.Blank);
+            RenderLayer(layr);
+            //Graphics.EndTextureMode();
+        }
+        Graphics.EndMode2D();      
+    }
+    Rectangle _screenRect = new(0,0, Window.GetScreenWidth(), -Window.GetScreenHeight());
+    void RenderComposition()
+    {
+        Vector2 position = _screenRect.GetCenter();
+
+        foreach(LayerData l in _layers)
+        {
+            Graphics.BeginShaderMode(l.materialInstance.Shader);
+            Graphics.DrawTextureRec(l.RenderTexture.Texture, _screenRect, position, Color.White);
+            Graphics.EndShaderMode();
+        }
+    }
+
+    public void QueueAtLayer(Layers layerPos, IRenderSorting renderData)
+    {
+        LayerData l = _layers.ElementAt((int)layerPos);
+        l.RenderBatch.Enqueue(renderData);
+    }
+
+    internal void RenderLayer(LayerData layer)
+    {
+        layer.RenderBatch.TrimExcess();
+        int length = layer.RenderBatch.Count;
+        for (int i = 0; i < length; i++)
+        {
+            if(layer.RenderBatch.TryDequeue(out IRenderSorting r))
+            {
+                r.RenderMe();     
+            }
+        }
+    }
+
+    public void Update()
+    {
+        
+    }
+
+    public void DrawUpdate()
+    {
+        Render();
+    }
+
+    public override void Initialize()
+    {
+        foreach(Layers _layersEnum in Enum.GetValues<Layers>())
+        {
+            _layers.Add(new(RenderTexture2D.Load(Window.GetScreenWidth(), Window.GetScreenHeight()), ShaderLib.UseShader(_layerShaders[(int)_layersEnum])));
+        }
+    }
+
+    public override void Shutdown()
+    {
+        foreach(LayerData rt in _layers)
+        {
+            rt.RenderTexture.Unload();
+        }
+    }
+
+    #region Structs
+
     internal struct LayerData : IDisposable
     {
         public LayerData(RenderTexture2D rt, MaterialInstance matInstance)
@@ -421,4 +532,5 @@ public static partial class Rendering2D
         public void RenderMe();
     }
 
+    #endregion
 }

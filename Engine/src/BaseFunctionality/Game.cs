@@ -41,7 +41,6 @@ public class Game
         Textures.Initialize();
         Fonts.Initialize();
         ShaderLib.Initialize();
-        Rendering2D.InitializeLayers();
         EngineSystems.AddSystem(new AudioControl());
         EngineSystems.AddSystem(new SceneManager());
         //EngineSystems.AddSystem(new SkeletonUISystem(new Style(Color.Blank, Color.Blank, Color.Gray, Color.DarkBlue, Color.DarkGray, Color.Gray, Color.SkyBlue, Color.DarkGray, Fonts.GetFont("PixelOperator"), 24, 1)));
@@ -70,6 +69,7 @@ public class Game
             DrawUpdate();
             //Camera and less priority nesseccary things go here.
             LateUpdate();
+
         }
 
     }
@@ -82,13 +82,12 @@ public class Game
     static void DrawUpdate()
     {
         EngineSystems.DrawUpdate();
-        Rendering2D.Render();
     }
 
     static void LateUpdate()
     {
         EngineSystems.LateUpdate();
-        Rendering2D.UpdateCamera();
+        EngineSystems.MiscUpdate();
     }
 }
 

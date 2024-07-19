@@ -20,6 +20,9 @@ public static class EngineSystems
     static delegateDrawUpdate dDrawUpdate;
     delegate void delegateLateUpdate();
     static delegateLateUpdate dLateUpdate;
+    public delegate void delegateMiscUpdate();
+    public static delegateMiscUpdate dMiscUpdate;
+
 
     public static void AddSystem(SystemClass systemClass)
     {
@@ -99,6 +102,14 @@ public static class EngineSystems
         if(dLateUpdate != null)
         {
             dLateUpdate();
+        }
+    }
+
+    public static void MiscUpdate()
+    {
+        if(dMiscUpdate != null)
+        {
+            dMiscUpdate();
         }
     }
 

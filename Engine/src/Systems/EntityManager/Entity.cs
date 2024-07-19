@@ -3,7 +3,7 @@ using Engine.FlatPhysics;
 using System.Numerics;
 using Newtonsoft.Json;
 using Raylib_CSharp.Transformations;
-namespace Engine.Systems;
+namespace Engine.Entities;
 
 public abstract class Entity : IDisposable
 {
@@ -29,16 +29,8 @@ public abstract class Entity : IDisposable
         }
     }
 
-
-
+    
     [JsonProperty] public FlatBody body { get; protected set; }
-    public Vector2 Position 
-    {
-        get
-        {
-            return body.Position;
-        }
-    }
     public abstract void Initialize();
     public abstract void Update();
     public abstract void DrawUpdate();
@@ -49,4 +41,5 @@ public abstract class Entity : IDisposable
     {
         GC.SuppressFinalize(this);
     }
+
 }

@@ -6,8 +6,10 @@ using Engine.Enums;
 using Engine.Systems;
 using System.Numerics;
 using Engine;
+using Engine.Entities;
 using Engine.EntityManager;
 using Engine.Systems.SceneSystem;
+using Raylib_CSharp;
 
 public struct ParticleState
 {
@@ -88,7 +90,7 @@ public struct ParticleState
             List<Entity> _currentAttractors = EntitySystem.GetEntities<IParticleAttractor>(EngineSystems.GetSystem<SceneManager>().GetEntitiesData());
             foreach (Entity e in _currentAttractors)
             {
-                var dPos = e.Position - pos;
+                var dPos = e.body.Position - pos;
                 float distance = dPos.Length();
                 var n = dPos / distance;
                 vel += 10000 * n / (distance * distance + 10000);
