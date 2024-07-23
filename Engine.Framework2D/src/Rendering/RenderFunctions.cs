@@ -11,7 +11,7 @@ using Raylib_CSharp.Transformations;
 
 namespace Engine;
 
-public static partial class Draw2D
+public static class Draw2D
 {
     public static void DrawTexture2D(Layers layer, Texture2D tex, Rectangle UVcoord, Rectangle targetRect, Vector2 origin, float orientation, Color color)
     {

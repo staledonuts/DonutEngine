@@ -72,7 +72,6 @@ public static class EngineSystems
 
     public static T GetSystem<T>() where T : SystemClass
     {
-        
         if(systems.TryGetValue(typeof(T), out SystemClass systemClass))
         {
             return (T)systemClass;

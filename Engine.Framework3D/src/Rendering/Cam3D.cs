@@ -11,7 +11,7 @@ using Raylib_CSharp.Camera.Cam3D;
 
 namespace Engine.RenderSystems;
 
-public class Cam3D
+public class Cam3D : SystemClass, ILateUpdateSys
 {
     bool hasATarget;
     Camera3D _camera3D;
@@ -58,7 +58,7 @@ public class Cam3D
     }
 
     
-    public Camera3D GetCamera2D()
+    public Camera3D GetCamera()
     {
         return _camera3D;
     }
@@ -82,5 +82,20 @@ public class Cam3D
     void UpdateCamera()
     {
         //_camera3D.UpdatePro();
+    }
+
+    public void LateUpdate()
+    {
+        
+    }
+
+    public override void Initialize()
+    {
+        
+    }
+
+    public override void Shutdown()
+    {
+        
     }
 }
