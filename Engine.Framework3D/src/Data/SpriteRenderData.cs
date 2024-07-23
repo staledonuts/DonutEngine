@@ -9,32 +9,29 @@ using Raylib_CSharp.Transformations;
 namespace Engine.Framework3D.Data;
 public struct SpriteRenderData : IRenderData
 {
-    Mesh _mesh;
-    Material _material;
+    Quad _quad;
     Matrix4x4 _transform;
-
     int _depthPosition = 0;
 
     public SpriteRenderData(Vector2 Size, Point Resolution, int Depth, Material Material)
     {
-        _mesh = Mesh.GenPlane(Size.X, Size.Y, Resolution.X, Resolution.Y);
-        _material = Material;
+        _quad = new(Size, Resolution, Material);
         _depthPosition = Depth;
     }
 
     public Material GetMaterial()
     {
-        return _material;
+        return _quad.Material;
     }
 
     public Mesh GetMesh()
     {
-        return _mesh;
+        return _quad.Mesh;
     }
 
     public void RenderMe()
     {
-        Graphics.DrawMesh(_mesh, _material, _transform);
+        Graphics.DrawMesh(_quad.Mesh, _quad.Material, _transform);
     }
 
     public void UpdateData(Transform2D transform)

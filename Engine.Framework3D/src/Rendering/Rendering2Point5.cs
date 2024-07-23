@@ -12,7 +12,7 @@ namespace Engine.Framework3D;
 
 public class Rendering2Point5 : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
-    Quad _quad = new(new(10,10), new(5,5), new Material());
+    
     Dictionary<Guid, IRenderData> _renderDatas = new();
     Queue<IRenderData> _renderQueue = new();
 

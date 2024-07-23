@@ -6,23 +6,22 @@ using Raylib_CSharp.Materials;
 namespace Engine.Framework3D.Data;
 public struct Quad
 {
-    Mesh _mesh;
-    Material _material;
-
-
+    public readonly Mesh Mesh
+    {
+        get;
+        private init;
+    }
+    public Material Material
+    {
+        get;
+        private init;
+    }
+    
     public Quad(Vector2 Size, Point Resolution, Material Material)
     {
-        _mesh = Mesh.GenPlane(Size.X, Size.Y, Resolution.X, Resolution.Y);
-        _material = Material;
+        this.Mesh = Mesh.GenPlane(Size.X, Size.Y, Resolution.X, Resolution.Y);
+        this.Material = Material;
     }
 
-    public Material GetMaterials()
-    {
-        return _material;
-    }
-
-    public Mesh GetMesh()
-    {
-        return _mesh;
-    }
+    
 }
