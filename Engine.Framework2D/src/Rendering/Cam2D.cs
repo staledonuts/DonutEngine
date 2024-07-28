@@ -8,8 +8,9 @@ using Raylib_CSharp.Camera.Cam2D;
 using Raylib_CSharp.Logging;
 using Raylib_CSharp.Transformations;
 using Raylib_CSharp.Windowing;
+using Engine.Framework2D.Entities;
 
-namespace Engine.RenderSystems;
+namespace Engine.Framework2D.RenderSystems;
 
 public class Cam2D
 {
@@ -34,7 +35,7 @@ public class Cam2D
     CameraMovement _cameraMovement;
     Rectangle _cameraRectangle;
 
-    Entity currentEntity;
+    Entity2D currentEntity;
     public Cam2D()
     {
         _camera2D = new();
@@ -43,7 +44,7 @@ public class Cam2D
         hasATarget = false;
     }
 
-    public void CameraTarget(Entity entity)
+    public void CameraTarget(Entity2D entity)
     {
         currentEntity = entity;
         if(!hasATarget)

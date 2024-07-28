@@ -3,7 +3,11 @@ sealed class Empty : Scene
 {
     public static readonly Empty Scene = new();
     
-    Empty() { }
+    Empty() 
+    {
+        //entitiesData = new EntitiesData2D();
+        //entitiesData = new EntitiesData3D();
+    }
 
     public override void DrawScene()
     {

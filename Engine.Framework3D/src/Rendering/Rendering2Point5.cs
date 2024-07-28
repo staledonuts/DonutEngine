@@ -1,14 +1,10 @@
-using System.Numerics;
 using Engine.Entities;
 using Engine.Framework3D.Data;
-using Engine.RenderSystems;
 using Engine.Systems;
 using Engine.Transformations;
-using Raylib_CSharp.Materials;
 using Raylib_CSharp.Rendering;
-using Raylib_CSharp.Transformations;
 
-namespace Engine.Framework3D;
+namespace Engine.Framework3D.RenderSystems;
 
 public class Rendering2Point5 : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
@@ -16,9 +12,9 @@ public class Rendering2Point5 : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUp
     Dictionary<Guid, IRenderData> _renderDatas = new();
     Queue<IRenderData> _renderQueue = new();
 
-    public void AddEntity(Entity entity, IRenderData renderData)
+    public void AddEntity(IEntity entity, IRenderData renderData)
     {
-        _renderDatas.Add(entity.EntityID, renderData);
+        _renderDatas.Add(entity.GetGuid(), renderData);
     }
 
     public void UpdateSpriteData(Guid guid, Transform2D transform)

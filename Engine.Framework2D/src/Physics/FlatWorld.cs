@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Engine.FlatPhysics;
+namespace Engine.Framework2D.FlatPhysics;
 
 public class FlatWorld
 {

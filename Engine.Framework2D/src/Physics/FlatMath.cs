@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace Engine.FlatPhysics;
+namespace Engine.Framework2D.FlatPhysics;
 
 public static class FlatMath
 {

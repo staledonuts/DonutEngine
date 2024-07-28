@@ -1,5 +1,6 @@
 namespace Engine.Systems.SceneSystem;
 
+using Engine.Entities;
 using Engine.EntityManager;
 using Engine.Exceptions;
 using Engine.Systems;
@@ -42,7 +43,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
     Dictionary<long, Scene> _Scenes = new();
     Scene _current = Empty.Scene;
 
-    public EntitiesData GetEntitiesData()
+    public IEntitiesData GetEntitiesData()
     {
         return _current.entitiesData;
     }

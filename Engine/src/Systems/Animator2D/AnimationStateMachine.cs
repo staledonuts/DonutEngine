@@ -10,10 +10,10 @@ namespace Engine.Systems.ASM;
 public class AnimationStateMachine :  SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdateSys
 {
     
-    private Dictionary<Entity, Dictionary<string, AnimationState>> _entityStates = new Dictionary<Entity, Dictionary<string, AnimationState>>();
-    private Dictionary<Entity, AnimationState> _currentStates = new Dictionary<Entity, AnimationState>();
+    private Dictionary<IEntity, Dictionary<string, AnimationState>> _entityStates = new Dictionary<IEntity, Dictionary<string, AnimationState>>();
+    private Dictionary<IEntity, AnimationState> _currentStates = new Dictionary<IEntity, AnimationState>();
 
-    public void AddState(Entity entity, AnimationState state)
+    public void AddState(IEntity entity, AnimationState state)
     {
         if (!_entityStates.ContainsKey(entity))
         {
@@ -39,7 +39,7 @@ public class AnimationStateMachine :  SystemClass, IUpdateSys, IDrawUpdateSys, I
 
     }
 
-    public void ChangeState(Entity entity, string newState)
+    public void ChangeState(IEntity entity, string newState)
     {
         try 
         {

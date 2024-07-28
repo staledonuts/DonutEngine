@@ -13,9 +13,9 @@ public abstract class AnimationState
         get;
         protected set;
     }
-    [AllowNull] protected Entity _entity;
+    [AllowNull] protected IEntity _entity;
     protected Rectangle _targetRect = new();
-    public abstract void Init(Entity entity);
+    public abstract void Init(IEntity entity);
     public abstract void Enter(AnimationStateMachine animator);
     public abstract void Update(AnimationStateMachine animator);
     public abstract void DrawUpdate(AnimationStateMachine animator);

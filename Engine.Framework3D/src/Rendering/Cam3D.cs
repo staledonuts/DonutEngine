@@ -1,15 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Engine.Systems;
-using Engine.Entities;
-using Engine.Utils;
-using Raylib_CSharp;
-using Raylib_CSharp.Logging;
 using Raylib_CSharp.Transformations;
-using Raylib_CSharp.Windowing;
 using Raylib_CSharp.Camera.Cam3D;
+using Engine.Framework3D.Entities;
 
-namespace Engine.RenderSystems;
+namespace Engine.Framework3D.RenderSystems;
 
 public class Cam3D : SystemClass, ILateUpdateSys
 {
@@ -39,14 +34,14 @@ public class Cam3D : SystemClass, ILateUpdateSys
     float MinFollowEffectLength;
     float FractionFollowSpeed;
     Rectangle _cameraRectangle;
-    Entity currentEntity;
+    Entity3D currentEntity;
     public Cam3D()
     {
         _camera3D = new();
         hasATarget = false;
     }
 
-    public void CameraTarget(Entity entity)
+    public void CameraTarget(Entity3D entity)
     {
         currentEntity = entity;
         if(!hasATarget)

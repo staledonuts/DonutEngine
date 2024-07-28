@@ -2,7 +2,7 @@
 using System;
 using System.Numerics;
 
-namespace Engine.FlatPhysics;
+namespace Engine.Framework2D.FlatPhysics;
 
 public sealed class Counter
 {

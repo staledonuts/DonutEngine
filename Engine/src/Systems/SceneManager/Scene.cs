@@ -1,4 +1,5 @@
 using Engine.Assets;
+using Engine.Entities;
 using Engine.EntityManager;
 
 namespace Engine.Systems.SceneSystem;
@@ -6,7 +7,7 @@ namespace Engine.Systems.SceneSystem;
 
 public abstract class Scene : IDisposable
 {
-    public EntitiesData entitiesData = new();
+    public IEntitiesData entitiesData;
 
     public abstract void InitScene();
     public abstract void UpdateScene();
