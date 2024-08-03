@@ -1,16 +1,15 @@
-namespace Engine.Systems;
+namespace Engine.Framework2D.Systems;
 
 using System;
 using System.Numerics;
 using Engine.Systems;
-using Engine.Systems.Particles;
+using Engine.Framework2D.Systems.Particles;
 using Engine;
-using Engine.Assets;
 using Engine.Enums;
 using Raylib_CSharp.Colors;
 using Raylib_CSharp.Textures;
 
-public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
+public class Particle2DManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
 {
     // This delegate will be called for each particle.
     private Action<Particle> updateParticle;
@@ -21,7 +20,7 @@ public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
     /// </summary>
     /// <param name="capacity">The maximum number of particles. An array of this size will be pre-allocated.</param>
     /// <param name="updateParticle">A delegate that lets you specify custom behaviour for your particles. Called once per particle, per frame.</param>
-    public ParticleManager(int capacity, Action<Particle> updateParticle)
+    public Particle2DManager(int capacity, Action<Particle> updateParticle)
     {
         this.updateParticle = updateParticle;
         particleList = new CircularParticleArray(capacity);
@@ -70,7 +69,7 @@ public class ParticleManager<T> : SystemClass, IUpdateSys, IDrawUpdateSys
         for (int i = 0; i < particleList.Count; i++)
         {
             Particle particle = particleList[i];
-            if(particle.State is ParticleState particleState && particleState.Type == Engine.Enums.ParticleType.Exhaust)
+            if(particle.State is Particle2DState particleState && particleState.Type == Engine.Enums.ParticleType.Exhaust)
             {
                 Draw2D.DrawCircle2D(Layers.Particles, particle.Position, 4, particle.Tint);
             }

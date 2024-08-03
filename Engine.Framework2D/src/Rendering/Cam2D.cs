@@ -63,7 +63,7 @@ public class Cam2D
     private void NormalMovement()
     {
         _camera2D.Offset = new Vector2(Window.GetScreenWidth() / 2, Window.GetScreenHeight() / 2);
-        _camera2D.Target = currentEntity.body.Position;
+        _camera2D.Target = currentEntity.Body.Position;
     }
     private void SmoothMovement() 
     {

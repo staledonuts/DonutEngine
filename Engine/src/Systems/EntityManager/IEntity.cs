@@ -1,9 +1,9 @@
+using System.Numerics;
+
 namespace Engine.Entities;
 
 public interface IEntity : IDisposable
 {
-
-
     public Guid GetGuid();
     public void Initialize();
     public void Update();

@@ -1,4 +1,4 @@
-namespace Engine.Systems.Particles;
+namespace Engine.Framework2D.Systems.Particles;
 
 using System;
 using Engine.Utils.Extensions;
@@ -10,8 +10,9 @@ using Engine.Entities;
 using Engine.EntityManager;
 using Engine.Systems.SceneSystem;
 using Raylib_CSharp;
+using Engine.Framework2D.Entities;
 
-public struct ParticleState
+public struct Particle2DState
 {
     public Vector2 Velocity;
     public ParticleType Type;
@@ -19,16 +20,16 @@ public struct ParticleState
 
     private Random rand = new Random();
 
-    public ParticleState(Vector2 velocity, ParticleType type, float lengthMultiplier = 1f)
+    public Particle2DState(Vector2 velocity, ParticleType type, float lengthMultiplier = 1f)
     {
         Velocity = velocity;
         Type = type;
         LengthMultiplier = lengthMultiplier;
     }
 
-    public ParticleState GetRandom(float minVel, float maxVel)
+    public Particle2DState GetRandom(float minVel, float maxVel)
     {
-        var state = new ParticleState();
+        var state = new Particle2DState();
         state.Velocity = rand.NextVector2(minVel, maxVel);
         state.Type = ParticleType.None;
         state.LengthMultiplier = 1;
@@ -36,7 +37,7 @@ public struct ParticleState
         return state;
     }
 
-    public static void UpdateParticle(ParticleManager<ParticleState>.Particle particle)
+    public static void UpdateParticle(Particle2DManager<Particle2DState>.Particle particle)
     {
         Vector2 vel = particle.State.Velocity;
         float speed = vel.Length();
@@ -87,10 +88,10 @@ public struct ParticleState
 
         if (particle.State.Type != ParticleType.IgnoreGravity)
         {
-            List<Entity> _currentAttractors = EntitySystem.GetEntities<IParticleAttractor>(EngineSystems.GetSystem<SceneManager>().GetEntitiesData());
-            foreach (Entity e in _currentAttractors)
+            List<IEntity> _currentAttractors = EntitySystem.GetEntities<IParticle2DAttractor>(EngineSystems.GetSystem<SceneManager>().GetEntitiesData());
+            foreach (Entity2D e in _currentAttractors)
             {
-                var dPos = e.body.Position - pos;
+                var dPos = e.Position - pos;
                 float distance = dPos.Length();
                 var n = dPos / distance;
                 vel += 10000 * n / (distance * distance + 10000);

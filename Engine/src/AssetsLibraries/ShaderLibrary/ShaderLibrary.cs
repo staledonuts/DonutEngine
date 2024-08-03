@@ -6,7 +6,7 @@ namespace Engine.Assets;
 
 public static class ShaderLib
 {
-    static Dictionary<string, MaterialInstance> shaderLibrary = new();
+    static Dictionary<string, ShaderData> shaderLibrary = new();
     
 
     public static void Initialize()
@@ -16,29 +16,55 @@ public static class ShaderLib
         {
             string name = Path.GetFileNameWithoutExtension(file);
             string currentFile = Path.GetFileName(file);
+            string fsFile;
+            string vsFile;
             string compareExt = Path.GetExtension(currentFile);
             if(compareExt == ".fs")
             {
-                if(Path.Exists(Path.ChangeExtension(Paths.ShaderPath+currentFile, ".vs")))
+                fsFile = file;
+                string vsTest = Path.ChangeExtension(Paths.ShaderPath+currentFile, ".vs");
+                if(Path.Exists(vsTest))
                 {
-                    string vs = Path.ChangeExtension(currentFile, ".vs");
-                    shaderLibrary.TryAdd(name, new(Shader.Load(Paths.ShaderPath+vs, Paths.ShaderPath+currentFile), name));
+                    vsFile = vsTest;
                     Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Vertex and Fragment to Shader Library");
                 }
                 else
                 {
+                    vsFile = "empty";
                     Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Fragment to Shader Library");
-                    shaderLibrary.TryAdd(name, new(Shader.Load(null, Paths.ShaderPath+currentFile), name));
                 }
+                shaderLibrary.TryAdd(name, new(vsFile, fsFile));
+            }
+            else if(!shaderLibrary.ContainsKey(name))
+            {
+                vsFile = file;
+                string fsTest = Path.ChangeExtension(Paths.ShaderPath+currentFile, ".fs");
+                if(Path.Exists(fsTest))
+                {
+                    fsFile = fsTest;
+                    Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Vertex and Fragment to Shader Library");
+                }
+                else
+                {
+                    fsFile = "empty";
+                    Logger.TraceLog(TraceLogLevel.Info, "Adding: "+name+" Fragment to Shader Library");
+                }
+                shaderLibrary.TryAdd(name, new(vsFile, fsFile));
             }
             
         }
     }
 
 
-    public static MaterialInstance UseShader(string name)
+    public static ShaderData UseShader(string name)
     {
-        shaderLibrary.TryGetValue(name, out MaterialInstance shader);
-        return shader;
+        if(shaderLibrary.TryGetValue(name, out ShaderData shader))
+        {
+            return shader;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

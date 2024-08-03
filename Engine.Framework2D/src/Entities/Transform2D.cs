@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Engine.Transformations;
+namespace Engine;
 
 public struct Transform2D
 {

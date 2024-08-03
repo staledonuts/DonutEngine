@@ -9,6 +9,7 @@ using System.Numerics;
 using Engine.Utils.Extensions;
 using Engine.Systems;
 using Engine.Systems.UI.Skeleton;
+using Engine.Framework2D.RenderSystems;
 
 namespace Engine.RenderSystems;
 public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
@@ -71,7 +72,7 @@ public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
 
         foreach(LayerData l in _layers)
         {
-            Graphics.BeginShaderMode(l.materialInstance.Shader);
+            Graphics.BeginShaderMode(l.ShaderData.Shader);
             Graphics.DrawTextureRec(l.RenderTexture.Texture, _screenRect, position, Color.White);
             Graphics.EndShaderMode();
         }
@@ -126,15 +127,15 @@ public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
 
     internal struct LayerData : IDisposable
     {
-        public LayerData(RenderTexture2D rt, MaterialInstance matInstance)
+        public LayerData(RenderTexture2D rt, ShaderData shaData)
         {
             RenderBatch = new();
             RenderTexture = rt;
-            materialInstance = matInstance;
+            ShaderData = shaData;
         }
         public Queue<IRenderSorting> RenderBatch;
         public RenderTexture2D RenderTexture;
-        public MaterialInstance materialInstance;
+        public ShaderData ShaderData;
 
         public void Dispose()
         {
@@ -167,7 +168,7 @@ public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
         private string _shader;
         private Layers _layer;
         private int _frameBuffer;
-        private MaterialInstance _mat;
+        private ShaderData _shaData;
         public string Shader
         { 
             get
@@ -204,15 +205,15 @@ public class Rendering2D : SystemClass, IUpdateSys, IDrawUpdateSys
             }
         }
 
-        public MaterialInstance Mat
+        public ShaderData ShaderData
         {
             get
             {
-                return _mat;
+                return _shaData;
             }
             set
             {
-                _mat = value;
+                _shaData = value;
             }
         }
 

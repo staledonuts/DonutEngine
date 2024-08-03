@@ -10,21 +10,55 @@ public abstract class Entity2D : IEntity
 {
     protected Entity2D(Vector2 position, float density, float mass, float restitution, float area, bool isStatic, float radius, float width, float height, float sizeMultiplier, ShapeType shapeType)
     {
-        body = new(position, density, mass, restitution, area, isStatic, radius, width, height, sizeMultiplier, shapeType);
+        Body = new(position, density, mass, restitution, area, isStatic, radius, width, height, sizeMultiplier, shapeType);
         _entityID = Guid.NewGuid();
     }
 
     protected Entity2D(FlatBody flatBody)
     {
-        body = flatBody;
+        Body = flatBody;
         _entityID = Guid.NewGuid();
     }
 
-    [JsonProperty] public FlatBody body 
+    [JsonProperty] public FlatBody Body 
     {
         get; 
         protected set; 
     }
+    public Vector2 Position 
+    { 
+        get
+        {
+            return Body.Position;
+        }
+        set
+        {
+           Body.Move(value); 
+        }
+    }
+    public Vector2 Scale 
+    { 
+        get
+        {
+            return Body.Size;
+        } 
+        set 
+        {
+            Body.SizeMultiplier = value.X;
+        }
+    }
+    public float Rotation 
+    { 
+        get 
+        {
+            return Body.Rotation;
+        } 
+        set 
+        {
+            Body.Rotate(value);
+        }
+    }
+
     [JsonProperty] protected Guid _entityID;
 
     public Guid GetGuid()

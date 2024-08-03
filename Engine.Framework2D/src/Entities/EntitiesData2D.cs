@@ -35,7 +35,7 @@ public class EntitiesData2D : IEntitiesData
     public void CreateEntity(Entity2D entity)
     {
         _entities.Add(entity.GetGuid(), entity);
-        world.AddBody(entity.body);
+        world.AddBody(entity.Body);
         entity.Initialize();
     }
     
