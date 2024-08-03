@@ -1,3 +1,5 @@
+using Engine.Entities;
+
 namespace Engine.Systems.SceneSystem;
 sealed class Empty : Scene
 {
@@ -5,7 +7,7 @@ sealed class Empty : Scene
     
     Empty() 
     {
-        //entitiesData = new EntitiesData2D();
+        entitiesData = new DummyEntitiesData();
         //entitiesData = new EntitiesData3D();
     }
 

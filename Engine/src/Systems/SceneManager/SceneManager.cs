@@ -94,7 +94,7 @@ public class SceneManager : SystemClass, IUpdateSys, IDrawUpdateSys, ILateUpdate
 
     public override void Initialize()
     {
-        AddScene(1, new Logo());
+        //AddScene(1, new Logo());
         SwitchTo(1);
     }
 }
