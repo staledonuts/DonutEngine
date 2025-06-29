@@ -22,23 +22,19 @@ namespace DonutEngine
 
         public void CreateEntitiesForLevel(LdtkData.Level level)
         {
-            entities.Clear(); // Remove entities from the previous level
+            entities.Clear();
 
-            // Find the "Entities" layer
             var entityLayer = level.LayerInstances.FirstOrDefault(l => l.Type == "Entities");
             if (entityLayer == null) return;
 
             foreach (var entityInstance in entityLayer.EntityInstances)
             {
-                // For GridVania, entity positions are relative to the level's world position.
                 Vector2 entityPosition = new Vector2(
                     level.WorldX + entityInstance.Px[0], 
                     level.WorldY + entityInstance.Px[1]);
 
                 GameEntity newEntity = null;
 
-                // --- Entity Factory ---
-                // Here, you would decide what C# class to instantiate based on the entity's identifier in LDtk.
                 switch (entityInstance.Identifier)
                 {
                     case "Player":
@@ -52,7 +48,6 @@ namespace DonutEngine
 
                 if (newEntity != null)
                 {
-                    // Apply any custom fields from LDtk to the new entity
                     newEntity.ApplyLdtkFields(entityInstance.FieldInstances);
                     entities.Add(newEntity);
                     Console.WriteLine($"Created entity: {entityInstance.Identifier} at {entityPosition}");

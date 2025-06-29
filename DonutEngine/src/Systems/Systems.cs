@@ -19,6 +19,8 @@ public static class Systems
         {
             _initialized = true;
         }
+        Add(new WorldSystem());
+        Add(new LdtkSystem(Systems.Get<WorldSystem>()));
     }
 
     public static void Add(SystemClass systemClass)

@@ -1,8 +1,4 @@
 using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using DonutEngine.Utilities;
@@ -12,8 +8,6 @@ using Newtonsoft.Json;
 namespace DonutEngine.Input
 {
     #region JSON Data Transfer Objects (DTOs)
-    // These classes are used only for serialization and deserialization of the action maps.
-    // This separates the data format from the runtime logic.
 
     internal class ActionMapCollectionDTO
     {
@@ -180,7 +174,6 @@ namespace DonutEngine.Input
 
         public override void Shutdown()
         {
-            // **ADDED**: Save current maps on shutdown.
             SaveActionMapsToFile("input_actions.json");
             _devices.Clear();
             _actionMaps.Clear();
@@ -310,7 +303,7 @@ namespace DonutEngine.Input
                         var newBindings = actionDto.Bindings.Select(b => new InputBinding(b, actionDto.Name, actionDto.ControlScheme));
                         newMap.AddAction(newAction, newBindings);
                     }
-                    newMap.Enable(); // Enable maps by default when loaded.
+                    newMap.Enable();
                     _actionMaps.Add(newMap);
                 }
                 Logger.Info($"Successfully loaded {_actionMaps.Count} action map(s) from '{filePath}'.");
@@ -341,7 +334,6 @@ namespace DonutEngine.Input
                         var actionDto = new ActionDTO
                         {
                             Name = action.Name,
-                            // Assume the first binding defines the scheme for the whole action
                             ControlScheme = action.Bindings.FirstOrDefault()?.ControlScheme ?? "None", 
                             Bindings = action.Bindings.Select(b => b.Path).ToList()
                         };

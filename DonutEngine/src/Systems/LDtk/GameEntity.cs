@@ -13,12 +13,9 @@ public abstract class GameEntity
     {
         this.Position = position;
     }
-
-    // --- Virtual Methods for child classes to override ---
     public virtual void Update() { }
     public virtual void Draw() { }
 
-    // Parses the field instances from LDtk and applies them to the entity
     public virtual void ApplyLdtkFields(LdtkData.FieldInstance[] fieldInstances)
     {
         // Example:
