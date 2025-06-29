@@ -1,1 +1,0 @@
-@All texture formats that raylib supports should be added eventually
